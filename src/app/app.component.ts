@@ -14,4 +14,8 @@ export class AppComponent {
   showCircle = () => {
     this.router.navigate(['svg'], { queryParams: { type: 'circle', title: 'Circle' } });
   }
+
+  showFusion = () => {
+    this.router.navigate(['fusion']);
+  }
 }

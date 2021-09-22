@@ -1,0 +1,117 @@
+<h6 class='acenter'>Fusion Reactions - data provided by Dr. Alexander Parkhomov</h6>
+<h6 class='acenter'>Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project
+</h6>
+<p class='acenter'>Version 5.0, Sep 28, 2019</p>
+<p class='acenter'><a href='https://www.nanosoft.co.nz/Fusion.php'>Fusion Reactions</a> | <a
+    href='https://www.nanosoft.co.nz/Fission.php'>Fission Reactions</a> | <a
+    href='https://www.nanosoft.co.nz/TwoToTwo.php'>Two To Two Reactions</a> | <a
+    href='https://www.nanosoft.co.nz/AllTables.php'>All Tables</a><br /><a
+    href='https://www.nanosoft.co.nz/CascadesAll.php'>CascadesAll</a> | <a
+    href='https://www.nanosoft.co.nz/Cascades4.php'>Cascades4</a> | <a
+    href='https://www.nanosoft.co.nz/Cascades5Lite.php'>Cascades5Lite</a> | <a
+    href='https://www.nanosoft.co.nz/Cascades5.php'>Cascades5</a> | <a
+    href='https://www.nanosoft.co.nz/list_results.php' target="_blank">All Results</a><br /><a
+    href='https://www.nanosoft.co.nz/ShowElementData.php'>Show Element Data</a> | <a
+    href='https://www.nanosoft.co.nz/TablesInDetail.php'>Tables in Detail</a> | <a
+    href='https://www.nanosoft.co.nz/downloads/' target="_blank">Downloads</a> | <a
+    href='https://www.nanosoft.co.nz/notes.php'>Notes</a> | <a
+    href='https://www.nanosoft.co.nz/Select_LENR_Events.php'>Select LENR Events</a></p>
+<hr class='clear-both' />
+<p class='aleft'>This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr
+  Parkhomov's spreadsheets.</p>
+<p class='aleft'>To make full use of this and the other database tables, a good grasp of SQL is essential.</p>
+<p class='aleft'>But note that it, <a href='http://www.nanosoft.co.nz/TwoToTwo.php'>TwoToTwo</a> and <a
+    href='http://www.nanosoft.co.nz/Fission.php'>Fission</a> is each dedicated to querying only one of two tables.</p>
+<p>The "universal" program <a href='http://www.nanosoft.co.nz/AllTables.php'>All Tables</a> can accept full SQL commands
+  that query any of the 12 "Parkhomov" tables, together with the "ElementProperties", "Nuclides", "RadioNuclides" and
+  "Atomic Radii" tables as well.</p>
+<p>You may indicate which of the three neutrino conditions to include: "left" and/or "none" and/or "right". The default
+  condition is include all three.</p>
+<p>In all the above tables, except the Periodic, each atom, in either the input or the output, as well as its 'A' and
+  'Z' numbers now also has a 'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or Fermion') parameter
+  associated with it.</p>
+<p>An atom's nucleus is considered a Boson ('b') if its A number is even; if odd a Fermion ('f'). The atom itself is
+  considered a Boson ('b') if its number of neutrons (A - Z) is even; if odd a Fermion ('f').</p>
+<p>These parameters can be used either passively, by observing the distributions of 'b' and 'f' in inputs and/or
+  outputs, and/or actively, by selecting 'b only', 'f only' or 'either' in the boxes below.</p>
+<p class='aleft'>NB: To avoid unnecessary duplication in all Fusion tables, A1 is never greater than A2 in any row, i.e.
+  A1 <= A2. This also applies implicitly in that, if the input side of the Core Query only involves E1 and E2, only rows
+    whose associated mass numbers obey A1 <=A2 will appear in the results</p>
+    <form id='f'
+    action='https://www.nanosoft.co.nz/Fusion.php' method='post'>
+    <input type='hidden' name='doit' value='execute_query' readonly />
+    <p class='aleft'>To protect the table, only SQL compatible "selection" queries can be allowed and you must enter
+      only the CORE part of that query.</p>
+    <p>Once you do this and click on the "Execute Query" button, the front part (here "select * from FusionAll where ")
+      will be automatically prepended and the full query sent to the database.</p>
+    <p class='aleft'>Latest: All queries will now be limited to 1000 possible rows of results; any requested 'limit'
+      greater than 1000 will be reset to 1000; to any core query not including any 'limit' command will be appended
+      'limit 1000'.</p>
+    <p class='aleft'>This Fusion Core Query can refer to any and all of E1, A1, nBorF1, Z1, aBorF1, E2, A2, nBorF2, Z2
+      or aBorF2 (the inputs) and to any and all of E, A, nBorF, Z or aBorF (the output).</p>
+    <h6 class='acenter'>Enter your Core Query below: (but clear any initial, place-holding or old one first)</h6>
+    <h6 class='acenter'>
+      <input type='text' name='query' size='100' value="E1 in ('O') and E2 in ('O' ) order by MeV desc limit 100" />
+    </h6>
+    <h6 class='acenter'>
+      Select Fusion data table from 'FusionAll' (original: MeV > 0.0; 3,921 rows; based on the 'Nuclides' table, 293
+      nuclides), or<br />FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the 'NuclidesPlus' table, 324 nuclides)
+    </h6>
+    <h6 class='acenter'>
+      <input type='radio' id='table_name' name='table_name' value='FusionAll' checked='checked' />
+      FusionAll
+      <input type='radio' name='table_name' value='FusionAllNewPlus' />FusionAllNewPlus
+
+    </h6>
+    <h6 class='acenter'>Tick neutrino (nu) contributions to be included (default is all three).</h6>
+    <h6 class='acenter'>
+      <input type='checkbox' name='sql_tables[]' value='left' />
+      nu on left (with input)&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='sql_tables[]' value='none'
+        checked='checked' />
+      none: nu absent &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='sql_tables[]' value='right' />nu on right
+      (with output)&nbsp;&nbsp;&nbsp;&nbsp;
+    </h6>
+    <h6 class='acenter'>Filtering by Nuclear/Atomic Bosons/Fermions: For no filtering, select 'either'</h6>
+    <h6 class='acenter'>
+      <span class=''>nBorF1 </span>
+      <select id='nBorF1_filter' name='nBorF1_filter'>
+        <option value='b'>b only</option>
+        <option value='f'>f only</option>
+        <option value='bf' selected='selected'>either</option>
+      </select>
+      <span class=''>aBorF1 </span>
+      <select id='aBorF1_filter' name='aBorF1_filter'>
+        <option value='b'>b only</option>
+        <option value='f'>f only</option>
+        <option value='bf' selected='selected'>either</option>
+      </select>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class=''>nBorF2 </span>
+      <select id='nBorF2_filter' name='nBorF2_filter'>
+        <option value='b'>b only</option>
+        <option value='f'>f only</option>
+        <option value='bf' selected='selected'>either</option>
+      </select>
+      <span class=''>aBorF2 </span>
+      <select id='aBorF2_filter' name='aBorF2_filter'>
+        <option value='b'>b only</option>
+        <option value='f'>f only</option>
+        <option value='bf' selected='selected'>either</option>
+      </select>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class=''>nBorF </span>
+      <select id='nBorF_filter' name='nBorF_filter'>
+        <option value='b'>b only</option>
+        <option value='f'>f only</option>
+        <option value='bf' selected='selected'>either</option>
+      </select>
+      <span class=''>aBorF </span>
+      <select id='aBorF_filter' name='aBorF_filter'>
+        <option value='b'>b only</option>
+        <option value='f'>f only</option>
+        <option value='bf' selected='selected'>either</option>
+      </select>
+    </h6>
+    <h6 class='acenter'>
+      <!--<input type='button' value='Execute Query' name='btnXEQ' onclick='execute_query()'/>-->
+      <input type="submit" value="Submit">
+    </h6>
+    </form>

@@ -1,0 +1,314 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 125%;
+}
+
+/* This sets 1em to 20 pixels */
+
+body {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 50%;
+  /* Now 1em is 10 pixels (points) */
+  margin: 1em 2em;
+  /* might revisit */
+  color: rgb(0, 0, 0);
+  background-color: rgb(240, 240, 240);
+  /* silvery */
+}
+
+#container {
+  width: 400px;
+  background: ivory;
+  border: 0 5px;
+}
+
+* a {
+  font-size: 1.0em;
+  text-decoration: none;
+  color: rgb(0, 0, 255);
+  cursor: pointer;
+  cursor: hand;
+}
+
+* a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  cursor: hand;
+}
+
+h1,
+h1.a {
+  font-size: 1.8em;
+  padding: 0.1em 0em;
+  margin: 0;
+}
+
+h2,
+h2.a {
+  font-size: 1.6em;
+  padding: 0.1em 0em;
+  margin: 0;
+}
+
+h3,
+h3.a {
+  font-size: 1.5em;
+  padding: 0.1em 0em;
+  margin: 0;
+}
+
+h4,
+h4.a {
+  font-size: 1.4em;
+  padding: 0.1em 0em;
+  margin: 0;
+}
+
+h5,
+h5.a {
+  font-size: 1.3em;
+  padding: 0.1em 0em;
+  margin: 0;
+}
+
+h6,
+h6.a {
+  font-size: 1.2em;
+  padding: 0.1em 0em;
+  margin: 0;
+}
+
+p {
+  font-size: 1.2em;
+  padding: 0.1em 0em 0.2em 0em;
+}
+
+/* Header **************************************/
+#header {
+  margin: 0;
+  padding: 0;
+  color: black
+}
+
+#headerleft {
+  float: left;
+  width: 400px;
+  text-align: left;
+  padding: 0.5em;
+}
+
+#headercenter {
+  margin-left: 405px;
+  margin-right: 405px;
+  text-align: center;
+  padding: 0.5em;
+}
+
+#headerright {
+  float: right;
+  width: 400px;
+  text-align: left;
+  padding: 0.5em;
+}
+
+#headerright_full {
+  float: right;
+  text-align: center;
+}
+
+.header-left30 {
+  float: left;
+  text-align: left;
+}
+
+.header-right70 {
+  float: right;
+  text-align: right;
+  padding: 0 10px;
+}
+
+#mainleft {
+  float: left;
+  width: 200px;
+  text-align: center;
+  padding: 1px, 1px;
+}
+
+#mainright {
+  float: right;
+  width: 535px;
+  text-align: center;
+  padding: 1px, 1px;
+}
+
+#maincenter {
+  text-align: left;
+  margin-left: 205px;
+  margin-right: 540px;
+  padding: 1px, 1px;
+}
+
+.block-up {
+  display: block;
+}
+
+.line-up {
+  display: inline;
+}
+
+.aleft {
+  text-align: left;
+}
+
+.acenter {
+  text-align: center;
+}
+
+.aright {
+  text-align: right;
+}
+
+.justify {
+  text-align: justify;
+}
+
+.clear-top {
+  margin-top: 1em;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.clear-left {
+  clear: left;
+}
+
+.clear-right {
+  clear: right;
+}
+
+.clear-both {
+  clear: both;
+  border-width: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-border {
+  border-width: 0;
+}
+
+.padding-one {
+  padding: 5px;
+}
+
+.left-margin-one {
+  margin: 0em 1em 0em 1em;
+}
+
+.inside-markers {
+  list-style-position: inside
+}
+
+.block-center {
+  margin: auto;
+}
+
+.inline-center {
+  text-align: center;
+}
+
+.outer-div {
+  width: 1000px;
+}
+
+.inner-div {
+  width: 900px;
+}
+
+table.calendar {
+  width: 100%;
+  table-layout: fixed;
+  caption-side: top;
+  margin-bottom: 20px;
+  padding: 1em;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+table.calendar td {
+  font-size: 1.2em;
+  padding: 0.1em;
+  border: 1px solid black;
+}
+
+table.calendar td a {
+  font-size: 1.0em;
+  font-weight: bold;
+}
+
+table.results {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: auto;
+  caption-side: top;
+  margin-bottom: 20px;
+  padding: 1em;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+table.results td {
+  font-size: 1.2em;
+  padding: 0.1em;
+  border: 1px solid black;
+}
+
+table.left {
+  width: 195px;
+  table-layout: auto;
+  caption-side: top;
+  margin-bottom: 20px;
+  padding: 1em;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+table.left td {
+  font-size: 1.0em;
+  padding: 0.1em;
+  border: 1px solid black;
+}
+
+table.right {
+  width: 295px;
+  table-layout: auto;
+  caption-side: top;
+  margin-bottom: 20px;
+  padding: 1em;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+table.right td {
+  font-size: 1.0em;
+  padding: 0.1em;
+  border: 1px solid black;
+}

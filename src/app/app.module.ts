@@ -4,10 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FusionComponent } from './fusion/fusion.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FusionComponent
   ],
   imports: [
     BrowserModule,
@@ -15,6 +17,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [FusionComponent]
 })
 export class AppModule { }
