@@ -3,19 +3,13 @@ export function init_app(appLoadService: AppInitService) {
 }
 
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { AppInitService } from './app-init';
 
 
-
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    CommonModule
-  ],
+
+  imports: [HttpClientModule],
   providers: [
     AppInitService,
     {
