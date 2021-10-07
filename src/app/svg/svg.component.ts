@@ -1,7 +1,7 @@
 import { AfterContentInit, Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-svg',
+  selector: 'mfmp-svg',
   template: `
       <img src="/assets/images/svgs/{{type}}.svg" [alt]="type + ' icon'" title="{{title}}">`,
   styleUrls: [

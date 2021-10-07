@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SvgComponent } from './svg/svg.component';
 
 const routes: Routes = [
   // { path: 'svg', loadChildren: () => import('./svg/svg.module').then(m => m.SvgModule) }
-  { path: '', component: AppComponent, pathMatch: 'full' },
+  { path: '', redirectTo: 'intro', pathMatch: 'full' },
+  { path: 'intro', loadChildren: () => import('./intro/intro.module').then(m => m.IntroModule)},
   { path: 'svg', component: SvgComponent },
   {
     path: 'fusion',

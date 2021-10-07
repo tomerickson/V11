@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-fusion',
+  selector: 'mfmp-fusion',
   templateUrl: './fusion.component.html',
   styleUrls: ['./fusion.component.scss']
 })

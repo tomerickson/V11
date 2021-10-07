@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { version } from 'package.json'
+import version from 'package.json'
 @Component({
-  selector: 'app-header',
+  selector: 'mfmp-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
-  public version: string = version;
+   public version = version;
   constructor() { }
 
   ngOnInit(): void {
