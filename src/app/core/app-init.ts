@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, from } from 'rxjs';
 import { catchError, retry, map } from 'rxjs/operators';
+import {version} from 'package.json';
 declare var window: any;
 
 @Injectable()
@@ -18,7 +19,7 @@ export class AppInitService {
       ).pipe(
         map((config) => {
         window.config = config;
-        return 
+        return version;
       }));
   }
 
