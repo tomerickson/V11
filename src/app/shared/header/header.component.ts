@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {version} from 'package.json';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'mfmp-header',
   templateUrl: './header.component.html',
@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
   @Input() version = '';
    // public version = version;
   constructor() {
-    this.version = version;
+    this.version = environment.version;
    }
 
   ngOnInit(): void {
