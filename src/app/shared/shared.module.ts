@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { MatListModule} from '@angular/material/list';
 import { MatSidenavModule} from '@angular/material/sidenav';
@@ -10,18 +9,13 @@ import { MatToolbarModule} from '@angular/material/toolbar';
   declarations: [
     HeaderComponent
   ],
-  imports: [
-    CommonModule,
-    MatListModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatToolbarModule
-  ],
+  imports: [MatToolbarModule],
   exports: [
     MatListModule,
     MatSidenavModule,
     MatSliderModule,
-    MatToolbarModule
+    MatToolbarModule,
+    HeaderComponent
   ]
 })
 export class SharedModule { }
