@@ -54,7 +54,7 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/ukraine.css",
+              "src/ukraine.css",
               "src/styles.scss"
             ],
             "scripts": [],
