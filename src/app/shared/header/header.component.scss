@@ -1,0 +1,18 @@
+.tbar {
+  width: 100%;
+  z-index: 5;
+  position: relative;
+  :last-child {
+    height: 30px;
+  }
+}
+
+.split-row {
+  display: flex;
+  justify-content: space-evenly;
+
+  :last-child {
+    font-size: smaller;
+    font-weight: lighter;
+  }
+}

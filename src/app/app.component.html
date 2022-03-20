@@ -1,18 +1,11 @@
-
-<mfmp-header></mfmp-header>
-<mat-sidenav-container>
-  <mat-sidenav mode="side" opened=true>
-    <mat-list>
-      <mat-list-item>
-        <a routerLink="intro">Introduction</a>
-      </mat-list-item>
-      <mat-list-item>
-        <a routerLink="fusion">Fusion Reactions</a>
-      </mat-list-item>
-    </mat-list>
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
+<div class="body-container">
+  <mfmp-header></mfmp-header>
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened="true">
+      <mfmp-menu></mfmp-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
-</mat-sidenav-container>
+  </mat-sidenav-container>
+</div>

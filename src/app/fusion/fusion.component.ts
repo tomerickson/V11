@@ -11,7 +11,8 @@ export class FusionComponent extends MfmpBaseComponent implements OnInit {
   constructor() {
 
     super();
-    this.pageTitle.next('Fusion Reactions');
+    this.pageTitle = ('Fusion Reactions');
+    this.pageDescription = (`This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov's spreadsheets.`);
   }
 
   ngOnInit(): void {

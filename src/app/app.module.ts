@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
+import { MenuComponent } from './menu/menu.component';
 
 export function initializeApp() {
   return () => {
@@ -28,6 +29,7 @@ export function initializeApp() {
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
