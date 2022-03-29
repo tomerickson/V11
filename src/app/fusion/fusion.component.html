@@ -36,60 +36,60 @@
         or aBorF2 (the inputs) and to any and all of E, A, nBorF, Z or aBorF (the output).</p>
       <h6 class='acenter'>Enter your Core Query below: (but clear any initial, place-holding or old one first)</h6>
       <h6 class='acenter'>
-        <input type='text' name='query' size='100' value="E1 in ('O') and E2 in ('O' ) order by MeV desc limit 100" />
+        <input type='text' title='Query' placeholder="E1 in ('O') and E2 in ('O' ) order by MeV desc limit 100" name='query' size='100' value="E1 in ('O') and E2 in ('O' ) order by MeV desc limit 100" />
       </h6>
       <h6 class='acenter'>
         Select Fusion data table from 'FusionAll' (original: MeV > 0.0; 3,921 rows; based on the 'Nuclides' table, 293
         nuclides), or<br />FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the 'NuclidesPlus' table, 324 nuclides)
       </h6>
       <h6 class='acenter'>
-        <input type='radio' id='table_name' name='table_name' value='FusionAll' checked='checked' />
+        <input title='fusion table' placeholder='' type='radio' id='table_name' name='table_name' value='FusionAll' checked='checked' />
         FusionAll
-        <input type='radio' name='table_name' value='FusionAllNewPlus' />FusionAllNewPlus
+        <input title='fusionall table' placeholder='fusionallnew table' type='radio' name='table_name' value='FusionAllNewPlus' />FusionAllNewPlus
 
       </h6>
       <h6 class='acenter'>Tick neutrino (nu) contributions to be included (default is all three).</h6>
       <h6 class='acenter'>
-        <input type='checkbox' name='sql_tables[]' value='left' />
-        nu on left (with input)&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='sql_tables[]' value='none'
+        <input type='checkbox' title='Left-side Neutrino interactions' name='sql_tables[]' value='left' />
+        nu on left (with input)&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' title="No neutrino interactioins" name='sql_tables[]' value='none'
           checked='checked' />
-        none: nu absent &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' name='sql_tables[]' value='right' />nu on right
+        none: nu absent &nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' title='Right-side neutrino interactions' name='sql_tables[]' value='right' />nu on right
         (with output)&nbsp;&nbsp;&nbsp;&nbsp;
       </h6>
       <h6 class='acenter'>Filtering by Nuclear/Atomic Bosons/Fermions: For no filtering, select 'either'</h6>
       <h6 class='acenter'>
-        <span class=''>nBorF1 </span>
-        <select id='nBorF1_filter' name='nBorF1_filter'>
+        <span class=''>Element One Nuclear spin</span>
+        <select title='E1Nbf' id='nBorF1_filter' name='nBorF1_filter'>
           <option value='b'>b only</option>
           <option value='f'>f only</option>
           <option value='bf' selected='selected'>either</option>
         </select>
-        <span class=''>aBorF1 </span>
-        <select id='aBorF1_filter' name='aBorF1_filter'>
+        <span class=''>Element One Atomic spin </span>
+        <select title='E1Abf' id='aBorF1_filter' name='aBorF1_filter'>
           <option value='b'>b only</option>
           <option value='f'>f only</option>
           <option value='bf' selected='selected'>either</option>
         </select>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class=''>nBorF2 </span>
-        <select id='nBorF2_filter' name='nBorF2_filter'>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class=''>Element Two Nuclear Spin</span>
+        <select title='E2Nbf' id='nBorF2_filter' name='nBorF2_filter'>
           <option value='b'>b only</option>
           <option value='f'>f only</option>
           <option value='bf' selected='selected'>either</option>
         </select>
-        <span class=''>aBorF2 </span>
-        <select id='aBorF2_filter' name='aBorF2_filter'>
+        <span class=''>Element Two Atomic Spin </span>
+        <select title='E2Abf' id='aBorF2_filter' name='aBorF2_filter'>
           <option value='b'>b only</option>
           <option value='f'>f only</option>
           <option value='bf' selected='selected'>either</option>
         </select>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class=''>nBorF </span>
-        <select id='nBorF_filter' name='nBorF_filter'>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class=''>Output Nuclear Spin </span>
+        <select title='FNbf' id='nBorF_filter' name='nBorF_filter'>
           <option value='b'>b only</option>
           <option value='f'>f only</option>
           <option value='bf' selected='selected'>either</option>
         </select>
-        <span class=''>aBorF </span>
-        <select id='aBorF_filter' name='aBorF_filter'>
+        <span class=''>Output Atomic Spin </span>
+        <select title='FAbf' id='aBorF_filter' name='aBorF_filter'>
           <option value='b'>b only</option>
           <option value='f'>f only</option>
           <option value='bf' selected='selected'>either</option>
@@ -97,7 +97,7 @@
       </h6>
       <h6 class='acenter'>
         <!--<input type='button' value='Execute Query' name='btnXEQ' onclick='execute_query()'/>-->
-        <input type="submit" value="Submit" (click)="execute_query()">
+        <input matInput type="submit" value="Submit" name="submit" (click)="execute_query()">
       </h6>
       </form>
 </div>

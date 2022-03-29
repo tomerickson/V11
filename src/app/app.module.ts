@@ -1,51 +1,48 @@
-
+import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { SharedModule } from './shared/shared.module';
-import { CommonModule} from '@angular/common';
-import { StoreModule } from '@ngrx/store';
+import { EntityDataModule } from '@ngrx/data';
 import { EffectsModule } from '@ngrx/effects';
-import { reducers, metaReducers } from './reducers';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { EntityDataModule } from '@ngrx/data';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { entityConfig } from './entity-metadata';
 import { MenuComponent } from './menu/menu.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SharedModule } from './shared/shared.module';
 
 export function initializeApp() {
   return () => {
     return new Promise((resolve, reject) => {
-      return resolve(true)
-    })
-  }
+      return resolve(true);
+    });
+  };
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PageNotFoundComponent,
-    MenuComponent,
-  ],
+  declarations: [AppComponent, PageNotFoundComponent, MenuComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CommonModule,
     SharedModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+      autoPause: true
+    }),
     StoreRouterConnectingModule.forRoot(),
     EntityDataModule.forRoot(entityConfig)
   ],
-  providers: [    
+  providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
@@ -54,4 +51,4 @@ export function initializeApp() {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
