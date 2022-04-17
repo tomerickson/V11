@@ -1,5 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
+
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCommonModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -10,7 +11,8 @@ import { HeaderComponent } from './header/header.component';
   declarations: [
     HeaderComponent
   ],
-  imports: [HttpClientModule,
+  imports: [
+    MatButtonModule,
     MatToolbarModule,
     MatCommonModule,
     MatListModule,
@@ -18,6 +20,7 @@ import { HeaderComponent } from './header/header.component';
     MatSliderModule,
   MatToolbarModule],
   exports: [
+    MatButtonModule,
     MatCommonModule,
     MatListModule,
     MatSidenavModule,
