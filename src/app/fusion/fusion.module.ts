@@ -1,19 +1,22 @@
 import { NgModule } from "@angular/core";
+import { EntityDefinitionService } from "@ngrx/data";
+import { fusionEntityMetaData } from "./fusion-entity-metadata";
 import { FusionRoutingModule } from "./fusion-routing.module";
 import { FusionComponent } from "./fusion.component";
-import { StoreModule } from '@ngrx/store';
-import * as fromFusion from './reducers';
-
 
 @NgModule({
 
     imports: [
         FusionRoutingModule,
-        StoreModule.forFeature(fromFusion.fusionFeatureKey, fromFusion.reducers, { metaReducers: fromFusion.metaReducers })
     ],
     declarations: [
         FusionComponent
     ]
 })
 
-export class FusionModule { }
+export class FusionModule {
+
+    constructor(entityDefService: EntityDefinitionService) {
+        entityDefService.registerMetadataMap(fusionEntityMetaData);
+    }
+ }

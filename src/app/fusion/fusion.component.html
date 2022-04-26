@@ -96,8 +96,10 @@
         </select>
       </h6>
       <h6 class='acenter'>
-        <!--<input type='button' value='Execute Query' name='btnXEQ' onclick='execute_query()'/>-->
-        <input matInput type="submit" value="Submit" name="submit" (click)="execute_query()">
+        <button type="button" name="btnXEQ" (click) = "execute_query()">Execute Query</button>
+        <!--
+          <input matInput type="submit" value="Submit" name="submit" (click)="execute_query()">
+        -->
       </h6>
       </form>
 </div>
