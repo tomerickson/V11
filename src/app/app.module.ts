@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { entityConfig } from './entity-metadata';
 import { MenuComponent } from './menu/menu.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
 export function initializeApp() {
@@ -43,7 +44,9 @@ export function initializeApp() {
       autoPause: true
     }),
     StoreRouterConnectingModule.forRoot(),
-    EntityDataModule.forRoot(entityConfig)
+    EntityDataModule.forRoot(entityConfig),
+    CoreModule,
+    SharedModule
   ],
   providers: [
     {
