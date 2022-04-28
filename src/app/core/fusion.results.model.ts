@@ -12,10 +12,12 @@ export interface FusionResultsModel {
   nBorF2: string;
   Z2: number;
   aBorF2: string;
+  BEin: number;
   E: string;
   A: number;
   nBorF: string;
   Z: number;
   aBorF: string;
+  BEOut: number;
   MeV: number;
 }
