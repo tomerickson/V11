@@ -8,13 +8,13 @@
          "name": "Launch Edge",
          "request": "launch",
          "type": "pwa-msedge",
-         "url": "http://localhost:8080",
+         "url": "http://localhost:4200",
          "webRoot": "${workspaceFolder}"
       },
       {
          "name": "Attach Edge",
          "request": "attach",
-         "type": "msedge",
+         "type": "pwa-msedge",
          "url": "http://localhost:4200",
          "webRoot": "${workspaceFolder}"
       },
@@ -22,13 +22,13 @@
          "type": "pwa-chrome",
          "request": "launch",
          "name": "Launch Chrome against localhost",
-         "url": "http://localhost:8080",
+         "url": "http://localhost:4200",
          "webRoot": "${workspaceFolder}"
       },
       {
-         "type": "chrome",
+         "type": "pwa-chrome",
          "request": "attach",
-         "name": "Attach Chrometo localhost:4200",
+         "name": "Attach Chrome to localhost:4200",
          "url": "http://localhost:4200",
          "port": 4200,
          "webRoot": "${workspaceFolder}"
