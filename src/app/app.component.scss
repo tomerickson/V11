@@ -1,18 +1,10 @@
-.body-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: stretch;
-}
-.mat-sidenav-container {
-    bottom: 0px;
-    width: 100%;
-    min-width: 100%;
-    display: flex;
-    z-index: 0;
- }
+
+ mat-sidenav-container.mat-drawer-container {
+    overflow: auto;
+    flex-grow: 1;
+  }
  .mat-sidenav {
-     bottom: 0px;
+    padding: 1em;
  }
  .mat-sidenav-content {
      padding: 1em;

@@ -12,3 +12,8 @@ body {
 body {
   margin: 0;
 }
+mfmp-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
