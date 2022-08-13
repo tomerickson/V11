@@ -1,13 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 // @import '@angular/material/prebuilt-themes/ukraine.scss';
-
+@import './ukraine.scss';
 /*
 @at-root
 @at-root
 */
 html,
 body {
-  height: 100vh;
+  height: 100%;
 }
 body {
   margin: 0;

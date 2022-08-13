@@ -6,7 +6,11 @@ import { SvgComponent } from './svg/svg.component';
 const routes: Routes = [
   // { path: 'svg', loadChildren: () => import('./svg/svg.module').then(m => m.SvgModule) }
   { path: '', redirectTo: 'intro', pathMatch: 'full' },
-  { path: 'intro', loadChildren: () => import('./intro/intro.module').then(m => m.IntroModule)},
+  {
+    path: 'intro',
+    loadChildren: () =>
+      import('./intro/intro.module').then((m) => m.IntroModule)
+  },
   { path: 'svg', component: SvgComponent },
   {
     path: 'fusion',

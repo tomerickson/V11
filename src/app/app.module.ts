@@ -26,7 +26,6 @@ export function initializeApp() {
 }
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent, MenuComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -35,7 +34,7 @@ export function initializeApp() {
     SharedModule,
     HttpClientModule,
     StoreModule.forRoot({}),
-        EffectsModule.forRoot([]),
+    EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EntityDataModule.forRoot({}),
     StoreDevtoolsModule.instrument({
@@ -45,9 +44,10 @@ export function initializeApp() {
     }),
     StoreRouterConnectingModule.forRoot(),
     EntityDataModule.forRoot(entityConfig),
-    CoreModule,
-    SharedModule
+    CoreModule
   ],
+  exports: [SharedModule],
+  declarations: [AppComponent, PageNotFoundComponent, MenuComponent],
   providers: [
     {
       provide: APP_INITIALIZER,

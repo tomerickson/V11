@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card'
 import { MatCommonModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
@@ -19,14 +20,14 @@ const materialModules = [
 
 const ngrxModules: [] = [];
 
-const allModules = materialModules.concat(ngrxModules)
+const allModules = materialModules.concat(CommonModule).concat(ngrxModules)
 
 @NgModule({
-  declarations: [
-    HeaderComponent
-  ],
+
   imports: [allModules],
-  exports: [allModules, HeaderComponent]
+  exports: [allModules, HeaderComponent],
+  declarations: [HeaderComponent]
 
 })
-export class SharedModule { }
+export class SharedModule {
+ }
