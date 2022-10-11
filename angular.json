@@ -56,7 +56,6 @@
               "src/assets"
             ],
             "styles": [
-              "src/ukraine.scss",
               "src/styles.scss"
             ],
             "scripts": [],
