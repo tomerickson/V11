@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { MatCardModule } from '@angular/material/card'
+import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card'
 import { MatCommonModule } from '@angular/material/core';
-import { MatListModule } from '@angular/material/list';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
+import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatSliderModule } from '@angular/material/slider';
+import { MatLegacySliderModule as MatSliderModule } from '@angular/material/legacy-slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 const materialModules = [
