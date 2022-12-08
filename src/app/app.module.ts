@@ -3,20 +3,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { EntityDataModule } from '@ngrx/data';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
 import { entityConfig } from './entity-metadata';
 import { MenuComponent } from './menu/menu.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-
+import { AppRoutingModule } from './app-routing.module';
 export function initializeApp() {
   return () => {
     return new Promise((resolve, reject) => {
@@ -28,10 +28,10 @@ export function initializeApp() {
 @NgModule({
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     CommonModule,
-    SharedModule,
+    RouterModule,
+    AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
@@ -46,7 +46,7 @@ export function initializeApp() {
     EntityDataModule.forRoot(entityConfig),
     CoreModule
   ],
-  exports: [SharedModule],
+  exports: [AppRoutingModule],
   declarations: [AppComponent, PageNotFoundComponent, MenuComponent],
   providers: [
     {
@@ -55,6 +55,6 @@ export function initializeApp() {
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrapApplication: [AppComponent]
 })
 export class AppModule {}

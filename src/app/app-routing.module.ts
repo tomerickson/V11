@@ -11,7 +11,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./intro/intro.module').then((m) => m.IntroModule)
   },
-  { path: 'svg', component: SvgComponent },
   {
     path: 'fusion',
     loadChildren: () =>
