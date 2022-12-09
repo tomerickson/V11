@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { EntityCollectionService, EntityCollectionServiceFactory } from '@ngrx/data';
 import { FusionResultsModel } from '../core/fusion.results.model';
 import { MfmpBaseComponent } from '../core/mfmp-base-component';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatCardModule],
   selector: 'mfmp-fusion',
   templateUrl: './fusion.component.html',
   styleUrls: ['./fusion.component.scss']

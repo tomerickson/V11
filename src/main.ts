@@ -1,5 +1,6 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Routes } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
@@ -10,13 +11,11 @@ const routes: Routes = [
   { path: '', redirectTo: 'intro', pathMatch: 'full' },
   {
     path: 'intro',
-    loadChildren: () =>
-      import('./app/intro/intro.module').then((m) => m.IntroModule)
+    loadComponent: () => import('./app/intro/intro.component').then(m => m.IntroComponent)
   },
   {
     path: 'fusion',
-    loadChildren: () =>
-      import('./app/fusion/fusion.module').then((m) => m.FusionModule)
+    loadComponent: () => import('./app/fusion/fusion.component').then(m => m.FusionComponent)
   },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -25,6 +24,8 @@ if (environment.production) {
   enableProdMode();
 }
 bootstrapApplication(AppComponent, {
-  providers:[provideRouter(routes)]
-})
-.catch(err => console.error(err));
+  providers:[
+    importProvidersFrom([BrowserAnimationsModule]),
+     provideRouter(routes)
+    ]
+}).catch(err => console.error(err));

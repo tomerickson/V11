@@ -1,16 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  // selector: 'mfmp-page-not-found',
-  templateUrl: './page-not-found.component.html',
-  styleUrls: ['./page-not-found.component.scss']
+  standalone: true,
+  selector: 'mfmp-page-not-found',
+  template: `
+    <h2>Page Not Found</h2>`,
+  styles: [`h2: {color: red;}`]
 })
-export class PageNotFoundComponent implements OnInit {
-
-  public radius: number = 200;
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class PageNotFoundComponent {
 }
