@@ -6,7 +6,8 @@ import pkg from '../../package.json';
 export const environment = {
   production: false,
   name: pkg.name,
-  version: pkg.version
+  version: pkg.version,
+  apiUrl: 'https://nanosoft.co.nz/'
 };
 
 /*

@@ -1,4 +1,4 @@
-export interface FusionResultsModel {
+export interface IFusionResultsModel {
   id: number;
   neutrino: string;
   id_sub: number;

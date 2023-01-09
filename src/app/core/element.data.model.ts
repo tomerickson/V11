@@ -1,4 +1,4 @@
-export interface ElementDataModel {
+export interface IElementDataModel {
   Z: number;
   E: string;
   EName: string;

@@ -1,4 +1,4 @@
-export interface NuclideResultsModel {
+export interface INuclideResultsModel {
   id: number;
   A: number;
   Z: number;

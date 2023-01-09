@@ -11,6 +11,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
+    "test:debug": "npm run jest --runInBand --silent=false",
     "lint": "tsc --noEmit && eslint . --ext js,ts,json --quiet --fix",
     "e2e": "ng e2e"
   },
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.0.4",
+    "@angular-devkit/schematics": "^15.0.5",
     "@angular-eslint/builder": "^15.1.0",
     "@angular-eslint/eslint-plugin": "^15.1.0",
     "@angular-eslint/eslint-plugin-template": "^15.1.0",
