@@ -23,6 +23,7 @@ import { RouterModule } from '@angular/router';
      <a mat-list-item routerLink="notes">Notes</a>
      <a mat-list-item href="https://www.nanosoft.co.nz/TheNanosoftPackage.pdf" target="_blank" rel="noopener noreferrer">Overview</a>
      <a mat-list-item routerLink="selectlenrevents">Select LENR Events</a>
+     <a mat-list-item routerLink="testpage">Test Page</a>
 </ul>`,
    styles: [`
    .mat-list-item {

@@ -7,9 +7,10 @@ export const environment = {
   production: false,
   name: pkg.name,
   version: pkg.version,
+  // proxy: 'https://cors-anywhere.azm.workers.dev/',
+  proxy: '',
   apiUrl: 'https://nanosoft.co.nz/'
-};
-
+}
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

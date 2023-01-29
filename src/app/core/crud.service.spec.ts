@@ -30,7 +30,7 @@ describe('CrudService', () => {
   it('GetFusionResults returns results', () => {
 
     let rsp: string;
-    let obj: Observable<string> = service.getFusionResults();
+    let obj: Observable<ArrayBuffer> = service.getFusionResults();
     obj.subscribe((response) => {
       console.log('rsp', response);
       expect(obj).toBeTruthy();
