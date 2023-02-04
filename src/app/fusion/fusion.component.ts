@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EntityCollectionService, EntityCollectionServiceFactory } from '@ngrx/data';
+import { EntityCollectionService, EntityCollectionServiceFactory, EntityMetadataMap } from '@ngrx/data';
 import { IFusionResultsModel } from '../core/fusion.results.model';
 import { MfmpBaseComponent } from '../core/mfmp-base-component';
 import { MatCardModule } from '@angular/material/card';
@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class FusionComponent extends MfmpBaseComponent implements OnInit {
 
   fusionService: EntityCollectionService<IFusionResultsModel>;
+
   constructor(entityCollecctionServiceFactory: EntityCollectionServiceFactory) {
 
     super();

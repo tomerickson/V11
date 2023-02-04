@@ -3,7 +3,7 @@ import {
   HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, retry, map, tap } from 'rxjs/operators';
+import { catchError, retry, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 export interface User {
@@ -21,9 +21,6 @@ export interface dummy {
 @Injectable({ providedIn: 'root' })
 export class CrudService {
   private httpError: any;
-  private header: HttpHeaders;
-  private options;
-
   private _endPoint: string = environment.proxy + environment.apiUrl;
   private user: User;
 
@@ -33,14 +30,6 @@ export class CrudService {
 
   constructor(private http: HttpClient) {
     this.user = <User>{ id: '' };
-    this.header = new HttpHeaders({ Accept: 'text/html' });
-    this.header.append('Content-Type', 'text/html');
-    // this.options = {headers: this.header, observe: 'body'};
-    this.options = {
-      headers: this.header,
-      observe: 'response',
-      responseType: 'text'
-    };
   }
 
   getUsers(): Observable<User> {
@@ -49,14 +38,16 @@ export class CrudService {
       .pipe(retry(1), catchError(this.httpError));
   }
 
-  getFusionResults(): Observable<ArrayBuffer> {
-    let page = `${this.endPoint}Fusion.php`;
-    return this.http.get<ArrayBuffer>(page, {observe: 'body', headers: this.header});
-    return this.http.post<ArrayBuffer>(page, null, {
-      headers: this.header,
-      observe: 'body'
-    });
-    // .pipe(retry(1), this.handleError(this.httpError));
+  getFusionResults(): Observable<string> {
+
+    let page: string = `${this.endPoint}Fusion.php`;
+    return this.http.get(page, {responseType: 'text'})
+    .pipe(retry(1));
+    // .pipe(retry(1),catchError(this.httpError));
+    // return this.http.post<string>(page, null, this.optionsObject);
+    // .pipe((rsp: any) => rsp.body);
+    // return this.http.post<string>(page, '', this.options);
+    // .pipe(retry(1), this.handleError<string>('getFusionResults', this.httpError));
     /*       .pipe(retry(1),
       tap(res => {
         return console.log('getting fusion results', res);
@@ -64,10 +55,17 @@ export class CrudService {
        catchError(this.handleError<any>('getFusionResults'))); */
   }
 
+  getDummyResults(): Observable<any> {
+    console.log('getting dummy data');
+    let page = 'http://localhost:4200/assets/demo.txt';
+    return this.http.get<any>(page, {observe: 'body'})
+    ;
+  }
+
   getUser(id: string): Observable<User> {
     return this.http
       .get<User>(`${this.endPoint}/users/${id}`)
-      .pipe(retry(1), this.handleError(this.httpError));
+      .pipe(retry(1), this.handleError<User>(this.httpError));
   }
   /*
   create(employee): Observable<User> {
@@ -118,7 +116,7 @@ export class CrudService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      console.error(operation); // log to console instead
+      // console.error(operation, result); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);

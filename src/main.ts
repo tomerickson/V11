@@ -4,9 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Routes } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
-import { TestpageComponent } from './app/testpage/testpage.component';
+import { TestpagePipeComponent } from './app/testpage/testpage.pipe.component';
 import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
+import { provideStore } from '@ngrx/store';
 const routes: Routes = [
   // { path: 'svg', loadChildren: () => import('./svg/svg.module').then(m => m.SvgModule) }
   { path: '', redirectTo: 'intro', pathMatch: 'full' },
@@ -20,7 +21,7 @@ const routes: Routes = [
     loadComponent: () =>
       import('./app/fusion/fusion.component').then((m) => m.FusionComponent)
   },
-  { path: 'testpage', component: TestpageComponent },
+  { path: 'testpage', component: TestpagePipeComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -30,6 +31,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [provideHttpClient(),
     importProvidersFrom([BrowserAnimationsModule]),
-    provideRouter(routes)
+    provideRouter(routes),
+    provideStore()
   ]
 }).catch((err) => console.error(err));
