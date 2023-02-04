@@ -26,5 +26,5 @@ export type NeutrinoContributions =  'l' | 'r' | 'n';
  * https://www.differencebetween.com/difference-between-bosons-and-fermions/
  */
 export type SpinClassification = 'b' | 'f' | undefined; // We can select bosons, fermions, or either.
-export type SpinTarget = 'neus' | 'nide'; // Nucleus or nuclide
+export type SpinBody = 'nucleus' | 'nuclide'; // Nucleus or nuclide
 export type SpinChoice = 'x';
