@@ -6,7 +6,8 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  EventEmitter
+  EventEmitter,
+  inject
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CrudService } from '../core/crud.service';
@@ -42,7 +43,9 @@ export class TestpageShowComponent
     @Output() testit: EventEmitter<string> = new EventEmitter();
     @Output() demoit: EventEmitter<string> = new EventEmitter();
 
-  constructor(private crudService: CrudService) {
+    private crudService = inject(CrudService);
+
+  constructor() {
     super();
   }
 

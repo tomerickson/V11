@@ -1,6 +1,6 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, Routes } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
@@ -8,6 +8,7 @@ import { TestpagePipeComponent } from './app/testpage/testpage.pipe.component';
 import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 const routes: Routes = [
   // { path: 'svg', loadChildren: () => import('./svg/svg.module').then(m => m.SvgModule) }
   { path: '', redirectTo: 'intro', pathMatch: 'full' },
@@ -19,7 +20,11 @@ const routes: Routes = [
   {
     path: 'fusion',
     loadComponent: () =>
-      import('./app/fusion/fusion.component').then((m) => m.FusionComponent)
+      import('./app/fusion/fusion.component').then((m) => m.FusionComponent),
+      providers: [
+        provideStore(),
+        provideEffects()
+      ]
   },
   { path: 'testpage', component: TestpagePipeComponent },
   { path: '**', component: PageNotFoundComponent }
@@ -30,7 +35,7 @@ if (environment.production) {
 }
 bootstrapApplication(AppComponent, {
   providers: [provideHttpClient(),
-    importProvidersFrom([BrowserAnimationsModule]),
+    provideAnimations(),
     provideRouter(routes),
     provideStore()
   ]
