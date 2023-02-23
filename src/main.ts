@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './app/page-not-found/page-not-found.compo
 import { TestpagePipeComponent } from './app/testpage/testpage.pipe.component';
 import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 const routes: Routes = [
   // { path: 'svg', loadChildren: () => import('./svg/svg.module').then(m => m.SvgModule) }
@@ -22,7 +22,7 @@ const routes: Routes = [
     loadComponent: () =>
       import('./app/fusion/fusion.component').then((m) => m.FusionComponent),
       providers: [
-        provideStore(),
+        provideState(),
         provideEffects()
       ]
   },
