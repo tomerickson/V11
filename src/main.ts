@@ -1,4 +1,4 @@
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, Routes } from '@angular/router';
@@ -6,11 +6,12 @@ import { AppComponent } from './app/app.component';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
 import { TestpagePipeComponent } from './app/testpage/testpage.pipe.component';
 import { environment } from './environments/environment';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
+import { GlobalErrorHandler } from './app/core/global-error-handler';
+import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
 const routes: Routes = [
-  // { path: 'svg', loadChildren: () => import('./svg/svg.module').then(m => m.SvgModule) }
   { path: '', redirectTo: 'intro', pathMatch: 'full' },
   {
     path: 'intro',
@@ -22,8 +23,8 @@ const routes: Routes = [
     loadComponent: () =>
       import('./app/fusion/fusion.component').then((m) => m.FusionComponent),
       providers: [
-        provideState(),
-        provideEffects()
+        // provideState('fusion', fusionState),
+        // provideEffects()
       ]
   },
   { path: 'testpage', component: TestpagePipeComponent },
@@ -35,6 +36,8 @@ if (environment.production) {
 }
 bootstrapApplication(AppComponent, {
   providers: [provideHttpClient(),
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
+    {provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor},
     provideAnimations(),
     provideRouter(routes),
     provideStore()

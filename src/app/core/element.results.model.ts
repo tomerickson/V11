@@ -1,4 +1,4 @@
-export interface ElementResultsModel {
+export interface IElementResultsModel {
     Z: number,
     E: string,
     EName: string,

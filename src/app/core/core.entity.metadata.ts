@@ -1,5 +1,5 @@
 import { EntityMetadataMap } from '@ngrx/data';
-import { ElementResultsModel } from './element.results.model';
+import { IElementResultsModel } from './element.results.model';
 import { IFusionResultsModel } from './fusion.results.model';
 import { INuclideResultsModel } from './nuclide.results.model';
 import { RawDataModel } from './raw-data.model';
@@ -15,6 +15,6 @@ export const coreEntityMetaData: EntityMetadataMap = {
       selectId: (nuclideResult: INuclideResultsModel) => nuclideResult.id
   },
   ElementResult: {
-      selectId: (elementResult: ElementResultsModel) => elementResult.Z
+      selectId: (elementResult: IElementResultsModel) => elementResult.Z
   }
 };

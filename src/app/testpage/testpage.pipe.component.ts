@@ -6,7 +6,7 @@ import {
   EventEmitter
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { from, Observable, of, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { CrudService } from '../core/crud.service';
 import { MfmpBaseComponent } from '../core/mfmp-base-component';
 import { TestpageShowComponent } from './testpage.show.component';
