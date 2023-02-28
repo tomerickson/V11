@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { IElementDataModel } from './element.data.model';
 
 export interface User {
   id: string;
@@ -38,6 +39,11 @@ export class CrudService {
       .pipe(retry(1), catchError(this.httpError));
   }
 
+  getElements(): Observable<IElementDataModel[]> {
+    let page = `${this.endPoint}Elements.php`;
+    return this.http.get<IElementDataModel[]>(page);
+  }
+  
   getFusionResults(): Observable<string> {
 
     let page: string = `${this.endPoint}Fusion.php`;

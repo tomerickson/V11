@@ -1,13 +1,9 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  EventEmitter
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, EventEmitter, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { Observable, of, tap } from 'rxjs';
+import { from, Observable, of, tap } from 'rxjs';
 import { CrudService } from '../core/crud.service';
+import { IElementDataModel } from '../core/element.data.model';
 import { MfmpBaseComponent } from '../core/mfmp-base-component';
 import { TestpageShowComponent } from './testpage.show.component';
 
@@ -15,21 +11,22 @@ import { TestpageShowComponent } from './testpage.show.component';
   standalone: true,
   imports: [CommonModule, MatButtonModule, TestpageShowComponent],
   template: `<mfmp-testpage
-  [test]="this.testResults | async"
-  [demo]="this.dummyResults | async"
-  (testit)="testFusion()"
-  (demoit)="testDummy()"></mfmp-testpage>`
+    [test]="this.testResults | async"
+    [demo]="this.dummyResults | async"
+    [elements]="this.elements | async"
+    (testit)="testFusion()"
+    (demoit)="testDummy()"
+    (getElements)="loadElements()"
+  ></mfmp-testpage>`
 })
 export class TestpagePipeComponent
-  extends MfmpBaseComponent
+
   implements OnInit, OnDestroy
 {
+  private crudService = inject(CrudService)
   testResults: Observable<string> = of();
   dummyResults: Observable<string> = of();
-
-  constructor(private crudService: CrudService) {
-    super();
-  }
+  elements: Observable<IElementDataModel[]> = from([]);
 
   ngOnInit(): void {}
 
@@ -37,16 +34,21 @@ export class TestpagePipeComponent
     // this.refresher.unsubscribe();
   }
 
+  loadElements() {
+    console.log('loading elements');
+    this.elements = this.crudService.getElements();
+  }
+
   reloadFusion() {
-    this.testResults = this.crudService
-      .getFusionResults();
-      // .pipe(tap(res => console.log(res)));
+    this.testResults = this.crudService.getFusionResults();
+    // .pipe(tap(res => console.log(res)));
   }
 
   reloadDemo() {
-    this.crudService.getDummyResults()
-    .pipe(tap(res => console.log(res)),
-    res => this.dummyResults = res);
+    this.crudService.getDummyResults().pipe(
+      tap((res) => console.log(res)),
+      (res) => (this.dummyResults = res)
+    );
   }
 
   testFusion(): void {
@@ -55,7 +57,7 @@ export class TestpagePipeComponent
   }
 
   testDummy(): void {
-    console.log('demo')
+    console.log('demo');
     this.reloadDemo();
   }
 

@@ -9,7 +9,8 @@ export const environment = {
   version: pkg.version,
   // proxy: 'https://cors-anywhere.azm.workers.dev/',
   proxy: '',
-  apiUrl: 'https://nanosoft.co.nz/'
+  // apiUrl: 'https://nanosoft.co.nz/'
+  apiUrl: 'http://parkhomov/'
 }
 /*
  * For easier debugging in development mode, you can import the following file
