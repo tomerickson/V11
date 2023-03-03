@@ -1,16 +1,25 @@
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
-import { enableProdMode, ErrorHandler } from '@angular/core';
+
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  APP_INITIALIZER, ErrorHandler,
+  importProvidersFrom
+} from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Routes } from '@angular/router';
-import { provideStore } from '@ngrx/store';
 import { AppComponent } from './app/app.component';
+import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalErrorHandler } from './app/core/global-error-handler';
+import { NotificationService } from './app/core/notification.service';
 import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
-import { TestpagePipeComponent } from './app/testpage/testpage.pipe.component';
-import { environment } from './environments/environment';
-import { CommonModule } from '@angular/common';
+
+const initAppFn = (configService: AppConfigService) => {
+  return (() => configService.validateConfiguration());
+};
 
 const routes: Routes = [
   { path: '', redirectTo: 'intro', pathMatch: 'full' },
@@ -39,16 +48,31 @@ const routes: Routes = [
   { path: '**', component: PageNotFoundComponent }
 ];
 
-if (environment.production) {
-  enableProdMode();
-}
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(),
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor },
-    provideAnimations(),
+    importProvidersFrom(
+      BrowserAnimationsModule,
+      HttpClientModule,
+      MatSnackBarModule,
+      MatDialogModule
+    ),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initAppFn,
+      multi: true,
+      deps: [AppConfigService]
+    },
+    {provide: NotificationService},
     provideRouter(routes),
-    provideStore()
+
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerErrorInterceptor,
+      multi: true
+    }
   ]
-}).catch((err) => console.error(err));
+}).catch((err) => console.log(err));

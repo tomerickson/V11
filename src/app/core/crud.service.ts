@@ -36,12 +36,13 @@ export class CrudService {
   getUsers(): Observable<User> {
     return this.http
       .get<User>(this.endPoint + '/users')
-      .pipe(retry(1), catchError(this.httpError));
+      .pipe(retry(1));
   }
 
   getElements(): Observable<IElementDataModel[]> {
     let page = `${this.endPoint}Elements.php`;
-    return this.http.get<IElementDataModel[]>(page);
+    return this.http.get<IElementDataModel[]>(page)
+    .pipe(retry(1));
   }
   
   getFusionResults(): Observable<string> {
@@ -71,7 +72,7 @@ export class CrudService {
   getUser(id: string): Observable<User> {
     return this.http
       .get<User>(`${this.endPoint}/users/${id}`)
-      .pipe(retry(1), this.handleError<User>(this.httpError));
+      .pipe(retry(1));
   }
   /*
   create(employee): Observable<User> {
@@ -111,26 +112,6 @@ export class CrudService {
     return throwError(msg);
   }
 
-
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   *
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      // console.error(operation, result); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {

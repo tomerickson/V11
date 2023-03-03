@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit, EventEmitter, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { from, Observable, of, tap } from 'rxjs';
@@ -9,7 +9,7 @@ import { TestpageShowComponent } from './testpage.show.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatButtonModule, TestpageShowComponent],
+  imports: [CommonModule, MatButtonModule, TestpageShowComponent, NgIf],
   template: `<mfmp-testpage
     [test]="this.testResults | async"
     [demo]="this.dummyResults | async"
@@ -26,7 +26,7 @@ export class TestpagePipeComponent
   private crudService = inject(CrudService)
   testResults: Observable<string> = of();
   dummyResults: Observable<string> = of();
-  elements: Observable<IElementDataModel[]> = from([]);
+  elements: Observable<IElementDataModel[] | null> = from([]);
 
   ngOnInit(): void {}
 

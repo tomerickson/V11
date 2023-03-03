@@ -11,11 +11,16 @@ export interface IElementDataModel {
   Boiling: number;
   Negativity: number;
   Affinity: number;
-  Valence: number;
-  MaxIonNum: number;
-  MaxIonization: number;
+  Val: number;
+  MaxInum: number;
+  MaxInize: number;
   STPDensity: number;
-  ElectConduct: number;
-  ThermConduct: number;
+  ElectG: number;
+  ThermG: number;
   SpecHeat: number;
+  ppmECrust: string;
+  ppmEStellar: string
+  MagType: string;
+  CuriePtK: string;
+  MagVol: number;
 }

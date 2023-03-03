@@ -1,13 +1,14 @@
 import { Injectable, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { ErrorHandlerDialogComponent } from './error-handler-dialog.component';
 
-@Injectable({
+ @Injectable({
   providedIn: 'root'
-})
+ })
+
 export class NotificationService {
+
   constructor(
     private snackbar: MatSnackBar,
     private dialog: MatDialog,
@@ -19,6 +20,7 @@ export class NotificationService {
     // Wrapping it in the run method fixes this issue.
     this.zone.run(() => {
       this.snackbar.open(`Error: ${message}`, 'Okay', {
+        duration: 2000,
         panelClass: ['error-snack'] // add a class to snackbar to add custom styles
       });
     });

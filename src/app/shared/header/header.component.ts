@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MfmpBaseComponent } from 'src/app/core/mfmp-base-component';
+import { AppConfigService } from 'src/app/core/config/app-config.service';
 @Component({
   selector: 'mfmp-header',
   templateUrl: './header.component.html',
@@ -17,9 +18,9 @@ export class HeaderComponent extends MfmpBaseComponent implements OnInit {
 
   @Input() version = '';
    // public version = version;
-  constructor() {
+  constructor(private config: AppConfigService) {
     super();
-    this.version = environment.version;
+    this.version = config.version;
    }
 
   ngOnInit(): void {

@@ -1,0 +1,9 @@
+{
+    "production": false,
+    "name": "Uninitiialized",
+    "version": "5.0",
+    "proxy": null,
+    "apiUrl": "http://parkhomov/assets/config/",
+    "httpMaxRetries": -1,
+    "httpRetryDelay": -1
+}
