@@ -10,6 +10,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Routes } from '@angular/router';
+import { provideEffects } from '@ngrx/effects';
+import { provideRouterStore } from '@ngrx/router-store';
+import { provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AppComponent } from './app/app.component';
 import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalErrorHandler } from './app/core/global-error-handler';
@@ -73,6 +77,10 @@ bootstrapApplication(AppComponent, {
       provide: HTTP_INTERCEPTORS,
       useClass: ServerErrorInterceptor,
       multi: true
-    }
+    },
+    provideStore(),
+    provideEffects(),
+    provideStoreDevtools(),
+    provideRouterStore()
   ]
 }).catch((err) => console.log(err));

@@ -15,6 +15,7 @@ export class GlobalErrorHandler implements ErrorHandler {
             this.notifier.openServerErrorDialog(error.message);
         } else if (error instanceof Error) {
             message = error.message ? error.message : error.toString();
+            console.error(message);
             this.notifier.showClientError(message);
         } else {
             console.warn(`${error} is not an Error, and should not be handled by Custom Error Handler`)

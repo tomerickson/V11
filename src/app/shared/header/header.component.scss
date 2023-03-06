@@ -1,17 +1,19 @@
 .tbar {
   width: 100%;
-  // position: relative;
-  :last-child {
-    height: 30px;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
+/*
 .split-row {
   display: flex;
-  justify-content: space-evenly;
-
   :last-child {
-    font-size: smaller;
-    font-weight: lighter;
+    flex: stretch;
+    align-items:  center;
+  }*/
+
+  .acknowledgements {
+    font-size: 10pt;
+    font-weight: 300;
   }
-}

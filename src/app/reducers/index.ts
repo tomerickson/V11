@@ -1,3 +1,4 @@
+/*
 import {
   ActionReducer,
   ActionReducerMap,
@@ -5,16 +6,20 @@ import {
   createSelector,
   MetaReducer
 } from '@ngrx/store';
-import { environment } from '../../environments/environment';
+
+import configs from 'src/assets/config/app-config.json';
 
 
 export interface State {
+  pageTitle: string;
+  pageCredits: string;
 
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<State> = {}
 
 };
 
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
+export const metaReducers: MetaReducer<State>[] = !configs.production ? [] : [];
+*/
