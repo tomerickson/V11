@@ -12,13 +12,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Routes } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore } from '@ngrx/router-store';
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AppComponent } from './app/app.component';
 import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalErrorHandler } from './app/core/global-error-handler';
 import { NotificationService } from './app/core/notification.service';
 import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
+import { globalFeature } from './app/core/state/global.state';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
 
 const initAppFn = (configService: AppConfigService) => {
@@ -79,6 +80,7 @@ bootstrapApplication(AppComponent, {
       multi: true
     },
     provideStore(),
+    provideState(globalFeature),
     provideEffects(),
     provideStoreDevtools(),
     provideRouterStore()

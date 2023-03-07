@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { IElementDataModel } from './element.data.model';
+import { ILookupDataModel } from './lookup..data.model';
 
 export interface User {
   id: string;
@@ -39,12 +40,23 @@ export class CrudService {
       .pipe(retry(1));
   }
 
+  getGlobalData(): {elements: Observable<IElementDataModel[]>, lookups: Observable<ILookupDataModel[]>} {
+    let elements = this.getElements();
+    let lookups = this.getLookups();
+    return {elements: elements, lookups: lookups};
+  }
+  
   getElements(): Observable<IElementDataModel[]> {
     let page = `${this.endPoint}Elements.php`;
     return this.http.get<IElementDataModel[]>(page)
     .pipe(retry(1));
   }
   
+  getLookups(): Observable<ILookupDataModel[]> {
+    let page = `${this.endPoint}Lookups.php`;
+    return this.http.get<ILookupDataModel[]>(page)
+    .pipe(retry(1));
+  }
   getFusionResults(): Observable<string> {
 
     let page: string = `${this.endPoint}Fusion.php`;
