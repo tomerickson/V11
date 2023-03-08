@@ -1,12 +1,11 @@
-import {
-  HttpClient,
-  HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, retry, tap } from 'rxjs/operators';
+import { catchError, map, retry, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { IElementDataModel } from './element.data.model';
 import { ILookupDataModel } from './lookup..data.model';
+import { GlobalState } from './state/global.state';
 
 export interface User {
   id: string;
@@ -15,9 +14,9 @@ export interface User {
   phone: number;
 }
 
-export interface dummy {
-  client: HttpClient;
-  url: string;
+export interface GlobalCollections {
+  elements: IElementDataModel[];
+  lookups: ILookupDataModel[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -35,33 +34,28 @@ export class CrudService {
   }
 
   getUsers(): Observable<User> {
-    return this.http
-      .get<User>(this.endPoint + '/users')
-      .pipe(retry(1));
+    return this.http.get<User>(this.endPoint + '/users').pipe(retry(1));
   }
 
-  getGlobalData(): {elements: Observable<IElementDataModel[]>, lookups: Observable<ILookupDataModel[]>} {
-    let elements = this.getElements();
-    let lookups = this.getLookups();
-    return {elements: elements, lookups: lookups};
+  getGlobalData(): Observable<GlobalCollections> {
+    let result: GlobalCollections = { elements: [], lookups: [] };
+    this.getElements().pipe(map((res) => result.elements));
+    this.getLookups().pipe(map((res) => result.lookups));
+    return of(result);
   }
-  
+
   getElements(): Observable<IElementDataModel[]> {
     let page = `${this.endPoint}Elements.php`;
-    return this.http.get<IElementDataModel[]>(page)
-    .pipe(retry(1));
+    return this.http.get<IElementDataModel[]>(page).pipe(retry(1));
   }
-  
+
   getLookups(): Observable<ILookupDataModel[]> {
     let page = `${this.endPoint}Lookups.php`;
-    return this.http.get<ILookupDataModel[]>(page)
-    .pipe(retry(1));
+    return this.http.get<ILookupDataModel[]>(page).pipe(retry(1));
   }
   getFusionResults(): Observable<string> {
-
     let page: string = `${this.endPoint}Fusion.php`;
-    return this.http.get(page, {responseType: 'text'})
-    .pipe(retry(1));
+    return this.http.get(page, { responseType: 'text' }).pipe(retry(1));
     // .pipe(retry(1),catchError(this.httpError));
     // return this.http.post<string>(page, null, this.optionsObject);
     // .pipe((rsp: any) => rsp.body);
@@ -77,14 +71,11 @@ export class CrudService {
   getDummyResults(): Observable<any> {
     console.log('getting dummy data');
     let page = 'http://localhost:4200/assets/demo.txt';
-    return this.http.get<any>(page, {observe: 'body'})
-    ;
+    return this.http.get<any>(page, { observe: 'body' });
   }
 
   getUser(id: string): Observable<User> {
-    return this.http
-      .get<User>(`${this.endPoint}/users/${id}`)
-      .pipe(retry(1));
+    return this.http.get<User>(`${this.endPoint}/users/${id}`).pipe(retry(1));
   }
   /*
   create(employee): Observable<User> {

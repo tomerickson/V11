@@ -6,6 +6,7 @@ import {
 } from '@ngrx/store';
 import { ILookupDataModel } from '../lookup..data.model';
 import { IElementDataModel } from '../element.data.model';
+import { GlobalCollections } from '../crud.service';
 
 export const ElementActions = createActionGroup({
   source: 'Global API',
@@ -23,9 +24,11 @@ export const LookupActions = createActionGroup({
   events: {
     'Load Lookups': emptyProps(),
     'Load Lookups Success': props<{lookups: ILookupDataModel[]}>(),
-    'Load Lookups Failure': (error: any) => ({error}),
+    'Load Lookups Failure': (error: any) => ({error})
+    /* ,
     'Set Radiation Types': props<{category: string}>(),
     'Set Radiation Decay Modes': props<{category: string}>()
+    */
   }
 })
 
@@ -33,6 +36,9 @@ export const PageActions = createActionGroup({
   source: 'Global API',
   events: {
     enter: emptyProps(),
+    'Load Globals': emptyProps(),
+    'Load Globals Success': props<{results: GlobalCollections}>(),
+    'Load Globals Failure': (error: any) => ({error}),
     'Set Page Title': props<{ title: string }>(),
     'Set Page Credits': props<{ credits: string }>(),
     exit: emptyProps()

@@ -1,9 +1,7 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  createFeature, createReducer, on
-} from '@ngrx/store';
-import { exhaustMap, map } from 'rxjs';
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { catchError, exhaustMap, map, of } from 'rxjs';
 import { CrudService } from '../crud.service';
 import { IElementDataModel } from '../element.data.model';
 import { ILookupDataModel } from '../lookup..data.model';
@@ -91,6 +89,39 @@ export const globalFeature = createFeature({
         radiationTypes: action.lookups.filter((item) => item.category === 'RT')
       };
     }),
+    on(PageActions.enter, (state, action) => {
+      return { ...state };
+    }),
+    on(PageActions.loadGlobals, (state, action) => {
+      return {
+        ...state,
+        elements: [],
+        lookups: [],
+        radiationDecayModes: [],
+        radiationTypes: [],
+        elementsLoading: true,
+        elementsReady: false,
+        lookupsLoading: true,
+        lookupsReady: false
+      };
+    }),
+    on(PageActions.loadGlobalsSuccess, (state, action) => {
+      return {
+        ...state,
+        elements: action.results.elements,
+        lookups: action.results.lookups,
+        radiationDecayModes: action.results.lookups.filter(
+          (item) => item.category === 'RDM'
+        ),
+        radiationTypes: action.results.lookups.filter(
+          (item) => item.category === 'RT'
+        ),
+        elementsLoading: false,
+        elementsReady: true,
+        lookupsLoading: false,
+        lookupsReady: true
+      };
+    }),
     on(PageActions.setPageTitle, (state, action) => {
       return {
         ...state,
@@ -101,22 +132,6 @@ export const globalFeature = createFeature({
       return {
         ...state,
         pageCredits: action.credits
-      };
-    }),
-    on(LookupActions.setRadiationDecayModes, (state, action) => {
-      return {
-        ...state,
-        radiationDecayModes: state.lookups.filter(
-          (f) => f.category == action.category
-        )
-      };
-    }),
-    on(LookupActions.setRadiationTypes, (state, action) => {
-      return {
-        ...state,
-        radiationTypes: state.lookups.filter(
-          (f) => f.category == action.category
-        )
       };
     })
   )
@@ -143,15 +158,15 @@ export const {
 export const fetchElements$ = createEffect(
   (actions$ = inject(Actions)) => {
     const http = inject(CrudService);
-
     return actions$.pipe(
       ofType(PageActions.enter),
-      exhaustMap(() =>
-        http
-          .getElements()
-          .pipe(map((elements) => ElementActions.loadElements()))
-      )
+      exhaustMap(() => {
+        return http.getGlobalData().pipe(
+          map((results) => PageActions.loadGlobalsSuccess({ results })),
+          catchError((error) => of(PageActions.loadGlobalsFailure({ error })))
+        );
+      })
     );
   },
-  { functional: false }
+  { functional: true }
 );
