@@ -1,28 +1,30 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatIconModule} from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    imports: [MatDialogModule,MatIconModule],
+  imports: [MatDialogModule, MatIconModule],
   selector: 'error-handler-dialog',
-  styles: [`
-  .mat-dialog-title {
-  display: flex;
-  align-items: center;
-  mat-icon {
-    color: red;
-  }
-}
+  styles: [
+    `
+      .mat-dialog-title {
+        display: flex;
+        align-items: center;
+        mat-icon {
+          color: red;
+        }
+      }
 
-mat-dialog-content {
-  text-align: center;
-}
+      mat-dialog-content {
+        text-align: center;
+      }
 
-#error-btn {
-  background-color: red;
-  color: white;
-}
-`],
+      #error-btn {
+        background-color: red;
+        color: white;
+      }
+    `
+  ],
   template: `
     <h1 mat-dialog-title><mat-icon>priority_high</mat-icon>{{ title }}</h1>
     <mat-dialog-content>
@@ -34,7 +36,6 @@ mat-dialog-content {
   `,
   standalone: true
 })
-
 export class ErrorHandlerDialogComponent {
   public title = 'Network Error';
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}

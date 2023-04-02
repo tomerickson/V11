@@ -1,20 +1,21 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Component, NgZone, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorHandlerDialogComponent } from './error-handler-dialog.component';
 
- @Injectable({
-  providedIn: 'root'
- })
+@Component({
+  standalone: true,
+  imports: [
+ErrorHandlerDialogComponent],
+  template: ``
+})
 
-export class NotificationService {
+export class NotificationComponent {
 
-  constructor(
-    private snackbar: MatSnackBar,
-    private dialog: MatDialog,
-    private zone: NgZone
-  ) {}
-
+  zone = inject(NgZone);
+  snackbar = inject(MatSnackBar);
+  dialog = inject(MatDialog);
+  
   showClientError(message: string, prompt?: string): void {
     // The snackbar or dialog won't run outside the Angular's zone.
     // Wrapping it in the run method fixes this issue.
@@ -28,11 +29,11 @@ export class NotificationService {
     });
   }
 
-  openServerErrorDialog(message: string) {
+  showServerErrorDialog(message: string) {
     this.zone.run(() => {
       this.dialog.open(ErrorHandlerDialogComponent, {
         data: { message }
-      });
+      })
     });
   }
 

@@ -1,14 +1,6 @@
-
-
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import {
-  APP_INITIALIZER, ErrorHandler,
-  importProvidersFrom
-} from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { APP_INITIALIZER, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Routes } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore } from '@ngrx/router-store';
@@ -17,10 +9,12 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AppComponent } from './app/app.component';
 import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalErrorHandler } from './app/core/global-error-handler';
-import { NotificationService } from './app/core/notification.service';
 import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
 import { globalFeature } from './app/core/state/global.state';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 const initAppFn = (configService: AppConfigService) => {
   return (() => configService.validateConfiguration());
@@ -55,19 +49,12 @@ const routes: Routes = [
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(
-      BrowserAnimationsModule,
-      HttpClientModule,
-      MatSnackBarModule,
-      MatDialogModule
-    ),
     {
       provide: APP_INITIALIZER,
       useFactory: initAppFn,
       multi: true,
       deps: [AppConfigService]
     },
-    {provide: NotificationService},
     provideRouter(routes),
 
     {
@@ -83,6 +70,10 @@ bootstrapApplication(AppComponent, {
     provideState(globalFeature),
     provideEffects(),
     provideStoreDevtools(),
-    provideRouterStore()
+    provideRouterStore(),
+    importProvidersFrom(MatDialogModule),
+    importProvidersFrom(MatSnackBarModule),
+    importProvidersFrom(BrowserAnimationsModule)
   ]
 }).catch((err) => console.log(err));
+

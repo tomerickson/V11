@@ -1,3 +1,8 @@
+import { NgModule } from "@angular/core";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { NotificationComponent } from "./core/notification.component";
+
 /*
 import { CommonModule } from '@angular/common';
 import {
@@ -72,3 +77,8 @@ const routes: Routes = [
 })
 export class AppModule {}
 */
+@NgModule({
+  imports: [MatSnackBarModule, MatDialogModule],
+  providers: [MatSnackBarModule, MatDialogModule, NotificationComponent],
+})
+export class AppModule {}
