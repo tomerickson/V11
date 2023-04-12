@@ -10,7 +10,7 @@ import { AppComponent } from './app/app.component';
 import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalErrorHandler } from './app/core/global-error-handler';
 import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
-import { globalFeature } from './app/core/state/global.state';
+import { globalFeature } from './app/state/global.state';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';

@@ -10,4 +10,5 @@ export interface IAppConfiguration {
     apiUrl: string;
     httpMaxRetries: number;
     httpRetryDelay: number;
+    pageCredits: string;
 }

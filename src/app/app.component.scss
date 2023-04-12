@@ -1,12 +1,12 @@
 
  mat-sidenav-container.mat-drawer-container {
     overflow: auto;
-    flex-grow: 1;
   }
- /*.mat-sidenav {
-    padding: 1em;
+ .mat-drawer-container,
+ .mat-drawer-content {
+   height: auto;
+   // padding: 1em;
  }
- */
  .mat-sidenav-content {
-     padding: 1em;
+   padding: 1em;
  }

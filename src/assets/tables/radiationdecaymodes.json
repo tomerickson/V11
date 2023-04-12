@@ -1,0 +1,4 @@
+[{"code":"A", "description":"Alpha Decay"},
+ {"code":"B-", "description":"Beta decay"},
+ {"code":"EC", "description":"Electron Capture"},
+ {"code":"IT", "description":"Isomeric Transition"}]

@@ -1,71 +1,75 @@
+  p.header {
+    text-overflow: ellipsis;
+    padding-right: 2em;
+  }
 
-table.calendar {
-  width: 100%;
-  table-layout: fixed;
-  caption-side: top;
-  margin-bottom: 20px;
-  padding: 1em;
-  border-collapse: collapse;
-  text-align: center;
-}
+  table.calendar {
+    width: 100%;
+    table-layout: fixed;
+    caption-side: top;
+    margin-bottom: 20px;
+    padding: 1em;
+    border-collapse: collapse;
+    text-align: center;
+  }
 
-table.calendar td {
-  font-size: 1.2em;
-  padding: 0.1em;
-  border: 1px solid black;
-}
+  table.calendar td {
+    font-size: 1.2em;
+    padding: 0.1em;
+    border: 1px solid black;
+  }
 
-table.calendar td a {
-  font-size: 1.0em;
-  font-weight: bold;
-}
+  table.calendar td a {
+    font-size: 1.0em;
+    font-weight: bold;
+  }
 
-table.results {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  table-layout: auto;
-  caption-side: top;
-  margin-bottom: 20px;
-  padding: 1em;
-  border-collapse: collapse;
-  text-align: center;
-}
+  table.results {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: auto;
+    caption-side: top;
+    margin-bottom: 20px;
+    padding: 1em;
+    border-collapse: collapse;
+    text-align: center;
+  }
 
-table.results td {
-  font-size: 1.2em;
-  padding: 0.1em;
-  border: 1px solid black;
-}
+  table.results td {
+    font-size: 1.2em;
+    padding: 0.1em;
+    border: 1px solid black;
+  }
 
-table.left {
-  width: 195px;
-  table-layout: auto;
-  caption-side: top;
-  margin-bottom: 20px;
-  padding: 1em;
-  border-collapse: collapse;
-  text-align: center;
-}
+  table.left {
+    width: 195px;
+    table-layout: auto;
+    caption-side: top;
+    margin-bottom: 20px;
+    padding: 1em;
+    border-collapse: collapse;
+    text-align: center;
+  }
 
-table.left td {
-  font-size: 1.0em;
-  padding: 0.1em;
-  border: 1px solid black;
-}
+  table.left td {
+    font-size: 1.0em;
+    padding: 0.1em;
+    border: 1px solid black;
+  }
 
-table.right {
-  width: 295px;
-  table-layout: auto;
-  caption-side: top;
-  margin-bottom: 20px;
-  padding: 1em;
-  border-collapse: collapse;
-  text-align: center;
-}
+  table.right {
+    width: 295px;
+    table-layout: auto;
+    caption-side: top;
+    margin-bottom: 20px;
+    padding: 1em;
+    border-collapse: collapse;
+    text-align: center;
+  }
 
-table.right td {
-  font-size: 1.0em;
-  padding: 0.1em;
-  border: 1px solid black;
-}
+  table.right td {
+    font-size: 1.0em;
+    padding: 0.1em;
+    border: 1px solid black;
+  }

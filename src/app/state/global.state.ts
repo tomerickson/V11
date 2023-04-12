@@ -2,14 +2,18 @@ import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { catchError, exhaustMap, map, of } from 'rxjs';
-import { CrudService } from '../crud.service';
-import { IElementDataModel } from '../element.data.model';
-import { ILookupDataModel } from '../lookup..data.model';
+import { CrudService } from '../core/crud.service';
+import { IElementDataModel } from '../core/element.data.model';
+import { ILookupDataModel } from '../core/lookup..data.model';
 import { ElementActions, LookupActions, PageActions } from './global.actions';
+import {config} from '../../assets/config';
 
 export interface GlobalState {
-  pageTitle: string | null;
-  pageCredits: string | null;
+  pageTitle: string;
+  pageCredits: string;
+  pageDescription: string;
+  showMenu: boolean;
+  showMenuText: string;
   elementsReady: boolean;
   elementsLoading: boolean;
   lookupsReady: boolean;
@@ -21,8 +25,11 @@ export interface GlobalState {
 }
 
 export const globalInitialState: GlobalState = {
-  pageTitle: null,
-  pageCredits: null,
+  pageTitle: '',
+  pageCredits: config.pageCredits,
+  pageDescription: '',
+  showMenu: true,
+  showMenuText: 'Hide menu',
   elementsReady: false,
   elementsLoading: false,
   lookupsReady: false,
@@ -133,6 +140,16 @@ export const globalFeature = createFeature({
         ...state,
         pageCredits: action.credits
       };
+    }),
+    on(PageActions.setPageDescription, (state, action) => {
+      return { ...state, pageDescription: action.description };
+    }),
+    on(PageActions.toggleMenu, (state) => {
+      return {
+        ...state,
+        showMenuText: state.showMenu ? 'Show menu' : 'Hide menu',
+        showMenu: !state.showMenu
+      };
     })
   )
 });
@@ -147,7 +164,9 @@ export const {
   selectPageCredits,
   selectPageTitle,
   selectRadiationDecayModes,
-  selectRadiationTypes
+  selectRadiationTypes,
+  selectShowMenu,
+  selectShowMenuText
 } = globalFeature;
 // export const globalSelectors = {};
 // export const selectGlobalState = createFeatureSelector<GlobalState>('global');

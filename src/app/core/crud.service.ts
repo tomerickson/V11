@@ -5,7 +5,7 @@ import { catchError, map, retry, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { IElementDataModel } from './element.data.model';
 import { ILookupDataModel } from './lookup..data.model';
-import { GlobalState } from './state/global.state';
+import { GlobalState } from '../state/global.state';
 
 export interface User {
   id: string;

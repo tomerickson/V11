@@ -1,6 +1,6 @@
 <mfmp-header></mfmp-header>
 <mat-sidenav-container class="app-wrapper">
-  <mat-sidenav mode="side" opened="true">
+  <mat-sidenav mode="side" [opened]="showMenu | async">
     <mfmp-menu></mfmp-menu>
   </mat-sidenav>
   <mat-sidenav-content>

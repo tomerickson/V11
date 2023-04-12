@@ -1,15 +1,36 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
 
 @Component({
-    template: ``
+  template: ``
 })
+export abstract class MfmpBaseComponent {
 
-export class MfmpBaseComponent {
+  private _pageTitle!: Observable<string>;
+  private _pageCredits!: Observable<string>;
+  private _pageDescription!: Observable<string>;
 
-    protected _pageTitle: string = '';
-    protected _pageDescription: string = '';
-    get pageTitle(): string { return this._pageTitle };
-    set pageTitle(value: string) { this._pageTitle = value; }
-    get pageDescription(): string { return this._pageDescription; }
-    set pageDescription(value: string) { this._pageDescription = value; }
+  protected get pageTitle(): Observable<string> {
+    return this._pageTitle;
+  }
+  protected set pageTitle(value: Observable<string>) {
+    this._pageTitle = value;
+  }
+  protected get pageCredits() {
+    return this._pageCredits;
+  }
+  protected set pageCredits(value: Observable<string>) {
+    this._pageCredits = value;
+  }
+  protected get pageDescription() {
+    return this._pageDescription;
+  }
+  protected set pageDescription(value: Observable<string>) {
+    this._pageDescription = value;
+  }
+
+  protected store = inject(Store);
+
+  constructor() {}
 }

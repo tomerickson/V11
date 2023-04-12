@@ -4,9 +4,10 @@ import {
   emptyProps,
   props
 } from '@ngrx/store';
-import { ILookupDataModel } from '../lookup..data.model';
-import { IElementDataModel } from '../element.data.model';
-import { GlobalCollections } from '../crud.service';
+import { ILookupDataModel } from '../core/lookup..data.model';
+import { IElementDataModel } from '../core/element.data.model';
+import { GlobalCollections } from '../core/crud.service';
+import { empty } from 'rxjs';
 
 export const ElementActions = createActionGroup({
   source: 'Global API',
@@ -15,7 +16,7 @@ export const ElementActions = createActionGroup({
     'Load Elements Success': props<{ elements: IElementDataModel[] }>(),
     'Load Elements Failure': (error: any) => ({ error }),
     'Set Title': props<{ title: string }>(),
-    'Set Credits': props<{ credits: string }>()
+    'Set Credits': props<{ credits: string }>(),
   }
 });
 
@@ -41,6 +42,8 @@ export const PageActions = createActionGroup({
     'Load Globals Failure': (error: any) => ({error}),
     'Set Page Title': props<{ title: string }>(),
     'Set Page Credits': props<{ credits: string }>(),
+    'Set Page Description': props<{description: string}>(),
+    'Toggle Menu': emptyProps,
     exit: emptyProps()
   }
 });

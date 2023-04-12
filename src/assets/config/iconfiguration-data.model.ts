@@ -1,4 +1,4 @@
-import pkg from '../../package.json';
+import pkg from '../../../package.json';
 
 export const environment = {
   production: false,
@@ -18,7 +18,8 @@ export const environment = {
    * Subsequent retries are delayed by (# of retries * httpRetryDelay)
    *
    */
-  httpRetryDelay: 200
+  httpRetryDelay: 200,
+  pageCredits: ""
 }
 /*
  * For easier debugging in development mode, you can import the following file

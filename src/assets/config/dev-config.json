@@ -5,5 +5,6 @@
     "proxy": null,
     "apiUrl": "http://parkhomov/assets/config/",
     "httpMaxRetries": -1,
-    "httpRetryDelay": -1
+    "httpRetryDelay": -1,
+    "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project"
 }

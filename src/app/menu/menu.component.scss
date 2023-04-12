@@ -1,13 +1,10 @@
-/*.mat-list-item,
-.mat-list-item-ontent {
-  padding: 3px !important;
-  height: 18px !important;
-}
-*/
 ul {
   text-decoration: none;
   list-style: none;
 }
 .mdc-list-item {
   height: 2rem !important;
+}
+.hidden {
+  display: none;
 }
