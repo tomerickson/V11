@@ -1,9 +1,11 @@
-<mfmp-header></mfmp-header>
-<mat-sidenav-container class="app-wrapper">
-  <mat-sidenav mode="side" [opened]="showMenu | async">
-    <mfmp-menu></mfmp-menu>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="wrapper">
+  <mfmp-header></mfmp-header>
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" [opened]="showMenu | async">
+      <mfmp-menu></mfmp-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

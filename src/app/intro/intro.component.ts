@@ -8,7 +8,9 @@ import { PageActions } from '../state/global.actions';
 import { MatExpansionModule} from '@angular/material/expansion'
 @Component({
   standalone: true,
-  imports: [CommonModule, MatExpansionModule],
+  imports: [CommonModule, 
+    MatCardModule,
+    MatExpansionModule],
   selector: 'mfmp-intro',
   templateUrl: './intro.component.html',
   styleUrls: ['./intro.component.scss']

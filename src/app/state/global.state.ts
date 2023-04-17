@@ -7,6 +7,9 @@ import { IElementDataModel } from '../core/element.data.model';
 import { ILookupDataModel } from '../core/lookup..data.model';
 import { ElementActions, LookupActions, PageActions } from './global.actions';
 import {config} from '../../assets/config';
+import radTypesJson from '../../assets/tables/radiationtypes.json';
+import radDecayModesJson from '../../assets/tables/radiationdecaymodes.json';
+import elementsJson from '../../assets/tables/elements.json';
 
 export interface GlobalState {
   pageTitle: string;
@@ -99,20 +102,20 @@ export const globalFeature = createFeature({
     on(PageActions.enter, (state, action) => {
       return { ...state };
     }),
-    on(PageActions.loadGlobals, (state, action) => {
+    on(PageActions.loadGlobals, (state) => {
       return {
         ...state,
-        elements: [],
+        elements: elementsJson.map(row => {return {Z: row.z, E: row.e, EName: row.ename}}),
         lookups: [],
-        radiationDecayModes: [],
-        radiationTypes: [],
+        radiationDecayModes: radDecayModesJson.map(row => {return {category: 'RDM', code: row.code, description: row.description}}),
+        radiationTypes: radTypesJson.map(row => {return {category: 'RT', code: row.code, description: row.description}}),
         elementsLoading: true,
         elementsReady: false,
         lookupsLoading: true,
         lookupsReady: false
       };
     }),
-    on(PageActions.loadGlobalsSuccess, (state, action) => {
+/*     on(PageActions.loadGlobalsSuccess, (state, action) => {
       return {
         ...state,
         elements: action.results.elements,
@@ -128,7 +131,7 @@ export const globalFeature = createFeature({
         lookupsLoading: false,
         lookupsReady: true
       };
-    }),
+    }), */
     on(PageActions.setPageTitle, (state, action) => {
       return {
         ...state,
@@ -174,7 +177,7 @@ export const {
 /**
  * Effects
  */
-export const fetchElements$ = createEffect(
+/* export const fetchElements$ = createEffect(
   (actions$ = inject(Actions)) => {
     const http = inject(CrudService);
     return actions$.pipe(
@@ -188,4 +191,4 @@ export const fetchElements$ = createEffect(
     );
   },
   { functional: true }
-);
+); */

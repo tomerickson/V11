@@ -2,7 +2,7 @@ export interface IElementDataModel {
   Z: number;
   E: string;
   EName: string;
-  P: number;
+/*   P: number;
   G: number;
   AWeight: number;
   ARadius: number;
@@ -22,5 +22,5 @@ export interface IElementDataModel {
   ppmEStellar: string
   MagType: string;
   CuriePtK: string;
-  MagVol: number;
+  MagVol: number; */
 }

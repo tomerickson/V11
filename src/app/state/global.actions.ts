@@ -38,8 +38,8 @@ export const PageActions = createActionGroup({
   events: {
     enter: emptyProps(),
     'Load Globals': emptyProps(),
-    'Load Globals Success': props<{results: GlobalCollections}>(),
-    'Load Globals Failure': (error: any) => ({error}),
+    // 'Load Globals Success': props<{results: GlobalCollections}>(),
+    // 'Load Globals Failure': (error: any) => ({error}),
     'Set Page Title': props<{ title: string }>(),
     'Set Page Credits': props<{ credits: string }>(),
     'Set Page Description': props<{description: string}>(),

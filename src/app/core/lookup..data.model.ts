@@ -1,5 +1,5 @@
 export interface ILookupDataModel {
     category: string;
-    key: string;
-    value: string;
+    code: string;
+    description: string;
 }

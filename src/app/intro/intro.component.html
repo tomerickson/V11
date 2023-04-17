@@ -1,4 +1,4 @@
-<mat-expansion-panel>
+<mat-expansion-panel expanded="true">
   <mat-expansion-panel-header>
     <div>
       <p>
@@ -7,60 +7,64 @@
       </p>
     </div>
   </mat-expansion-panel-header>
-  <p>
-    But note that it,
-    <a href="http://www.nanosoft.co.nz/TwoToTwo.php">TwoToTwo</a> and
-    <a href="http://www.nanosoft.co.nz/Fission.php">Fission</a> is each
-    dedicated to querying only one of two tables.
-  </p>
-  <p>
-    The "universal" program
-    <a href="http://www.nanosoft.co.nz/AllTables.php">All Tables</a> can accept
-    full SQL commands that query any of the 12 "Parkhomov" tables, together with
-    the "ElementProperties", "Nuclides", "RadioNuclides" and "Atomic Radii"
-    tables as well.
-  </p>
-  <p>
-    You may indicate which of the three neutrino conditions to include: "left"
-    and/or "none" and/or "right". The default condition is include all three.
-  </p>
-  <p>
-    In all the above tables, except the Periodic, each atom, in either the input
-    or the output, as well as its 'A' and 'Z' numbers now also has a 'nBorF'
-    ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or Fermion')
-    parameter associated with it.
-  </p>
-  <p>
-    An atom's nucleus is considered a Boson ('b') if its A number is even; if
-    odd a Fermion ('f'). The atom itself is considered a Boson ('b') if its
-    number of neutrons (A - Z) is even; if odd a Fermion ('f').
-  </p>
-  <p>
-    These parameters can be used either passively, by observing the
-    distributions of 'b' and 'f' in inputs and/or outputs, and/or actively, by
-    selecting 'b only', 'f only' or 'either' in the boxes below.
-  </p>
-  <p>
-    NB: To avoid unnecessary duplication in all Fusion tables, A1 is never
-    greater than A2 in any row, i.e. A1 <= A2. This also applies implicitly in
-    that, if the input side of the Core Query only involves E1 and E2, only rows
-    whose associated mass numbers obey A1 <=A2 will appear in the results
-  </p>
-  <form id="f" action="https://www.nanosoft.co.nz/Fusion.php" method="post">
-    <input type="hidden" name="doit" value="execute_query" readonly />
-    <p>
-      To protect the table, only SQL compatible "selection" queries can be
-      allowed and you must enter only the CORE part of that query.
-    </p>
-    <p>
-      Once you do this and click on the "Execute Query" button, the front part
-      (here "select * from FusionAll where ") will be automatically prepended
-      and the full query sent to the database.
-    </p>
-    <p>
-      Latest: All queries will now be limited to 1000 possible rows of results;
-      any requested 'limit' greater than 1000 will be reset to 1000; to any core
-      query not including any 'limit' command will be appended 'limit 1000'.
-    </p>
-  </form>
+  <mat-card>
+    <mat-card-content>
+      <p>
+        But note that it,
+        <a href="http://www.nanosoft.co.nz/TwoToTwo.php">TwoToTwo</a> and
+        <a href="http://www.nanosoft.co.nz/Fission.php">Fission</a> is each
+        dedicated to querying only one of two tables.
+      </p>
+      <p>
+        The "universal" program
+        <a href="http://www.nanosoft.co.nz/AllTables.php">All Tables</a> can
+        accept full SQL commands that query any of the 12 "Parkhomov" tables,
+        together with the "ElementProperties", "Nuclides", "RadioNuclides" and
+        "Atomic Radii" tables as well.
+      </p>
+      <p>
+        You may indicate which of the three neutrino conditions to include:
+        "left" and/or "none" and/or "right". The default condition is include
+        all three.
+      </p>
+      <p>
+        In all the above tables, except the Periodic, each atom, in either the
+        input or the output, as well as its 'A' and 'Z' numbers now also has a
+        'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or
+        Fermion') parameter associated with it.
+      </p>
+      <p>
+        An atom's nucleus is considered a Boson ('b') if its A number is even;
+        if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
+        its number of neutrons (A - Z) is even; if odd a Fermion ('f').
+      </p>
+      <p>
+        These parameters can be used either passively, by observing the
+        distributions of 'b' and 'f' in inputs and/or outputs, and/or actively,
+        by selecting 'b only', 'f only' or 'either' in the boxes below.
+      </p>
+      <p>
+        NB: To avoid unnecessary duplication in all Fusion tables, A1 is never
+        greater than A2 in any row, i.e. A1 <= A2. This also applies implicitly
+        in that, if the input side of the Core Query only involves E1 and E2,
+        only rows whose associated mass numbers obey A1 <=A2 will appear in the
+        results
+      </p>
+      <p>
+        To protect the table, only SQL compatible "selection" queries can be
+        allowed and you must enter only the CORE part of that query.
+      </p>
+      <p>
+        Once you do this and click on the "Execute Query" button, the front part
+        (here "select * from FusionAll where ") will be automatically prepended
+        and the full query sent to the database.
+      </p>
+      <p>
+        Latest: All queries will now be limited to 1000 possible rows of
+        results; any requested 'limit' greater than 1000 will be reset to 1000;
+        to any core query not including any 'limit' command will be appended
+        'limit 1000'.
+      </p>
+    </mat-card-content>
+  </mat-card>
 </mat-expansion-panel>
