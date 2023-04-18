@@ -1,3 +1,10 @@
+ div.particles{
+  display: flex;
+  flex-direction: row;
+  div {
+    flex: 1;
+  }
+ }
   p.header {
     text-overflow: ellipsis;
     padding-right: 2em;

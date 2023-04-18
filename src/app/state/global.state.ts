@@ -1,15 +1,12 @@
-import { inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { catchError, exhaustMap, map, of } from 'rxjs';
-import { CrudService } from '../core/crud.service';
+import { config } from '../../assets/config';
+import elementsJson from '../../assets/tables/elements.json';
+import radDecayModesJson from '../../assets/tables/radiationdecaymodes.json';
+import radTypesJson from '../../assets/tables/radiationtypes.json';
 import { IElementDataModel } from '../core/element.data.model';
 import { ILookupDataModel } from '../core/lookup..data.model';
 import { ElementActions, LookupActions, PageActions } from './global.actions';
-import {config} from '../../assets/config';
-import radTypesJson from '../../assets/tables/radiationtypes.json';
-import radDecayModesJson from '../../assets/tables/radiationdecaymodes.json';
-import elementsJson from '../../assets/tables/elements.json';
+import { ENTITY_CACHE_META_REDUCERS } from '@ngrx/data';
 
 export interface GlobalState {
   pageTitle: string;
@@ -27,6 +24,9 @@ export interface GlobalState {
   radiationDecayModes: ILookupDataModel[];
 }
 
+const loadElements = () => {
+
+}
 export const globalInitialState: GlobalState = {
   pageTitle: '',
   pageCredits: config.pageCredits,
@@ -37,7 +37,7 @@ export const globalInitialState: GlobalState = {
   elementsLoading: false,
   lookupsReady: false,
   lookupsLoading: false,
-  elements: [],
+  elements: elementsJson.map(row => {return {Z: row.z, E: row.e, EName: row.ename}}),
   lookups: [],
   radiationTypes: [],
   radiationDecayModes: []
