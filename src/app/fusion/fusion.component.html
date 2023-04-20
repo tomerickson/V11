@@ -76,18 +76,73 @@
   </mat-card>
 </mat-expansion-panel>
 <mat-card>
-  <mat-card-header></mat-card-header>
-  <form
-    id="fusionForm"
-    action="https://www.nanosoft.co.nz/Fusion.php"
-    method="post">
+  <mat-card-header>
+    <mat-card-subtitle>
+      <p>
+        In all the above tables, except the Periodic, each atom, in either the
+        input or the output, as well as its 'A' and 'Z' numbers now also has a
+        'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or
+        Fermion') parameter associated with it.
+      </p>
+      <p>
+        An atom's nucleus is considered a Boson ('b') if its A number is even;
+        if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
+        its number of neutrons (A - Z) is even; if odd a Fermion ('f').
+      </p>
+      <p>
+        These parameters can be used either passively, by observing the
+        distributions of 'b' and 'f' in inputs and/or outputs, and/or actively,
+        by selecting 'b only', 'f only' or 'either' in the boxes below.
+      </p>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card>
     <mat-card-content>
+      <p>
+        Select Fusion data table from 'FusionAll' (original: MeV > 0.0; 3,921
+        rows; based on the 'Nuclides' table, 293 nuclides), or FusionAllNewPlus
+        (MeV = +/- any, 8026 rows; based on the 'NuclidesPlus' table, 324
+        nuclides)
+      </p>
+      FusionAll FusionAllNewPlus
+    </mat-card-content>
+  </mat-card>
+  <ng-container [formGroup]="fusionForm">
+      <mat-card>
+        <mat-card-content>
+          <p>
+            Select Fusion data table from 'FusionAll' (original: MeV > 0.0;
+            3,921 rows; based on the 'Nuclides' table, 293 nuclides), or
+            FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the
+            'NuclidesPlus' table, 324 nuclides)
+          </p>
+          <mat-radio-group name="tables">
+            <mat-radio-button value="FusionAll">FusionAll</mat-radio-button>
+            <mat-radio-button value="FusionAllNewPlus">FusionAllNewPlus</mat-radio-button>
+          </mat-radio-group>
+        </mat-card-content>
+      </mat-card>
       <div class="particles">
         <div>
-          <mfmp-particle-picker [hostForm]="fusionForm"></mfmp-particle-picker>
+          <mfmp-particle-picker
+            [role]="'query'"
+            [title]="'Left-side elements'"
+            [formName]="'leftNuclides'"
+            [elements]="elements | async"></mfmp-particle-picker>
         </div>
         <div>
-          <mfmp-particle-picker [hostForm]="fusionForm"></mfmp-particle-picker>
+          <mfmp-particle-picker
+            [role]="'query'"
+            [title]="'Right-side elements'"
+            [formName]="'rightNuclides'"
+            [elements]="elements | async"></mfmp-particle-picker>
+        </div>
+        <div>
+          <mfmp-particle-picker
+            [role]="'result'"
+            [title]="''"
+            [formName]="'resultNuclides'"
+            [elements]="elements | async"></mfmp-particle-picker>
         </div>
       </div>
       <h6 class="acenter">
@@ -206,6 +261,5 @@
           <input matInput type="submit" value="Submit" name="submit" (click)="execute_query()">
         -->
       </h6>
-    </mat-card-content>
-  </form>
+  </ng-container>
 </mat-card>

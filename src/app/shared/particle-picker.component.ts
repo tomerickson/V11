@@ -1,37 +1,49 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  FormGroup,
+  FormGroupDirective,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
-import { Observable, from } from 'rxjs';
 import { IElementDataModel } from '../core/element.data.model';
 import { MfmpBaseComponent } from '../core/mfmp-base-component';
-import { globalFeature } from '../state/global.state';
 import { SpinPickerComponent } from './spin-picker.component';
 
 @Component({
   selector: 'mfmp-particle-picker',
   standalone: true,
   template: `
-    <mat-card>
-      <mat-card-header>Particle Picker</mat-card-header>
-      <mat-card-content>
-        <form-field formControlName="" appearance="fill">
-          <mat-label>Elements</mat-label>
-          <mat-select placeholder="Elements" multiple>
-            <mat-option
-              *ngFor="let element of elements | async"
-              [value]="element.E">
-              {{ element.E }} - {{ element.EName }}
-            </mat-option>
-          </mat-select>
-        </form-field>
-        <mfmp-spin-picker></mfmp-spin-picker>
-      </mat-card-content>
-    </mat-card>
+    <form [formGroup]="form">
+      <mat-card formGroupName="{{ formName }}">
+        <mat-card-header>{{ title }}</mat-card-header>
+        <mat-card-content>
+          <form-field
+            class="{{ invisible }}"
+            formControlName="selectedElements"
+            appearance="outline">
+            <mat-select placeholder="select element(s)" multiple>
+              <mat-option *ngFor="let element of elements" [value]="element.E">
+                {{ element.E }} - {{ element.EName }}
+              </mat-option>
+            </mat-select>
+          </form-field>
+          <mfmp-spin-picker
+            [formName]="formName"
+            [role]="role"></mfmp-spin-picker>
+        </mat-card-content>
+      </mat-card>
+    </form>
   `,
-  styles: [``],
+  styles: [
+    `
+      .hidden {
+        visibility: hidden;
+      }
+    `
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -41,16 +53,28 @@ import { SpinPickerComponent } from './spin-picker.component';
     SpinPickerComponent
   ]
 })
-export class ParticlePickerComponent extends MfmpBaseComponent {
-  @Input() hostForm: FormGroup | undefined;
-  @Input() controlName: string = '';
-  elements: Observable<IElementDataModel[]> = from([]);
+export class ParticlePickerComponent
+  extends MfmpBaseComponent
+  implements OnInit
+{
+  @Input() formName!: string;
+  @Input() title!: string | null;
+  @Input() role!: string;
+  @Input() elements!: IElementDataModel[] | null;
   element: string = '';
-  constructor() {
+  invisible: string = '';
+  form!: FormGroup;
+
+  constructor(private parentForm: FormGroupDirective) {
     super();
   }
 
   ngOnInit() {
-    this.elements = this.store.select(globalFeature.selectElements);
+    console.log(this.parentForm);
+    if (this.formName && this.parentForm) {
+      this.form = this.parentForm.control.get(this.formName) as FormGroup;
+    }
+    this.invisible = this.role === 'result' ? 'hidden' : '';
+    console.log('formName', this.formName);
   }
 }

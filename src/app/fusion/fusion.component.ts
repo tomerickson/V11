@@ -5,11 +5,14 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { globalFeature } from '../state/global.state';
 import { PageActions } from '../state/global.actions';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ParticlePickerComponent } from '../shared/particle-picker.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SpinPickerComponent } from '../shared/spin-picker.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { IElementDataModel } from '../core/element.data.model';
 
 @Component({
   standalone: true,
@@ -21,29 +24,34 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatExpansionModule,
     MatGridListModule,
+    MatRadioModule,
     ParticlePickerComponent,
+    SpinPickerComponent,
     ReactiveFormsModule
   ]
 })
 export class FusionComponent extends MfmpBaseComponent implements OnInit {
-
   fb: FormBuilder = inject(FormBuilder);
-  fusionForm: FormGroup;
+  fusionForm!: FormGroup;
+  elements!: Observable<IElementDataModel[]>;
 
-  execute_query() {
+  execute_query(): void {
     //this.fusionService.getAll();
   }
 
   constructor() {
     super();
-    this.fusionForm = this.fb.group({})
   }
 
   ngOnInit(): void {
+
+    this.buildForm();
     this.pageTitle = this.store.select(globalFeature.selectPageTitle);
     this.pageDescription = this.store.select(
       globalFeature.selectPageDescription
     );
+    this.elements = this.store.select(globalFeature.selectElements);
+
     this.store.dispatch(
       PageActions.setPageTitle({ title: 'Fusion Reactions' })
     );
@@ -55,4 +63,27 @@ export class FusionComponent extends MfmpBaseComponent implements OnInit {
       })
     );
   }
+
+  buildForm = () => {
+    this.fusionForm = this.fb.group({
+      fileSet: new FormControl(''),
+      coreQuery: new FormControl(''),
+      leftNuclides: this.fb.group({
+        selectedElements: new FormControl(''),
+        atomicSpin: new FormControl(''),
+        nuclearSpin: new FormControl('')
+      }),
+      rightNuclides: this.fb.group({
+        selectedElements: new FormControl(''),
+        atomicSpin: new FormControl(''),
+        nuclearSpin: new FormControl('')
+      }),
+      resultNuclides: this.fb.group({
+        selectedElements: new FormControl(''),
+        atomicSpin: new FormControl(''),
+        nuclearSpin: new FormControl('')
+      })
+    });
+  }
+
 }
