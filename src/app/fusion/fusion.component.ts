@@ -1,18 +1,16 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { IFusionResultsModel } from '../core/fusion.results.model';
-import { MfmpBaseComponent } from '../core/mfmp-base-component';
-import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
-import { globalFeature } from '../state/global.state';
-import { PageActions } from '../state/global.actions';
-import { BehaviorSubject, Observable, from } from 'rxjs';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { ParticlePickerComponent } from '../shared/particle-picker.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SpinPickerComponent } from '../shared/spin-picker.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { Observable } from 'rxjs';
 import { IElementDataModel } from '../core/element.data.model';
+import { MfmpBaseComponent } from '../core/mfmp-base-component';
+import { NuclidePickerComponent } from '../shared/nuclide-picker.component';
+import { PageActions } from '../state/global.actions';
+import { globalFeature } from '../state/global.state';
 
 @Component({
   standalone: true,
@@ -25,8 +23,7 @@ import { IElementDataModel } from '../core/element.data.model';
     MatExpansionModule,
     MatGridListModule,
     MatRadioModule,
-    ParticlePickerComponent,
-    SpinPickerComponent,
+    NuclidePickerComponent,
     ReactiveFormsModule
   ]
 })
