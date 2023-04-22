@@ -124,32 +124,37 @@
         </mat-radio-group>
       </mat-card-content>
     </mat-card>
-    <div class="nuclides">
-      <div>
-        <mfmp-nuclide-picker
-          [parentFormName]="'fusionForm'"
-          [role]="'query'"
-          [title]="'Left-side elements'"
-          [formName]="'leftNuclides'"
-          [elements]="elements | async"></mfmp-nuclide-picker>
-      </div>
-      <div>
-        <mfmp-nuclide-picker
-          [parentFormName]="'fusionForm'"
-          [role]="'query'"
-          [title]="'Right-side elements'"
-          [formName]="'rightNuclides'"
-          [elements]="elements | async"></mfmp-nuclide-picker>
-      </div>
-      <div>
-        <mfmp-nuclide-picker
-          [parentFormName]="'fusionForm'"
-          [role]="'result'"
-          [title]="'Result set'"
-          [formName]="'resultNuclides'"
-          [elements]="elements | async"></mfmp-nuclide-picker>
-      </div>
-    </div>
+    <mat-card>
+      <mat-card-content>
+        <div class="nuclides">
+          <div>
+            <mfmp-nuclide-picker
+              *ngIf="fusionForm"
+              [role]="'query'"
+              [title]="'Left side'"
+              [formGroup]="leftNuclides"
+              [formGroupName]="'leftNuclides'"
+              [elements]="elements | async"></mfmp-nuclide-picker>
+          </div>
+          <div>
+            <mfmp-nuclide-picker
+              [role]="'query'"
+              [title]="'Right side'"
+              [formGroup]="rightNuclides"
+              [formGroupName]="'rightNuclides'"
+              [elements]="elements | async"></mfmp-nuclide-picker>
+          </div>
+          <div>
+            <mfmp-nuclide-picker
+              [role]="'result'"
+              [title]="'Results'"
+              [formGroup]="resultNuclides"
+              [formGroupName]="'resultNuclides'"
+              [elements]="elements | async"></mfmp-nuclide-picker>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
     <h6 class="acenter">
       Enter your Core Query below: (but clear any initial, place-holding or old
       one first)

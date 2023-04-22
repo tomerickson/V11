@@ -1,0 +1,64 @@
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content [formGroup]="formGroup">
+      <section>
+        <form-field
+          class="rj"
+          formControlName="selectedElements"
+          appearance="outline"
+          ngDefaultControl>
+          <label>Element(s)</label>
+          <mat-select placeholder="click to select ->&nbsp;" multiple>
+            <mat-option *ngFor="let element of elements" [value]="element.E">
+              {{ element.E }} - {{ element.EName }}
+            </mat-option>
+          </mat-select>
+        </form-field>
+      </section>
+      <section>
+        <!-- <div>
+          <label matLabel>Spin:</label>
+        </div> -->
+        <mat-expansion-panel
+         class="mat-elevation-z0 expansion-panel-class"
+          hideToggle="true"
+          #panel
+        onmouseenter="panel.open()"
+        onmouseleave="penel.close()">
+          <mat-expansion-panel-header>Spin:</mat-expansion-panel-header>
+          <mat-label>
+            Uncheck a spin category to exclude it from the {{ role }}.
+          </mat-label>
+        </mat-expansion-panel>
+        <div class="flexrow">
+            <div>
+
+            </div>
+          <div class="flexcolumn">
+            <form-field formControlName="atomicSpin" ngDefaultControl>
+              <div>Atomic</div>
+              <div>
+                <mat-checkbox checked="true" value="1">Boson</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox checked="true" value="2">Fermion</mat-checkbox>
+              </div>
+            </form-field>
+          </div>
+          <div class="flexcolumn">
+            <form-field formControlName="nuclearSpin" ngDefaultControl>
+              <div>Nuclear</div>
+              <div>
+                <mat-checkbox checked="true" value="1">Boson</mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox checked="true" value="2">Fermion</mat-checkbox>
+              </div>
+            </form-field>
+          </div>
+        </div>
+      </section>
+    </mat-card-content>
+  </mat-card>
