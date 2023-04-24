@@ -1,5 +1,9 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { APP_INITIALIZER, ErrorHandler, importProvidersFrom } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ErrorHandler,
+  importProvidersFrom
+} from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter, Routes } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
@@ -14,10 +18,10 @@ import { globalFeature } from './app/state/global.state';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const initAppFn = (configService: AppConfigService) => {
-  return (() => configService.validateConfiguration());
+  return () => configService.validateConfiguration();
 };
 
 const routes: Routes = [
@@ -43,7 +47,6 @@ const routes: Routes = [
         (m) => m.TestpagePipeComponent
       )
   },
-
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -76,4 +79,3 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(BrowserAnimationsModule)
   ]
 }).catch((err) => console.log(err));
-

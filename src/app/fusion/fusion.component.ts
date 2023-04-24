@@ -78,20 +78,23 @@ export class FusionComponent extends MfmpBaseComponent implements OnInit, OnDest
       this.leftNuclides = this.fb.group({
         selectedElements: new FormControl(''),
         atomicSpin: new FormControl(''),
-        nuclearSpin: new FormControl('')
+        nuclearSpin: new FormControl(''),
+        neutrinos: new FormControl('')
       });
       this.rightNuclides = this.fb.group({
         selectedElements: new FormControl(''),
         atomicSpin: new FormControl(''),
-        nuclearSpin: new FormControl('')
+        nuclearSpin: new FormControl(''),
+        neutrinos: new FormControl('')
       });
       this.resultNuclides = this.fb.group({
         selectedElements: new FormControl(''),
         atomicSpin: new FormControl(''),
-        nuclearSpin: new FormControl('')
+        nuclearSpin: new FormControl(''),
+        neutrinos: new FormControl('')
       });
       this.fusionForm = this.fb.group({
-        fileSet: new FormControl(''),
+        tableSet: new FormControl(''),
         coreQuery: new FormControl(''),
         leftNuclides: this.leftNuclides,
         rightNuclides: this.rightNuclides,

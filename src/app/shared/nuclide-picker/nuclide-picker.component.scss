@@ -1,17 +1,24 @@
+section.hidden {
+  visibility: hidden;
+}
+
 div.center {
-    text-align: center;
-  }
-  div.flexrow {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-around;
-  }
-  div.flexcolumn {
-    display: flex;
-    flex-direction: column;
-  }
-  .rj {
-    text-align: right;
-  }
+  text-align: center;
+}
+
+div.flexrow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+
+div.flexcolumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.rj {
+  text-align: right;
+}
