@@ -16,6 +16,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule} from '@angular/material/input'
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'mfmp-nuclide-picker',
@@ -31,13 +32,15 @@ import { MatRadioModule } from '@angular/material/radio';
     MatGridListModule,
     MatRadioModule,
     MatSelectModule,
+    MatTooltipModule,
     MatInputModule
   ]
 })
 export class NuclidePickerComponent
   extends MfmpBaseComponent
+  implements OnInit
 {
-  @Input() formGroup!: FormGroup;
+  // @Input() formGroup!: FormGroup;
   @Input() title!: string | null;
   @Input() role!: string;
   @Input() elements!: IElementDataModel[] | null;
@@ -46,6 +49,12 @@ export class NuclidePickerComponent
   form!: FormGroup;
   spinPanelState = 0;
 
+  constructor(private fb: FormBuilder, private fgd: FormGroupDirective){
+    super();
+  }
+  ngOnInit(): void {
+    this.form = this.fgd.control.get(this.formGroupName) as FormGroup;
+  }
   viewProviders: [
     { provide: ControlContainer; useExisting: FormGroupDirective; }
   ] | undefined

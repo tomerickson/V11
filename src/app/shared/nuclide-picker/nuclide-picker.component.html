@@ -1,8 +1,9 @@
-<mat-card>
+<form [formGroup]="form">
+<mat-card [formGroup]="form">
   <mat-card-header>
     <mat-card-title>{{ title }}</mat-card-title>
   </mat-card-header>
-  <mat-card-content [formGroup]="formGroup">
+  <mat-card-content>
     <section [className]="role === 'result' ? 'hidden' : ''">
       <form-field
         class="rj"
@@ -21,11 +22,16 @@
       </form-field>
     </section>
     <section>
-      <mat-expansion-panel class="mat-elevation-z0">
-        <mat-expansion-panel-header>Spin:</mat-expansion-panel-header>        
-        <mat-label>
-          Uncheck a spin category to exclude it from the {{ role }}.
-        </mat-label>
+      <mat-expansion-panel
+        class="mat-elevation-z0 disable-ripple"
+        hideToggle="true">
+        <mat-expansion-panel-header
+          matTooltip="Uncheck a spin category to exclude it from the {{
+            role
+          }}."
+          [matTooltipPosition]="'below'">
+          Spin:
+        </mat-expansion-panel-header>
       </mat-expansion-panel>
       <div class="flexrow">
         <div class="flexcolumn">
@@ -58,18 +64,35 @@
           Neutrino contributions:
         </mat-expansion-panel-header>
         <p>
-          You can indicate how to {{(role === 'query' ? 'filter' : 'report')}} neutrino contributions by clicking
-          'Only' to {{(role === 'query' ? 'include' : 'report')}} neutrino contributions, 'None' to exclude them, or
-          'Either'
+          You can indicate how to
+          {{ role === 'query' ? 'filter' : 'report' }} neutrino contributions by
+          clicking 'Only' to
+          {{ role === 'query' ? 'include' : 'report' }} neutrino contributions,
+          'None' to exclude them, or 'Either'
         </p>
       </mat-expansion-panel>
       <form-field formControlName="neutrinos" ngDefaultControl>
-        <mat-radio-group>
-          <mat-radio-button>Only</mat-radio-button>
-          <mat-radio-button>None</mat-radio-button>
-          <mat-radio-button>Either</mat-radio-button>
+        <mat-radio-group value="2">
+          <mat-radio-button
+            title="{{
+              role === 'query' ? 'Include' : 'Report'
+            }} ONLY neutrino interactions"
+            value="1">
+            Only
+          </mat-radio-button>
+          <mat-radio-button title="Exclude neutrino interactions" value="0">
+            None
+          </mat-radio-button>
+          <mat-radio-button selected="true"
+            title="{{
+              role === 'query' ? 'Include' : 'Report'
+            }} w/wo neutrino interactions"
+            value="2">
+            Either
+          </mat-radio-button>
         </mat-radio-group>
       </form-field>
     </section>
   </mat-card-content>
 </mat-card>
+</form>

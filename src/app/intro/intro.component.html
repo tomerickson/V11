@@ -260,7 +260,6 @@
       their particular idea, theory or data-set.
     </p>
   </li>
-
   <li>
     Using the Nanosoft Package
     <ul class="decimal">
@@ -411,23 +410,23 @@
         For Example:
         <a
           href="http://www.nanosoft.co.nz/results/select_*_from_ElementPropertiesPlusByZ.html"
-          target="_b"></a>
+          target="_blank">
+          http://www.nanosoft.co.nz/results/select_*_from_ElementPropertiesPlusByZ.html
+        </a>
         - In this, the user is employing AllTables in its simplest mode - to
         explore the whole of the ElementsPropertiesPlus table.
       </p>
       <p>
         Similarly, we could use it to explore the entire NuclidesPlus table:
-        <a
-          href="
-          http://www.nanosoft.co.nz/results/select_*_from_NuclidesPlusByZ-A.html"
-          target="_blank"></a>
+        <a href="http://www.nanosoft.co.nz/results/select_*_from_NuclidesPlusByZ-A.html"
+          target="_blank">http://www.nanosoft.co.nz/results/select_*_from_NuclidesPlusByZ-A.html</a>
       </p>
       <p>
         However, we can also make use of a nested command:
-        <a
-          href="http://www.nanosoft.co.nz/results/select_*_from_FusionAllPlus_where_E1eqOandZ2inlbselect_Z_
+        <a href="http://www.nanosoft.co.nz/results/select_*_from_FusionAllPlus_where_E1eqOandZ2inlbselect_Z_
           from_ElementPropertiesPlus_where_MagTypeeqFerromagneticrbByMeVDescLimit100.html"
-          target="_blank"></a>
+          target="_blank">http://www.nanosoft.co.nz/results/select_*_from_FusionAllPlus_where_E1eqOandZ2inlbselect_Z_
+          from_ElementPropertiesPlus_where_MagTypeeqFerromagneticrbByMeVDescLimit100.html</a>
       </p>
       <p>
         Here, we want to query the FusionAllPlus table for all instances of
@@ -517,94 +516,98 @@
     </ul>
   </li>
 
-  <li>Ongoing Documentation</li>
-  <p>
-    Descriptions of various aspects of the package are available on the Notes
-    link. By studying these notes starting with the earliest, the user can
-    clarify any issues as well as note how the package evolved historically.
-    Copies of the latest version of this paper are currently located here.
-  </p>
-  <li>Appendix: Generation of the Reaction Tables</li>
-  <p>
-    In the simplest reaction tables - that do not include neutrinos - two rules
-    must be obeyed:
-  </p>
-  <p class="subordinate">1. Conservation of protons.</p>
-  <p class="subordinate">2. Conservation of atomic numbers.</p>
+  <li>
+    Ongoing Documentation
+    <p>
+      Descriptions of various aspects of the package are available on the <a href="http://www.nanosoft.co.nz/notes.php">Notes</a>
+      link. By studying these notes starting with the earliest, the user can
+      clarify any issues as well as note how the package evolved historically.
+      Copies of the latest version of this paper are currently located <a href="https://www.nanosoft.co.nz/downloads/Documentation/TheNanosoftPackage.pdf">here</a>.
+    </p>
+  </li>
+  <li>
+    Appendix: Generation of the Reaction Tables
+    <p>
+      In the simplest reaction tables - that do not include neutrinos - two
+      rules must be obeyed:
+    </p>
+    <p class="subordinate">1. Conservation of protons.</p>
+    <p class="subordinate">2. Conservation of atomic numbers.</p>
 
-  <p>Fission Reactions: Z → Z1 + Z2 and A → A1 + A2</p>
-  <p>Fusion Reactions: Z1 + Z1 → Z and A1 + A2 → A</p>
-  <p>And for 2-2 Reactions: Z1 + Z2 → Z3 + Z4 and A1 + A2 → A3 + A4</p>
-  <p>
-    These rules obviously come with the extra constraint that the output values
-    of Z and A must correspond to actual nuclides or - more accurately here -
-    entries in the relevant Nuclides or NuclidesPlus table. This constraint,
-    together with the necessity to include all possible nuclide combinations
-    during the Reaction Table generation, especially for the 2-2 tables, was a
-    demanding challenge for the coding - as it also undoubtedly was for Dr
-    Parkhomov‘s original programmers.
-  </p>
-  <p>
-    In the case of net exothermic reactions, the total binding energy of the
-    output nuclide(s) must exceed the total binding energy of the input
-    nuclide(s).
-  </p>
-  <p>Thus, for Fission Reactions: MeV = BE1 + BE2 - BE,</p>
-  <p>For Fusion Reactions: MeV = BE - (BE1 + BE2),</p>
-  <p>And for 2-2 Reactions: MeV = (BE3 + BE4) - (BE1 + BE2)</p>
-  <p>
-    Given that these equations amount to the differences between large numbers,
-    it is crucially important to calculate all the binding energies in the
-    Nuclides(Plus) table with the greatest available precision.
-  </p>
-  <p>
-    To calculate the binding energies, the following constants, from NIST, were
-    used:
-  </p>
-  <p>Mn = 939.56542052, Neutron mass in MeV</p>
-  <p>Mp = 938.27208816, Proton mass in MeV</p>
-  <p>Me = 0.510998950, Electron mass in MeV</p>
-  <p>
-    K = 931.49433355837, 1 AMU (atomic mass unit) in MeV (= 1/12 of a Carbon
-    nucleus).
-  </p>
-  <p>
-    This was, in turn, derived from the assumption that the speed of light is:
-  </p>
-  <p>c = 299,792,458 m/s</p>
-  <p>The AMU values were all taken from this table:</p>
-  <p>
-    <a
-      href="http://amdc.impcas.ac.cn/masstables/Ame2016/mass16.txt"
-      target="_blank">
-      http://amdc.impcas.ac.cn/masstables/Ame2016/mass16.txt
-    </a>
-  </p>
-  <p>The Formula used for the BE’s was</p>
-  <p>BE = Z * (Mp + Me) + (A - Z) * Mn - AMU * K</p>
-  <p>
-    The only exception was for pure Hydrogen/Protium (Z = 1, A = 1) where the BE
-    was set to 0.0, to reflect the fact that H1 is not bound to any other
-    nucleon.
-  </p>
-  <p>
-    To accommodate neutrinos in either the input (‘left’) or the output
-    (‘right’), the original ‘A’ constraints can be retained but, to reflect the
-    conversion of a proton into a neutron or vice-versa, there is variously a
-    loss of total Z on the ‘left’ or a gain of total Z on the ‘right’.
-    Specifically:
-  </p>
-  <p>Fission Reactions: Z → Z1 + Z2 - 1 (left) and Z → Z1 + Z2 + 1 (right)</p>
-  <p>Fusion Reactions: Z1 + Z1 → Z - 1 (left) and Z1 + Z1 → Z + 1 (right)</p>
-  <p>
-    And, for 2-2 Reactions: Z1 + Z2 → Z3 + Z4 - 1 (left) and Z1 + Z2 → Z3 + Z4 +
-    1 (right).
-  </p>
-  <p>
-    The mass-energy loss or gain implicit in the neutrino based transformation
-    of a proton into a neutron or vice versa is Mn - (Mp + Me) and this is
-    variously added to or subtracted from the basic binding energy difference of
-    output and input. The kinetic energy component of the neutrinos was
-    neglected.
-  </p>
+    <p>Fission Reactions: Z → Z1 + Z2 and A → A1 + A2</p>
+    <p>Fusion Reactions: Z1 + Z1 → Z and A1 + A2 → A</p>
+    <p>And for 2-2 Reactions: Z1 + Z2 → Z3 + Z4 and A1 + A2 → A3 + A4</p>
+    <p>
+      These rules obviously come with the extra constraint that the output
+      values of Z and A must correspond to actual nuclides or - more accurately
+      here - entries in the relevant Nuclides or NuclidesPlus table. This
+      constraint, together with the necessity to include all possible nuclide
+      combinations during the Reaction Table generation, especially for the 2-2
+      tables, was a demanding challenge for the coding - as it also undoubtedly
+      was for Dr Parkhomov‘s original programmers.
+    </p>
+    <p>
+      In the case of net exothermic reactions, the total binding energy of the
+      output nuclide(s) must exceed the total binding energy of the input
+      nuclide(s).
+    </p>
+    <p>Thus, for Fission Reactions: MeV = BE1 + BE2 - BE,</p>
+    <p>For Fusion Reactions: MeV = BE - (BE1 + BE2),</p>
+    <p>And for 2-2 Reactions: MeV = (BE3 + BE4) - (BE1 + BE2)</p>
+    <p>
+      Given that these equations amount to the differences between large
+      numbers, it is crucially important to calculate all the binding energies
+      in the Nuclides(Plus) table with the greatest available precision.
+    </p>
+    <p>
+      To calculate the binding energies, the following constants, from NIST,
+      were used:
+    </p>
+    <p>Mn = 939.56542052, Neutron mass in MeV</p>
+    <p>Mp = 938.27208816, Proton mass in MeV</p>
+    <p>Me = 0.510998950, Electron mass in MeV</p>
+    <p>
+      K = 931.49433355837, 1 AMU (atomic mass unit) in MeV (= 1/12 of a Carbon
+      nucleus).
+    </p>
+    <p>
+      This was, in turn, derived from the assumption that the speed of light is:
+    </p>
+    <p>c = 299,792,458 m/s</p>
+    <p>The AMU values were all taken from this table:</p>
+    <p>
+      <a
+        href="http://amdc.impcas.ac.cn/masstables/Ame2016/mass16.txt"
+        target="_blank">
+        http://amdc.impcas.ac.cn/masstables/Ame2016/mass16.txt
+      </a>
+    </p>
+    <p>The Formula used for the BE’s was</p>
+    <p>BE = Z * (Mp + Me) + (A - Z) * Mn - AMU * K</p>
+    <p>
+      The only exception was for pure Hydrogen/Protium (Z = 1, A = 1) where the
+      BE was set to 0.0, to reflect the fact that H1 is not bound to any other
+      nucleon.
+    </p>
+    <p>
+      To accommodate neutrinos in either the input (‘left’) or the output
+      (‘right’), the original ‘A’ constraints can be retained but, to reflect
+      the conversion of a proton into a neutron or vice-versa, there is
+      variously a loss of total Z on the ‘left’ or a gain of total Z on the
+      ‘right’. Specifically:
+    </p>
+    <p>Fission Reactions: Z → Z1 + Z2 - 1 (left) and Z → Z1 + Z2 + 1 (right)</p>
+    <p>Fusion Reactions: Z1 + Z1 → Z - 1 (left) and Z1 + Z1 → Z + 1 (right)</p>
+    <p>
+      And, for 2-2 Reactions: Z1 + Z2 → Z3 + Z4 - 1 (left) and Z1 + Z2 → Z3 + Z4
+      + 1 (right).
+    </p>
+    <p>
+      The mass-energy loss or gain implicit in the neutrino based transformation
+      of a proton into a neutron or vice versa is Mn - (Mp + Me) and this is
+      variously added to or subtracted from the basic binding energy difference
+      of output and input. The kinetic energy component of the neutrinos was
+      neglected.
+    </p>
+  </li>
 </ul>
