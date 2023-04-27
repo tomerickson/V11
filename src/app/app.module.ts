@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { NotificationComponent } from "./core/notification.component";
+import { DemoComponent } from './demo/demo.component';
 
 /*
 import { CommonModule } from '@angular/common';
@@ -80,5 +81,8 @@ export class AppModule {}
 @NgModule({
   imports: [MatSnackBarModule, MatDialogModule],
   providers: [MatSnackBarModule, MatDialogModule, NotificationComponent],
+  declarations: [
+    DemoComponent
+  ],
 })
 export class AppModule {}

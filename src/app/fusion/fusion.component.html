@@ -1,4 +1,3 @@
-<ng-container [formGroup]="fusionForm">
   <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
       <p class="header">{{ pageDescription | async }}</p>
@@ -86,32 +85,10 @@
     </mat-card-header>
     <mat-card-content>
       <mat-card>
-        <mat-expansion-panel class="mat-elevation-z0">
-          <mat-expansion-panel-header>Tables</mat-expansion-panel-header>
-          <p>
-            Select Fusion data table from 'FusionAll' (original: MeV > 0.0;
-            3,921 rows; based on the 'Nuclides' table, 293 nuclides), or
-            FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the
-            'NuclidesPlus' table, 324 nuclides)
-          </p>
-          <p>
-            An atom's nucleus is considered a Boson ('b') if its A number is
-            even; if odd a Fermion ('f'). The atom itself is considered a Boson
-            ('b') if its number of neutrons (A - Z) is even; if odd a Fermion
-            ('f').
-          </p>
-        </mat-expansion-panel>
-        <form-field formControlName="tableSet" ngDefaultControl>
-          <mat-radio-group name="tables" value="FusionAll">
-            <mat-radio-button value="FusionAll">FusionAll</mat-radio-button>
-            <mat-radio-button value="FusionAllNewPlus">
-              FusionAllNewPlus
-            </mat-radio-button>
-          </mat-radio-group>
-        </form-field>
       </mat-card>
     </mat-card-content>
   </mat-card>
+  <form [formGroup]="fusionForm">
   <mat-card>
     <mat-card-content>
       <mat-expansion-panel>
@@ -177,10 +154,46 @@
             [elements]="elements | async"></mfmp-nuclide-picker>
         </div>
       </div>
+      <mat-expansion-panel expanded="true">
+        <mat-expansion-panel-header>Tables</mat-expansion-panel-header>
+        <p>
+          Select Fusion data table from 'FusionAll' (original: MeV > 0.0; 3,921
+          rows; based on the 'Nuclides' table, 293 nuclides), or
+          FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the
+          'NuclidesPlus' table, 324 nuclides)
+        </p>
+        <div class="nuclides">
+          <div>
+            <form-field formControlName="tableSet" ngDefaultControl>
+              <mat-radio-group name="tables" value="FusionAll">
+                <mat-radio-button value="FusionAll">FusionAll</mat-radio-button>
+                <mat-radio-button value="FusionAllNewPlus">
+                  FusionAllNewPlus
+                </mat-radio-button>
+              </mat-radio-group>
+            </form-field>
+          </div>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngIf="ready" hideToggle="true" expanded="true">
+        <label>Limit</label>
+        <mat-slider
+          [min]="0"
+          [max]="1000"
+          [step]="10"
+          discrete>
+        <input placeholder="thumb" matSliderThumb formControlName="resultLimit"></mat-slider>
+
+        <mat-form-field>
+          <mat-label>Slider</mat-label>
+          <input matInput placeholder="slider" formControlName="resultLimit" />
+        </mat-form-field>
+      </mat-expansion-panel>
+      <div>add a slider and a textbox to capture result limit</div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button mat-button (click)="resetForm()">RESET</button>
-      <button mat-raised-button color="primary">SUBMIT</button>
+      <button type="button" mat-raised-button (click)="resetForm()">RESET</button>
+      <button type="button" mat-raised-button color="primary">SUBMIT</button>
     </mat-card-actions>
   </mat-card>
-</ng-container>
+  </form>

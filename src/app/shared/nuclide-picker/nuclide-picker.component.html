@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<ng-container [formGroup]="form">
 <mat-card [formGroup]="form">
   <mat-card-header>
     <mat-card-title>{{ title }}</mat-card-title>
@@ -6,14 +6,11 @@
   <mat-card-content>
     <section [className]="role === 'result' ? 'hidden' : ''">
       <form-field
-        class="rj"
         formControlName="selectedElements"
         appearance="outline"
         ngDefaultControl>
         <label>Element(s)</label>
-        <mat-select
-          appearance="fill"
-          placeholder="click to select ->&nbsp;"
+        <mat-select matNativeControl
           multiple>
           <mat-option *ngFor="let element of elements" [value]="element.E">
             {{ element.E }} - {{ element.EName }}
@@ -95,4 +92,4 @@
     </section>
   </mat-card-content>
 </mat-card>
-</form>
+</ng-container>

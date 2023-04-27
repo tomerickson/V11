@@ -1,30 +1,14 @@
 header {
     text-align: center;
 }
-
-ul.decimal {
-    counter-reset: item;
-    // padding-top: 1em;
-    // list-style: decimal;
-    li {
-        padding-top: 1em;
-        display: block;
-        font-size: 16pt;
-    }
-
-    li:before {
-        content: counters(item, ".") " ";
-        counter-increment: item
-    }
+li {
+    font-size: 12pt;
 }
 
 p {
     padding-top: 1em;
     font-size: 12pt;
-}
-
-p.subordinate {
-    margin-left: 2em;
-    list-style: decimal;
-    text-indent: -1.4em;
+    .subordinate {
+        text-indent: 1em;
+    }
 }

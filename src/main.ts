@@ -19,6 +19,7 @@ import { PageNotFoundComponent } from './app/page-not-found/page-not-found.compo
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DemoComponent } from './app/demo/demo.component';
 
 const initAppFn = (configService: AppConfigService) => {
   return () => configService.validateConfiguration();
@@ -46,6 +47,10 @@ const routes: Routes = [
       import('./app/testpage/testpage.pipe.component').then(
         (m) => m.TestpagePipeComponent
       )
+  },
+  {
+    path: 'demo',
+    component: DemoComponent
   },
   { path: '**', component: PageNotFoundComponent }
 ];

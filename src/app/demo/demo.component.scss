@@ -1,0 +1,14 @@
+// li {
+//     display: block
+// }
+
+// ol li:before {
+//     content: counter(level1) ". ";
+//     counter-increment: level1;
+//     counter-reset: level2;
+// }
+
+// ol ol li:before {
+//     content: counter(level1) "." counter(level2) " ";
+//     counter-increment: level2
+// }
