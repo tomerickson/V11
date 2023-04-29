@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -10,12 +15,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Head, Observable, Subscription } from 'rxjs';
 import { IElementDataModel } from '../core/element.data.model';
-import { MfmpBaseComponent } from '../core/mfmp-base-component';
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
-import { PageActions } from '../state/global.actions';
-import { globalFeature } from '../state/global.state';
+import { Store } from '@ngrx/store';
+import { HeaderProviderService } from '../shared/header/header.provider.service';
+// import { ComponentStore } from '@ngrx/component-store';
+// import { FusionComponentStore } from './fusion-component.state';
+
 @Component({
   standalone: true,
   selector: 'mfmp-fusion',
@@ -34,11 +41,14 @@ import { globalFeature } from '../state/global.state';
     MatFormFieldModule,
     NuclidePickerComponent,
     ReactiveFormsModule
+  ],
+  providers: [
+    { provide: HeaderProviderService }
   ]
 })
+export class FusionComponent implements OnInit, OnDestroy {
 
-export class FusionComponent extends MfmpBaseComponent implements OnInit, OnDestroy {
-
+  store = inject(Store);
   fb: FormBuilder = inject(FormBuilder);
   fusionForm!: FormGroup;
   leftNuclides!: FormGroup;
@@ -48,70 +58,75 @@ export class FusionComponent extends MfmpBaseComponent implements OnInit, OnDest
   ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   subscriptions: Subscription = new Subscription();
 
+  constructor(private headerService: HeaderProviderService) {}
+  
   execute_query(): void {
     //this.fusionService.getAll();
   }
 
-  constructor() {
-    super();
-  }
   ngOnDestroy(): void {
-
     this.subscriptions.unsubscribe();
   }
 
   ngOnInit(): void {
-
+    
+    this.headerService.buildPageHeader('fusion');
     this.buildForm();
-    this.pageTitle = this.store.select(globalFeature.selectPageTitle);
-    this.pageDescription = this.store.select(
-      globalFeature.selectPageDescription
-    );
-    this.elements = this.store.select(globalFeature.selectElements);
-
-    this.store.dispatch(
-      PageActions.setPageTitle({ title: 'Fusion Reactions' })
-    );
-    this.store.dispatch(
-      PageActions.setPageDescription({
-        description: `This program ("Fusion.php") enables SQL 
-        commands to query the Fusion tables originally created 
-        from Dr Parkhomov's spreadsheets.`
-      })
-    );
     this.ready.next(true);
   }
 
   buildForm = () => {
+    this.fusionForm = this.fb.nonNullable.group({
+      tableSet: new FormControl('FusionAll', { nonNullable: true }),
+      coreQuery: new FormControl(''),
+      resultLimit: new FormControl(1000),
+      leftNuclides: this.fb.nonNullable.group({
+        selectedElements: new FormControl(''),
+        atomicSpin: new FormControl(''),
+        nuclearSpin: new FormControl(''),
+        neutrinos: new FormControl(2, { nonNullable: true })
+      }),
+      rightNuclides: this.fb.nonNullable.group({
+        selectedElements: new FormControl(''),
+        atomicSpin: new FormControl(''),
+        nuclearSpin: new FormControl(''),
+        neutrinos: new FormControl(2, { nonNullable: true })
+      }),
+      resultNuclides: this.fb.nonNullable.group({
+        selectedElements: new FormControl(''),
+        atomicSpin: new FormControl(''),
+        nuclearSpin: new FormControl(''),
+        neutrinos: new FormControl(2, { nonNullable: true })
+      })
+    });
+    this.subscriptions.add(
+      this.fusionForm.valueChanges.subscribe((data) => console.log(data))
+    );
+  };
 
-      this.fusionForm = new FormGroup({
-        tableSet: new FormControl(''),
-        coreQuery: new FormControl(''),
-        resultLimit: new FormControl(''),
-        resultDisplay: new FormControl(''),
-        leftNuclides: this.fb.group({
-          selectedElements: new FormControl(''),
-          atomicSpin: new FormControl(''),
-          nuclearSpin: new FormControl(''),
-          neutrinos: new FormControl('')
-        }),
-        rightNuclides: this.fb.group({
-          selectedElements: new FormControl(''),
-          atomicSpin: new FormControl(''),
-          nuclearSpin: new FormControl(''),
-          neutrinos: new FormControl('')
-        }),
-        resultNuclides: this.fb.group({
-          selectedElements: new FormControl(''),
-          atomicSpin: new FormControl(''),
-          nuclearSpin: new FormControl(''),
-          neutrinos: new FormControl('')
-        })
+  resetForm = () => {
+    this.fusionForm.reset({
+      tableSet: 'FusionAll',
+      coreQuery: '',
+      resultLimit: 1000,
+      leftNuclides: {
+        selectedElements: null,
+        atomicSpin: 2,
+        nuclearSpin: 2,
+        neutrinos: 2
+      },
+      rightNuclides: {
+        selectedElements: null,
+        atomicSpin: 2,
+        nuclearSpin: 2,
+        neutrinos: 2
+      },
+      resultNuclides: {
+        selectedElements: null,
+        atomicSpin: 2,
+        nuclearSpin: 2,
+        neutrinos: 2
       }
-      ); 
-    this.subscriptions.add(this.fusionForm.valueChanges.subscribe(data => console.log(data)));
-  }
-
-  resetForm = () => this.fusionForm?.reset();
-
+    });
+  };
 }

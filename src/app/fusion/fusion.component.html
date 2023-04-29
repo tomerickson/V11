@@ -1,94 +1,91 @@
-  <mat-expansion-panel expanded="true">
-    <mat-expansion-panel-header>
-      <p class="header">{{ pageDescription | async }}</p>
-    </mat-expansion-panel-header>
+<mat-expansion-panel expanded="true">
+  <mat-expansion-panel-header>
+    <!-- <p class="header">{{ pageDescription}}</p> -->
+  </mat-expansion-panel-header>
 
-    <mat-card>
-      <mat-card-content>
-        <p class="aleft">
-          To make full use of this and the other database tables, a good grasp
-          of SQL is essential.
-        </p>
-        <p class="aleft">
-          But note that it,
-          <a href="http://www.nanosoft.co.nz/TwoToTwo.php">TwoToTwo</a>
-          and
-          <a href="http://www.nanosoft.co.nz/Fission.php">Fission</a>
-          is each dedicated to querying only one of two tables.
-        </p>
-        <p>
-          The "universal" program
-          <a href="http://www.nanosoft.co.nz/AllTables.php">All Tables</a>
-          can accept full SQL commands that query any of the 12 "Parkhomov"
-          tables, together with the "ElementProperties", "Nuclides",
-          "RadioNuclides" and "Atomic Radii" tables as well.
-        </p>
-
-        <p>
-          An atom's nucleus is considered a Boson ('b') if its A number is even;
-          if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
-          its number of neutrons (A - Z) is even; if odd a Fermion ('f').
-        </p>
-        <p>
-          These parameters can be used either passively, by observing the
-          distributions of 'b' and 'f' in inputs and/or outputs, and/or
-          actively, by selecting 'b only', 'f only' or 'either' in the boxes
-          below.
-        </p>
-        <p class="aleft">
-          NB: To avoid unnecessary duplication in all Fusion tables, A1 is never
-          greater than A2 in any row, i.e. A1 &le; A2. This also applies
-          implicitly in that, if the input side of the Core Query only involves
-          E1 and E2, only rows whose associated mass numbers obey A1 &le; A2
-          will appear in the results
-        </p>
-
-        <p class="aleft">
-          To protect the table, only SQL compatible "selection" queries can be
-          allowed and you must enter only the CORE part of that query.
-        </p>
-        <p>
-          Once you do this and click on the "Execute Query" button, the front
-          part (here "select * from FusionAll where ") will be automatically
-          prepended and the full query sent to the database.
-        </p>
-        <p class="aleft">
-          Latest: All queries will now be limited to 1000 possible rows of
-          results; any requested 'limit' greater than 1000 will be reset to
-          1000; to any core query not including any 'limit' command will be
-          appended 'limit 1000'.
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </mat-expansion-panel>
   <mat-card>
-    <mat-card-header>
-      <mat-card-subtitle>
-        <p>
-          In all the above tables, except the Periodic, each atom, in either the
-          input or the output, as well as its 'A' and 'Z' numbers now also has a
-          'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or
-          Fermion') parameter associated with it.
-        </p>
-        <p>
-          An atom's nucleus is considered a Boson ('b') if its A number is even;
-          if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
-          its number of neutrons (A - Z) is even; if odd a Fermion ('f').
-        </p>
-        <p>
-          These parameters can be used either passively, by observing the
-          distributions of 'b' and 'f' in inputs and/or outputs, and/or
-          actively, by selecting 'b only', 'f only' or 'either' in the boxes
-          below.
-        </p>
-      </mat-card-subtitle>
-    </mat-card-header>
     <mat-card-content>
-      <mat-card>
-      </mat-card>
+      <p class="aleft">
+        To make full use of this and the other database tables, a good grasp of
+        SQL is essential.
+      </p>
+      <p class="aleft">
+        But note that it,
+        <a href="http://www.nanosoft.co.nz/TwoToTwo.php">TwoToTwo</a>
+        and
+        <a href="http://www.nanosoft.co.nz/Fission.php">Fission</a>
+        is each dedicated to querying only one of two tables.
+      </p>
+      <p>
+        The "universal" program
+        <a href="http://www.nanosoft.co.nz/AllTables.php">All Tables</a>
+        can accept full SQL commands that query any of the 12 "Parkhomov"
+        tables, together with the "ElementProperties", "Nuclides",
+        "RadioNuclides" and "Atomic Radii" tables as well.
+      </p>
+
+      <p>
+        An atom's nucleus is considered a Boson ('b') if its A number is even;
+        if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
+        its number of neutrons (A - Z) is even; if odd a Fermion ('f').
+      </p>
+      <p>
+        These parameters can be used either passively, by observing the
+        distributions of 'b' and 'f' in inputs and/or outputs, and/or actively,
+        by selecting 'b only', 'f only' or 'either' in the boxes below.
+      </p>
+      <p class="aleft">
+        NB: To avoid unnecessary duplication in all Fusion tables, A1 is never
+        greater than A2 in any row, i.e. A1 &le; A2. This also applies
+        implicitly in that, if the input side of the Core Query only involves E1
+        and E2, only rows whose associated mass numbers obey A1 &le; A2 will
+        appear in the results
+      </p>
+
+      <p class="aleft">
+        To protect the table, only SQL compatible "selection" queries can be
+        allowed and you must enter only the CORE part of that query.
+      </p>
+      <p>
+        Once you do this and click on the "Execute Query" button, the front part
+        (here "select * from FusionAll where ") will be automatically prepended
+        and the full query sent to the database.
+      </p>
+      <p class="aleft">
+        Latest: All queries will now be limited to 1000 possible rows of
+        results; any requested 'limit' greater than 1000 will be reset to 1000;
+        to any core query not including any 'limit' command will be appended
+        'limit 1000'.
+      </p>
     </mat-card-content>
   </mat-card>
-  <form [formGroup]="fusionForm">
+</mat-expansion-panel>
+<mat-card>
+  <mat-card-header>
+    <mat-card-subtitle>
+      <p>
+        In all the above tables, except the Periodic, each atom, in either the
+        input or the output, as well as its 'A' and 'Z' numbers now also has a
+        'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or
+        Fermion') parameter associated with it.
+      </p>
+      <p>
+        An atom's nucleus is considered a Boson ('b') if its A number is even;
+        if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
+        its number of neutrons (A - Z) is even; if odd a Fermion ('f').
+      </p>
+      <p>
+        These parameters can be used either passively, by observing the
+        distributions of 'b' and 'f' in inputs and/or outputs, and/or actively,
+        by selecting 'b only', 'f only' or 'either' in the boxes below.
+      </p>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-card></mat-card>
+  </mat-card-content>
+</mat-card>
+<form [formGroup]="fusionForm">
   <mat-card>
     <mat-card-content>
       <mat-expansion-panel>
@@ -165,8 +162,10 @@
         <div class="nuclides">
           <div>
             <form-field formControlName="tableSet" ngDefaultControl>
-              <mat-radio-group name="tables" value="FusionAll">
-                <mat-radio-button value="FusionAll">FusionAll</mat-radio-button>
+              <mat-radio-group name="tableSet" value="">
+                <mat-radio-button value="FusionAll" selected>
+                  FusionAll
+                </mat-radio-button>
                 <mat-radio-button value="FusionAllNewPlus">
                   FusionAllNewPlus
                 </mat-radio-button>
@@ -175,25 +174,43 @@
           </div>
         </div>
       </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="ready" hideToggle="true" expanded="true">
-        <label>Limit</label>
-        <mat-slider
-          [min]="0"
-          [max]="1000"
-          [step]="10"
-          discrete>
-        <input placeholder="thumb" matSliderThumb formControlName="resultLimit"></mat-slider>
-
-        <mat-form-field>
-          <mat-label>Slider</mat-label>
-          <input matInput placeholder="slider" formControlName="resultLimit" />
-        </mat-form-field>
+      <mat-expansion-panel *ngIf="ready">
+        <mat-expansion-panel-header class="resultLimit" title="">
+          <span class="resultLimitHeader">
+            <span>
+              Limit results to {{ fusionForm.value['resultLimit'] }} rows.
+            </span>
+            <span>Use the slider below to change the result limit.</span>
+          </span>
+        </mat-expansion-panel-header>
+        <div class="resultLimit">
+          <div>
+            <mat-slider
+              [min]="0"
+              [max]="1000"
+              [step]="10"
+              showTickMarks="true"
+              discrete>
+              <input
+                placeholder="thumb"
+                matSliderThumb
+                formControlName="resultLimit" />
+            </mat-slider>
+          </div>
+          <!-- <div>
+            <mat-form-field formControlName="resultLimit" ngDefaultControl>
+              <mat-label>{{ fusionForm.value['resultLimit'] }}</mat-label>
+              <input matInput placeholder="limit" />
+            </mat-form-field>
+          </div> -->
+        </div>
       </mat-expansion-panel>
-      <div>add a slider and a textbox to capture result limit</div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button type="button" mat-raised-button (click)="resetForm()">RESET</button>
+      <button type="button" mat-raised-button (click)="resetForm()">
+        RESET
+      </button>
       <button type="button" mat-raised-button color="primary">SUBMIT</button>
     </mat-card-actions>
   </mat-card>
-  </form>
+</form>

@@ -1,11 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
 
-@Component({
-  template: ``
-})
-export abstract class MfmpBaseComponent {
+  /**
+   * Sample implementation
+   */
+/* export abstract class MfmpBaseComponent {
+
 
   private _pageTitle!: Observable<string>;
   private _pageCredits!: Observable<string>;
@@ -31,6 +29,4 @@ export abstract class MfmpBaseComponent {
   }
 
   protected store = inject(Store);
-
-  constructor() {}
-}
+} */

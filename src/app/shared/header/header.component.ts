@@ -3,12 +3,11 @@ import { MatCommonModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MfmpBaseComponent } from 'src/app/core/mfmp-base-component';
 import { AppConfigService } from 'src/app/core/config/app-config.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { globalFeature } from 'src/app/state/global.state';
 import { PageActions } from 'src/app/state/global.actions';
 import { AsyncPipe } from '@angular/common';
@@ -27,16 +26,21 @@ import { AsyncPipe } from '@angular/common';
     MatListModule
   ]
 })
-export class HeaderComponent extends MfmpBaseComponent implements OnInit {
+export class HeaderComponent implements OnInit {
 
    showMenu!: Observable<boolean>;
    menuTip!: Observable<string>;
-  @Input() version = '';
+   pageTitle!: Observable<string>;
+   pageCredits!: Observable<string>;
+   pageDescription!: Observable<string>;
+   
+   @Input() version = '';
 
   store = inject(Store);
+  ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
 
   constructor(private config: AppConfigService) {
-    super();
     this.version = config.version;
   }
 
@@ -45,6 +49,8 @@ export class HeaderComponent extends MfmpBaseComponent implements OnInit {
     this.menuTip = this.store.select(globalFeature.selectShowMenuText);
     this.pageTitle = this.store.select(globalFeature.selectPageTitle)
     this.pageCredits = this.store.select(globalFeature.selectPageCredits);
+    this.pageDescription = this.store.select(globalFeature.selectPageDescription);
+    this.ready.next(true);
 
   }
 

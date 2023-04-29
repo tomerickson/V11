@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { from, Observable, of, tap } from 'rxjs';
 import { CrudService } from '../core/crud.service';
 import { IElementDataModel } from '../core/element.data.model';
-import { MfmpBaseComponent } from '../core/mfmp-base-component';
 import { TestpageShowComponent } from './testpage.show.component';
 
 @Component({

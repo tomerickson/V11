@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MfmpBaseComponent } from './core/mfmp-base-component';
 import { HeaderComponent } from './shared/header/header.component';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -20,7 +19,7 @@ import { globalFeature, selectShowMenu } from './state/global.state';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent extends MfmpBaseComponent implements OnInit {
+export class AppComponent implements OnInit {
   title = 'v11';
   store = inject(Store);
   showMenu?: Observable<boolean>;

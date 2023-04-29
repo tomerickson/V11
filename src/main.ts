@@ -35,11 +35,12 @@ const routes: Routes = [
   {
     path: 'fusion',
     loadComponent: () =>
-      import('./app/fusion/fusion.component').then((m) => m.FusionComponent),
-    providers: [
-      // provideState('fusion', fusionState),
-      // provideEffects()
-    ]
+      import('./app/fusion/fusion.component').then((m) => m.FusionComponent)
+  },
+  {
+    path: 'fission',
+    loadComponent: () =>
+      import('./app/fission/fission.component').then((m) => m.FissionComponent)
   },
   {
     path: 'testpage',

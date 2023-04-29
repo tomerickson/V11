@@ -1,4 +1,10 @@
-section.hidden {
+.mat-expansion-panel-header.mat-expanded {
+  background-color: rgba(250,250,250,.5);
+ }
+ .mat-expansion-panel-header.mat-expanded:hover {
+  background-color: rgba(250,250,250,.5);
+ }
+ section.hidden {
   visibility: hidden;
 }
 

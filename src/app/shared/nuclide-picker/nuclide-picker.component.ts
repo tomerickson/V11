@@ -11,7 +11,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { IElementDataModel } from '../../core/element.data.model';
-import { MfmpBaseComponent } from '../../core/mfmp-base-component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule} from '@angular/material/input'
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -37,7 +36,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ]
 })
 export class NuclidePickerComponent
-  extends MfmpBaseComponent
   implements OnInit
 {
   // @Input() formGroup!: FormGroup;
@@ -50,7 +48,6 @@ export class NuclidePickerComponent
   spinPanelState = 0;
 
   constructor(private fb: FormBuilder, private fgd: FormGroupDirective){
-    super();
   }
   ngOnInit(): void {
     this.form = this.fgd.control.get(this.formGroupName) as FormGroup;

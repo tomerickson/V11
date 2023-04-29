@@ -1,31 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { compileComponentFromMetadata } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MfmpBaseComponent } from '../core/mfmp-base-component';
-import { globalFeature } from '../state/global.state';
-import { PageActions } from '../state/global.actions';
-import { MatExpansionModule} from '@angular/material/expansion'
+import { MatExpansionModule } from '@angular/material/expansion';
+import { Store } from '@ngrx/store';
+import { IPageHeader } from '../core/ipage-header';
+import { HeaderProviderService } from '../shared/header/header.provider.service';
+
 @Component({
   standalone: true,
-  imports: [CommonModule, 
-    MatCardModule,
-    MatExpansionModule],
+  imports: [CommonModule, MatCardModule, MatExpansionModule],
   selector: 'mfmp-intro',
   templateUrl: './intro.component.html',
-  styleUrls: ['./intro.component.scss']
+  styleUrls: ['./intro.component.scss'],
+  providers: [
+    { provide: HeaderProviderService }
+  ]
 })
-export class IntroComponent extends MfmpBaseComponent implements OnInit {
+export class IntroComponent implements OnInit {
+  store: Store = Inject(Store);
+  headerInfo: IPageHeader | undefined;
 
-  constructor() {
-    super();
-  }
+  constructor( private headerService: HeaderProviderService) {}
 
   ngOnInit(): void {
-    this.pageTitle = this.store.select(globalFeature.selectPageTitle)
-    this.pageDescription = this.store.select(globalFeature.selectPageDescription);
-    this.store.dispatch(PageActions.setPageTitle({title: 'Introduction'}))
-    this.store.dispatch(PageActions.setPageDescription({description: ''}))
+    this.headerService.buildPageHeader('intro');
   }
-
 }

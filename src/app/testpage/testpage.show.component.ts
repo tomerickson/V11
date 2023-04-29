@@ -16,7 +16,6 @@ import {
   MatTableModule
 } from '@angular/material/table';
 import { IElementDataModel } from '../core/element.data.model';
-import { MfmpBaseComponent } from '../core/mfmp-base-component';
 
 @Component({
   imports: [
@@ -178,7 +177,6 @@ export interface IElementDataModel {
   styleUrls: ['testpage.component.scss']
 })
 export class TestpageShowComponent
-  extends MfmpBaseComponent
   implements OnInit, OnDestroy
 {
   @Input() test: any;
@@ -212,7 +210,6 @@ export class TestpageShowComponent
   ];
 
   constructor() {
-    super();
     this.demo = null;
     this.elements = [];
   }
