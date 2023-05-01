@@ -7,6 +7,23 @@
  section.hidden {
   visibility: hidden;
 }
+section.dead {
+  display: none;
+}
+section.elements {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .form-field-label {
+    white-space: nowrap;
+  }
+  .form-field-label + mat-form-field {
+   margin-left: 10px;
+  }
+  mat-form-field {
+    width:100%;
+  }
+}
 
 div.center {
   text-align: center;

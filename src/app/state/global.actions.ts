@@ -26,10 +26,6 @@ export const LookupActions = createActionGroup({
     'Load Lookups': emptyProps(),
     'Load Lookups Success': props<{lookups: ILookupDataModel[]}>(),
     'Load Lookups Failure': (error: any) => ({error})
-    /* ,
-    'Set Radiation Types': props<{category: string}>(),
-    'Set Radiation Decay Modes': props<{category: string}>()
-    */
   }
 })
 

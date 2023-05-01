@@ -16,6 +16,7 @@ import { MatInputModule} from '@angular/material/input'
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'mfmp-nuclide-picker',
@@ -28,7 +29,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatCardModule,
     MatCheckboxModule,
     MatExpansionModule,
+    MatFormFieldModule,
     MatGridListModule,
+    MatInputModule,
     MatRadioModule,
     MatSelectModule,
     MatTooltipModule,
@@ -38,7 +41,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class NuclidePickerComponent
   implements OnInit
 {
-  // @Input() formGroup!: FormGroup;
   @Input() title!: string | null;
   @Input() role!: string;
   @Input() elements!: IElementDataModel[] | null;

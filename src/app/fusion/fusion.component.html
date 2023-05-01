@@ -1,10 +1,9 @@
-<mat-expansion-panel expanded="true">
-  <mat-expansion-panel-header>
-    <!-- <p class="header">{{ pageDescription}}</p> -->
-  </mat-expansion-panel-header>
-
-  <mat-card>
-    <mat-card-content>
+<mat-card>
+  <mat-card-content>
+    <mat-expansion-panel expanded="false">
+      <mat-expansion-panel-header>
+        <p class="header">{{ description }}</p>
+      </mat-expansion-panel-header>
       <p class="aleft">
         To make full use of this and the other database tables, a good grasp of
         SQL is essential.
@@ -57,46 +56,16 @@
         to any core query not including any 'limit' command will be appended
         'limit 1000'.
       </p>
-    </mat-card-content>
-  </mat-card>
-</mat-expansion-panel>
-<mat-card>
-  <mat-card-header>
-    <mat-card-subtitle>
-      <p>
-        In all the above tables, except the Periodic, each atom, in either the
-        input or the output, as well as its 'A' and 'Z' numbers now also has a
-        'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or
-        Fermion') parameter associated with it.
-      </p>
-      <p>
-        An atom's nucleus is considered a Boson ('b') if its A number is even;
-        if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
-        its number of neutrons (A - Z) is even; if odd a Fermion ('f').
-      </p>
-      <p>
-        These parameters can be used either passively, by observing the
-        distributions of 'b' and 'f' in inputs and/or outputs, and/or actively,
-        by selecting 'b only', 'f only' or 'either' in the boxes below.
-      </p>
-    </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-card></mat-card>
+    </mat-expansion-panel>
   </mat-card-content>
 </mat-card>
+
 <form [formGroup]="fusionForm">
   <mat-card>
     <mat-card-content>
-      <mat-expansion-panel>
+      <mat-expansion-panel id="blurb" expanded="true">
         <mat-expansion-panel-header>Nuclides</mat-expansion-panel-header>
         <div>
-          <p>
-            You may indicate which of the three neutrino conditions to include:
-            "left" and/or "none" and/or "right". The default condition is
-            include all three.
-          </p>
-
           <p>
             In all the above tables, except the Periodic, each atom, in either
             the input or the output, as well as its 'A' and 'Z' numbers now also
@@ -117,7 +86,11 @@
             actively, by selecting 'b only', 'f only' or 'either' in the boxes
             below.
           </p>
-
+          <p>
+            You may indicate which of the three neutrino conditions to include:
+            "left" and/or "none" and/or "right". The default condition is
+            include all three.
+          </p>
           <p>
             NB: To avoid unnecessary duplication in all Fusion tables, A1 is
             never greater than A2 in any row, i.e. A1 &le; A2. This also applies
@@ -138,6 +111,7 @@
         </div>
         <div>
           <mfmp-nuclide-picker
+            *ngIf="fusionForm"
             [role]="'query'"
             [title]="'Right side'"
             formGroupName="rightNuclides"
@@ -145,6 +119,7 @@
         </div>
         <div>
           <mfmp-nuclide-picker
+            *ngIf="fusionForm"
             [role]="'result'"
             [title]="'Results'"
             formGroupName="resultNuclides"
@@ -159,23 +134,61 @@
           FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the
           'NuclidesPlus' table, 324 nuclides)
         </p>
-        <div class="nuclides">
+        <div class="sql">
           <div>
-            <form-field formControlName="tableSet" ngDefaultControl>
-              <mat-radio-group name="tableSet" value="">
-                <mat-radio-button value="FusionAll" selected>
-                  FusionAll
-                </mat-radio-button>
-                <mat-radio-button value="FusionAllNewPlus">
-                  FusionAllNewPlus
-                </mat-radio-button>
-              </mat-radio-group>
-            </form-field>
+            <mat-radio-group
+              labelPosition="before"
+              formControlName="tableSet"
+              name="tableSet"
+              value="FusionAll">
+              <mat-radio-button value="FusionAll" selected>
+                FusionAll
+              </mat-radio-button>
+              <mat-radio-button value="FusionAllNewPlus">
+                FusionAllNewPlus
+              </mat-radio-button>
+            </mat-radio-group>
           </div>
+          <div>
+            <mat-form-field
+              id="orderBy"
+              formControlName="orderBy"
+              value="orderBy"
+              ngDefaultControl>
+              <mat-label>Order By:</mat-label>
+              <mat-select title="Order by" formControlName="orderBy">
+                <mat-option
+                  *ngFor="let f of sortFields | async"
+                  [value]="f.code">
+                  {{ f.code }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            </div>
+            <div>
+              <form-field formControlName="sortDescending" ngDefaultControl>
+                <mat-checkbox title="when checked." formControlName="sortDescending"
+                checked="false" >Descending</mat-checkbox>
+              </form-field>
+            </div>
         </div>
       </mat-expansion-panel>
-      <mat-expansion-panel *ngIf="ready">
-        <mat-expansion-panel-header class="resultLimit" title="">
+      <mat-card class="coreQuery">
+        <mat-card-content>
+          <mat-form-field formControlName="coreQuery" ngDefaultControl>
+            <mat-label>Core Query</mat-label>
+            <input
+              matInput
+              formControlName="coreQuery"
+              placeholder="core query"
+              value="coreQuery"
+              readonly
+              ngDefaultControl />
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+      <mat-expansion-panel *ngIf="ready" expanded="true">
+        <mat-expansion-panel-header class="resultLimit" title="Results">
           <span class="resultLimitHeader">
             <span>
               Limit results to {{ fusionForm.value['resultLimit'] }} rows.
@@ -188,7 +201,7 @@
             <mat-slider
               [min]="0"
               [max]="1000"
-              [step]="10"
+              [step]="50"
               showTickMarks="true"
               discrete>
               <input
@@ -197,12 +210,6 @@
                 formControlName="resultLimit" />
             </mat-slider>
           </div>
-          <!-- <div>
-            <mat-form-field formControlName="resultLimit" ngDefaultControl>
-              <mat-label>{{ fusionForm.value['resultLimit'] }}</mat-label>
-              <input matInput placeholder="limit" />
-            </mat-form-field>
-          </div> -->
         </div>
       </mat-expansion-panel>
     </mat-card-content>

@@ -1,95 +1,88 @@
 <ng-container [formGroup]="form">
-<mat-card [formGroup]="form">
-  <mat-card-header>
-    <mat-card-title>{{ title }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <section [className]="role === 'result' ? 'hidden' : ''">
-      <form-field
-        formControlName="selectedElements"
-        appearance="outline"
-        ngDefaultControl>
-        <label>Element(s)</label>
-        <mat-select matNativeControl
-          multiple>
-          <mat-option *ngFor="let element of elements" [value]="element.E">
-            {{ element.E }} - {{ element.EName }}
-          </mat-option>
-        </mat-select>
-      </form-field>
-    </section>
-    <section>
-      <mat-expansion-panel
-        class="mat-elevation-z0 disable-ripple"
-        hideToggle="true">
-        <mat-expansion-panel-header
-          matTooltip="Uncheck a spin category to exclude it from the {{
-            role
-          }}."
-          [matTooltipPosition]="'below'">
+  <mat-card [formGroup]="form">
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <section  [className]="(role === 'result') ? 'dead' : 'elements'">
+        <mat-form-field 
+          formControlName="selectedElements"
+          appearance="fill"
+          ngDefaultControl>
+          <label>Element(s)</label>
+          <mat-select
+            formControlName="selectedElements"
+            ngDefaultControl
+            multiple
+            placeholder="click the chevron to begin.">
+            <mat-option *ngFor="let element of elements" [value]="element.E">
+              {{ element.E }} - {{ element.EName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
+      <section name="Spin" *ngIf="form">
+        <mat-expansion-panel class="mat-elevation-z0"
+          displayMode="flat"
+          hideToggle="true">
+          <mat-expansion-panel-header>
           Spin:
         </mat-expansion-panel-header>
-      </mat-expansion-panel>
-      <div class="flexrow">
-        <div class="flexcolumn">
-          <form-field formControlName="atomicSpin" ngDefaultControl>
-            <div>Atomic</div>
-            <div>
-              <mat-checkbox checked="true" value="1">Boson</mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox checked="true" value="2">Fermion</mat-checkbox>
-            </div>
-          </form-field>
+        </mat-expansion-panel>
+        <div class="flexrow">
+          <div class="flexcolumn">
+              <mat-label>Atomic</mat-label>
+              <mat-checkbox formControlName="atomicBosons"
+              checked="true" value="1">Boson</mat-checkbox>
+              <mat-checkbox formControlName="atomicFermions"
+              checked="true" value="2">Fermion</mat-checkbox>
+          </div>
+          <div class="flexcolumn">
+              <mat-label>Nuclear</mat-label>
+              <mat-checkbox formControlName="nuclearBosons"
+              checked="true" value="1">Boson</mat-checkbox>
+              <mat-checkbox formControlName="nuclearFermions"
+              checked="true" value="2">Fermion</mat-checkbox>
+          </div>
         </div>
-        <div class="flexcolumn">
-          <form-field formControlName="nuclearSpin" ngDefaultControl>
-            <div>Nuclear</div>
-            <div>
-              <mat-checkbox checked="true" value="1">Boson</mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox checked="true" value="2">Fermion</mat-checkbox>
-            </div>
-          </form-field>
-        </div>
-      </div>
-    </section>
-    <section>
-      <mat-expansion-panel class="mat-elevation-z0">
-        <mat-expansion-panel-header>
-          Neutrino contributions:
-        </mat-expansion-panel-header>
-        <p>
-          You can indicate how to
-          {{ role === 'query' ? 'filter' : 'report' }} neutrino contributions by
-          clicking 'Only' to
-          {{ role === 'query' ? 'include' : 'report' }} neutrino contributions,
-          'None' to exclude them, or 'Either'
-        </p>
-      </mat-expansion-panel>
-      <form-field formControlName="neutrinos" ngDefaultControl>
-        <mat-radio-group value="2">
-          <mat-radio-button
-            title="{{
-              role === 'query' ? 'Include' : 'Report'
-            }} ONLY neutrino interactions"
-            value="1">
-            Only
-          </mat-radio-button>
-          <mat-radio-button title="Exclude neutrino interactions" value="0">
-            None
-          </mat-radio-button>
-          <mat-radio-button selected="true"
-            title="{{
-              role === 'query' ? 'Include' : 'Report'
-            }} w/wo neutrino interactions"
-            value="2">
-            Either
-          </mat-radio-button>
-        </mat-radio-group>
-      </form-field>
-    </section>
-  </mat-card-content>
-</mat-card>
+      </section>
+      <section>
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+            Neutrino contributions:
+          </mat-expansion-panel-header>
+          <p>
+            You can indicate how to
+            {{ (role === 'query') ? 'filter' : 'report' }} neutrino contributions
+            by clicking 'Only' to
+            {{ (role === 'query') ? 'include' : 'report' }} neutrino
+            contributions, 'None' to exclude them, or 'Either'
+          </p>
+        </mat-expansion-panel>
+          <mat-radio-group formControlName="neutrinos" labelPosition="before">
+            <mat-radio-button
+              title="{{(role === 'query') ? 'Include' : 'Report'}} ONLY neutrino interactions"
+              value="1"
+              selected="value==neutrinos">
+              Only
+            </mat-radio-button>
+            <mat-radio-button
+              title="Exclude neutrino interactions"
+              value="0"
+              selected="value==neutrinos">
+              None
+            </mat-radio-button>
+            <mat-radio-button
+              selected="true"
+              title="{{
+                role === 'query' ? 'Include' : 'Report'
+              }} w/wo neutrino interactions"
+              value="2"
+              selected="value==neutrinos">
+              Either
+            </mat-radio-button>
+          </mat-radio-group>
+      </section>
+    </mat-card-content>
+  </mat-card>
 </ng-container>

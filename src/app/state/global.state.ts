@@ -1,12 +1,12 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { config } from '../../assets/config';
 import elementsJson from '../../assets/tables/elements.json';
-import radDecayModesJson from '../../assets/tables/radiationdecaymodes.json';
-import radTypesJson from '../../assets/tables/radiationtypes.json';
+import radDecayModesJson from '../../assets/tables/radiation-decay-modes.json';
+import radTypesJson from '../../assets/tables/radiation-types.json';
 import { IElementDataModel } from '../core/element.data.model';
 import { ILookupDataModel } from '../core/lookup..data.model';
+import sortFieldsJson from '../../assets/tables/reaction-result-sort-fields.json';
 import { ElementActions, LookupActions, PageActions } from './global.actions';
-import { ENTITY_CACHE_META_REDUCERS } from '@ngrx/data';
 
 export interface GlobalState {
   pageTitle: string;
@@ -22,6 +22,7 @@ export interface GlobalState {
   lookups: ILookupDataModel[];
   radiationTypes: ILookupDataModel[];
   radiationDecayModes: ILookupDataModel[];
+  reactionSortFields: ILookupDataModel[];
 }
 
 const loadElements = () => {
@@ -39,8 +40,9 @@ export const globalInitialState: GlobalState = {
   lookupsLoading: false,
   elements: elementsJson.map(row => {return {Z: row.z, E: row.e, EName: row.ename}}),
   lookups: [],
-  radiationTypes: [],
-  radiationDecayModes: []
+  radiationDecayModes: radDecayModesJson.map(row => {return {category: 'RDM', code: row.code, description: row.description}}),
+  radiationTypes: radTypesJson.map(row => {return {category: 'RT', code: row.code, description: row.description}}),
+  reactionSortFields: sortFieldsJson.map(row => {return {category: 'SORT', code: row.code, description: row.description}}),
 };
 
 export const globalFeature = createFeature({
@@ -93,10 +95,6 @@ export const globalFeature = createFeature({
         lookupsReady: true,
         lookupsLoading: false,
         lookups: action.lookups,
-        radiationDecayModes: action.lookups.filter(
-          (item) => item.category === 'RDM'
-        ),
-        radiationTypes: action.lookups.filter((item) => item.category === 'RT')
       };
     }),
     on(PageActions.enter, (state, action) => {
@@ -107,31 +105,10 @@ export const globalFeature = createFeature({
         ...state,
         elements: elementsJson.map(row => {return {Z: row.z, E: row.e, EName: row.ename}}),
         lookups: [],
-        radiationDecayModes: radDecayModesJson.map(row => {return {category: 'RDM', code: row.code, description: row.description}}),
-        radiationTypes: radTypesJson.map(row => {return {category: 'RT', code: row.code, description: row.description}}),
-        elementsLoading: true,
-        elementsReady: false,
         lookupsLoading: true,
         lookupsReady: false
       };
     }),
-/*     on(PageActions.loadGlobalsSuccess, (state, action) => {
-      return {
-        ...state,
-        elements: action.results.elements,
-        lookups: action.results.lookups,
-        radiationDecayModes: action.results.lookups.filter(
-          (item) => item.category === 'RDM'
-        ),
-        radiationTypes: action.results.lookups.filter(
-          (item) => item.category === 'RT'
-        ),
-        elementsLoading: false,
-        elementsReady: true,
-        lookupsLoading: false,
-        lookupsReady: true
-      };
-    }), */
     on(PageActions.setPageTitle, (state, action) => {
       return {
         ...state,
@@ -168,11 +145,11 @@ export const {
   selectPageTitle,
   selectRadiationDecayModes,
   selectRadiationTypes,
+  selectReactionSortFields,
   selectShowMenu,
   selectShowMenuText
 } = globalFeature;
-// export const globalSelectors = {};
-// export const selectGlobalState = createFeatureSelector<GlobalState>('global');
+
 
 /**
  * Effects
