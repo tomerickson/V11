@@ -5,7 +5,9 @@
  .mat-expansion-panel-header.mat-expanded:hover {
    background-color: rgba(250, 250, 250, .5);
  }
-
+.mat-card-content {
+  width: 100%;
+}
  mat-expansion-panel#blurb {
   margin-bottom: 1rex;
  }
@@ -14,13 +16,14 @@
    display: flex;
    flex-direction: row;
    align-items: stretch;
-   justify-content: stretch;
+   justify-content: space-around;
    margin-bottom: 1rex;
-   > div {
-    flex: 1;
-   }
  }
-
+ div.vl {
+  border-left: 1px solid darkgray;
+  margin-top: 1ex;
+  margin-bottom: 1ex;
+}
  div.sql {
    width: 100%;
    display: flex;

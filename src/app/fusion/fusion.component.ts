@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  inject
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -51,8 +57,7 @@ import { HttpClient } from '@angular/common/http';
   ],
   providers: [{ provide: HeaderProviderService }]
 })
-export class FusionComponent implements OnInit, OnDestroy {
-
+export class FusionComponent implements OnInit, OnDestroy, AfterContentInit {
   /**
    * for testing
    */
@@ -76,19 +81,73 @@ export class FusionComponent implements OnInit, OnDestroy {
 
   execute_query(): void {
     const formData: FormData = new FormData();
+    const leftNeutrinos = this.fusionForm.get(
+      'resultNuclides.leftNeutrinos'
+    )?.value;
+    const noNeutrinos = this.fusionForm.get(
+      'resultNuclides.noNeutrinos'
+    )?.value;
+    const rightNeutrinos = this.fusionForm.get(
+      'resultNuclides.rightNeutrinos'
+    )?.value;
+    const leftNuclearBosons = this.fusionForm.get(
+      'leftNuclides.nuclearBosons'
+    )?.value;
+    const leftNuclearFermions = this.fusionForm.get(
+      'leftNuclides.nuclearFermions'
+    )?.value;
+    const leftAtomicBosons = this.fusionForm.get(
+      'leftNuclides.atomicBosons'
+    )?.value;
+    const leftAtomicFermions = this.fusionForm.get(
+      'leftNuclides.atomicFermions'
+    )?.value;
+    const rightNuclearBosons = this.fusionForm.get(
+      'rightNuclides.nuclearBosons'
+    )?.value;
+    const rightNuclearFermions = this.fusionForm.get(
+      'rightNuclides.nuclearFermions'
+    )?.value;
+    const rightAtomicBosons = this.fusionForm.get(
+      'rightNuclides.atomicBosons'
+    )?.value;
+    const rightAtomicFermions = this.fusionForm.get(
+      'rightNuclides.atomicFermions'
+    )?.value;
+    const resultNuclearBosons = this.fusionForm.get(
+      'resultNuclides.nuclearBosons'
+    )?.value;
+    const resultNuclearFermions = this.fusionForm.get(
+      'resultNuclides.nuclearFermions'
+    )?.value;
+    const resultAtomicBosons = this.fusionForm.get(
+      'resultNuclides.atomicBosons'
+    )?.value;
+    const resultAtomicFermions = this.fusionForm.get(
+      'resultNuclides.atomicFermions'
+    )?.value;
     formData.append('doit', 'execute_query');
     formData.append('query', this.fusionForm.get('coreQuery')?.value);
     formData.append('table_name', this.fusionForm.get('tableSet')?.value);
-
-    this.http
-      .post('http://localhost:4000/api/create-user', formData)
-      .subscribe({
-        next: (response) => console.log(response),
-        error: (error) => console.log(error),
-      });
+    if (leftNeutrinos) {
+      formData.append('sql_tables[]', 'left');
     }
+    if (noNeutrinos) {
+      formData.append('sql_tables[]', 'none');
+    }
+    if (rightNeutrinos) {
+      formData.append('sql_tables[]', 'right');
+    }
+    console.log(formData);
+    // this.http
+    //   .post('http://localhost:4000/api/create-user', formData)
+    //   .subscribe({
+    //     next: (response) => console.log(response),
+    //     error: (error) => console.log(error),
+    //   });
+  }
 
-/*
+  /*
 doit: execute_query
 query: E1 in ('H','Na') and E2 in ('C','N') order by MeV desc limit 1000
 table_name: FusionAll
@@ -103,7 +162,6 @@ nBorF_filter: bf
 aBorF_filter: bf;
 */
 
-
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -113,8 +171,13 @@ aBorF_filter: bf;
     this.sortFields = this.store.select(globalFeature.selectReactionSortFields);
     this.headerService.buildPageHeader('fusion');
     this.buildForm();
+    this.leftNuclides = this.fusionForm.get('leftNuclides') as FormGroup;
+    this.rightNuclides = this.fusionForm.get('rightNuclides') as FormGroup;
+    this.resultNuclides = this.fusionForm.get('resultNuclides') as FormGroup;
     this.ready.next(true);
   }
+
+  ngAfterContentInit(): void {}
 
   buildForm = () => {
     this.fusionForm = this.fb.nonNullable.group({
@@ -129,7 +192,9 @@ aBorF_filter: bf;
         atomicFermions: new FormControl(true),
         nuclearBosons: new FormControl(true),
         nuclearFermions: new FormControl(true),
-        neutrinos: new FormControl('2', { nonNullable: true })
+        leftNeutrinos: new FormControl(true),
+        noNeutrinos: new FormControl(true),
+        rightNeutrinos: new FormControl(true)
       }),
       rightNuclides: this.fb.nonNullable.group({
         selectedElements: new FormControl(''),
@@ -137,7 +202,9 @@ aBorF_filter: bf;
         atomicFermions: new FormControl(true),
         nuclearBosons: new FormControl(true),
         nuclearFermions: new FormControl(true),
-        neutrinos: new FormControl('2', { nonNullable: true })
+        leftNeutrinos: new FormControl(true),
+        noNeutrinos: new FormControl(true),
+        rightNeutrinos: new FormControl(true)
       }),
       resultNuclides: this.fb.nonNullable.group({
         selectedElements: new FormControl(''),
@@ -145,7 +212,9 @@ aBorF_filter: bf;
         atomicFermions: new FormControl(true),
         nuclearBosons: new FormControl(true),
         nuclearFermions: new FormControl(true),
-        neutrinos: new FormControl('2', { nonNullable: true })
+        leftNeutrinos: new FormControl(true),
+        noNeutrinos: new FormControl(true),
+        rightNeutrinos: new FormControl(true)
       })
     });
     this.subscriptions.add(
@@ -169,16 +238,14 @@ aBorF_filter: bf;
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true,
-        neutrinos: '2'
+        nuclearFermions: true
       },
       rightNuclides: {
         selectedElements: null,
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true,
-        neutrinos: '2'
+        nuclearFermions: true
       },
       resultNuclides: {
         selectedElements: null,
@@ -186,7 +253,9 @@ aBorF_filter: bf;
         atomicFermions: true,
         nuclearBosons: true,
         nuclearFermions: true,
-        neutrinos: '2'
+        leftNeutrinos: true,
+        noNeutrinos: true,
+        rightNeutrinos: true
       }
     });
     this.handleFormChanges(this.fusionForm.value);
@@ -215,7 +284,9 @@ aBorF_filter: bf;
     rightElements: string[] | null
   ) => {
     let resultElements = this.combineElements(leftElements, rightElements);
-    this.fusionForm.get('resultNuclides.selectedElements')?.patchValue(resultElements, {onlySelf: true, emitEvents: false})
+    this.fusionForm
+      .get('resultNuclides.selectedElements')
+      ?.patchValue(resultElements, { onlySelf: true, emitEvents: false });
   };
 
   /**
@@ -237,13 +308,13 @@ aBorF_filter: bf;
     /**
      * @remarks
      * This is a hack.
-     * 
+     *
      * Valuechanges is firing twice when patchValue is called
      * inspite of the emitEvents: false
-     * 
+     *
      * Using the sortDescendingProxy to hold the valid
      * state of the sortDescending property.
-     * 
+     *
      */
     if (typeof sortDescending === 'boolean') {
       this.sortDescendingProxy = sortDescending;
@@ -269,7 +340,9 @@ aBorF_filter: bf;
       query += ` limit ${resultLimit}`;
     }
     // this.fusionForm.patchValue({coreQuery: query}, {onlySelf: true, emitEvent: false})
-    this.fusionForm.get('coreQuery')?.patchValue(query, {onlySelf: true, emitEvent: false})
+    this.fusionForm
+      .get('coreQuery')
+      ?.patchValue(query, { onlySelf: true, emitEvent: false });
   };
 
   /**

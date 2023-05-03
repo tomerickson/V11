@@ -1,5 +1,5 @@
-<ng-container formGroup="form" class="flexcolumn">
-    <section name="Spin" *ngIf="role === 'query'">
+  <ng-container *ngIf="form" [formGroup]="form" class="flexcolumn">
+    <section name="Spin">
         <mat-expansion-panel
           class="mat-elevation-z0"
           displayMode="flat"
@@ -7,36 +7,16 @@
           <mat-expansion-panel-header>Spin:</mat-expansion-panel-header>
         </mat-expansion-panel>
         <div class="flexrow">
-          <div>
+          <div class="flexcolumn">
             <mat-label>Atomic</mat-label>
-            <mat-checkbox
-              formControlName="atomicBosons"
-              checked="true"
-              value="1">
-              Boson
-            </mat-checkbox>
-            <mat-checkbox
-              formControlName="atomicFermions"
-              checked="true"
-              value="2">
-              Fermion
-            </mat-checkbox>
+            <mat-checkbox formControlName="atomicBosons">Boson</mat-checkbox>
+            <mat-checkbox formControlName="atomicFermions">Fermion</mat-checkbox>
           </div>
-          <div>
+          <div class="flexcolumn">
             <mat-label>Nuclear</mat-label>
-            <mat-checkbox
-              formControlName="nuclearBosons"
-              checked="true"
-              value="1">
-              Boson
-            </mat-checkbox>
-            <mat-checkbox
-              formControlName="nuclearFermions"
-              checked="true"
-              value="2">
-              Fermion
-            </mat-checkbox>
+            <mat-checkbox formControlName="nuclearBosons">Boson</mat-checkbox>
+            <mat-checkbox formControlName="nuclearFermions">Fermion</mat-checkbox>
           </div>
         </div>
       </section>
-</ng-container>
+  </ng-container>

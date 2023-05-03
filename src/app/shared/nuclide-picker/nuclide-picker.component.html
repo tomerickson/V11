@@ -1,9 +1,8 @@
-<ng-container [formGroup]="form" class="flexcolumn">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{ title }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+<ng-container *ngIf="form" [formGroup]="form" class="flexcolumn">
+    <section class="margins">
+      <header>
+        <h2>{{ title }}</h2>
+      </header>
       <section [className]="'elements'">
         <mat-form-field
           formControlName="selectedElements"
@@ -17,87 +16,33 @@
             [placeholder]="
               role === 'query' ? 'click here to begin.' : 'selected elements.'
             ">
-            <ng-container *ngIf="true">
               <mat-option
                 [disabled]="role == 'result'"
                 *ngFor="let element of elements"
                 [value]="element.E">
                 {{ this.elementOptionValue(element) }}
               </mat-option>
-            </ng-container>
           </mat-select>
         </mat-form-field>
       </section>
-      <!-- <section name="Spin" *ngIf="role === 'query'">
-        <mat-expansion-panel
-          class="mat-elevation-z0"
-          displayMode="flat"
-          hideToggle="true">
-          <mat-expansion-panel-header>Spin:</mat-expansion-panel-header>
-        </mat-expansion-panel>
-        <div class="flexrow">
-          <div>
-            <mat-label>Atomic</mat-label>
-            <mat-checkbox
-              formControlName="atomicBosons"
-              checked="true"
-              value="1">
-              Boson
-            </mat-checkbox>
-            <mat-checkbox
-              formControlName="atomicFermions"
-              checked="true"
-              value="2">
-              Fermion
-            </mat-checkbox>
-          </div>
-          <div>
-            <mat-label>Nuclear</mat-label>
-            <mat-checkbox
-              formControlName="nuclearBosons"
-              checked="true"
-              value="1">
-              Boson
-            </mat-checkbox>
-            <mat-checkbox
-              formControlName="nuclearFermions"
-              checked="true"
-              value="2">
-              Fermion
-            </mat-checkbox>
-          </div>
-        </div>
-      </section> -->
-      <mfmp-spin-picker [title]="'Spin'" [role]="role" [formGroupName]="formGroupName"></mfmp-spin-picker>
-      <section *ngIf="role === 'result'">
+      <mfmp-spin-picker
+        [title]="'Spin'"
+        [role]="role"
+        [formGroupName]="formGroupName"
+        [form]="form">
+      </mfmp-spin-picker>
+      <section *ngIf="role === 'result'" class="flexcolumn">
         <mat-expansion-panel class="mat-elevation-z0" expanded="false">
           <mat-expansion-panel-header>
             Neutrino contributions:
           </mat-expansion-panel-header>
           <p>You can click below to report neutrino contributions'</p>
         </mat-expansion-panel>
-        <mat-radio-group formControlName="neutrinos" labelPosition="before">
-          <mat-radio-button
-            title="Report ONLY neutrino interactions"
-            value="1"
-            selected="value==neutrinos">
-            Only
-          </mat-radio-button>
-          <mat-radio-button
-            title="Exclude neutrino interactions"
-            value="0"
-            selected="value==neutrinos">
-            None
-          </mat-radio-button>
-          <mat-radio-button
-            selected="true"
-            title="Report w/wo neutrino interactions"
-            value="2"
-            selected="value==neutrinos">
-            Either
-          </mat-radio-button>
-        </mat-radio-group>
+        <div>
+          <mat-checkbox formControlName="leftNeutrinos">Left</mat-checkbox>
+          <mat-checkbox formControlName="noNeutrinos">None</mat-checkbox>
+          <mat-checkbox formControlName="rightNeutrinos">Right</mat-checkbox>
+        </div>
       </section>
-    </mat-card-content>
-  </mat-card>
+    </section>
 </ng-container>

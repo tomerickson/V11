@@ -12,12 +12,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { IElementDataModel } from '../../core/element.data.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatInputModule} from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SpinPickerComponent } from '../spin-picker/spin-picker.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'mfmp-nuclide-picker',
@@ -37,34 +39,37 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatSelectModule,
     MatSlideToggleModule,
     MatTooltipModule,
+    SpinPickerComponent
   ]
 })
-export class NuclidePickerComponent
-  implements OnInit
-{
+export class NuclidePickerComponent implements OnInit {
   @Input() title!: string | null;
   @Input() role!: string;
   @Input() elements!: IElementDataModel[] | null;
   @Input() formGroupName!: string; // the subgroup in fusionForm
+  @Input() form!: FormGroup;
 
-  form!: FormGroup;
+  ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   spinPanelState = 0;
 
-  constructor(private fb: FormBuilder, private fgd: FormGroupDirective){
-  }
+  constructor(private fb: FormBuilder, private fgd: FormGroupDirective) {}
+
   ngOnInit(): void {
-    this.form = this.fgd.control.get(this.formGroupName) as FormGroup;
+    // this.form = this.fgd.control.get(this.formGroupName) as FormGroup;
+    this.ready.next(true);
   }
-  viewProviders: [
-    { provide: ControlContainer; useExisting: FormGroupDirective; }
-  ] | undefined
+
+  viewProviders:
+    | [{ provide: ControlContainer; useExisting: FormGroupDirective }]
+    | undefined;
 
   toggleSpinState = () => {
     this.spinPanelState = this.spinPanelState++ % 2;
-  }
+  };
 
   elementOptionValue = (element: IElementDataModel): string => {
-    return (this.role === 'query') ? element.E + ' - ' + element.EName : element.E;
-  }
-
+    return this.role === 'query'
+      ? element.E + ' - ' + element.EName
+      : element.E;
+  };
 }

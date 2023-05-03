@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoComponent } from './app/demo/demo.component';
+import { UnderConstructionComponent } from './app/under-construction/under-construction.component';
 
 const initAppFn = (configService: AppConfigService) => {
   return () => configService.validateConfiguration();
@@ -53,7 +54,7 @@ const routes: Routes = [
     path: 'demo',
     component: DemoComponent
   },
-  { path: '**', component: PageNotFoundComponent }
+  { path: '**', component: UnderConstructionComponent }
 ];
 
 bootstrapApplication(AppComponent, {
