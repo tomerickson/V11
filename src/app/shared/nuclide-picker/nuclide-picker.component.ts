@@ -15,6 +15,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule} from '@angular/material/input'
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
@@ -34,6 +35,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
+    MatSlideToggleModule,
     MatTooltipModule,
     MatInputModule
   ]
@@ -60,6 +62,10 @@ export class NuclidePickerComponent
 
   toggleSpinState = () => {
     this.spinPanelState = this.spinPanelState++ % 2;
+  }
+
+  elementOptionValue = (element: IElementDataModel): string => {
+    return (this.role === 'query') ? element.E + ' - ' + element.EName : element.E;
   }
 
 }

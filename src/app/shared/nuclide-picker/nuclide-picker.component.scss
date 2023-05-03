@@ -7,9 +7,6 @@
  section.hidden {
   visibility: hidden;
 }
-section.dead {
-  display: none;
-}
 section.elements {
   display: flex;
   flex-direction: row;
@@ -33,13 +30,15 @@ div.flexrow {
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: stretch;
   justify-content: space-around;
 }
 
 div.flexcolumn {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
 }
 
 .rj {

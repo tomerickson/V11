@@ -13,11 +13,11 @@
  div.nuclides {
    display: flex;
    flex-direction: row;
-   align-items: flex-end;
+   align-items: stretch;
+   justify-content: stretch;
    margin-bottom: 1rex;
-
-   div {
-     flex: 1;
+   > div {
+    flex: 1;
    }
  }
 

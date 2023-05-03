@@ -100,32 +100,32 @@
           </p>
         </div>
       </mat-expansion-panel>
-      <div class="nuclides">
-        <div>
-          <mfmp-nuclide-picker
-            *ngIf="fusionForm"
-            [role]="'query'"
-            [title]="'Left side'"
-            formGroupName="leftNuclides"
-            [elements]="elements | async"></mfmp-nuclide-picker>
+        <div class="nuclides">
+          <div>
+            <mfmp-nuclide-picker
+              *ngIf="fusionForm"
+              [role]="'query'"
+              [title]="'Left side (E1)'"
+              formGroupName="leftNuclides"
+              [elements]="elements | async"></mfmp-nuclide-picker>
+          </div>
+          <div>
+            <mfmp-nuclide-picker
+              *ngIf="fusionForm"
+              [role]="'query'"
+              [title]="'Right side (E2)'"
+              formGroupName="rightNuclides"
+              [elements]="elements | async"></mfmp-nuclide-picker>
+          </div>
+          <div>
+            <mfmp-nuclide-picker
+              *ngIf="fusionForm"
+              [role]="'result'"
+              [title]="'Results'"
+              formGroupName="resultNuclides"
+              [elements]="elements | async"></mfmp-nuclide-picker>
+          </div>
         </div>
-        <div>
-          <mfmp-nuclide-picker
-            *ngIf="fusionForm"
-            [role]="'query'"
-            [title]="'Right side'"
-            formGroupName="rightNuclides"
-            [elements]="elements | async"></mfmp-nuclide-picker>
-        </div>
-        <div>
-          <mfmp-nuclide-picker
-            *ngIf="fusionForm"
-            [role]="'result'"
-            [title]="'Results'"
-            formGroupName="resultNuclides"
-            [elements]="elements | async"></mfmp-nuclide-picker>
-        </div>
-      </div>
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>Tables</mat-expansion-panel-header>
         <p>
@@ -164,13 +164,16 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            </div>
-            <div>
-              <form-field formControlName="sortDescending" ngDefaultControl>
-                <mat-checkbox title="when checked." formControlName="sortDescending"
-                checked="false" >Descending</mat-checkbox>
-              </form-field>
-            </div>
+          </div>
+          <div>
+            <form-field formControlName="sortDescending" ngDefaultControl>
+              <mat-checkbox
+                title="when checked."
+                formControlName="sortDescending">
+                Descending
+              </mat-checkbox>
+            </form-field>
+          </div>
         </div>
       </mat-expansion-panel>
       <mat-card class="coreQuery">
@@ -182,8 +185,7 @@
               formControlName="coreQuery"
               placeholder="core query"
               value="coreQuery"
-              readonly
-              ngDefaultControl />
+              readonly />
           </mat-form-field>
         </mat-card-content>
       </mat-card>
