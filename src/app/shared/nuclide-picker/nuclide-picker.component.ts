@@ -37,7 +37,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatSelectModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    MatInputModule
   ]
 })
 export class NuclidePickerComponent

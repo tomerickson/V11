@@ -3,6 +3,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { NotificationComponent } from "./core/notification.component";
 import { DemoComponent } from './demo/demo.component';
+import { SharedComponent } from './shared/shared.component';
 
 /*
 import { CommonModule } from '@angular/common';
@@ -82,7 +83,8 @@ export class AppModule {}
   imports: [MatSnackBarModule, MatDialogModule],
   providers: [MatSnackBarModule, MatDialogModule, NotificationComponent],
   declarations: [
-    DemoComponent
+    DemoComponent,
+    SharedComponent
   ],
 })
 export class AppModule {}
