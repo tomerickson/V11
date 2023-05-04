@@ -5,11 +5,13 @@
  .mat-expansion-panel-header.mat-expanded:hover {
    background-color: rgba(250, 250, 250, .5);
  }
-.mat-card-content {
-  width: 100%;
-}
+
+ .mat-card-content {
+   width: 100%;
+ }
+
  mat-expansion-panel#blurb {
-  margin-bottom: 1rex;
+   margin-bottom: 1rex;
  }
 
  div.nuclides {
@@ -19,11 +21,13 @@
    justify-content: space-around;
    margin-bottom: 1rex;
  }
+
  div.vl {
-  border-left: 1px solid darkgray;
-  margin-top: 1ex;
-  margin-bottom: 1ex;
-}
+   border-left: 1px solid darkgray;
+   margin-top: 1ex;
+   margin-bottom: 1ex;
+ }
+
  div.sql {
    width: 100%;
    display: flex;
@@ -34,6 +38,26 @@
  mat-card.coreQuery {
    mat-form-field {
      width: 100%;
+   }
+ }
+
+ div.coreQuery {
+   padding: 1em;
+   display: flex;
+   flex-direction: row;
+   justify-content: stretch;
+
+   :first-child {
+     display: block;
+     flex: 1;
+   }
+
+   :last-child {
+     display: block;
+     flex: 4;
+     border-radius: 5px;
+     border: 1px solid #ccc;
+     box-shadow: 1px 1px 1px #999;
    }
  }
 
@@ -52,18 +76,31 @@
    }
  }
 
+ div.flexrow {
+   width: 100%;
+   display: flex;
+   flex-direction: row;
+   justify-content: stretch;
+
+   >div {
+     flex: 1;
+   }
+ }
+
+ .fill {
+   margin: 1em;
+ }
+
  div.resultLimit {
    display: flex;
    flex-direction: row;
+   justify-content: stretch;
 
-   div {
-     width: 100%;
-
-     mat-slider {
-       width: 30%;
-     }
+   mat-slider {
+     width: 30%;
    }
  }
+
 
  p.header {
    text-overflow: ellipsis;

@@ -174,48 +174,58 @@
       </mat-expansion-panel>
       <mat-card class="coreQuery">
         <mat-card-content>
-          <mat-form-field formControlName="coreQuery" ngDefaultControl>
-            <mat-label>Core Query</mat-label>
-            <input
-              matInput
-              formControlName="coreQuery"
-              placeholder="core query"
-              value="coreQuery"
-              readonly />
-          </mat-form-field>
+          <div class="flexrow">
+            <div class="coreQuery">
+                <mat-label>Core Query</mat-label>
+                <textarea
+                  matInput
+                  formControlName="coreQuery"
+                  title="'core query'"
+                  value="coreQuery"
+                  rows="4"
+                  readonly></textarea>
+            </div>
+            <div>
+              <div class="resultLimitHeader">
+                <span>
+                  Limit results to
+                  {{ fusionForm.get('resultLimit')?.value }} rows.
+                </span>
+                <span>Use the slider below to change the result limit.</span>
+              </div>
+              <div class="resultLimit">
+                <form-field formControlName="resultLimit" ngDefaultControl>
+                  <mat-slider
+                    [min]="0"
+                    [max]="1000"
+                    [step]="50"
+                    showTickMarks="true"
+                    discrete>
+                    <input
+                      placeholder="thumb"
+                      matSliderThumb
+                      [value]="getResultLimit()" />
+                  </mat-slider>
+                </form-field>
+              </div>
+            </div>
+          </div>
         </mat-card-content>
       </mat-card>
-      <mat-expansion-panel *ngIf="ready" expanded="true">
-        <mat-expansion-panel-header class="resultLimit" title="Results">
-          <span class="resultLimitHeader">
-            <span>
-              Limit results to {{ fusionForm.value['resultLimit'] }} rows.
-            </span>
-            <span>Use the slider below to change the result limit.</span>
-          </span>
-        </mat-expansion-panel-header>
-        <div class="resultLimit">
-          <div>
-            <mat-slider
-              [min]="0"
-              [max]="1000"
-              [step]="50"
-              showTickMarks="true"
-              discrete>
-              <input
-                placeholder="thumb"
-                matSliderThumb
-                formControlName="resultLimit" />
-            </mat-slider>
-          </div>
-        </div>
-      </mat-expansion-panel>
     </mat-card-content>
     <mat-card-actions align="end">
       <button type="button" mat-raised-button (click)="resetForm()">
         RESET
       </button>
-      <button type="button" mat-raised-button color="primary" (click)="execute_query()">SUBMIT</button>
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        tooltip="(submittable) ? '' : 'Select elements to continue.'"
+        [disabled]="fusionForm.pristine || !fusionForm.valid"
+        (click)="execute_query()">
+        SUBMIT
+      </button>
     </mat-card-actions>
   </mat-card>
 </form>

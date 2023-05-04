@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import {
   AfterContentInit,
   Component,
@@ -14,25 +15,23 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IElementDataModel } from '../core/element.data.model';
-import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
-import { Store } from '@ngrx/store';
-import { HeaderProviderService } from '../shared/header/header.provider.service';
-import { MatSelectModule } from '@angular/material/select';
 import { ILookupDataModel } from '../core/lookup..data.model';
+import { HeaderProviderService } from '../shared/header/header.provider.service';
+import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
 import { globalFeature } from '../state';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { HttpClient } from '@angular/common/http';
-// import { ComponentStore } from '@ngrx/component-store';
-// import { FusionComponentStore } from './fusion-component.state';
+import { missingElementsValidator } from './fusion-form.validator';
 
 @Component({
   standalone: true,
@@ -58,9 +57,6 @@ import { HttpClient } from '@angular/common/http';
   providers: [{ provide: HeaderProviderService }]
 })
 export class FusionComponent implements OnInit, OnDestroy, AfterContentInit {
-  /**
-   * for testing
-   */
   http!: HttpClient;
   store = inject(Store);
   fb: FormBuilder = inject(FormBuilder);
@@ -73,8 +69,9 @@ export class FusionComponent implements OnInit, OnDestroy, AfterContentInit {
   ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   subscriptions: Subscription = new Subscription();
   sortDescendingProxy!: boolean;
+  submittable = false;
 
-  description =
+  readonly description =
     'This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov\'s spreadsheets.';
 
   constructor(private headerService: HeaderProviderService) {}
@@ -180,75 +177,84 @@ aBorF_filter: bf;
   ngAfterContentInit(): void {}
 
   buildForm = () => {
-    this.fusionForm = this.fb.nonNullable.group({
-      tableSet: new FormControl('FusionAll', { nonNullable: true }),
-      coreQuery: new FormControl(''),
-      resultLimit: new FormControl(1000),
-      orderBy: new FormControl('MeV'),
-      sortDescending: new FormControl(true),
-      leftNuclides: this.fb.nonNullable.group({
-        selectedElements: new FormControl(''),
-        atomicBosons: new FormControl(true),
-        atomicFermions: new FormControl(true),
-        nuclearBosons: new FormControl(true),
-        nuclearFermions: new FormControl(true),
-        leftNeutrinos: new FormControl(true),
-        noNeutrinos: new FormControl(true),
-        rightNeutrinos: new FormControl(true)
-      }),
-      rightNuclides: this.fb.nonNullable.group({
-        selectedElements: new FormControl(''),
-        atomicBosons: new FormControl(true),
-        atomicFermions: new FormControl(true),
-        nuclearBosons: new FormControl(true),
-        nuclearFermions: new FormControl(true),
-        leftNeutrinos: new FormControl(true),
-        noNeutrinos: new FormControl(true),
-        rightNeutrinos: new FormControl(true)
-      }),
-      resultNuclides: this.fb.nonNullable.group({
-        selectedElements: new FormControl(''),
-        atomicBosons: new FormControl(true),
-        atomicFermions: new FormControl(true),
-        nuclearBosons: new FormControl(true),
-        nuclearFermions: new FormControl(true),
-        leftNeutrinos: new FormControl(true),
-        noNeutrinos: new FormControl(true),
-        rightNeutrinos: new FormControl(true)
-      })
-    });
+    this.fusionForm = this.fb.nonNullable.group(
+      {
+        tableSet: new FormControl('FusionAll', { nonNullable: true }),
+        coreQuery: new FormControl(''),
+        resultLimit: new FormControl(1000),
+        orderBy: new FormControl('MeV'),
+        sortDescending: new FormControl(true),
+        leftNuclides: this.fb.nonNullable.group({
+          selectedElements: new FormControl(''),
+          atomicBosons: new FormControl(true),
+          atomicFermions: new FormControl(true),
+          nuclearBosons: new FormControl(true),
+          nuclearFermions: new FormControl(true),
+          leftNeutrinos: new FormControl(true),
+          noNeutrinos: new FormControl(true),
+          rightNeutrinos: new FormControl(true)
+        }),
+        rightNuclides: this.fb.nonNullable.group({
+          selectedElements: new FormControl(''),
+          atomicBosons: new FormControl(true),
+          atomicFermions: new FormControl(true),
+          nuclearBosons: new FormControl(true),
+          nuclearFermions: new FormControl(true),
+          leftNeutrinos: new FormControl(true),
+          noNeutrinos: new FormControl(true),
+          rightNeutrinos: new FormControl(true)
+        }),
+        resultNuclides: this.fb.nonNullable.group({
+          selectedElements: new FormControl(''),
+          atomicBosons: new FormControl(true),
+          atomicFermions: new FormControl(true),
+          nuclearBosons: new FormControl(true),
+          nuclearFermions: new FormControl(true),
+          leftNeutrinos: new FormControl(true),
+          noNeutrinos: new FormControl(true),
+          rightNeutrinos: new FormControl(true)
+        })
+      },
+      { validators: missingElementsValidator }
+    );
     this.subscriptions.add(
       this.fusionForm.valueChanges.subscribe((data) => {
         this.handleFormChanges(data);
         console.log(data);
       })
     );
-    this.handleFormChanges(this.fusionForm.value);
+    // this.handleFormChanges(this.fusionForm.value);
   };
 
   resetForm = () => {
     this.fusionForm.reset({
       tableSet: 'FusionAll',
       coreQuery: '',
-      orderBy: '',
+      orderBy: 'MeV',
       sortDescending: true,
       resultLimit: 1000,
       leftNuclides: {
-        selectedElements: null,
+        selectedElements: [],
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true
+        nuclearFermions: true,
+        leftNeutrinos: true,
+        noNeutrinos: true,
+        rightNeutrinos: true
       },
       rightNuclides: {
-        selectedElements: null,
+        selectedElements: [],
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true
+        nuclearFermions: true,
+        leftNeutrinos: true,
+        noNeutrinos: true,
+        rightNeutrinos: true
       },
       resultNuclides: {
-        selectedElements: null,
+        selectedElements: [],
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
@@ -258,6 +264,8 @@ aBorF_filter: bf;
         rightNeutrinos: true
       }
     });
+    // To initialize coreQuery
+    //
     this.handleFormChanges(this.fusionForm.value);
   };
 
@@ -270,7 +278,12 @@ aBorF_filter: bf;
     const rightElements = changes?.rightNuclides.selectedElements;
     this.buildResultElements(leftElements, rightElements);
     this.buildCoreQuery(changes, leftElements, rightElements);
+    this.submittable = this.fusionForm.valid;
   };
+
+  getResultLimit = (): number => {
+    return this.fusionForm.get('resultLimit')?.value;
+  } 
 
   /**
    * concatenate the elements selected  in the
@@ -323,12 +336,16 @@ aBorF_filter: bf;
     }
 
     let query = '';
-    if (leftElements) {
-      query += `E1 in ('${leftElements.join("','")}')`;
+    if (leftElements == null) leftElements = [];
+    if (rightElements == null) rightElements = [];
+    if (leftElements.length > 0) {
+      query += `E1 in ${this.combineElements(leftElements, null, true)}`;
     }
-    if (rightElements) {
-      if (leftElements) query += ' and ';
-      query += `E2 in ('${rightElements.join("','")}')`;
+    if (rightElements.length > 0) {
+      if (leftElements.length > 0) {
+        query += ' and ';
+      }
+      query += `E2 in ${this.combineElements(rightElements, null, true)}`;
     }
     if (orderBy) {
       query += ` order by ${orderBy}`;
@@ -345,23 +362,38 @@ aBorF_filter: bf;
       ?.patchValue(query, { onlySelf: true, emitEvent: false });
   };
 
-  /**
-   * Concatenate the selected elements arrays
-   * and convert them to a quoted string
-   * @param leftElements
-   * @param rightElements
-   * @returns
-   */
+/**
+ * 
+ * @param leftElements 
+ * @param rightElements 
+ * @param stringify 
+ * @returns combined elements
+ * @description if stringify is true, combine
+ */
   combineElements = (
     leftElements: string[] | null,
-    rightElements: string[] | null
-  ): string[] | null => {
+    rightElements: string[] | null,
+    stringify: boolean = false
+  ): string[] | null | string => {
     if (leftElements || rightElements) {
-      return leftElements && rightElements
-        ? leftElements.concat(rightElements)
-        : !leftElements
-        ? rightElements
-        : leftElements;
+      let result: string | string[] ;
+      if (leftElements && rightElements) {
+        result = leftElements.concat(rightElements);
+      } else {
+        if (leftElements) {
+          result = leftElements;
+        } else {
+          if (rightElements) {
+            result = rightElements;
+          } else {
+            throw 'unreachable code reached!';
+          }
+        }
+      }
+      if(stringify) {
+        result = `('${result.join("','")}')`;
+      }
+      return result;
     } else {
       return null;
     }
