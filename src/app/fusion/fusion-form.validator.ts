@@ -11,16 +11,12 @@ import {
  * @param control
  * @returns
  */
-export const identityRevealedValidator: ValidatorFn = (
+export const elementsSelectedValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
-  const fusionForm = { ...control } as FormGroup;
-  const leftElements: string[] = fusionForm.get(
-    'leftNuclides.selectedElements'
-  )?.value;
-  const rightElements: string[] = fusionForm.get(
-    'rightNuclides.selectedElements'
-  )?.value;
+  const fusionForm = control as FormGroup;
+  const leftElements: string[] = control.get('leftNuclides.selectedElements')?.value;
+  const rightElements: string[] = control.get('rightNuclides.selectedElements')?.value;
   const name = control.get('name');
   const alterEgo = control.get('alterEgo');
 

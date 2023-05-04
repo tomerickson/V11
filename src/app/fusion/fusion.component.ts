@@ -31,6 +31,7 @@ import { ILookupDataModel } from '../core/lookup..data.model';
 import { globalFeature } from '../state';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HttpClient } from '@angular/common/http';
+import { elementsSelectedValidator } from './fusion-form.validator';
 // import { ComponentStore } from '@ngrx/component-store';
 // import { FusionComponentStore } from './fusion-component.state';
 
@@ -216,7 +217,7 @@ aBorF_filter: bf;
         noNeutrinos: new FormControl(true),
         rightNeutrinos: new FormControl(true)
       })
-    });
+    }, { validators: elementsSelectedValidator });
     this.subscriptions.add(
       this.fusionForm.valueChanges.subscribe((data) => {
         this.handleFormChanges(data);
@@ -230,7 +231,7 @@ aBorF_filter: bf;
     this.fusionForm.reset({
       tableSet: 'FusionAll',
       coreQuery: '',
-      orderBy: '',
+      orderBy: 'MeV',
       sortDescending: true,
       resultLimit: 1000,
       leftNuclides: {
@@ -238,14 +239,20 @@ aBorF_filter: bf;
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true
+        nuclearFermions: true,
+        leftNeutrinos: true,
+        noNeutrinos: true,
+        rightNeutrinos: true
       },
       rightNuclides: {
         selectedElements: null,
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true
+        nuclearFermions: true,
+        leftNeutrinos: true,
+        noNeutrinos: true,
+        rightNeutrinos: true
       },
       resultNuclides: {
         selectedElements: null,

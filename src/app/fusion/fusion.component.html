@@ -100,26 +100,26 @@
           </p>
         </div>
       </mat-expansion-panel>
-      <div class="nuclides mat-elevation-z2">
+      <div *ngIf="fusionForm" class="nuclides mat-elevation-z2">
         <mfmp-nuclide-picker
           [role]="'query'"
           [title]="'Left side (E1)'"
           [formGroupName]="'leftNuclides'"
-          [form]="leftNuclides"
+          [form]="fusionForm"
           [elements]="elements | async"></mfmp-nuclide-picker>
         <div class="vl"></div>
         <mfmp-nuclide-picker
           [role]="'query'"
           [title]="'Right side (E2)'"
           [formGroupName]="'rightNuclides'"
-          [form]="rightNuclides"
+          [form]="fusionForm"
           [elements]="elements | async"></mfmp-nuclide-picker>
         <div class="vl"></div>
         <mfmp-nuclide-picker
           [role]="'result'"
           [title]="'Results'"
           [formGroupName]="'resultNuclides'"
-          [form]="resultNuclides"
+          [form]="fusionForm"
           [elements]="elements | async"></mfmp-nuclide-picker>
       </div>
       <mat-expansion-panel expanded="true">
@@ -215,7 +215,7 @@
       <button type="button" mat-raised-button (click)="resetForm()">
         RESET
       </button>
-      <button type="button" mat-raised-button color="primary" (click)="execute_query()">SUBMIT</button>
-    </mat-card-actions>
+      <button type="button" [disabled]="this.fusionForm.invalid" mat-raised-button color="primary" (click)="execute_query()">SUBMIT</button>
+    </mat-card-actions>v
   </mat-card>
 </form>
