@@ -238,10 +238,7 @@ aBorF_filter: bf;
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true,
-        leftNeutrinos: true,
-        noNeutrinos: true,
-        rightNeutrinos: true
+        nuclearFermions: true
       },
       rightNuclides: {
         selectedElements: [],

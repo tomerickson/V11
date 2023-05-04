@@ -12,9 +12,7 @@
           <mat-select
             formControlName="selectedElements"
             multiple
-            [placeholder]="
-              role === 'query' ? 'click here to begin.' : 'selected elements.'
-            ">
+            [placeholder]="role === 'query' ? 'click here to begin.' : 'selected elements.'">
               <mat-option
                 [disabled]="role == 'result'"
                 *ngFor="let element of elements"
