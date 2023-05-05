@@ -100,12 +100,13 @@
           </p>
         </div>
       </mat-expansion-panel>
-      <div *ngIf="fusionForm" class="nuclides mat-elevation-z2">
+      <div class="nuclides mat-elevation-z2">
         <mfmp-nuclide-picker
           [role]="'query'"
           [title]="'Left side (E1)'"
           [formGroupName]="'leftNuclides'"
           [form]="fusionForm"
+          [caption]="'Left'"
           [elements]="elements | async"></mfmp-nuclide-picker>
         <div class="vl"></div>
         <mfmp-nuclide-picker
@@ -113,6 +114,7 @@
           [title]="'Right side (E2)'"
           [formGroupName]="'rightNuclides'"
           [form]="fusionForm"
+          [caption]="'Right'"
           [elements]="elements | async"></mfmp-nuclide-picker>
         <div class="vl"></div>
         <mfmp-nuclide-picker
@@ -120,6 +122,7 @@
           [title]="'Results'"
           [formGroupName]="'resultNuclides'"
           [form]="fusionForm"
+          [caption]="'Result'"
           [elements]="elements | async"></mfmp-nuclide-picker>
       </div>
       <mat-expansion-panel expanded="true">

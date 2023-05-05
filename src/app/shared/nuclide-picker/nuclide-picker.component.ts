@@ -1,25 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import {
-  ControlContainer,
   FormBuilder,
   FormGroup,
-  FormGroupDirective,
   ReactiveFormsModule
 } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatSelectModule } from '@angular/material/select';
-import { IElementDataModel } from '../../core/element.data.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { SpinPickerComponent } from '../spin-picker/spin-picker.component';
 import { BehaviorSubject } from 'rxjs';
+import { IElementDataModel } from '../../core/element.data.model';
+import { SpinPickerComponent } from '../spin-picker/spin-picker.component';
 
 @Component({
   selector: 'mfmp-nuclide-picker',
@@ -48,20 +46,20 @@ export class NuclidePickerComponent implements OnInit {
   @Input() elements!: IElementDataModel[] | null;
   @Input() formGroupName!: string; // the subgroup in fusionForm
   @Input() form!: FormGroup;
+  @Input() caption!: string;
 
   ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   spinPanelState = 0;
 
-  constructor(private fb: FormBuilder, private fgd: FormGroupDirective) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    // this.form = this.fgd.control.get(this.formGroupName) as FormGroup;
     this.ready.next(true);
   }
-
+/* 
   viewProviders:
     | [{ provide: ControlContainer; useExisting: FormGroupDirective }]
-    | undefined;
+    | undefined; */
 
   toggleSpinState = () => {
     this.spinPanelState = this.spinPanelState++ % 2;

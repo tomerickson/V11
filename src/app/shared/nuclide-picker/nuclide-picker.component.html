@@ -1,45 +1,41 @@
-<ng-container *ngIf="form" [formGroup]="form" class="flexcolumn">
-    <section class="margins">
-      <header>
-        <h2>{{ title }}</h2>
-      </header>
-      <section [className]="'elements'">
-        <mat-form-field
+<ng-container [formGroup]="form" class="flexcolumn">
+  <section [formGroupName]="formGroupName" class="margins">
+    <header>
+      <h2>{{ title }}</h2>
+    </header>
+    <section [className]="'elements'">
+      <mat-form-field
+        formControlName="selectedElements"
+        appearance="fill"
+        ngDefaultControl>
+        <label>Element(s)</label>
+        <mat-select
           formControlName="selectedElements"
-          appearance="fill"
-          ngDefaultControl>
-          <label>Element(s)</label>
-          <mat-select
-            formControlName="selectedElements"
-            multiple
-            [placeholder]="role === 'query' ? 'click here to begin.' : 'selected elements.'">
-              <mat-option
-                [disabled]="role == 'result'"
-                *ngFor="let element of elements"
-                [value]="element.E">
-                {{ this.elementOptionValue(element) }}
-              </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </section>
-      <mfmp-spin-picker
-        [title]="'Spin'"
-        [role]="role"
-        [formGroupName]="formGroupName"
-        [form]="form">
-      </mfmp-spin-picker>
-      <section *ngIf="role === 'result'" class="flexcolumn">
-        <mat-expansion-panel class="mat-elevation-z0" expanded="false">
-          <mat-expansion-panel-header>
-            Neutrino contributions:
-          </mat-expansion-panel-header>
-          <p>You can click below to report neutrino contributions'</p>
-        </mat-expansion-panel>
-        <div>
-          <mat-checkbox formControlName="leftNeutrinos">Left</mat-checkbox>
-          <mat-checkbox formControlName="noNeutrinos">None</mat-checkbox>
-          <mat-checkbox formControlName="rightNeutrinos">Right</mat-checkbox>
-        </div>
-      </section>
+          multiple
+          [placeholder]="
+            role === 'query' ? 'click here to begin.' : 'selected elements.'
+          ">
+          <mat-option
+            [disabled]="role == 'result'"
+            *ngFor="let element of elements"
+            [value]="element.E">
+            {{ this.elementOptionValue(element) }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </section>
+    <mfmp-spin-picker
+      [title]="'Spin'"
+      [role]="role"
+      [formGroupName]="formGroupName"
+      [form]="form"></mfmp-spin-picker>
+    <section class="flexcolumn">
+      <p>
+        You can click below to
+        {{ role === 'result' ? 'report' : 'include' }} neutrino contributions'
+      </p>
+          <mat-checkbox formControlName="neutrinos" ngDefaultControl>{{caption}}
+          </mat-checkbox>
+    </section>
+  </section>
 </ng-container>

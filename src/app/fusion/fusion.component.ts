@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   AfterContentInit,
+  AfterViewInit,
   Component,
   OnDestroy,
   OnInit,
@@ -56,7 +57,7 @@ import { missingElementsValidator } from './fusion-form.validator';
   ],
   providers: [{ provide: HeaderProviderService }]
 })
-export class FusionComponent implements OnInit, OnDestroy, AfterContentInit {
+export class FusionComponent implements OnInit, OnDestroy {
   http!: HttpClient;
   store = inject(Store);
   fb: FormBuilder = inject(FormBuilder);
@@ -74,7 +75,8 @@ export class FusionComponent implements OnInit, OnDestroy, AfterContentInit {
   readonly description =
     'This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov\'s spreadsheets.';
 
-  constructor(private headerService: HeaderProviderService) {}
+  constructor(private headerService: HeaderProviderService) {
+  }
 
   execute_query(): void {
     const formData: FormData = new FormData();
@@ -164,7 +166,7 @@ aBorF_filter: bf;
   }
 
   ngOnInit(): void {
-    this.elements = this.store.select(globalFeature.selectElements);
+     this.elements = this.store.select(globalFeature.selectElements);
     this.sortFields = this.store.select(globalFeature.selectReactionSortFields);
     this.headerService.buildPageHeader('fusion');
     this.buildForm();
@@ -174,13 +176,11 @@ aBorF_filter: bf;
     this.ready.next(true);
   }
 
-  ngAfterContentInit(): void {}
-
   buildForm = () => {
     this.fusionForm = this.fb.nonNullable.group(
       {
         tableSet: new FormControl('FusionAll', { nonNullable: true }),
-        coreQuery: new FormControl(''),
+        coreQuery: new FormControl(' order by MeV desc limit 1000'),
         resultLimit: new FormControl(1000),
         orderBy: new FormControl('MeV'),
         sortDescending: new FormControl(true),
@@ -190,9 +190,7 @@ aBorF_filter: bf;
           atomicFermions: new FormControl(true),
           nuclearBosons: new FormControl(true),
           nuclearFermions: new FormControl(true),
-          leftNeutrinos: new FormControl(true),
-          noNeutrinos: new FormControl(true),
-          rightNeutrinos: new FormControl(true)
+          neutrinos: new FormControl(true),
         }),
         rightNuclides: this.fb.nonNullable.group({
           selectedElements: new FormControl(''),
@@ -200,9 +198,7 @@ aBorF_filter: bf;
           atomicFermions: new FormControl(true),
           nuclearBosons: new FormControl(true),
           nuclearFermions: new FormControl(true),
-          leftNeutrinos: new FormControl(true),
-          noNeutrinos: new FormControl(true),
-          rightNeutrinos: new FormControl(true)
+          neutrinos: new FormControl(true),
         }),
         resultNuclides: this.fb.nonNullable.group({
           selectedElements: new FormControl(''),
@@ -210,9 +206,7 @@ aBorF_filter: bf;
           atomicFermions: new FormControl(true),
           nuclearBosons: new FormControl(true),
           nuclearFermions: new FormControl(true),
-          leftNeutrinos: new FormControl(true),
-          noNeutrinos: new FormControl(true),
-          rightNeutrinos: new FormControl(true)
+          neutrinos: new FormControl(true),
         })
       },
       { validators: missingElementsValidator }
@@ -238,7 +232,8 @@ aBorF_filter: bf;
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true
+        nuclearFermions: true,
+        neutrinos: true,
       },
       rightNuclides: {
         selectedElements: [],
@@ -246,9 +241,7 @@ aBorF_filter: bf;
         atomicFermions: true,
         nuclearBosons: true,
         nuclearFermions: true,
-        leftNeutrinos: true,
-        noNeutrinos: true,
-        rightNeutrinos: true
+        neutrinos: true,
       },
       resultNuclides: {
         selectedElements: [],
@@ -256,9 +249,7 @@ aBorF_filter: bf;
         atomicFermions: true,
         nuclearBosons: true,
         nuclearFermions: true,
-        leftNeutrinos: true,
-        noNeutrinos: true,
-        rightNeutrinos: true
+        neutrinos: true,
       }
     });
     // To initialize coreQuery
