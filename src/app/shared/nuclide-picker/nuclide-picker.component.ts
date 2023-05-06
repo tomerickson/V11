@@ -16,7 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BehaviorSubject } from 'rxjs';
-import { IElementDataModel } from '../../core/element.data.model';
+import { IElementDataModel } from '../../core/models/element.data.model';
 import { SpinPickerComponent } from '../spin-picker/spin-picker.component';
 
 @Component({

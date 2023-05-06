@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import {
   APP_INITIALIZER,
   ErrorHandler,
@@ -65,8 +65,6 @@ bootstrapApplication(AppComponent, {
       multi: true,
       deps: [AppConfigService]
     },
-    provideRouter(routes),
-
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler
@@ -76,6 +74,8 @@ bootstrapApplication(AppComponent, {
       useClass: ServerErrorInterceptor,
       multi: true
     },
+    provideHttpClient(),
+    provideRouter(routes),
     provideStore(),
     provideState(globalFeature),
     provideEffects(),

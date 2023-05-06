@@ -1,7 +1,7 @@
 import { EntityMetadataMap } from '@ngrx/data';
-import { IElementResultsModel } from './element.results.model';
-import { IFusionResultsModel } from './fusion.results.model';
-import { INuclideResultsModel } from './nuclide.results.model';
+import { IElementResultsModel } from './models/element.results.model';
+import { IFusionResultsModel } from './models/fusion.results.model';
+import { INuclideResultsModel } from './models/nuclide.results.model';
 import { RawDataModel } from './raw-data.model';
 
 export const coreEntityMetaData: EntityMetadataMap = {

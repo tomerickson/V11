@@ -1,7 +1,7 @@
 import { EntityMetadataMap } from "@ngrx/data";
-import { IFusionResultsModel } from "../core/fusion.results.model";
-import { IElementResultsModel } from "../core/element.results.model";
-import { INuclideResultsModel } from "../core/nuclide.results.model";
+import { IFusionResultsModel } from "../core/models/fusion.results.model";
+import { IElementResultsModel } from "../core/models/element.results.model";
+import { INuclideResultsModel } from "../core/models/nuclide.results.model";
 
 export const fusionEntityMetaData: EntityMetadataMap = {
     FusionResult: {},

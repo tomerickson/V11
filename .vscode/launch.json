@@ -31,8 +31,8 @@
          "request": "attach",
          "name": "Attach Chrome to localhost:4200",
          "url": "http://localhost:4200",
-         "port": 4200,
-         "webRoot": "${workspaceFolder}"
+         "port":  9222,
+         "webRoot": "${workspaceFolder}",
       },
       {
          "type": "pwa-msedge",

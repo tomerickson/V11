@@ -20,12 +20,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { IElementDataModel } from '../core/element.data.model';
-import { ILookupDataModel } from '../core/lookup..data.model';
+import { IElementDataModel } from '../core/models/element.data.model';
+import { ILookupDataModel } from '../core/models/lookup..data.model';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
 import { globalFeature } from '../state';
 import { missingElementsValidator } from './fusion-form.validator';
+import { CrudService } from '../core/crud.service';
 
 @Component({
   standalone: true,
@@ -49,11 +50,11 @@ import { missingElementsValidator } from './fusion-form.validator';
     NuclidePickerComponent,
     ReactiveFormsModule
   ],
-  providers: [{ provide: HeaderProviderService }, { provide: HttpClient }]
+  providers: [{ provide: HeaderProviderService }]
 })
 export class FusionComponent implements OnInit, OnDestroy {
   store: Store = inject(Store);
-  http: HttpClient = inject(HttpClient);
+  http: CrudService = inject(CrudService);
   fb: FormBuilder = inject(FormBuilder);
   fusionForm!: FormGroup;
   leftNuclides!: FormGroup;
@@ -166,26 +167,11 @@ export class FusionComponent implements OnInit, OnDestroy {
       console.log(pair[0] + ', ' + pair[1]);
     }
     if (true)
-      this.http.post('https://nanosoft.co.nz/Fusion.php', formData).subscribe({
+      this.http.getFusionResults(formData).subscribe({
         next: (response) => console.log(response),
         error: (error) => console.log(error)
       });
   }
-
-  /*
-doit: execute_query
-query: E1 in ('H','Na') and E2 in ('C','N') order by MeV desc limit 1000
-table_name: FusionAll
-sql_tables[]: left
-sql_tables[]: none
-sql_tables[]: right
-nBorF1_filter: bf
-aBorF1_filter: bf
-nBorF2_filter: bf
-aBorF2_filter: bf
-nBorF_filter: bf
-aBorF_filter: bf;
-*/
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
@@ -337,7 +323,7 @@ aBorF_filter: bf;
      * This is a hack.
      *
      * Valuechanges is firing twice when patchValue is called
-     * inspite of the emitEvents: false
+     * in spite of the emitEvents: false
      *
      * Using the sortDescendingProxy to hold the valid
      * state of the sortDescending property.
@@ -370,7 +356,7 @@ aBorF_filter: bf;
     if (resultLimit) {
       query += ` limit ${resultLimit}`;
     }
-    // this.fusionForm.patchValue({coreQuery: query}, {onlySelf: true, emitEvent: false})
+
     this.fusionForm
       .get('coreQuery')
       ?.patchValue(query, { onlySelf: true, emitEvent: false });

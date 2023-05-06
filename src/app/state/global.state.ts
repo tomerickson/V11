@@ -3,8 +3,8 @@ import { config } from '../../assets/config';
 import elementsJson from '../../assets/tables/elements.json';
 import radDecayModesJson from '../../assets/tables/radiation-decay-modes.json';
 import radTypesJson from '../../assets/tables/radiation-types.json';
-import { IElementDataModel } from '../core/element.data.model';
-import { ILookupDataModel } from '../core/lookup..data.model';
+import { IElementDataModel } from '../core/models/element.data.model';
+import { ILookupDataModel } from '../core/models/lookup..data.model';
 import sortFieldsJson from '../../assets/tables/reaction-result-sort-fields.json';
 import { ElementActions, LookupActions, PageActions } from './global.actions';
 
@@ -25,9 +25,6 @@ export interface GlobalState {
   reactionSortFields: ILookupDataModel[];
 }
 
-const loadElements = () => {
-
-}
 export const globalInitialState: GlobalState = {
   pageTitle: '',
   pageCredits: config.pageCredits,

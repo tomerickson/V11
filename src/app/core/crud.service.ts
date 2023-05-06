@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, retry, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { IElementDataModel } from './element.data.model';
-import { ILookupDataModel } from './lookup..data.model';
+import { IElementDataModel } from './models/element.data.model';
+import { ILookupDataModel } from './models/lookup..data.model';
 import { GlobalState } from '../state/global.state';
 
 export interface User {
@@ -53,10 +53,11 @@ export class CrudService {
     let page = `${this.endPoint}Lookups.php`;
     return this.http.get<ILookupDataModel[]>(page).pipe(retry(1));
   }
-  getFusionResults(): Observable<string> {
+
+  getFusionResults(payload: any): Observable<string> {
     let page: string = `${this.endPoint}Fusion.php`;
-    return this.http.get(page, { responseType: 'text' }).pipe(retry(1));
-    // .pipe(retry(1),catchError(this.httpError));
+    return this.http.post(page, payload, { responseType: 'text' })
+    .pipe(retry(1),catchError(this.httpError));
     // return this.http.post<string>(page, null, this.optionsObject);
     // .pipe((rsp: any) => rsp.body);
     // return this.http.post<string>(page, '', this.options);

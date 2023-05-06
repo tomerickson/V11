@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, EventEmitter, inject } from '@angular/cor
 import { MatButtonModule } from '@angular/material/button';
 import { from, Observable, of, tap } from 'rxjs';
 import { CrudService } from '../core/crud.service';
-import { IElementDataModel } from '../core/element.data.model';
+import { IElementDataModel } from '../core/models/element.data.model';
 import { TestpageShowComponent } from './testpage.show.component';
 
 @Component({
@@ -39,7 +39,7 @@ export class TestpagePipeComponent
   }
 
   reloadFusion() {
-    this.testResults = this.crudService.getFusionResults();
+    this.testResults = this.crudService.getFusionResults('some form data');
     // .pipe(tap(res => console.log(res)));
   }
 
