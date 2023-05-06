@@ -14,14 +14,24 @@
    margin-bottom: 1rex;
  }
 
- div.nuclides {
+ div.children {
    display: flex;
-   flex-direction: row;
-   align-items: stretch;
-   justify-content: space-around;
-   margin-bottom: 1rex;
- }
+   flex-direction: column;
 
+   div.nuclides {
+     display: flex;
+     flex-direction: row;
+     align-items: stretch;
+     justify-content: space-around;
+     margin-bottom: 1rex;
+   }
+ }
+div.neutrinos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rex;
+}
  div.vl {
    border-left: 1px solid darkgray;
    margin-top: 1ex;

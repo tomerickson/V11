@@ -1,13 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import {
-  AfterContentInit,
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  inject
-} from '@angular/core';
+import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -41,6 +34,7 @@ import { missingElementsValidator } from './fusion-form.validator';
   styleUrls: ['./fusion.component.scss'],
   imports: [
     CommonModule,
+    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -55,11 +49,11 @@ import { missingElementsValidator } from './fusion-form.validator';
     NuclidePickerComponent,
     ReactiveFormsModule
   ],
-  providers: [{ provide: HeaderProviderService }]
+  providers: [{ provide: HeaderProviderService }, { provide: HttpClient }]
 })
 export class FusionComponent implements OnInit, OnDestroy {
-  http!: HttpClient;
-  store = inject(Store);
+  store: Store = inject(Store);
+  http: HttpClient = inject(HttpClient);
   fb: FormBuilder = inject(FormBuilder);
   fusionForm!: FormGroup;
   leftNuclides!: FormGroup;
@@ -75,75 +69,107 @@ export class FusionComponent implements OnInit, OnDestroy {
   readonly description =
     'This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov\'s spreadsheets.';
 
-  constructor(private headerService: HeaderProviderService) {
-  }
+  constructor(private headerService: HeaderProviderService) {}
+
+  /**
+   * Convert spin choices to a string for postback
+  
+   * @param bosons 
+   * @param fermions 
+   * @returns 
+   * @remarks
+   * If both choices are false convert them to true
+   */
+  formatSpinChoices = (bosons: boolean, fermions: boolean): string => {
+    return bosons && fermions ? 'bf' : bosons ? 'b' : fermions ? 'f' : 'bf';
+  };
 
   execute_query(): void {
     const formData: FormData = new FormData();
-    const leftNeutrinos = this.fusionForm.get(
-      'resultNuclides.leftNeutrinos'
-    )?.value;
-    const noNeutrinos = this.fusionForm.get(
-      'resultNuclides.noNeutrinos'
-    )?.value;
-    const rightNeutrinos = this.fusionForm.get(
-      'resultNuclides.rightNeutrinos'
-    )?.value;
-    const leftNuclearBosons = this.fusionForm.get(
+    const inputNeutrinos = this.fusionForm.get('inputNeutrinos')?.value;
+    const noNeutrinos = this.fusionForm.get('noNeutrinos')?.value;
+    const outputNeutrinos = this.fusionForm.get('outputNeutrinos')?.value;
+    const leftNuclearBosons: boolean = this.fusionForm.get(
       'leftNuclides.nuclearBosons'
     )?.value;
-    const leftNuclearFermions = this.fusionForm.get(
+    const leftNuclearFermions: boolean = this.fusionForm.get(
       'leftNuclides.nuclearFermions'
     )?.value;
-    const leftAtomicBosons = this.fusionForm.get(
+    const leftAtomicBosons: boolean = this.fusionForm.get(
       'leftNuclides.atomicBosons'
     )?.value;
-    const leftAtomicFermions = this.fusionForm.get(
+    const leftAtomicFermions: boolean = this.fusionForm.get(
       'leftNuclides.atomicFermions'
     )?.value;
-    const rightNuclearBosons = this.fusionForm.get(
+    const rightNuclearBosons: boolean = this.fusionForm.get(
       'rightNuclides.nuclearBosons'
     )?.value;
-    const rightNuclearFermions = this.fusionForm.get(
+    const rightNuclearFermions: boolean = this.fusionForm.get(
       'rightNuclides.nuclearFermions'
     )?.value;
-    const rightAtomicBosons = this.fusionForm.get(
+    const rightAtomicBosons: boolean = this.fusionForm.get(
       'rightNuclides.atomicBosons'
     )?.value;
-    const rightAtomicFermions = this.fusionForm.get(
+    const rightAtomicFermions: boolean = this.fusionForm.get(
       'rightNuclides.atomicFermions'
     )?.value;
-    const resultNuclearBosons = this.fusionForm.get(
+    const resultNuclearBosons: boolean = this.fusionForm.get(
       'resultNuclides.nuclearBosons'
     )?.value;
-    const resultNuclearFermions = this.fusionForm.get(
+    const resultNuclearFermions: boolean = this.fusionForm.get(
       'resultNuclides.nuclearFermions'
     )?.value;
-    const resultAtomicBosons = this.fusionForm.get(
+    const resultAtomicBosons: boolean = this.fusionForm.get(
       'resultNuclides.atomicBosons'
     )?.value;
-    const resultAtomicFermions = this.fusionForm.get(
+    const resultAtomicFermions: boolean = this.fusionForm.get(
       'resultNuclides.atomicFermions'
     )?.value;
     formData.append('doit', 'execute_query');
     formData.append('query', this.fusionForm.get('coreQuery')?.value);
     formData.append('table_name', this.fusionForm.get('tableSet')?.value);
-    if (leftNeutrinos) {
+    if (inputNeutrinos) {
       formData.append('sql_tables[]', 'left');
     }
     if (noNeutrinos) {
       formData.append('sql_tables[]', 'none');
     }
-    if (rightNeutrinos) {
+    if (outputNeutrinos) {
       formData.append('sql_tables[]', 'right');
     }
-    console.log(formData);
-    // this.http
-    //   .post('http://localhost:4000/api/create-user', formData)
-    //   .subscribe({
-    //     next: (response) => console.log(response),
-    //     error: (error) => console.log(error),
-    //   });
+    formData.append(
+      'nBorF1',
+      this.formatSpinChoices(leftNuclearBosons, leftNuclearFermions)
+    );
+    formData.append(
+      'aBorF1',
+      this.formatSpinChoices(leftAtomicBosons, leftAtomicFermions)
+    );
+    formData.append(
+      'nBorF2',
+      this.formatSpinChoices(rightNuclearBosons, rightNuclearFermions)
+    );
+    formData.append(
+      'aBorF2',
+      this.formatSpinChoices(rightAtomicBosons, rightAtomicFermions)
+    );
+    formData.append(
+      'nBorF',
+      this.formatSpinChoices(resultNuclearBosons, resultNuclearFermions)
+    );
+    formData.append(
+      'aBorF',
+      this.formatSpinChoices(resultAtomicBosons, resultAtomicFermions)
+    );
+
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+    if (true)
+      this.http.post('https://nanosoft.co.nz/Fusion.php', formData).subscribe({
+        next: (response) => console.log(response),
+        error: (error) => console.log(error)
+      });
   }
 
   /*
@@ -166,7 +192,7 @@ aBorF_filter: bf;
   }
 
   ngOnInit(): void {
-     this.elements = this.store.select(globalFeature.selectElements);
+    this.elements = this.store.select(globalFeature.selectElements);
     this.sortFields = this.store.select(globalFeature.selectReactionSortFields);
     this.headerService.buildPageHeader('fusion');
     this.buildForm();
@@ -184,29 +210,29 @@ aBorF_filter: bf;
         resultLimit: new FormControl(1000),
         orderBy: new FormControl('MeV'),
         sortDescending: new FormControl(true),
+        inputNeutrinos: new FormControl(true),
+        outputNeutrinos: new FormControl(true),
+        noNeutrinos: new FormControl(true),
         leftNuclides: this.fb.nonNullable.group({
           selectedElements: new FormControl(''),
           atomicBosons: new FormControl(true),
           atomicFermions: new FormControl(true),
           nuclearBosons: new FormControl(true),
-          nuclearFermions: new FormControl(true),
-          neutrinos: new FormControl(true),
+          nuclearFermions: new FormControl(true)
         }),
         rightNuclides: this.fb.nonNullable.group({
           selectedElements: new FormControl(''),
           atomicBosons: new FormControl(true),
           atomicFermions: new FormControl(true),
           nuclearBosons: new FormControl(true),
-          nuclearFermions: new FormControl(true),
-          neutrinos: new FormControl(true),
+          nuclearFermions: new FormControl(true)
         }),
         resultNuclides: this.fb.nonNullable.group({
           selectedElements: new FormControl(''),
           atomicBosons: new FormControl(true),
           atomicFermions: new FormControl(true),
           nuclearBosons: new FormControl(true),
-          nuclearFermions: new FormControl(true),
-          neutrinos: new FormControl(true),
+          nuclearFermions: new FormControl(true)
         })
       },
       { validators: missingElementsValidator }
@@ -214,7 +240,7 @@ aBorF_filter: bf;
     this.subscriptions.add(
       this.fusionForm.valueChanges.subscribe((data) => {
         this.handleFormChanges(data);
-        console.log(data);
+        console.log(JSON.stringify(data, undefined, 2));
       })
     );
     // this.handleFormChanges(this.fusionForm.value);
@@ -227,29 +253,29 @@ aBorF_filter: bf;
       orderBy: 'MeV',
       sortDescending: true,
       resultLimit: 1000,
+      inputNeutrinos: true,
+      outputNeutrinos: true,
+      noNeutrinos: true,
       leftNuclides: {
         selectedElements: [],
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true,
-        neutrinos: true,
+        nuclearFermions: true
       },
       rightNuclides: {
         selectedElements: [],
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true,
-        neutrinos: true,
+        nuclearFermions: true
       },
       resultNuclides: {
         selectedElements: [],
         atomicBosons: true,
         atomicFermions: true,
         nuclearBosons: true,
-        nuclearFermions: true,
-        neutrinos: true,
+        nuclearFermions: true
       }
     });
     // To initialize coreQuery
@@ -271,7 +297,7 @@ aBorF_filter: bf;
 
   getResultLimit = (): number => {
     return this.fusionForm.get('resultLimit')?.value;
-  } 
+  };
 
   /**
    * concatenate the elements selected  in the
@@ -350,21 +376,21 @@ aBorF_filter: bf;
       ?.patchValue(query, { onlySelf: true, emitEvent: false });
   };
 
-/**
- * 
- * @param leftElements 
- * @param rightElements 
- * @param stringify 
- * @returns combined elements
- * @description if stringify is true, combine
- */
+  /**
+   *
+   * @param leftElements
+   * @param rightElements
+   * @param stringify
+   * @returns combined elements
+   * @description if stringify is true, combine
+   */
   combineElements = (
     leftElements: string[] | null,
     rightElements: string[] | null,
     stringify: boolean = false
   ): string[] | null | string => {
     if (leftElements || rightElements) {
-      let result: string | string[] ;
+      let result: string | string[];
       if (leftElements && rightElements) {
         result = leftElements.concat(rightElements);
       } else {
@@ -378,7 +404,7 @@ aBorF_filter: bf;
           }
         }
       }
-      if(stringify) {
+      if (stringify) {
         result = `('${result.join("','")}')`;
       }
       return result;

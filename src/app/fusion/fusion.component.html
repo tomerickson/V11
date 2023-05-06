@@ -100,30 +100,51 @@
           </p>
         </div>
       </mat-expansion-panel>
-      <div class="nuclides mat-elevation-z2">
-        <mfmp-nuclide-picker
-          [role]="'query'"
-          [title]="'Left side (E1)'"
-          [formGroupName]="'leftNuclides'"
-          [form]="fusionForm"
-          [caption]="'Left'"
-          [elements]="elements | async"></mfmp-nuclide-picker>
-        <div class="vl"></div>
-        <mfmp-nuclide-picker
-          [role]="'query'"
-          [title]="'Right side (E2)'"
-          [formGroupName]="'rightNuclides'"
-          [form]="fusionForm"
-          [caption]="'Right'"
-          [elements]="elements | async"></mfmp-nuclide-picker>
-        <div class="vl"></div>
-        <mfmp-nuclide-picker
-          [role]="'result'"
-          [title]="'Results'"
-          [formGroupName]="'resultNuclides'"
-          [form]="fusionForm"
-          [caption]="'Result'"
-          [elements]="elements | async"></mfmp-nuclide-picker>
+      <div class="children">
+        <div class="nuclides mat-elevation-z2">
+          <mfmp-nuclide-picker
+            [role]="'query'"
+            [title]="'Left side (E1)'"
+            [formGroupName]="'leftNuclides'"
+            [form]="fusionForm"
+            [caption]="'Left'"
+            [elements]="elements | async"></mfmp-nuclide-picker>
+          <div class="vl"></div>
+          <mfmp-nuclide-picker
+            [role]="'query'"
+            [title]="'Right side (E2)'"
+            [formGroupName]="'rightNuclides'"
+            [form]="fusionForm"
+            [caption]="'Right'"
+            [elements]="elements | async"></mfmp-nuclide-picker>
+          <div class="vl"></div>
+          <mfmp-nuclide-picker
+            [role]="'result'"
+            [title]="'Results'"
+            [formGroupName]="'resultNuclides'"
+            [form]="fusionForm"
+            [caption]="'Result'"
+            [elements]="elements | async"></mfmp-nuclide-picker>
+        </div>
+        <div class="neutrinos mat-elevation-z2">
+          <div>
+            <p>
+              Tick neutrino (nu) contributions to be included (default is all
+              three).
+            </p>
+          </div>
+          <div>
+            <mat-checkbox formControlName="inputNeutrinos" value="left">
+              Left
+            </mat-checkbox>
+            <mat-checkbox formControlName="noNeutrinos" value="none">
+              None
+            </mat-checkbox>
+            <mat-checkbox formControlName="outputNeutrinos" value="right">
+              Right
+            </mat-checkbox>
+          </div>
+        </div>
       </div>
       <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>Tables</mat-expansion-panel-header>
@@ -179,14 +200,13 @@
         <mat-card-content>
           <div class="flexrow">
             <div class="coreQuery">
-                <mat-label>Core Query</mat-label>
-                <textarea
-                  matInput
-                  formControlName="coreQuery"
-                  title="'core query'"
-                  value="coreQuery"
-                  rows="4"
-                  readonly></textarea>
+              <mat-label>Core Query</mat-label>
+              <textarea
+                matInput
+                formControlName="coreQuery"
+                title="'core query'"
+                value="coreQuery"
+                rows="4"></textarea>
             </div>
             <div>
               <div class="resultLimitHeader">

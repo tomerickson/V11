@@ -29,13 +29,5 @@
       [role]="role"
       [formGroupName]="formGroupName"
       [form]="form"></mfmp-spin-picker>
-    <section class="flexcolumn">
-      <p>
-        You can click below to
-        {{ role === 'result' ? 'report' : 'include' }} neutrino contributions'
-      </p>
-          <mat-checkbox formControlName="neutrinos" ngDefaultControl>{{caption}}
-          </mat-checkbox>
-    </section>
   </section>
 </ng-container>
