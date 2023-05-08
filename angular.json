@@ -139,6 +139,9 @@
               "devServerTarget": "v11:serve:production"
             }
           }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:app-shell"
         }
       }
     }

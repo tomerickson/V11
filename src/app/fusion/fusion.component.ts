@@ -26,7 +26,7 @@ import { HeaderProviderService } from '../shared/header/header.provider.service'
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
 import { globalFeature } from '../state';
 import { missingElementsValidator } from './fusion-form.validator';
-import { CrudService } from '../core/crud.service';
+import { CrudService } from '../core/services/crud.service';
 
 @Component({
   standalone: true,

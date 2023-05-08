@@ -2,7 +2,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit, EventEmitter, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { from, Observable, of, tap } from 'rxjs';
-import { CrudService } from '../core/crud.service';
+import { CrudService } from '../core/services/crud.service';
 import { IElementDataModel } from '../core/models/element.data.model';
 import { TestpageShowComponent } from './testpage.show.component';
 

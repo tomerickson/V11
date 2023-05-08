@@ -5,93 +5,60 @@ import { INuclideResultsModel } from 'src/app/core/models/nuclide.results.model'
 import { FusionActions } from './fusion.actions';
 
 export interface FusionState {
+  loading: boolean;
+  ready: boolean;
+  error: any;
   elementResults: IElementResultsModel[];
   fusionResults: IFusionResultsModel[];
   nuclideResults: INuclideResultsModel[];
-  elementResultsLoading: boolean;
-  elementResultsReady: boolean;
-  fusionResultsLoading: boolean;
-  fusionResultsReady: boolean;
-  nuclidesLoading: boolean;
-  nuclidesReady: boolean;
-  error: any;
 }
 
 export const fusionInitialState: FusionState = {
+  loading: false,
+  ready: false,
+  error: null,
   elementResults: [],
   fusionResults: [],
-  nuclideResults: [],
-  elementResultsReady: false,
-  elementResultsLoading: false,
-  fusionResultsLoading: false,
-  fusionResultsReady: false,
-  nuclidesLoading: false,
-  nuclidesReady: false,
-  error: null
+  nuclideResults: []
 };
 
 export const fusionFeature = createFeature({
   name: 'fusion',
   reducer: createReducer(
     fusionInitialState,
-    on(FusionActions.loadElementresults, (state) => {
+    on(FusionActions.fetchAllResults, (state) => {
       return {
         ...state,
-        elementResultsReady: false,
-        elementResultsLoading: true,
+        loading: true,
+        ready: false,
+        error: null,
         elementResults: [],
+        fusionResults: [],
+        nuclideResults: []
       };
     }),
-    on(FusionActions.loadElementresultsFailure, (state, action) => {
+    on(FusionActions.loadAllResultsFailure, (state, action) => {
+      return { ...state, loading: false, error: action.error };
+    }),
+    on(FusionActions.loadAllResultsSuccess, (state, action) => {
       return {
         ...state,
-        elementResultsReady: false,
-        elementResultsLoading: false,
-        elements: [],
-        error: action.error
+        elementResults: action.elements,
+        fusionResults: action.fusions,
+        nuclideResults: action.nuclides
       };
-    }),
-    on(FusionActions.loadElementresultsSuccess, (state, action) => {
-      return {
-        ...state,
-        elementResultsReady: true,
-        elementResultsLoading: false,
-        elements: action.elements
-      };
-    }),
-        on(FusionActions.loadElementresults, (state) => {
-        return {
-          ...state,
-          elementResultsReady: false,
-          elementResultsLoading: true,
-          elementResults: [],
-        };
-      }),
-      on(FusionActions.loadElementresultsFailure, (state, action) => {
-        return {
-          ...state,
-          elementResultsReady: false,
-          elementResultsLoading: false,
-          elements: [],
-          error: action.error
-        };
-      }),
-      on(FusionActions.loadElementresultsSuccess, (state, action) => {
-        return {
-          ...state,
-          elementResultsReady: true,
-          elementResultsLoading: false,
-          elements: action.elements
-        };
-      }),
-
-
+    })
   )
 });
 
 export const {
-
-} = fusionFeature;
+  selectLoading,
+  selectReady,
+  selectElementResults,
+  selectError,
+  selectFusionResults,
+  selectNuclideResults
+} = fusionFeature
 
 /**
  * Effects

@@ -6,7 +6,7 @@ import {
 } from '@ngrx/store';
 import { ILookupDataModel } from '../core/models/lookup..data.model';
 import { IElementDataModel } from '../core/models/element.data.model';
-import { GlobalCollections } from '../core/crud.service';
+import { GlobalCollections } from '../core/services/crud.service';
 import { empty } from 'rxjs';
 
 export const ElementActions = createActionGroup({

@@ -23,6 +23,9 @@
       "dom",
       "dom.iterable"
     ],
+    "types": [
+      "jest"
+    ],
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
