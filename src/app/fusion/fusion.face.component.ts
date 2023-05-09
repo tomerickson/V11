@@ -1,6 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import {
+  HttpClientModule
+} from '@angular/common/http';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -18,21 +28,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
-import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { IElementDataModel } from '../core/models/element.data.model';
 import { ILookupDataModel } from '../core/models/lookup..data.model';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
-import { globalFeature } from '../state';
 import { missingElementsValidator } from './fusion-form.validator';
-import { CrudService } from '../core/services/crud.service';
 
 @Component({
   standalone: true,
-  selector: 'mfmp-fusion',
-  templateUrl: './fusion.component.html',
-  styleUrls: ['./fusion.component.scss'],
+  selector: 'mfmp-fusion-face',
+  templateUrl: './fusion.face.component.html',
+  styleUrls: ['./fusion.face.component.scss'],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -52,20 +59,21 @@ import { CrudService } from '../core/services/crud.service';
   ],
   providers: [{ provide: HeaderProviderService }]
 })
-export class FusionComponent implements OnInit, OnDestroy {
-  store: Store = inject(Store);
-  http: CrudService = inject(CrudService);
+export class FusionFaceComponent implements OnInit, OnDestroy {
   fb: FormBuilder = inject(FormBuilder);
   fusionForm!: FormGroup;
   leftNuclides!: FormGroup;
   rightNuclides!: FormGroup;
   resultNuclides!: FormGroup;
-  elements!: Observable<IElementDataModel[]>;
-  sortFields!: Observable<ILookupDataModel[]>;
+
   ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   subscriptions: Subscription = new Subscription();
   sortDescendingProxy!: boolean;
   submittable = false;
+
+  @Input({ required: true }) elements: IElementDataModel[] | null = null;
+  @Input({ required: true }) sortFields: ILookupDataModel[] | null = null;
+  @Output() doit: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   readonly description =
     'This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov\'s spreadsheets.';
@@ -85,92 +93,8 @@ export class FusionComponent implements OnInit, OnDestroy {
     return bosons && fermions ? 'bf' : bosons ? 'b' : fermions ? 'f' : 'bf';
   };
 
-  execute_query(): void {
-    const formData: FormData = new FormData();
-    const inputNeutrinos = this.fusionForm.get('inputNeutrinos')?.value;
-    const noNeutrinos = this.fusionForm.get('noNeutrinos')?.value;
-    const outputNeutrinos = this.fusionForm.get('outputNeutrinos')?.value;
-    const leftNuclearBosons: boolean = this.fusionForm.get(
-      'leftNuclides.nuclearBosons'
-    )?.value;
-    const leftNuclearFermions: boolean = this.fusionForm.get(
-      'leftNuclides.nuclearFermions'
-    )?.value;
-    const leftAtomicBosons: boolean = this.fusionForm.get(
-      'leftNuclides.atomicBosons'
-    )?.value;
-    const leftAtomicFermions: boolean = this.fusionForm.get(
-      'leftNuclides.atomicFermions'
-    )?.value;
-    const rightNuclearBosons: boolean = this.fusionForm.get(
-      'rightNuclides.nuclearBosons'
-    )?.value;
-    const rightNuclearFermions: boolean = this.fusionForm.get(
-      'rightNuclides.nuclearFermions'
-    )?.value;
-    const rightAtomicBosons: boolean = this.fusionForm.get(
-      'rightNuclides.atomicBosons'
-    )?.value;
-    const rightAtomicFermions: boolean = this.fusionForm.get(
-      'rightNuclides.atomicFermions'
-    )?.value;
-    const resultNuclearBosons: boolean = this.fusionForm.get(
-      'resultNuclides.nuclearBosons'
-    )?.value;
-    const resultNuclearFermions: boolean = this.fusionForm.get(
-      'resultNuclides.nuclearFermions'
-    )?.value;
-    const resultAtomicBosons: boolean = this.fusionForm.get(
-      'resultNuclides.atomicBosons'
-    )?.value;
-    const resultAtomicFermions: boolean = this.fusionForm.get(
-      'resultNuclides.atomicFermions'
-    )?.value;
-    formData.append('doit', 'execute_query');
-    formData.append('query', this.fusionForm.get('coreQuery')?.value);
-    formData.append('table_name', this.fusionForm.get('tableSet')?.value);
-    if (inputNeutrinos) {
-      formData.append('sql_tables[]', 'left');
-    }
-    if (noNeutrinos) {
-      formData.append('sql_tables[]', 'none');
-    }
-    if (outputNeutrinos) {
-      formData.append('sql_tables[]', 'right');
-    }
-    formData.append(
-      'nBorF1',
-      this.formatSpinChoices(leftNuclearBosons, leftNuclearFermions)
-    );
-    formData.append(
-      'aBorF1',
-      this.formatSpinChoices(leftAtomicBosons, leftAtomicFermions)
-    );
-    formData.append(
-      'nBorF2',
-      this.formatSpinChoices(rightNuclearBosons, rightNuclearFermions)
-    );
-    formData.append(
-      'aBorF2',
-      this.formatSpinChoices(rightAtomicBosons, rightAtomicFermions)
-    );
-    formData.append(
-      'nBorF',
-      this.formatSpinChoices(resultNuclearBosons, resultNuclearFermions)
-    );
-    formData.append(
-      'aBorF',
-      this.formatSpinChoices(resultAtomicBosons, resultAtomicFermions)
-    );
-
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
-    if (true)
-      this.http.getFusionResults(formData).subscribe({
-        next: (response) => console.log(response),
-        error: (error) => console.log(error)
-      });
+  build_request_form(): void {
+    this.doit.emit(this.fusionForm);
   }
 
   ngOnDestroy(): void {
@@ -178,9 +102,6 @@ export class FusionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.elements = this.store.select(globalFeature.selectElements);
-    this.sortFields = this.store.select(globalFeature.selectReactionSortFields);
-    this.headerService.buildPageHeader('fusion');
     this.buildForm();
     this.leftNuclides = this.fusionForm.get('leftNuclides') as FormGroup;
     this.rightNuclides = this.fusionForm.get('rightNuclides') as FormGroup;
@@ -226,7 +147,7 @@ export class FusionComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.fusionForm.valueChanges.subscribe((data) => {
         this.handleFormChanges(data);
-        console.log(JSON.stringify(data, undefined, 2));
+        // console.log(JSON.stringify(data, undefined, 2));
       })
     );
     // this.handleFormChanges(this.fusionForm.value);
@@ -363,7 +284,8 @@ export class FusionComponent implements OnInit, OnDestroy {
   };
 
   /**
-   *
+   * Merge the left-side and right-side element selections
+   * 
    * @param leftElements
    * @param rightElements
    * @param stringify

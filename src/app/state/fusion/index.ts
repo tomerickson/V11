@@ -1,3 +1,4 @@
-import { fusionFeature } from "././fusion.state";
-import { FusionActions}  from './fusion.actions'
-export {fusionFeature, FusionActions as fusionActions}
+import {FusionEffects} from './fusion.effects';
+import {FusionActions} from './fusion.actions';
+import {fusionFeature} from './fusion.state';
+export {fusionFeature, FusionEffects, FusionActions}

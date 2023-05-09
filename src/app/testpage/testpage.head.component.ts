@@ -4,11 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { from, Observable, of, tap } from 'rxjs';
 import { CrudService } from '../core/services/crud.service';
 import { IElementDataModel } from '../core/models/element.data.model';
-import { TestpageShowComponent } from './testpage.show.component';
+import { TestpageFaceComponent } from './testpage.face.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatButtonModule, TestpageShowComponent, NgIf],
+  imports: [CommonModule, MatButtonModule, TestpageFaceComponent, NgIf],
   template: `<mfmp-testpage
     [test]="this.testResults | async"
     [demo]="this.dummyResults | async"
@@ -18,14 +18,14 @@ import { TestpageShowComponent } from './testpage.show.component';
     (getElements)="loadElements()"
   ></mfmp-testpage>`
 })
-export class TestpagePipeComponent
+export class TestpageHeadComponent
 
   implements OnInit, OnDestroy
 {
   private crudService = inject(CrudService)
   testResults: Observable<string> = of();
   dummyResults: Observable<string> = of();
-  elements: Observable<IElementDataModel[] | null> = from([]);
+  elements: Observable<IElementDataModel[]> | null = from([]);
 
   ngOnInit(): void {}
 
@@ -39,8 +39,6 @@ export class TestpagePipeComponent
   }
 
   reloadFusion() {
-    this.testResults = this.crudService.getFusionResults('some form data');
-    // .pipe(tap(res => console.log(res)));
   }
 
   reloadDemo() {

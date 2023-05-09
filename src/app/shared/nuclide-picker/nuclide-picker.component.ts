@@ -43,7 +43,7 @@ import { SpinPickerComponent } from '../spin-picker/spin-picker.component';
 export class NuclidePickerComponent implements OnInit {
   @Input() title!: string | null;
   @Input() role!: string;
-  @Input() elements!: IElementDataModel[] | null;
+  @Input() elements: IElementDataModel[] | null = null;
   @Input() formGroupName!: string; // the subgroup in fusionForm
   @Input() form!: FormGroup;
   @Input() caption!: string;

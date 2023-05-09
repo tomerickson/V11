@@ -1,14 +1,14 @@
 <ng-container [formGroup]="form" class="flexcolumn">
   <section [formGroupName]="formGroupName" class="margins">
     <header>
-      <h2>{{ title }}</h2>
+      <!-- <h2>{{ title }}</h2> -->
     </header>
     <section [className]="'elements'">
       <mat-form-field
         formControlName="selectedElements"
         appearance="fill"
         ngDefaultControl>
-        <label>Element(s)</label>
+        <label>{{ title }}</label>
         <mat-select
           formControlName="selectedElements"
           multiple

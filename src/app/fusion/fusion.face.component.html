@@ -56,6 +56,38 @@
         to any core query not including any 'limit' command will be appended
         'limit 1000'.
       </p>
+      <p>
+        In all the above tables, except the Periodic, each atom, in either
+        the input or the output, as well as its 'A' and 'Z' numbers now also
+        has a 'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic
+        Boson or Fermion') parameter associated with it.
+      </p>
+
+      <p>
+        An atom's nucleus is considered a Boson ('b') if its A number is
+        even; if odd a Fermion ('f'). The atom itself is considered a Boson
+        ('b') if its number of neutrons (A - Z) is even; if odd a Fermion
+        ('f').
+      </p>
+
+      <p>
+        These parameters can be used either passively, by observing the
+        distributions of 'b' and 'f' in inputs and/or outputs, and/or
+        actively, by selecting 'b only', 'f only' or 'either' in the boxes
+        below.
+      </p>
+      <p>
+        You may indicate which of the three neutrino conditions to include:
+        "left" and/or "none" and/or "right". The default condition is
+        include all three.
+      </p>
+      <p>
+        NB: To avoid unnecessary duplication in all Fusion tables, A1 is
+        never greater than A2 in any row, i.e. A1 &le; A2. This also applies
+        implicitly in that, if the input side of the Core Query only
+        involves E1 and E2, only rows whose associated mass numbers obey A1
+        &le; A2 will appear in the results
+      </p>
     </mat-expansion-panel>
   </mat-card-content>
 </mat-card>
@@ -63,43 +95,7 @@
 <form [formGroup]="fusionForm">
   <mat-card>
     <mat-card-content>
-      <mat-expansion-panel id="blurb" expanded="true">
-        <mat-expansion-panel-header>Nuclides</mat-expansion-panel-header>
-        <div>
-          <p>
-            In all the above tables, except the Periodic, each atom, in either
-            the input or the output, as well as its 'A' and 'Z' numbers now also
-            has a 'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic
-            Boson or Fermion') parameter associated with it.
-          </p>
-
-          <p>
-            An atom's nucleus is considered a Boson ('b') if its A number is
-            even; if odd a Fermion ('f'). The atom itself is considered a Boson
-            ('b') if its number of neutrons (A - Z) is even; if odd a Fermion
-            ('f').
-          </p>
-
-          <p>
-            These parameters can be used either passively, by observing the
-            distributions of 'b' and 'f' in inputs and/or outputs, and/or
-            actively, by selecting 'b only', 'f only' or 'either' in the boxes
-            below.
-          </p>
-          <p>
-            You may indicate which of the three neutrino conditions to include:
-            "left" and/or "none" and/or "right". The default condition is
-            include all three.
-          </p>
-          <p>
-            NB: To avoid unnecessary duplication in all Fusion tables, A1 is
-            never greater than A2 in any row, i.e. A1 &le; A2. This also applies
-            implicitly in that, if the input side of the Core Query only
-            involves E1 and E2, only rows whose associated mass numbers obey A1
-            &le; A2 will appear in the results
-          </p>
-        </div>
-      </mat-expansion-panel>
+        <h3>Nuclides</h3>
       <div class="children">
         <div class="nuclides mat-elevation-z2">
           <mfmp-nuclide-picker
@@ -108,7 +104,7 @@
             [formGroupName]="'leftNuclides'"
             [form]="fusionForm"
             [caption]="'Left'"
-            [elements]="elements | async"></mfmp-nuclide-picker>
+            [elements]="elements"></mfmp-nuclide-picker>
           <div class="vl"></div>
           <mfmp-nuclide-picker
             [role]="'query'"
@@ -116,7 +112,7 @@
             [formGroupName]="'rightNuclides'"
             [form]="fusionForm"
             [caption]="'Right'"
-            [elements]="elements | async"></mfmp-nuclide-picker>
+            [elements]="elements"></mfmp-nuclide-picker>
           <div class="vl"></div>
           <mfmp-nuclide-picker
             [role]="'result'"
@@ -124,7 +120,7 @@
             [formGroupName]="'resultNuclides'"
             [form]="fusionForm"
             [caption]="'Result'"
-            [elements]="elements | async"></mfmp-nuclide-picker>
+            [elements]="elements"></mfmp-nuclide-picker>
         </div>
         <div class="neutrinos mat-elevation-z2">
           <div>
@@ -178,7 +174,7 @@
               <mat-label>Order By:</mat-label>
               <mat-select title="Order by" formControlName="orderBy">
                 <mat-option
-                  *ngFor="let f of sortFields | async"
+                  *ngFor="let f of sortFields"
                   [value]="f.code">
                   {{ f.code }}
                 </mat-option>
@@ -246,7 +242,7 @@
         color="primary"
         tooltip="(submittable) ? '' : 'Select elements to continue.'"
         [disabled]="fusionForm.pristine || !fusionForm.valid"
-        (click)="execute_query()">
+        (click)="build_request_form()">
         SUBMIT
       </button>
     </mat-card-actions>

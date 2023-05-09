@@ -5,7 +5,11 @@ import { catchError, map, retry, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IElementDataModel } from '../models/element.data.model';
 import { ILookupDataModel } from '../models/lookup..data.model';
-import { GlobalState } from '../../state/global.state';
+import { IFusionCompositeResults } from '../models/fusion-composite-results.model';
+import { IElementResultsModel } from '../models/element.results.model';
+import { IFusionResultsModel } from '../models/fusion.results.model';
+import { INuclideResultsModel } from '../models/nuclide.results.model';
+import { extractTablesFromPage } from './page.services';
 
 export interface User {
   id: string;
@@ -54,19 +58,11 @@ export class CrudService {
     return this.http.get<ILookupDataModel[]>(page).pipe(retry(1));
   }
 
-  getFusionResults(payload: any): Observable<string> {
+  getFusionResults(payload: FormData): Observable<IFusionCompositeResults> {
+    console.log('crudservice.getfusionresults');
     let page: string = `${this.endPoint}Fusion.php`;
     return this.http.post(page, payload, { responseType: 'text' })
-    .pipe(retry(1),catchError(this.httpError));
-    // return this.http.post<string>(page, null, this.optionsObject);
-    // .pipe((rsp: any) => rsp.body);
-    // return this.http.post<string>(page, '', this.options);
-    // .pipe(retry(1), this.handleError<string>('getFusionResults', this.httpError));
-    /*       .pipe(retry(1),
-      tap(res => {
-        return console.log('getting fusion results', res);
-      }),
-       catchError(this.handleError<any>('getFusionResults'))); */
+    .pipe(retry(1), map(rsp => this.parseFusionResults(rsp), catchError(this.httpError)));
   }
 
   getDummyResults(): Observable<any> {
@@ -77,6 +73,20 @@ export class CrudService {
 
   getUser(id: string): Observable<User> {
     return this.http.get<User>(`${this.endPoint}/users/${id}`).pipe(retry(1));
+  }
+
+  parseFusionResults(html: string): IFusionCompositeResults {
+
+    const nodes = extractTablesFromPage(html);
+    console.log(nodes);
+    debugger;
+    let result: IFusionCompositeResults = {
+      elementResults: [],
+      fusionResults: [],
+      nuclideResults: []
+    }
+ 
+    return result;
   }
   /*
   create(employee): Observable<User> {

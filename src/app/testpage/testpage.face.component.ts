@@ -176,7 +176,7 @@ export interface IElementDataModel {
     </ul>`,
   styleUrls: ['testpage.component.scss']
 })
-export class TestpageShowComponent
+export class TestpageFaceComponent
   implements OnInit, OnDestroy
 {
   @Input() test: any;
@@ -186,7 +186,7 @@ export class TestpageShowComponent
   @Output() demoit: EventEmitter<string> = new EventEmitter();
   @Output() getElements: EventEmitter<string> = new EventEmitter();
 
-  dataSource: MatTableDataSource<IElementDataModel[]> | undefined;
+  dataSource: MatTableDataSource<IElementDataModel[]> | null = null;
   columnsToDisplay = [
     'Z',
     'E',

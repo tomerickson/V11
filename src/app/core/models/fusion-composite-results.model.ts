@@ -1,9 +1,9 @@
-import { IElementDataModel } from "./element.data.model";
+import { IElementResultsModel } from "./element.results.model";
 import { IFusionResultsModel } from "./fusion.results.model";
 import { INuclideResultsModel } from "./nuclide.results.model";
 
 export interface IFusionCompositeResults {
-    fusioonResults: IFusionResultsModel[];
-    elementResults: IElementDataModel[];
+    elementResults: IElementResultsModel[];
+    fusionResults: IFusionResultsModel[];
     nuclideResults: INuclideResultsModel[];
 }

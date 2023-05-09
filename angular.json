@@ -68,6 +68,12 @@
             "namedChunks": true
           },
           "configurations": {
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap":true,
+              "namedChunks": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -100,7 +106,7 @@
               ]
             }
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -110,6 +116,9 @@
           "configurations": {
             "production": {
               "browserTarget": "v11:build:production"
+            },
+            "development": {
+              "browserTarget": "v11:build:development"
             }
           }
         },

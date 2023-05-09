@@ -5,6 +5,7 @@ import { INuclideResultsModel } from 'src/app/core/models/nuclide.results.model'
 import { FusionActions } from './fusion.actions';
 
 export interface FusionState {
+  formData: FormData;
   loading: boolean;
   ready: boolean;
   error: any;
@@ -14,6 +15,7 @@ export interface FusionState {
 }
 
 export const fusionInitialState: FusionState = {
+  formData: new FormData(),
   loading: false,
   ready: false,
   error: null,
@@ -26,9 +28,10 @@ export const fusionFeature = createFeature({
   name: 'fusion',
   reducer: createReducer(
     fusionInitialState,
-    on(FusionActions.fetchAllResults, (state) => {
+    on(FusionActions.fetchAllResults, (state, action) => {
       return {
         ...state,
+        formData: action.payload,
         loading: true,
         ready: false,
         error: null,
@@ -43,15 +46,18 @@ export const fusionFeature = createFeature({
     on(FusionActions.loadAllResultsSuccess, (state, action) => {
       return {
         ...state,
-        elementResults: action.elements,
-        fusionResults: action.fusions,
-        nuclideResults: action.nuclides
+        elementResults: action.results.elementResults,
+        fusionResults: action.results.fusionResults,
+        nuclideResults: action.results.nuclideResults,
+        loading: false,
+        ready: true
       };
     })
   )
 });
 
 export const {
+  selectFormData,
   selectLoading,
   selectReady,
   selectElementResults,
@@ -59,22 +65,3 @@ export const {
   selectFusionResults,
   selectNuclideResults
 } = fusionFeature
-
-/**
- * Effects
- */
-/* export const fetchElements$ = createEffect(
-  (actions$ = inject(Actions)) => {
-    const http = inject(CrudService);
-    return actions$.pipe(
-      ofType(PageActions.enter),
-      exhaustMap(() => {
-        return http.getGlobalData().pipe(
-          map((results) => PageActions.loadGlobalsSuccess({ results })),
-          catchError((error) => of(PageActions.loadGlobalsFailure({ error })))
-        );
-      })
-    );
-  },
-  { functional: true }
-); */
