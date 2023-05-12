@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -48,18 +48,12 @@ export class NuclidePickerComponent implements OnInit {
   @Input() form!: FormGroup;
   @Input() caption!: string;
 
-  ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  spinPanelState = 0;
+   spinPanelState = 0;
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.ready.next(true);
   }
-/* 
-  viewProviders:
-    | [{ provide: ControlContainer; useExisting: FormGroupDirective }]
-    | undefined; */
 
   toggleSpinState = () => {
     this.spinPanelState = this.spinPanelState++ % 2;

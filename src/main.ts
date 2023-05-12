@@ -8,25 +8,25 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Routes, provideRouter } from '@angular/router';
-import { provideEffects, EffectsModule } from '@ngrx/effects';
+import { provideRouter } from '@angular/router';
+import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore } from '@ngrx/router-store';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { APP_ROUTES } from './app/app-routes';
 import { AppComponent } from './app/app.component';
 import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalErrorHandler } from './app/core/global-error-handler';
 import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
-import { DemoComponent } from './app/demo/demo.component';
-import * as fusionState from './app/state/fusion';
 import { globalFeature } from './app/state/global.state';
-import { UnderConstructionComponent } from './app/under-construction/under-construction.component';
 
 const initAppFn = (configService: AppConfigService) => {
   return () => configService.validateConfiguration();
 };
 
-const routes: Routes = [
+const routes = APP_ROUTES;
+
+/* const routes: Routes = [
   { path: '', redirectTo: 'intro', pathMatch: 'full' },
   {
     path: 'intro',
@@ -35,12 +35,12 @@ const routes: Routes = [
   },
   {
     path: 'fusion',
+    providers: [
+        provideState('fusion', fusionState.fusionReducer),
+        provideEffects(fusionState.FusionEffects)
+      ],
     loadComponent: () =>
       import('./app/fusion/fusion.head.component').then((m) => m.FusionHeadComponent),
-      providers: [
-        provideState(fusionState.fusionFeature),
-        provideEffects(fusionState.FusionEffects)
-      ]
   },
   {
     path: 'fission',
@@ -60,7 +60,7 @@ const routes: Routes = [
   },
   { path: '**', component: UnderConstructionComponent }
 ];
-
+ */
 bootstrapApplication(AppComponent, {
   providers: [
     {
@@ -90,3 +90,4 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(BrowserAnimationsModule)
   ]
 }).catch((err) => console.log(err));
+

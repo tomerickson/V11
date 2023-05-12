@@ -11,6 +11,7 @@ import { globalFeature } from '../state';
 import { FusionFaceComponent } from './fusion.face.component';
 import { FusionActions } from '../state/fusion';
 import { FormGroup } from '@angular/forms';
+import { IKeyValuePair, KeyValuePair } from '../core/models/key-value.pair.model';
 
 @Component({
   standalone: true,
@@ -32,7 +33,6 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
   elements: Observable<IElementDataModel[]> | null = null;
   sortFields: Observable<ILookupDataModel[]> | null = null;
   ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  formData: FormData | undefined;
   subscriptions: Subscription = new Subscription();
   submittable = false;
 
@@ -42,8 +42,8 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
   constructor(private headerService: HeaderProviderService) {}
 
   submit_query = (fusionForm: FormGroup): void => {
-    this.formData = this.build_request_form(fusionForm);
-    this.store.dispatch(FusionActions.fetchAllResults({ payload: this.formData }));
+    const kvp = this.build_request_form(fusionForm);
+    this.store.dispatch(FusionActions.fetchAllResults({ payload: kvp }));
   };
 
   ngOnDestroy(): void {
@@ -69,8 +69,14 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     return bosons && fermions ? 'bf' : bosons ? 'b' : fermions ? 'f' : 'bf';
   };
 
-  build_request_form(fusionForm: FormGroup): FormData {
-    const formData: FormData = new FormData();
+  /**
+   * map the formgroup to an array of key-value pairs
+   * to be processed upstream
+   * @param fusionForm
+   * @returns keyvaluepairs[]
+   */
+  build_request_form(fusionForm: FormGroup): IKeyValuePair[] {
+    let kvp = new Array<IKeyValuePair>();
     const inputNeutrinos = fusionForm.get('inputNeutrinos')?.value;
     const noNeutrinos = fusionForm.get('noNeutrinos')?.value;
     const outputNeutrinos = fusionForm.get('outputNeutrinos')?.value;
@@ -110,46 +116,43 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     const resultAtomicFermions: boolean = fusionForm.get(
       'resultNuclides.atomicFermions'
     )?.value;
-    formData.append('doit', 'execute_query');
-    formData.append('query', fusionForm.get('coreQuery')?.value);
-    formData.append('table_name', fusionForm.get('tableSet')?.value);
+       
+    kvp.push(new KeyValuePair('doit', 'execute_query'));
+    kvp.push(new KeyValuePair('query', fusionForm.get('coreQuery')?.value));
+    kvp.push(new KeyValuePair('table_name', fusionForm.get('tableSet')?.value));
     if (inputNeutrinos) {
-      formData.append('sql_tables[]', 'left');
+      kvp.push(new KeyValuePair('sql_tables[]', 'left'));
     }
     if (noNeutrinos) {
-      formData.append('sql_tables[]', 'none');
+      kvp.push(new KeyValuePair('sql_tables[]', 'none'));
     }
     if (outputNeutrinos) {
-      formData.append('sql_tables[]', 'right');
+      kvp.push(new KeyValuePair('sql_tables[]', 'right'));
     }
-    formData.append(
+    kvp.push(new KeyValuePair(
       'nBorF1',
       this.formatSpinChoices(leftNuclearBosons, leftNuclearFermions)
-    );
-    formData.append(
+    ));
+    kvp.push(new KeyValuePair(
       'aBorF1',
       this.formatSpinChoices(leftAtomicBosons, leftAtomicFermions)
-    );
-    formData.append(
+    ));
+    kvp.push(new KeyValuePair(
       'nBorF2',
       this.formatSpinChoices(rightNuclearBosons, rightNuclearFermions)
-    );
-    formData.append(
+    ));
+    kvp.push(new KeyValuePair(
       'aBorF2',
       this.formatSpinChoices(rightAtomicBosons, rightAtomicFermions)
-    );
-    formData.append(
+    ));
+    kvp.push(new KeyValuePair(
       'nBorF',
       this.formatSpinChoices(resultNuclearBosons, resultNuclearFermions)
-    );
-    formData.append(
+    ));
+    kvp.push(new KeyValuePair(
       'aBorF',
       this.formatSpinChoices(resultAtomicBosons, resultAtomicFermions)
-    );
-
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
-    return formData;
+    ));
+    return kvp;
   }
 }

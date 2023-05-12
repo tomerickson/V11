@@ -6,9 +6,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   inject
 } from '@angular/core';
 import {
@@ -59,7 +61,7 @@ import { missingElementsValidator } from './fusion-form.validator';
   ],
   providers: [{ provide: HeaderProviderService }]
 })
-export class FusionFaceComponent implements OnInit, OnDestroy {
+export class FusionFaceComponent implements OnChanges, OnInit, OnDestroy {
   fb: FormBuilder = inject(FormBuilder);
   fusionForm!: FormGroup;
   leftNuclides!: FormGroup;
@@ -100,6 +102,10 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+  };
 
   ngOnInit(): void {
     this.buildForm();

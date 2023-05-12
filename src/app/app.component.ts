@@ -7,7 +7,7 @@ import { MenuComponent } from './menu/menu.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { globalFeature, selectShowMenu } from './state/global.state';
+import { globalFeature } from './state/global.state';
 
 @Component({
   standalone: true,

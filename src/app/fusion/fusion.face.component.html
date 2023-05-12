@@ -57,36 +57,34 @@
         'limit 1000'.
       </p>
       <p>
-        In all the above tables, except the Periodic, each atom, in either
-        the input or the output, as well as its 'A' and 'Z' numbers now also
-        has a 'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic
-        Boson or Fermion') parameter associated with it.
+        In all the above tables, except the Periodic, each atom, in either the
+        input or the output, as well as its 'A' and 'Z' numbers now also has a
+        'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or
+        Fermion') parameter associated with it.
       </p>
 
       <p>
-        An atom's nucleus is considered a Boson ('b') if its A number is
-        even; if odd a Fermion ('f'). The atom itself is considered a Boson
-        ('b') if its number of neutrons (A - Z) is even; if odd a Fermion
-        ('f').
+        An atom's nucleus is considered a Boson ('b') if its A number is even;
+        if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
+        its number of neutrons (A - Z) is even; if odd a Fermion ('f').
       </p>
 
       <p>
         These parameters can be used either passively, by observing the
-        distributions of 'b' and 'f' in inputs and/or outputs, and/or
-        actively, by selecting 'b only', 'f only' or 'either' in the boxes
-        below.
+        distributions of 'b' and 'f' in inputs and/or outputs, and/or actively,
+        by selecting 'b only', 'f only' or 'either' in the boxes below.
       </p>
       <p>
         You may indicate which of the three neutrino conditions to include:
-        "left" and/or "none" and/or "right". The default condition is
-        include all three.
+        "left" and/or "none" and/or "right". The default condition is include
+        all three.
       </p>
       <p>
-        NB: To avoid unnecessary duplication in all Fusion tables, A1 is
-        never greater than A2 in any row, i.e. A1 &le; A2. This also applies
-        implicitly in that, if the input side of the Core Query only
-        involves E1 and E2, only rows whose associated mass numbers obey A1
-        &le; A2 will appear in the results
+        NB: To avoid unnecessary duplication in all Fusion tables, A1 is never
+        greater than A2 in any row, i.e. A1 &le; A2. This also applies
+        implicitly in that, if the input side of the Core Query only involves E1
+        and E2, only rows whose associated mass numbers obey A1 &le; A2 will
+        appear in the results
       </p>
     </mat-expansion-panel>
   </mat-card-content>
@@ -95,7 +93,7 @@
 <form [formGroup]="fusionForm">
   <mat-card>
     <mat-card-content>
-        <h3>Nuclides</h3>
+      <h3>Nuclides</h3>
       <div class="children">
         <div class="nuclides mat-elevation-z2">
           <mfmp-nuclide-picker
@@ -173,9 +171,7 @@
               ngDefaultControl>
               <mat-label>Order By:</mat-label>
               <mat-select title="Order by" formControlName="orderBy">
-                <mat-option
-                  *ngFor="let f of sortFields"
-                  [value]="f.code">
+                <mat-option *ngFor="let f of sortFields" [value]="f.code">
                   {{ f.code }}
                 </mat-option>
               </mat-select>

@@ -1,14 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map, retry, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, map, retry } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IElementDataModel } from '../models/element.data.model';
-import { ILookupDataModel } from '../models/lookup..data.model';
 import { IFusionCompositeResults } from '../models/fusion-composite-results.model';
-import { IElementResultsModel } from '../models/element.results.model';
-import { IFusionResultsModel } from '../models/fusion.results.model';
-import { INuclideResultsModel } from '../models/nuclide.results.model';
+import { IKeyValuePair } from '../models/key-value.pair.model';
+import { ILookupDataModel } from '../models/lookup..data.model';
 import { extractTablesFromPage } from './page.services';
 
 export interface User {
@@ -25,28 +23,27 @@ export interface GlobalCollections {
 
 @Injectable({ providedIn: 'root' })
 export class CrudService {
-  private httpError: any;
   private _endPoint: string = environment.proxy + environment.apiUrl;
-  private user: User;
+  // private user: User;
 
   public get endPoint(): string {
     return this._endPoint;
   }
 
   constructor(private http: HttpClient) {
-    this.user = <User>{ id: '' };
+    // this.user = <User>{ id: '' };
   }
 
   getUsers(): Observable<User> {
     return this.http.get<User>(this.endPoint + '/users').pipe(retry(1));
   }
 
-  getGlobalData(): Observable<GlobalCollections> {
+  /*   getGlobalData(): Observable<GlobalCollections> {
     let result: GlobalCollections = { elements: [], lookups: [] };
     this.getElements().pipe(map((res) => result.elements));
     this.getLookups().pipe(map((res) => result.lookups));
     return of(result);
-  }
+  } */
 
   getElements(): Observable<IElementDataModel[]> {
     let page = `${this.endPoint}Elements.php`;
@@ -58,11 +55,24 @@ export class CrudService {
     return this.http.get<ILookupDataModel[]>(page).pipe(retry(1));
   }
 
-  getFusionResults(payload: FormData): Observable<IFusionCompositeResults> {
+  getFusionResults(payload: IKeyValuePair[]): IFusionCompositeResults {
     console.log('crudservice.getfusionresults');
     let page: string = `${this.endPoint}Fusion.php`;
-    return this.http.post(page, payload, { responseType: 'text' })
-    .pipe(retry(1), map(rsp => this.parseFusionResults(rsp), catchError(this.httpError)));
+    let result: IFusionCompositeResults = {
+      elementResults: [],
+      fusionResults: [],
+      nuclideResults: []
+    };
+    this.http.post(page, payload, { responseType: 'text' }).pipe(
+      map((data) => {
+        result = this.parseFusionResults(data);
+        return result;
+      }),
+      catchError((err) => {
+        throw `Error in ${'getFusionResults'}. err=${err}`;
+      })
+    );
+    return result;
   }
 
   getDummyResults(): Observable<any> {
@@ -76,7 +86,6 @@ export class CrudService {
   }
 
   parseFusionResults(html: string): IFusionCompositeResults {
-
     const nodes = extractTablesFromPage(html);
     console.log(nodes);
     debugger;
@@ -84,8 +93,7 @@ export class CrudService {
       elementResults: [],
       fusionResults: [],
       nuclideResults: []
-    }
- 
+    };
     return result;
   }
   /*
