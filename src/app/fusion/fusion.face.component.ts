@@ -31,11 +31,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { IElementDataModel } from '../core/models/element.data.model';
-import { ILookupDataModel } from '../core/models/lookup..data.model';
+import { IElementDataModel } from '../core/models/element-data.model';
+import { ILookupDataModel } from '../core/models/lookup.-data.model';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
 import { missingElementsValidator } from './fusion-form.validator';
+import { ElementResultsHeadComponent } from '../shared/element-results/element-results.component';
 
 @Component({
   standalone: true,
@@ -57,7 +58,8 @@ import { missingElementsValidator } from './fusion-form.validator';
     MatSliderModule,
     MatFormFieldModule,
     NuclidePickerComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ElementResultsHeadComponent
   ],
   providers: [{ provide: HeaderProviderService }]
 })

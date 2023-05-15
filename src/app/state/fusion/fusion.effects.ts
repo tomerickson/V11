@@ -1,54 +1,41 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  map,
-  of,
-  pipe,
-  withLatestFrom
-} from 'rxjs';
+import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { CrudService } from 'src/app/core/services/crud.service';
-import { FusionActions} from './fusion.actions';
-import { fusionFeature } from './fusion.state';
+import { FusionActions } from './fusion.actions';
 
-/* export const fetchAllResultsEffect = createEffect(
-  (actions$ = inject(Actions), crud = inject(CrudService)) => {
+/* export const dummyEffect = createEffect(
+  (actions$ = inject(Actions)) => {
     return actions$.pipe(
-      ofType(store.FusionActions.fetchAllResults),
-      withLatestFrom(store.fusionFeature.selectFormData),
-      pipe(
-        map((form) => crud.getFusionResults(form)),
-        pipe(
-          map((tables) =>
-            store.FusionActions.loadAllResultsSuccess({ results: tables })
-          )
-        ),
-        catchError((error) =>
-          of(store.FusionActions.loadAllResultsFailure(error))
-        )
-      )
+      ofType(FusionActions.fetchAllResults),
+      tap(() => console.log('dummyEffect is running'))
     );
   },
-  { functional: true }
+  { functional: true, dispatch: false }
 ); */
 
 export const fetchAllResultsEffect = createEffect(
-  (actions$ = inject(Actions), crud = inject(CrudService)) => {
+  (actions$ = inject(Actions)) => {
+    const crud = inject(CrudService);
     return actions$.pipe(
       ofType(FusionActions.fetchAllResults),
-      withLatestFrom(fusionFeature.selectFormData),
-      pipe(
-        map((form) => crud.getFusionResults(form)),
-        pipe(
-          map((tables) =>
-            FusionActions.loadAllResultsSuccess({ results: tables })
-          )
-        ),
-        catchError((error) =>
-          of(FusionActions.loadAllResultsFailure(error))
-        )
+      exhaustMap(action => crud.getFusionResults(action.payload)),
+      map(html => crud.parseFusionResults(html)),
+      map(tables => FusionActions.loadAllResultsSuccess({ results: tables })),
+      catchError((error) =>
+        of(FusionActions.loadAllResultsFailure({ error: error.message }))
       )
     );
   },
   { functional: true }
+);
+
+export const loadAllResultsErrorAlert = createEffect(
+  () => {
+    return inject(Actions).pipe(
+      ofType(FusionActions.loadAllResultsFailure),
+      tap(({ error }) => alert(error))
+    );
+  },
+  { functional: true, dispatch: false }
 );

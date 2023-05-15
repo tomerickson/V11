@@ -3,15 +3,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription, from } from 'rxjs';
-import { IElementDataModel } from '../core/models/element.data.model';
-import { ILookupDataModel } from '../core/models/lookup..data.model';
+import { IElementDataModel } from '../core/models/element-data.model';
+import { ILookupDataModel } from '../core/models/lookup.-data.model';
 import { CrudService } from '../core/services/crud.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { globalFeature } from '../state';
 import { FusionFaceComponent } from './fusion.face.component';
 import { FusionActions } from '../state/fusion';
 import { FormGroup } from '@angular/forms';
-import { IKeyValuePair, KeyValuePair } from '../core/models/key-value.pair.model';
+import {
+  IKeyValuePair,
+  KeyValuePair
+} from '../core/models/key-value-pair.model';
+import { ElementResultsHeadComponent } from '../shared/element-results/element-results.component';
 
 @Component({
   standalone: true,
@@ -23,7 +27,12 @@ import { IKeyValuePair, KeyValuePair } from '../core/models/key-value.pair.model
       (doit)="submit_query($event)"></mfmp-fusion-face>
   `,
   styles: [''],
-  imports: [CommonModule, HttpClientModule, FusionFaceComponent],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    FusionFaceComponent,
+    ElementResultsHeadComponent
+  ],
   providers: [{ provide: HeaderProviderService }]
 })
 export class FusionHeadComponent implements OnInit, OnDestroy {
@@ -32,6 +41,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
 
   elements: Observable<IElementDataModel[]> | null = null;
   sortFields: Observable<ILookupDataModel[]> | null = null;
+  elementResults: Observable<any[]> = from([]);
   ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   subscriptions: Subscription = new Subscription();
   submittable = false;
@@ -73,7 +83,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
    * map the formgroup to an array of key-value pairs
    * to be processed upstream
    * @param fusionForm
-   * @returns keyvaluepairs[]
+   * @returns KeyValuePairs[]
    */
   build_request_form(fusionForm: FormGroup): IKeyValuePair[] {
     let kvp = new Array<IKeyValuePair>();
@@ -116,43 +126,68 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     const resultAtomicFermions: boolean = fusionForm.get(
       'resultNuclides.atomicFermions'
     )?.value;
-       
-    kvp.push(new KeyValuePair('doit', 'execute_query'));
-    kvp.push(new KeyValuePair('query', fusionForm.get('coreQuery')?.value));
-    kvp.push(new KeyValuePair('table_name', fusionForm.get('tableSet')?.value));
+
+    kvp.push(new KeyValuePair({ key: 'doit', value: 'execute_query' }));
+    kvp.push(
+      new KeyValuePair({
+        key: 'query',
+        value: fusionForm.get('coreQuery')?.value
+      })
+    );
+    kvp.push(
+      new KeyValuePair({
+        key: 'table_name',
+        value: fusionForm.get('tableSet')?.value
+      })
+    );
     if (inputNeutrinos) {
-      kvp.push(new KeyValuePair('sql_tables[]', 'left'));
+      kvp.push(new KeyValuePair({ key: 'sql_tables[]', value: 'left' }));
     }
     if (noNeutrinos) {
-      kvp.push(new KeyValuePair('sql_tables[]', 'none'));
+      kvp.push(new KeyValuePair({ key: 'sql_tables[]', value: 'none' }));
     }
     if (outputNeutrinos) {
-      kvp.push(new KeyValuePair('sql_tables[]', 'right'));
+      kvp.push(new KeyValuePair({ key: 'sql_tables[]', value: 'right' }));
     }
-    kvp.push(new KeyValuePair(
-      'nBorF1',
-      this.formatSpinChoices(leftNuclearBosons, leftNuclearFermions)
-    ));
-    kvp.push(new KeyValuePair(
-      'aBorF1',
-      this.formatSpinChoices(leftAtomicBosons, leftAtomicFermions)
-    ));
-    kvp.push(new KeyValuePair(
-      'nBorF2',
-      this.formatSpinChoices(rightNuclearBosons, rightNuclearFermions)
-    ));
-    kvp.push(new KeyValuePair(
-      'aBorF2',
-      this.formatSpinChoices(rightAtomicBosons, rightAtomicFermions)
-    ));
-    kvp.push(new KeyValuePair(
-      'nBorF',
-      this.formatSpinChoices(resultNuclearBosons, resultNuclearFermions)
-    ));
-    kvp.push(new KeyValuePair(
-      'aBorF',
-      this.formatSpinChoices(resultAtomicBosons, resultAtomicFermions)
-    ));
+    kvp.push(
+      new KeyValuePair({
+        key: 'nBorF1',
+        value: this.formatSpinChoices(leftNuclearBosons, leftNuclearFermions)
+      })
+    );
+    kvp.push(
+      new KeyValuePair({
+        key: 'aBorF1',
+        value: this.formatSpinChoices(leftAtomicBosons, leftAtomicFermions)
+      })
+    );
+    kvp.push(
+      new KeyValuePair({
+        key: 'nBorF2',
+        value: this.formatSpinChoices(rightNuclearBosons, rightNuclearFermions)
+      })
+    );
+    kvp.push(
+      new KeyValuePair({
+        key: 'aBorF2',
+        value: this.formatSpinChoices(rightAtomicBosons, rightAtomicFermions)
+      })
+    );
+    kvp.push(
+      new KeyValuePair({
+        key: 'nBorF',
+        value: this.formatSpinChoices(
+          resultNuclearBosons,
+          resultNuclearFermions
+        )
+      })
+    );
+    kvp.push(
+      new KeyValuePair({
+        key: 'aBorF',
+        value: this.formatSpinChoices(resultAtomicBosons, resultAtomicFermions)
+      })
+    );
     return kvp;
   }
 }

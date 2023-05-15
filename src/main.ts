@@ -26,41 +26,6 @@ const initAppFn = (configService: AppConfigService) => {
 
 const routes = APP_ROUTES;
 
-/* const routes: Routes = [
-  { path: '', redirectTo: 'intro', pathMatch: 'full' },
-  {
-    path: 'intro',
-    loadComponent: () =>
-      import('./app/intro/intro.component').then((m) => m.IntroComponent)
-  },
-  {
-    path: 'fusion',
-    providers: [
-        provideState('fusion', fusionState.fusionReducer),
-        provideEffects(fusionState.FusionEffects)
-      ],
-    loadComponent: () =>
-      import('./app/fusion/fusion.head.component').then((m) => m.FusionHeadComponent),
-  },
-  {
-    path: 'fission',
-    loadComponent: () =>
-      import('./app/fission/fission.component').then((m) => m.FissionComponent)
-  },
-  {
-    path: 'testpage',
-    loadComponent: () =>
-      import('./app/testpage/testpage.head.component').then(
-        (m) => m.TestpageHeadComponent
-      )
-  },
-  {
-    path: 'demo',
-    component: DemoComponent
-  },
-  { path: '**', component: UnderConstructionComponent }
-];
- */
 bootstrapApplication(AppComponent, {
   providers: [
     {

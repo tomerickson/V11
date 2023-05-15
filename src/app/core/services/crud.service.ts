@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError, map, retry } from 'rxjs/operators';
+import { Injectable, inject } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, map, retry, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { IElementDataModel } from '../models/element.data.model';
+import { IElementDataModel } from '../models/element-data.model';
 import { IFusionCompositeResults } from '../models/fusion-composite-results.model';
-import { IKeyValuePair } from '../models/key-value.pair.model';
-import { ILookupDataModel } from '../models/lookup..data.model';
+import { IKeyValuePair, KeyValuePair } from '../models/key-value-pair.model';
+import { ILookupDataModel } from '../models/lookup.-data.model';
 import { extractTablesFromPage } from './page.services';
 
 export interface User {
@@ -23,15 +23,13 @@ export interface GlobalCollections {
 
 @Injectable({ providedIn: 'root' })
 export class CrudService {
+  http = inject(HttpClient);
+
   private _endPoint: string = environment.proxy + environment.apiUrl;
   // private user: User;
 
   public get endPoint(): string {
     return this._endPoint;
-  }
-
-  constructor(private http: HttpClient) {
-    // this.user = <User>{ id: '' };
   }
 
   getUsers(): Observable<User> {
@@ -55,24 +53,10 @@ export class CrudService {
     return this.http.get<ILookupDataModel[]>(page).pipe(retry(1));
   }
 
-  getFusionResults(payload: IKeyValuePair[]): IFusionCompositeResults {
-    console.log('crudservice.getfusionresults');
+  getFusionResults(payload: IKeyValuePair[]): Observable<string> {
     let page: string = `${this.endPoint}Fusion.php`;
-    let result: IFusionCompositeResults = {
-      elementResults: [],
-      fusionResults: [],
-      nuclideResults: []
-    };
-    this.http.post(page, payload, { responseType: 'text' }).pipe(
-      map((data) => {
-        result = this.parseFusionResults(data);
-        return result;
-      }),
-      catchError((err) => {
-        throw `Error in ${'getFusionResults'}. err=${err}`;
-      })
-    );
-    return result;
+    return this.http.post(page, this.buildFormData(payload), {responseType: 'text', observe: 'body'});
+    
   }
 
   getDummyResults(): Observable<any> {
@@ -86,16 +70,30 @@ export class CrudService {
   }
 
   parseFusionResults(html: string): IFusionCompositeResults {
-    const nodes = extractTablesFromPage(html);
-    console.log(nodes);
-    debugger;
+    const data = extractTablesFromPage(html);
+  
     let result: IFusionCompositeResults = {
-      elementResults: [],
-      fusionResults: [],
-      nuclideResults: []
+      elementResults: data[0],
+      fusionResults: data[1],
+      nuclideResults: data[2]
     };
     return result;
   }
+
+  /**
+   * Convert kvp array to FormData object
+   * for consumption by http.post
+   *
+   * @param kvp
+   * @returns
+   */
+  buildFormData = (kvp: KeyValuePair[]): FormData => {
+    let formData: FormData = new FormData();
+    for (let pair of kvp) {
+      formData.append(pair.key, pair.value);
+    }
+    return formData;
+  };
   /*
   create(employee): Observable<User> {
     return this.http.post<User>(this.endPoint + '/users', JSON.stringify(employee), this.httpHeader)

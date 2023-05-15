@@ -4,8 +4,8 @@ import {
   emptyProps,
   props
 } from '@ngrx/store';
-import { ILookupDataModel } from '../core/models/lookup..data.model';
-import { IElementDataModel } from '../core/models/element.data.model';
+import { ILookupDataModel } from '../core/models/lookup.-data.model';
+import { IElementDataModel } from '../core/models/element-data.model';
 
 export const ElementActions = createActionGroup({
   source: 'Global API',

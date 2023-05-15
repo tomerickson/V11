@@ -15,7 +15,7 @@ import {
   MatTableDataSourcePaginator,
   MatTableModule
 } from '@angular/material/table';
-import { IElementDataModel } from '../core/models/element.data.model';
+import { IElementDataModel } from '../core/models/element-data.model';
 
 @Component({
   imports: [

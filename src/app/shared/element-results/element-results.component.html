@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-content>
+    <table mat-table [dataSource]="elements" class="mat-elevation-z2">
+        <ng-container *ngFor="let x of doodles">
+            <p>{{x}}</p>
+        </ng-container>
+        <mat-text-column name="score"></mat-text-column>
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

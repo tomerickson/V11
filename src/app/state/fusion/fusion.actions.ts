@@ -1,7 +1,7 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IFusionCompositeResults } from 'src/app/core/models/fusion-composite-results.model';
-import { IKeyValuePair } from 'src/app/core/models/key-value.pair.model';
+import { IKeyValuePair } from 'src/app/core/models/key-value-pair.model';
 
 export const FusionActions = createActionGroup({
   source: 'Fusion API',

@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, EventEmitter, inject } from '@angular/cor
 import { MatButtonModule } from '@angular/material/button';
 import { from, Observable, of, tap } from 'rxjs';
 import { CrudService } from '../core/services/crud.service';
-import { IElementDataModel } from '../core/models/element.data.model';
+import { IElementDataModel } from '../core/models/element-data.model';
 import { TestpageFaceComponent } from './testpage.face.component';
 
 @Component({
