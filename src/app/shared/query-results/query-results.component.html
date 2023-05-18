@@ -1,0 +1,18 @@
+<mat-card>
+    <mat-card-header>
+      <h3>{{title}}</h3>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="results" matSort="results" (matSortChange)="sortData($event)" class="mat-elevation-z2">
+        <ng-container
+          *ngFor="let column of displayColumns; let colIndex = index"
+          [matColumnDef]="column">
+          <th mat-header-cell mat-sort-header [class]="columnStyles[colIndex]" *matHeaderCellDef>{{ column }}</th>
+          <td mat-cell [class]="columnStyles[colIndex]" *matCellDef="let row">{{ row[colIndex] }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+  

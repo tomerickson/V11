@@ -229,7 +229,10 @@
       </mat-card>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button type="button" mat-raised-button (click)="resetForm()">
+      <button
+        type="button"
+        mat-raised-button
+        (click)="resetForm(); resetResults()">
         RESET
       </button>
       <button
@@ -244,4 +247,21 @@
     </mat-card-actions>
   </mat-card>
 </form>
-<mfmp-element-results></mfmp-element-results>
+<mfmp-query-results
+  *ngIf="fusionResults.length > 0"
+  [title]="'Results'"
+  [inputResults]="fusionResults"
+  [sortBy]="sortBy"
+  [sortOrder]="sortOrder"></mfmp-query-results>
+<mfmp-query-results
+  *ngIf="nuclideResults.length > 0"
+  [title]="'Nuclides'"
+  [inputResults]="nuclideResults"
+  [sortBy]="sortBy"
+  [sortOrder]="sortOrder"></mfmp-query-results>
+<mfmp-query-results
+  *ngIf="elementResults.length > 0"
+  [title]="'Elements'"
+  [inputResults]="elementResults"
+  [sortBy]="sortBy"
+  [sortOrder]="sortOrder"></mfmp-query-results>

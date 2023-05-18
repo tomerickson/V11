@@ -2,20 +2,19 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, Subscription, from } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IElementDataModel } from '../core/models/element-data.model';
 import { ILookupDataModel } from '../core/models/lookup.-data.model';
 import { CrudService } from '../core/services/crud.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { globalFeature } from '../state';
 import { FusionFaceComponent } from './fusion.face.component';
-import { FusionActions } from '../state/fusion';
+import { FusionActions, fusionFeature } from '../state/fusion';
 import { FormGroup } from '@angular/forms';
 import {
   IKeyValuePair,
   KeyValuePair
 } from '../core/models/key-value-pair.model';
-import { ElementResultsHeadComponent } from '../shared/element-results/element-results.component';
 
 @Component({
   standalone: true,
@@ -24,14 +23,16 @@ import { ElementResultsHeadComponent } from '../shared/element-results/element-r
     <mfmp-fusion-face
       [elements]="elements | async"
       [sortFields]="sortFields | async"
+      [fusionResults]="(fusionResults | async) ?? []"
+      [nuclideResults]="(nuclideResults | async) ?? []"
+      [elementResults]="(elementResults | async) ?? []"
       (doit)="submit_query($event)"></mfmp-fusion-face>
   `,
   styles: [''],
   imports: [
     CommonModule,
     HttpClientModule,
-    FusionFaceComponent,
-    ElementResultsHeadComponent
+    FusionFaceComponent
   ],
   providers: [{ provide: HeaderProviderService }]
 })
@@ -41,7 +42,9 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
 
   elements: Observable<IElementDataModel[]> | null = null;
   sortFields: Observable<ILookupDataModel[]> | null = null;
-  elementResults: Observable<any[]> = from([]);
+  fusionResults!: Observable<any[]>;
+  nuclideResults!: Observable<any[]>;
+  elementResults!: Observable<any[]>;
   ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   subscriptions: Subscription = new Subscription();
   submittable = false;
@@ -63,6 +66,9 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.elements = this.store.select(globalFeature.selectElements);
     this.sortFields = this.store.select(globalFeature.selectReactionSortFields);
+    this.fusionResults = this.store.select(fusionFeature.selectFusionResults)
+    this.nuclideResults = this.store.select(fusionFeature.selectNuclideResults)
+    this.elementResults = this.store.select(fusionFeature.selectElementResults);
     this.headerService.buildPageHeader('fusion');
     this.ready.next(true);
   }

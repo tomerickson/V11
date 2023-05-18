@@ -20,9 +20,9 @@ export const fusionInitialState: FusionState = {
   loading: false,
   ready: false,
   error: null,
-  elementResults: [],
   fusionResults: [],
-  nuclideResults: []
+  nuclideResults: [],
+  elementResults: []
 };
 
 export const fusionReducer = createReducer(
@@ -34,9 +34,9 @@ export const fusionReducer = createReducer(
       loading: true,
       ready: false,
       error: null,
-      elementResults: [],
       fusionResults: [],
-      nuclideResults: []
+      nuclideResults: [],
+      elementResults: []
     };
   }),
   on(FusionActions.loadAllResultsFailure, (state, action) => {

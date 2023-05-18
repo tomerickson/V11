@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  HttpClientModule
-} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import {
   Component,
   EventEmitter,
@@ -36,7 +34,7 @@ import { ILookupDataModel } from '../core/models/lookup.-data.model';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
 import { missingElementsValidator } from './fusion-form.validator';
-import { ElementResultsHeadComponent } from '../shared/element-results/element-results.component';
+import { QueryResultsComponent } from '../shared/query-results/query-results.component';
 
 @Component({
   standalone: true,
@@ -59,7 +57,7 @@ import { ElementResultsHeadComponent } from '../shared/element-results/element-r
     MatFormFieldModule,
     NuclidePickerComponent,
     ReactiveFormsModule,
-    ElementResultsHeadComponent
+    QueryResultsComponent
   ],
   providers: [{ provide: HeaderProviderService }]
 })
@@ -74,9 +72,14 @@ export class FusionFaceComponent implements OnChanges, OnInit, OnDestroy {
   subscriptions: Subscription = new Subscription();
   sortDescendingProxy!: boolean;
   submittable = false;
+  sortBy = '';
+  sortOrder = '';
 
   @Input({ required: true }) elements: IElementDataModel[] | null = null;
   @Input({ required: true }) sortFields: ILookupDataModel[] | null = null;
+  @Input({required: true}) fusionResults: any[] = [];
+  @Input({required: true}) nuclideResults: any[] = [];
+  @Input({ required: true }) elementResults: any[] = [];
   @Output() doit: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   readonly description =
@@ -107,7 +110,7 @@ export class FusionFaceComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
-  };
+  }
 
   ngOnInit(): void {
     this.buildForm();
@@ -198,6 +201,12 @@ export class FusionFaceComponent implements OnChanges, OnInit, OnDestroy {
     this.handleFormChanges(this.fusionForm.value);
   };
 
+  resetResults = () => {
+
+    this.fusionResults = [];
+    this.nuclideResults = [];
+    this.elementResults = [];
+  }
   /**
    * Build out the coreQuery field
    * and the resultNuclides.selectedElements field
@@ -293,7 +302,7 @@ export class FusionFaceComponent implements OnChanges, OnInit, OnDestroy {
 
   /**
    * Merge the left-side and right-side element selections
-   * 
+   *
    * @param leftElements
    * @param rightElements
    * @param stringify
