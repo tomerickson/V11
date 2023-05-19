@@ -32,8 +32,7 @@ import { Subscription } from 'rxjs';
 export class QueryResultsComponent
   implements OnChanges, OnInit, OnDestroy
 {
-  @Input({ required: true }) title!: string;
-  @Input({ required: true }) inputResults: any[] = [];
+  @Input() inputResults: any[] | null;
   @Input({ required: true }) sortBy: string = '';
   @Input({ required: true }) sortOrder: string = '';
 
@@ -46,6 +45,9 @@ export class QueryResultsComponent
   columnStyles: string[] = [];
   subscriptions: Subscription = new Subscription();
 
+  constructor() {
+    this.inputResults = [];
+  }
   ngOnChanges(changes: SimpleChanges): void {
     for (let propName in changes) {
       let change = changes[propName];
@@ -54,7 +56,7 @@ export class QueryResultsComponent
       let prevVal = JSON.stringify(change.previousValue);
       console.log(`current: ${curVal}, previous: ${prevVal}`);
 
-      if (propName === 'inputResults' && this.inputResults.length > 0) {
+      if (propName === 'inputResults' && this.inputResults!.length > 0) {
         this.buildDataSource();
       }
     }
@@ -69,9 +71,9 @@ export class QueryResultsComponent
   };
 
   buildDataSource = () => {
-    if (this.inputResults.length > 0) {
-      this.displayColumns = this.inputResults[0];
-      this.results = [...this.inputResults];
+    if (this.inputResults!.length > 0) {
+      this.displayColumns = this.inputResults![0];
+      this.results = [...this.inputResults!];
       this.results.shift();
       this.dataSource = new MatTableDataSource(this.results);
       this.numbifyValues(this.results);

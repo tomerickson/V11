@@ -35,6 +35,7 @@ import { HeaderProviderService } from '../shared/header/header.provider.service'
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
 import { missingElementsValidator } from './fusion-form.validator';
 import { QueryResultsComponent } from '../shared/query-results/query-results.component';
+import { QueryWrapperComponent } from '../shared/query-results/query-wrapper.component';
 
 @Component({
   standalone: true,
@@ -57,7 +58,7 @@ import { QueryResultsComponent } from '../shared/query-results/query-results.com
     MatFormFieldModule,
     NuclidePickerComponent,
     ReactiveFormsModule,
-    QueryResultsComponent
+    QueryWrapperComponent
   ],
   providers: [{ provide: HeaderProviderService }]
 })
@@ -74,11 +75,12 @@ export class FusionFaceComponent implements OnChanges, OnInit, OnDestroy {
   submittable = false;
   sortBy = '';
   sortOrder = '';
+  coreQuery = '';
 
   @Input({ required: true }) elements: IElementDataModel[] | null = null;
   @Input({ required: true }) sortFields: ILookupDataModel[] | null = null;
-  @Input({required: true}) fusionResults: any[] = [];
-  @Input({required: true}) nuclideResults: any[] = [];
+  @Input({ required: true }) fusionResults: any[] = [];
+  @Input({ required: true }) nuclideResults: any[] = [];
   @Input({ required: true }) elementResults: any[] = [];
   @Output() doit: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
@@ -202,11 +204,10 @@ export class FusionFaceComponent implements OnChanges, OnInit, OnDestroy {
   };
 
   resetResults = () => {
-
     this.fusionResults = [];
     this.nuclideResults = [];
     this.elementResults = [];
-  }
+  };
   /**
    * Build out the coreQuery field
    * and the resultNuclides.selectedElements field
@@ -298,6 +299,7 @@ export class FusionFaceComponent implements OnChanges, OnInit, OnDestroy {
     this.fusionForm
       .get('coreQuery')
       ?.patchValue(query, { onlySelf: true, emitEvent: false });
+    this.coreQuery = query;
   };
 
   /**

@@ -247,21 +247,8 @@
     </mat-card-actions>
   </mat-card>
 </form>
-<mfmp-query-results
+<mfmp-query-wrapper
   *ngIf="fusionResults.length > 0"
-  [title]="'Results'"
-  [inputResults]="fusionResults"
+  [coreQuery]="coreQuery"
   [sortBy]="sortBy"
-  [sortOrder]="sortOrder"></mfmp-query-results>
-<mfmp-query-results
-  *ngIf="nuclideResults.length > 0"
-  [title]="'Nuclides'"
-  [inputResults]="nuclideResults"
-  [sortBy]="sortBy"
-  [sortOrder]="sortOrder"></mfmp-query-results>
-<mfmp-query-results
-  *ngIf="elementResults.length > 0"
-  [title]="'Elements'"
-  [inputResults]="elementResults"
-  [sortBy]="sortBy"
-  [sortOrder]="sortOrder"></mfmp-query-results>
+  [sortOrder]="sortOrder"></mfmp-query-wrapper>
