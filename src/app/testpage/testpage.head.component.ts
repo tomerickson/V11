@@ -1,9 +1,9 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnDestroy, OnInit, EventEmitter, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { from, Observable, of, tap } from 'rxjs';
-import { CrudService } from '../core/services/crud.service';
+import { Observable, from, of, tap } from 'rxjs';
 import { IElementDataModel } from '../core/models/element-data.model';
+import { CrudService } from '../core/services/crud.service';
 import { TestpageFaceComponent } from './testpage.face.component';
 
 @Component({
@@ -50,7 +50,6 @@ export class TestpageHeadComponent
 
   testFusion(): void {
     console.log('testing');
-    this.reloadFusion();
   }
 
   testDummy(): void {
