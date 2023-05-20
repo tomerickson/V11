@@ -8,6 +8,9 @@ import { IFusionCompositeResults } from '../models/fusion-composite-results.mode
 import { IKeyValuePair, KeyValuePair } from '../models/key-value-pair.model';
 import { ILookupDataModel } from '../models/lookup.-data.model';
 import { extractTablesFromPage } from './page.services';
+import { IFusionResultsModel } from '../models/fusion-results.model';
+import { INuclideResultsModel } from '../models/nuclide-results.model';
+import { IElementResultsModel } from '../models/element-results.model';
 
 export interface User {
   id: string;
@@ -55,8 +58,10 @@ export class CrudService {
 
   getFusionResults(payload: IKeyValuePair[]): Observable<string> {
     let page: string = `${this.endPoint}Fusion.php`;
-    return this.http.post(page, this.buildFormData(payload), {responseType: 'text', observe: 'body'});
-    
+    return this.http.post(page, this.buildFormData(payload), {
+      responseType: 'text',
+      observe: 'body'
+    });
   }
 
   getDummyResults(): Observable<any> {
@@ -69,17 +74,59 @@ export class CrudService {
     return this.http.get<User>(`${this.endPoint}/users/${id}`).pipe(retry(1));
   }
 
-  parseFusionResults(html: string): IFusionCompositeResults {
-    const data = extractTablesFromPage(html);
-  
+  /**
+   * Extract the results tables from the page and convert them
+   * into DTOs, then bundle them into a IFusionCompositeResults object.
+   *
+   * @param html
+   * @returns
+   */
+  parseFusionResults = (html: string): IFusionCompositeResults => {
     let result: IFusionCompositeResults = {
-      elementResults: data[0],
-      fusionResults: data[1],
-      nuclideResults: data[2]
+      fusionResults: [],
+      nuclideResults: [],
+      elementResults: [],
+      ok: true
     };
-    return result;
-  }
 
+    /* data is an array of arrays [3]x[n] */
+
+    const data = extractTablesFromPage(html);
+    for (let i = 0; i < 3; i++) {
+      const table: any[] = data[i];
+      const thead: any[] = table[0];
+      const tbody: any[] = table.slice(1);
+      result = this.parseTable(thead, tbody, result);
+    }
+    result.ok =
+      result.fusionResults.length > 0 &&
+      result.nuclideResults.length > 0 &&
+      result.elementResults.length > 0;
+    return result;
+  };
+
+  parseTable = (
+    thead: any[],
+    tbody: any[],
+    output: IFusionCompositeResults
+  ) => {
+    if (this.modelMatches(thead, {} as IFusionResultsModel)) {
+      output.fusionResults = tbody as IFusionResultsModel[];
+    } else if (this.modelMatches(thead, {} as INuclideResultsModel)) {
+      output.nuclideResults = tbody as INuclideResultsModel[];
+    } else if (this.modelMatches(thead, {} as IElementResultsModel)) {
+      output.elementResults = tbody as IElementResultsModel[];
+    }
+    return output;
+  };
+
+  modelMatches = (array: any[], model: {}): boolean => {
+    let matches = 0;
+    for (let columnName of array) {
+      if (columnName in model) matches++;
+    }
+    return matches === array.length;
+  };
   /**
    * Convert kvp array to FormData object
    * for consumption by http.post
