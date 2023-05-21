@@ -35,7 +35,7 @@ import { HeaderProviderService } from '../shared/header/header.provider.service'
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
 import { missingElementsValidator } from './fusion-form.validator';
 import { QueryResultsComponent } from '../shared/query-results/query-results.component';
-import { QueryWrapperComponent } from '../shared/query-results/query-wrapper.component';
+import { QueryWrapperComponent } from './query-wrapper.component';
 
 @Component({
   standalone: true,

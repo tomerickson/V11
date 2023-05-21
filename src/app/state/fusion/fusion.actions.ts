@@ -6,6 +6,7 @@ import { IKeyValuePair } from 'src/app/core/models/key-value-pair.model';
 export const FusionActions = createActionGroup({
   source: 'Fusion API',
   events: {
+    'Reset': emptyProps(),
     'Fetch All Results': props<{payload: IKeyValuePair[]}>(),
     'Load All Results Success': props<{results: IFusionCompositeResults}>(),
     'Load All Results Failure': (error: any) => ({error}),

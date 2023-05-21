@@ -1,15 +1,40 @@
 <mat-card>
-    <mat-card-content>
-      <table mat-table [dataSource]="results" matSort="results" (matSortChange)="sortData($event)" class="mat-elevation-z2">
-        <ng-container
-          *ngFor="let column of displayColumns; let colIndex = index"
-          [matColumnDef]="column">
-          <th mat-header-cell mat-sort-header [class]="columnStyles[colIndex]" *matHeaderCellDef>{{ column }}</th>
-          <td mat-cell [class]="columnStyles[colIndex]" *matCellDef="let row">{{ row[colIndex] }}</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-  
+  <mat-card-content>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="sortData($event)"
+      class="mat-elevation-z2">
+      <ng-container
+        *ngFor="let column of displayColumns; let colIndex = index"
+        [matColumnDef]="column">
+        <th
+          mat-header-cell
+          mat-sort-header
+          [class]="columnStyles[colIndex]"
+          *matHeaderCellDef>
+          {{ column }}
+        </th>
+        <td mat-cell [class]="columnStyles[colIndex]" *matCellDef="let row">
+          {{ row[colIndex] }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="paginator">
+        <td mat-footer-cell *matFooterCellDef colspan="99">
+          <mat-paginator
+            #paginator
+            [pageSize]="10"
+            [pageSizeOptions]="showPageSizeOptions ? this.pageSizeOptions : []"
+            [length]="length"
+            [pageIndex]="pageIndex"
+            showFirstLastButtons
+            (page)="handlePageEvent($event)"></mat-paginator>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+      <tr mat-footer-row *matFooterRowDef="['paginator']"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

@@ -1,16 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map, retry, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { retry } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IElementDataModel } from '../models/element-data.model';
 import { IFusionCompositeResults } from '../models/fusion-composite-results.model';
 import { IKeyValuePair, KeyValuePair } from '../models/key-value-pair.model';
 import { ILookupDataModel } from '../models/lookup.-data.model';
 import { extractTablesFromPage } from './page.services';
-import { IFusionResultsModel } from '../models/fusion-results.model';
-import { INuclideResultsModel } from '../models/nuclide-results.model';
-import { IElementResultsModel } from '../models/element-results.model';
 
 export interface User {
   id: string;
@@ -95,7 +92,7 @@ export class CrudService {
     for (let i = 0; i < 3; i++) {
       const table: any[] = data[i];
       const thead: any[] = table[0];
-      const tbody: any[] = table.slice(1);
+      const tbody: any[] = table;
       result = this.parseTable(thead, tbody, result);
     }
     result.ok =
@@ -105,27 +102,40 @@ export class CrudService {
     return result;
   };
 
+  /**
+   * Match up the first fields of the incoming
+   * header to the expected columns to determine the
+   * result type.
+   * 
+   * @param thead
+   * @param tbody 
+   * @param output 
+   * @returns 
+   */
   parseTable = (
-    thead: any[],
+    thead: string[],
     tbody: any[],
     output: IFusionCompositeResults
   ) => {
-    if (this.modelMatches(thead, {} as IFusionResultsModel)) {
-      output.fusionResults = tbody as IFusionResultsModel[];
-    } else if (this.modelMatches(thead, {} as INuclideResultsModel)) {
-      output.nuclideResults = tbody as INuclideResultsModel[];
-    } else if (this.modelMatches(thead, {} as IElementResultsModel)) {
-      output.elementResults = tbody as IElementResultsModel[];
+    if (this.modelMatches(thead, ['id', 'neutrino'])) {
+      output.fusionResults = tbody;
+    } else if (this.modelMatches(thead, ['id', 'A', 'Z'])) {
+      output.nuclideResults = tbody;
+    } else if (this.modelMatches(thead, ['Z', 'E', 'EName'])) {
+      output.elementResults = tbody;
     }
     return output;
   };
 
-  modelMatches = (array: any[], model: {}): boolean => {
+  modelMatches = (head: string[], model: string[]): boolean => {
     let matches = 0;
-    for (let columnName of array) {
-      if (columnName in model) matches++;
-    }
-    return matches === array.length;
+    for (let i = 0; i < model.length; i++)
+    {
+      if (model[i] === head[i]) {
+        matches++;
+      }
+    }  
+    return matches === model.length;
   };
   /**
    * Convert kvp array to FormData object

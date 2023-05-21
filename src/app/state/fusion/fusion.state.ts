@@ -1,9 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { IElementResultsModel } from 'src/app/core/models/element-results.model';
-import { IFusionResultsModel } from 'src/app/core/models/fusion-results.model';
-import { INuclideResultsModel } from 'src/app/core/models/nuclide-results.model';
-import { FusionActions } from './fusion.actions';
 import { IKeyValuePair } from 'src/app/core/models/key-value-pair.model';
+import { FusionActions } from './fusion.actions';
 
 export interface FusionState {
   formData: IKeyValuePair[];
@@ -27,6 +24,11 @@ export const fusionInitialState: FusionState = {
 
 export const fusionReducer = createReducer(
   fusionInitialState,
+  on(FusionActions.reset, () => {
+    return {
+      ...fusionInitialState     
+    }
+  }),
   on(FusionActions.fetchAllResults, (state, action) => {
     return {
       ...state,

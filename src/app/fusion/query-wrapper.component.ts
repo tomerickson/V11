@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
-import { QueryResultsComponent } from './query-results.component';
+import { QueryResultsComponent } from '../shared/query-results/query-results.component';
 import { Store } from '@ngrx/store';
-import { fusionFeature } from '../../state/fusion';
+import { FusionActions, fusionFeature } from '../state/fusion';
 import { Observable, from, tap } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
@@ -14,7 +15,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
     <mat-card>
       <mat-card-header>{{ coreQuery }}</mat-card-header>
       <mat-tab-group mat-stretch-tabs="false" animationDuration="250ms">
-        <mat-tab label="Results">
+        <mat-tab label="Results ({{ fusionRows - 1 }})">
           <ng-container
             *ngIf="fusionResults; then fusionYes; else fusionNo"></ng-container>
           <ng-template #fusionYes>
@@ -27,7 +28,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
             <h3>No results found</h3>
           </ng-template>
         </mat-tab>
-        <mat-tab label="Nuclides">
+        <mat-tab label="Nuclides ({{ nuclideRows - 1 }})">
           <ng-container
             *ngIf="
               nuclideResults;
@@ -44,7 +45,7 @@ import { AsyncPipe, NgIf } from '@angular/common';
               [sortOrder]="''"></mfmp-query-results>
           </ng-template>
         </mat-tab>
-        <mat-tab label="ELements">
+        <mat-tab label="ELements ({{ elementRows - 1 }})">
           <ng-container
             *ngIf="
               elementResults;
@@ -62,10 +63,20 @@ import { AsyncPipe, NgIf } from '@angular/common';
           </ng-template>
         </mat-tab>
       </mat-tab-group>
+      <mat-card-actions align="end">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="reset()">
+          Reset
+        </button>
+      </mat-card-actions>
     </mat-card>
   `,
   styles: [],
   imports: [
+    MatButtonModule,
     MatCardModule,
     MatTabsModule,
     QueryResultsComponent,
@@ -103,4 +114,8 @@ export class QueryWrapperComponent implements OnInit {
     this.nuclideResults = from([]);
     this.elementResults = from([]);
   }
+
+  reset = () => {
+    this.store.dispatch(FusionActions.reset());
+  };
 }
