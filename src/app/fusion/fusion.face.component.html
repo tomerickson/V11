@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="fusionResults.length == 0">
   <mat-card-content>
     <mat-expansion-panel expanded="false">
       <mat-expansion-panel-header>
@@ -90,10 +90,11 @@
   </mat-card-content>
 </mat-card>
 
-<form [formGroup]="fusionForm">
-  <mat-card>
+
+  <mat-card *ngIf="fusionResults.length == 0">
     <mat-card-content>
-      <h3>Nuclides</h3>
+      <form [formGroup]="fusionForm">
+              <h3>Nuclides</h3>
       <div class="children">
         <div class="nuclides mat-elevation-z2">
           <mfmp-nuclide-picker
@@ -227,6 +228,7 @@
           </div>
         </mat-card-content>
       </mat-card>
+    </form>
     </mat-card-content>
     <mat-card-actions align="end">
       <button
@@ -246,7 +248,7 @@
       </button>
     </mat-card-actions>
   </mat-card>
-</form>
+
 <mfmp-query-wrapper
   *ngIf="fusionResults.length > 0"
   [coreQuery]="coreQuery"
