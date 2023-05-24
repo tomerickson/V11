@@ -54,10 +54,10 @@ export class QueryResultsComponent implements AfterViewInit, OnDestroy {
   columnStyles: string[] = [];
   subscriptions: Subscription = new Subscription();
 
-  pageSize = 10;
+  pageSize = 25;
   pageIndex = 0;
   length = this.pageSize;
-  pageSizeOptions = [5, 10, 25];
+  pageSizeOptions = [5, 10, 25, 100];
   pageEvent!: PageEvent;
 
   hidePageSize = false;
@@ -131,7 +131,7 @@ export class QueryResultsComponent implements AfterViewInit, OnDestroy {
 
   getColumnType = (column: number): ColumnType => {
     let columnType = this.columnTypes[column];
-    if (columnType === null) {
+    if (columnType === undefined) {
       columnType = this.setColumnType(this.results, column);
     }
     return columnType;
