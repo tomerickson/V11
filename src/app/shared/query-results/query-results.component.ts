@@ -1,13 +1,10 @@
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnChanges,
   OnDestroy,
-  OnInit,
-  SimpleChanges,
   ViewChild,
   inject
 } from '@angular/core';
@@ -15,29 +12,34 @@ import { MatCardModule } from '@angular/material/card';
 import {
   MatPaginator,
   MatPaginatorModule,
-  PageEvent
+  PageEvent,
 } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Store } from '@ngrx/store';
-import { Subscription, reduce } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { ResultType } from 'src/app/core/models/result-type';
+import { DownloadComponent } from '../download/download.component';
 
 @Component({
   selector: 'mfmp-query-results',
   standalone: true,
   imports: [
+    NgIf,
     AsyncPipe,
     CommonModule,
     MatCardModule,
     MatSortModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    DownloadComponent
   ],
   templateUrl: './query-results.component.html',
   styleUrls: ['./query-results.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class QueryResultsComponent implements AfterViewInit, OnDestroy {
+  @Input({required: true}) resultType!: ResultType;
   @Input() inputResults: any[] | null;
   @Input({ required: true }) sortBy: string = '';
   @Input({ required: true }) sortOrder: string = '';
@@ -87,9 +89,9 @@ export class QueryResultsComponent implements AfterViewInit, OnDestroy {
       this.dataSource.sort = this.sort;
       this.numbifyValues(this.results);
       this.setColumnStyles(this.results[0]);
-      console.log(this.results);
     }
   };
+  
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;

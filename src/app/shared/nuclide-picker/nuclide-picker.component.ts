@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
-  FormBuilder,
   FormGroup,
   ReactiveFormsModule
 } from '@angular/forms';
@@ -13,9 +12,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { BehaviorSubject } from 'rxjs';
 import { IElementDataModel } from '../../core/models/element-data.model';
 import { SpinPickerComponent } from '../spin-picker/spin-picker.component';
 
@@ -35,7 +32,6 @@ import { SpinPickerComponent } from '../spin-picker/spin-picker.component';
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
-    MatSlideToggleModule,
     MatTooltipModule,
     SpinPickerComponent
   ]
@@ -48,20 +44,18 @@ export class NuclidePickerComponent implements OnInit {
   @Input() form!: FormGroup;
   @Input() caption!: string;
 
-   spinPanelState = 0;
-
-  constructor(private fb: FormBuilder) {}
+  constructor() {}
 
   ngOnInit(): void {
+    /**
+     * This hack forces the form to recognize the first change
+     */
+    this.form.get(`${this.formGroupName}.selectedElements`)?.patchValue('');
   }
-
-  toggleSpinState = () => {
-    this.spinPanelState = this.spinPanelState++ % 2;
-  };
 
   elementOptionValue = (element: IElementDataModel): string => {
     return this.role === 'query'
-      ? element.E + ' - ' + element.EName
+      ? (element.E + ' - ' + element.EName).padEnd(50)
       : element.E;
   };
 }

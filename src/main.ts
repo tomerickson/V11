@@ -19,6 +19,7 @@ import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalErrorHandler } from './app/core/global-error-handler';
 import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
 import { globalFeature } from './app/state/global.state';
+import { NotificationComponent } from './app/core/notification.component';
 
 const initAppFn = (configService: AppConfigService) => {
   return () => configService.validateConfiguration();
@@ -42,6 +43,9 @@ bootstrapApplication(AppComponent, {
       provide: HTTP_INTERCEPTORS,
       useClass: ServerErrorInterceptor,
       multi: true
+    },
+    {
+      provide: NotificationComponent, useClass: NotificationComponent
     },
     provideHttpClient(),
     provideRouter(routes),

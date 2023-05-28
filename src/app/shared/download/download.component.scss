@@ -1,0 +1,16 @@
+.hidden {
+  display: none !important;
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.disabled {
+  visibility: hidden;
+}
+label.block {
+  display: block;
+  margin: auto;
+}

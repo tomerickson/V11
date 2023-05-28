@@ -37,4 +37,9 @@
       <tr mat-footer-row *matFooterRowDef="['paginator']"></tr>
     </table>
   </mat-card-content>
+  <mat-card-actions>
+    <mfmp-download *ngIf="inputResults"
+      [data]="inputResults"
+      [resultType]="resultType"></mfmp-download>
+  </mat-card-actions>
 </mat-card>

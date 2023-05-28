@@ -14,9 +14,8 @@ import {
 export const missingElementsValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
-  const form = control as FormGroup;
   const leftElements: string[] = control.get('leftNuclides')?.get('selectedElements')?.value;
   const rightElements: string[] = control.get('rightNuclides')?.get('selectedElements')?.value;
-  const error = (leftElements.length == 0 && rightElements.length == 0);
+  const error = (leftElements && leftElements!.length == 0 && rightElements!.length == 0);
   return (error) ? { missingElements: true } : null;
 };

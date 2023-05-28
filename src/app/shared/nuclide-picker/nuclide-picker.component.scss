@@ -14,15 +14,12 @@
 section.elements {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  justify-content: stretch;
   .form-field-label {
     white-space: nowrap;
   }
   .form-field-label + mat-form-field {
    margin-left: 10px;
-  }
-  mat-form-field {
-    width:100%;
   }
 }
 

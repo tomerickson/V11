@@ -19,9 +19,10 @@
     "target": "ES2022",
     "module": "es2020",
     "lib": [
-      "es2018",
+      "es2019",
       "dom",
-      "dom.iterable"
+      "dom.iterable",
+      "ES2021.String"
     ],
     "types": [
       "jest"

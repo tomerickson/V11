@@ -1,15 +1,15 @@
-import { Component, NgZone, inject } from '@angular/core';
+import { Component, Injectable, NgZone, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorHandlerDialogComponent } from './error-handler-dialog.component';
-
+/* 
 @Component({
   standalone: true,
   imports: [
 ErrorHandlerDialogComponent],
   template: ``
-})
-
+}) */
+@Injectable()
 export class NotificationComponent {
 
   zone = inject(NgZone);

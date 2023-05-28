@@ -1,0 +1,51 @@
+<div class="flexrow">
+  <button
+    type="button"
+    mat-icon-button
+    title="Download results"
+    (click)="showDownload()">
+    <mat-icon>download</mat-icon>
+  </button>
+  <form id="download" [formGroup]="downloadForm">
+    <div class="flexrow">
+      <mat-form-field
+        formControlName="fileType"
+        [floatLabel]="getFloatLabelValue()">
+        <label>Select a file type:</label>
+        <mat-select>
+          <mat-option
+            *ngFor="let fileType of fileTypes; let i = index"
+            value="i">
+            {{ fileType.name }}
+          </mat-option>
+        </mat-select>
+        <input matInput class="hidden" title="hidden" />
+      </mat-form-field>
+      <mat-form-field formControlName="fileName">
+        <label>File name</label>
+        <input
+          matInput
+          placeholder="Choose a file name." />
+      </mat-form-field>
+      <mat-form-field>
+        <button
+          mat-raised-button
+          type="button"
+          disabled="!downloadForm.valid"
+          (click)="downloadBlob()">
+          Download
+        </button>
+        <input matInput class="hidden" title="hidden" />
+      </mat-form-field>
+      <a
+        href="x"
+        #fileInput
+        class="hidden"
+        type="file"
+        title="hidden"
+        download
+        (change)="onFileInput($event)"></a>
+      <input #filePicker type="file" class="hidden" title="picker" value="" />
+    </div>
+  </form>
+</div>

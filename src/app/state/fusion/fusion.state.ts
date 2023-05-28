@@ -42,7 +42,7 @@ export const fusionReducer = createReducer(
     };
   }),
   on(FusionActions.loadAllResultsFailure, (state, action) => {
-    return { ...state, loading: false, error: action.error };
+    return { ...state, loading: false, error: action.error, ready: true };
   }),
   on(FusionActions.loadAllResultsSuccess, (state, action) => {
     return {

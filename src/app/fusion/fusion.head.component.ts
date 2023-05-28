@@ -14,7 +14,7 @@ import { CrudService } from '../core/services/crud.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { globalFeature } from '../state';
 import { FusionActions, fusionFeature } from '../state/fusion';
-import { FusionFaceComponent } from './fusion.face.component';
+import { FusionFaceComponent } from './fusion-face/fusion.face.component';
 
 @Component({
   standalone: true,
@@ -54,8 +54,8 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
 
   constructor(private headerService: HeaderProviderService) {}
 
-  submit_query = (fusionForm: FormGroup): void => {
-    const kvp = this.build_request_form(fusionForm);
+  submit_query = (fusionForms: FormGroup[]): void => {
+    const kvp = this.buildRequestForm(fusionForms);
     this.store.dispatch(FusionActions.fetchAllResults({ payload: kvp }));
   };
 
@@ -91,7 +91,9 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
    * @param fusionForm
    * @returns KeyValuePairs[]
    */
-  build_request_form(fusionForm: FormGroup): IKeyValuePair[] {
+  buildRequestForm(forms: FormGroup[]): IKeyValuePair[] {
+    let fusionForm: FormGroup = forms[0];
+    let sqlForm: FormGroup = forms[1];
     let kvp = new Array<IKeyValuePair>();
     const inputNeutrinos = fusionForm.get('inputNeutrinos')?.value;
     const noNeutrinos = fusionForm.get('noNeutrinos')?.value;
@@ -137,7 +139,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     kvp.push(
       new KeyValuePair({
         key: 'query',
-        value: fusionForm.get('coreQuery')?.value
+        value: sqlForm.get('coreQuery')?.value
       })
     );
     kvp.push(
