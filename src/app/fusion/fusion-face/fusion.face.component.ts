@@ -3,13 +3,9 @@ import { HttpClientModule } from '@angular/common/http';
 import {
   Component,
   EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
+  Input, OnDestroy,
   OnInit,
-  Output,
-  SimpleChanges,
-  inject
+  Output, inject
 } from '@angular/core';
 import {
   FormBuilder,
@@ -33,8 +29,9 @@ import { IElementDataModel } from '../../core/models/element-data.model';
 import { ILookupDataModel } from '../../core/models/lookup.-data.model';
 import { HeaderProviderService } from '../../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../../shared/nuclide-picker/nuclide-picker.component';
-import { QueryWrapperComponent } from '../query-wrapper/query-wrapper.component';
+import { ReportPagesFaceComponent } from '../../shared/report-pages/report-pages.face.component';
 import { missingElementsValidator } from './fusion-form.validator';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -57,12 +54,15 @@ import { missingElementsValidator } from './fusion-form.validator';
     MatFormFieldModule,
     NuclidePickerComponent,
     ReactiveFormsModule,
-    QueryWrapperComponent
+    ReportPagesFaceComponent
   ],
   providers: [{ provide: HeaderProviderService }]
 })
 export class FusionFaceComponent implements OnInit, OnDestroy {
+
   fb: FormBuilder = inject(FormBuilder);
+  router: Router = inject(Router);
+  route: string;
   fusionForm!: FormGroup;
   sqlForm!: FormGroup;
   leftNuclides!: FormGroup;
@@ -79,16 +79,16 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
 
   @Input({ required: true }) elements: IElementDataModel[] | null = null;
   @Input({ required: true }) sortFields: ILookupDataModel[] | null = null;
-  @Input({ required: true }) fusionResults: any[] = [];
-  @Input({ required: true }) nuclideResults: any[] = [];
-  @Input({ required: true }) elementResults: any[] = [];
   @Output() doit: EventEmitter<FormGroup[]> = new EventEmitter<FormGroup[]>();
+  
 
   readonly description =
     'This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov\'s spreadsheets.';
 readonly initialCoreQuery = ' order by MeV desc limit 1000';
 
-  constructor(private headerService: HeaderProviderService) {}
+  constructor(private headerService: HeaderProviderService) {
+    this.route = this.router.routerState.snapshot.url;
+  }
 
   /**
    * Convert spin choices to a string for postback
@@ -111,9 +111,8 @@ readonly initialCoreQuery = ' order by MeV desc limit 1000';
     this.subscriptions.unsubscribe();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {}
-
   ngOnInit(): void {
+
     this.buildForm();
     this.leftNuclides = this.fusionForm.get('leftNuclides') as FormGroup;
     this.rightNuclides = this.fusionForm.get('rightNuclides') as FormGroup;
@@ -208,11 +207,7 @@ readonly initialCoreQuery = ' order by MeV desc limit 1000';
     this.handleSqlFormChanges(this.sqlForm.value);
   };
 
-  resetResults = () => {
-    this.fusionResults = [];
-    this.nuclideResults = [];
-    this.elementResults = [];
-  };
+  resetResults = () => {};
 
   /**
    * Build out the coreQuery field
@@ -335,7 +330,7 @@ readonly initialCoreQuery = ' order by MeV desc limit 1000';
 
     this.sqlForm
       .get('coreQuery')
-      ?.patchValue(query, { onlySelf: true, emitEvent: false });
+      ?.patchValue(query, { onlySelf: true});
     this.coreQuery = query;
   };
 

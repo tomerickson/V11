@@ -10,9 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
       .mat-dialog-title {
         display: flex;
         align-items: center;
-        mat-icon {
-          color: red;
-        }
       }
 
       mat-dialog-content {
@@ -26,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
     `
   ],
   template: `
-    <h1 mat-dialog-title><mat-icon>priority_high</mat-icon>{{ title }}</h1>
+    <h1 mat-dialog-title><mat-icon color="alert">priority_high</mat-icon>{{ title }}</h1>
     <mat-dialog-content>
       <p>{{ data.message }}</p>
     </mat-dialog-content>

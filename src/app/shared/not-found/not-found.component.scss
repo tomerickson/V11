@@ -1,0 +1,14 @@
+div.wrapper {
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    div {
+        img {
+            height: 80vh;
+            width: 60vw;
+            margin: auto;
+        }
+    }
+}

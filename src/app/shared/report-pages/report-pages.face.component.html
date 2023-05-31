@@ -1,0 +1,60 @@
+<mat-card>
+  <mat-card-header>
+    <p>{{ coreQuery }}</p>
+  </mat-card-header>
+  <mat-tab-group mat-stretch-tabs="false" animationDuration="250ms">
+    <mat-tab label="Results ({{reactionRows | async}})">
+      <ng-container
+        *ngIf="
+          (reactionRows | async);
+          then reactionYes;
+          else reactionNo
+        "></ng-container>
+      <ng-template #reactionNo>
+        <h3>No results found</h3>
+      </ng-template>
+      <ng-template #reactionYes>
+        <mfmp-query-results
+          [resultType]="'results'"
+          [inputResults]="reactionResults"></mfmp-query-results>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Nuclides ({{ nuclideRows | async}})">
+      <ng-container
+        *ngIf="
+          nuclideResults;
+          then nuclidesYes;
+          else nuclidesNo
+        "></ng-container>
+      <ng-template #nuclidesNo>
+        <h3>No results found</h3>
+      </ng-template>
+      <ng-template #nuclidesYes>
+        <mfmp-query-results
+          [resultType]="'nuclides'"
+          [inputResults]="nuclideResults"></mfmp-query-results>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="ELements ({{ elementRows | async}})">
+      <ng-container
+        *ngIf="
+          elementResults;
+          then elementsYes;
+          else elementsNo
+        "></ng-container>
+      <ng-template #elementsNo>
+        <h3>No results found</h3>
+      </ng-template>
+      <ng-template #elementsYes>
+        <mfmp-query-results
+          [resultType]="'elements'"
+          [inputResults]="elementResults"></mfmp-query-results>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  <mat-card-actions align="end">
+    <button type="button" mat-raised-button color="primary" (click)="reset()">
+      Again?
+    </button>
+  </mat-card-actions>
+</mat-card>

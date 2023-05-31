@@ -8,7 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore } from '@ngrx/router-store';
 import { provideState, provideStore } from '@ngrx/store';
@@ -24,8 +24,6 @@ import { NotificationComponent } from './app/core/notification.component';
 const initAppFn = (configService: AppConfigService) => {
   return () => configService.validateConfiguration();
 };
-
-const routes = APP_ROUTES;
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -48,7 +46,7 @@ bootstrapApplication(AppComponent, {
       provide: NotificationComponent, useClass: NotificationComponent
     },
     provideHttpClient(),
-    provideRouter(routes),
+    provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideStore(),
     provideState(globalFeature),
     provideEffects(),

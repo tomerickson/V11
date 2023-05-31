@@ -8,8 +8,11 @@ export interface FusionState {
   ready: boolean;
   error: any;
   elementResults: any[];
-  fusionResults: any[];
+  reactionResults: any[];
   nuclideResults: any[];
+  reactionRows: number;
+  nuclideRows: number;
+  elementRows: number;
 }
 
 export const fusionInitialState: FusionState = {
@@ -17,17 +20,20 @@ export const fusionInitialState: FusionState = {
   loading: false,
   ready: false,
   error: null,
-  fusionResults: [],
+  reactionResults: [],
   nuclideResults: [],
-  elementResults: []
+  elementResults: [],
+  reactionRows: 0,
+  nuclideRows: 0,
+  elementRows: 0
 };
 
 export const fusionReducer = createReducer(
   fusionInitialState,
   on(FusionActions.reset, () => {
     return {
-      ...fusionInitialState     
-    }
+      ...fusionInitialState
+    };
   }),
   on(FusionActions.fetchAllResults, (state, action) => {
     return {
@@ -36,7 +42,7 @@ export const fusionReducer = createReducer(
       loading: true,
       ready: false,
       error: null,
-      fusionResults: [],
+      reactionResults: [],
       nuclideResults: [],
       elementResults: []
     };
@@ -48,8 +54,11 @@ export const fusionReducer = createReducer(
     return {
       ...state,
       elementResults: action.results.elementResults,
-      fusionResults: action.results.fusionResults,
+      reactionResults: action.results.fusionResults,
       nuclideResults: action.results.nuclideResults,
+      reactionRows: action.results.fusionResults.length-1,
+      nuclideRows: action.results.nuclideResults.length-1,
+      elementRows: action.results.elementResults.length-1,
       loading: false,
       ready: true
     };
@@ -67,6 +76,9 @@ export const {
   selectReady,
   selectElementResults,
   selectError,
-  selectFusionResults,
-  selectNuclideResults
+  selectReactionResults,
+  selectNuclideResults,
+  selectReactionRows,
+  selectNuclideRows,
+  selectElementRows,
 } = fusionFeature;

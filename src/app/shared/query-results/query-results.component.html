@@ -38,8 +38,11 @@
     </table>
   </mat-card-content>
   <mat-card-actions>
-    <mfmp-download *ngIf="inputResults"
-      [data]="inputResults"
-      [resultType]="resultType"></mfmp-download>
+    <ng-container *ngIf="length > 0">
+      <mfmp-download
+        [data]="results"
+        [resultType]="resultType"
+        [ready]="ready | async"></mfmp-download>
+    </ng-container>
   </mat-card-actions>
 </mat-card>

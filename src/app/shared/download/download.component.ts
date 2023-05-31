@@ -34,16 +34,15 @@ import { ResultType } from '../../core/models/result-type';
   styleUrls: ['./download.component.scss']
 })
 export class DownloadComponent implements OnInit, OnDestroy {
-
   @Input({ required: true }) data: any;
   @Input({ required: true }) resultType!: ResultType;
-
+  @Input({ required: true }) ready!: boolean | null;
   readonly fileTypes = [
-    {name: "Comma-delimited", extension: ".csv", type: "text/csv"},
-    {name: "Tab-delimited", extension: ".tsv", type: "text/tsv"},
-    {name: "Text", extension: ".txt", type: "text/html"},
-    {name: "JSON", extension: ".csv", type: "json/applilcation"},
-];
+    { name: 'Comma-delimited', extension: '.csv', type: 'text/csv' },
+    { name: 'Tab-delimited', extension: '.tsv', type: 'text/tsv' },
+    { name: 'Text', extension: '.txt', type: 'text/html' },
+    { name: 'JSON', extension: '.csv', type: 'json/applilcation' }
+  ];
 
   title = '';
   url = '';
@@ -56,24 +55,26 @@ export class DownloadComponent implements OnInit, OnDestroy {
   fb = inject(FormBuilder);
 
   ngOnInit(): void {
-
     this.downloadForm = this.fb.group({
       fileName: [this.resultType, Validators.required],
       fileType: ['', [Validators.required, Validators.pattern('^[0-2]$')]],
+      dummy: [],
       floatLabelControl: this.floatLabelControl
     }) as FormGroup;
-    this.subscriptions.add(this.downloadForm.valueChanges
-      .pipe(pairwise())
-      .subscribe(([prev, next]) => this.setFileName([prev, next])));
+    this.subscriptions.add(
+      this.downloadForm.valueChanges
+        .pipe(pairwise())
+        .subscribe(([prev, next]) => this.setFileName([prev, next]))
+    );
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  setFileName = ([prev, next]:[any, any]) => {
+  setFileName = ([prev, next]: [any, any]) => {
     console.log(prev, next);
-  }
+  };
   onFileInput = ($event: Event) => {
     console.log($event);
     $event.stopPropagation();
@@ -88,8 +89,8 @@ export class DownloadComponent implements OnInit, OnDestroy {
   }
 
   arrayToTsv = (): string => {
-    return this.data.map((field:any) => field.join("\t")).join("\n");
-  }
+    return this.data.map((field: any) => field.join('\t')).join('\n');
+  };
   /** Convert a 2D array into a CSV string
    */
   arrayToCsv = (): string => {
@@ -110,21 +111,23 @@ export class DownloadComponent implements OnInit, OnDestroy {
    */
   downloadBlob = () => {
     // Create a blob
-  
+
     const fileType: number = this.downloadForm.get('fileType')?.value;
-    const fileName = this.downloadForm.get('fileName')?.value + this.fileTypes[fileType].extension;
+    const fileName =
+      this.downloadForm.get('fileName')?.value +
+      this.fileTypes[fileType].extension;
     const contentType = this.fileTypes[fileType].type;
     let blob: Blob;
 
     switch (fileType) {
       case 0: // csv
-        blob = new Blob([this.arrayToCsv()], {type: contentType});
+        blob = new Blob([this.arrayToCsv()], { type: contentType });
         break;
       case 1: // tsv
-        blob = new Blob([this.arrayToTsv()], {type: contentType});
+        blob = new Blob([this.arrayToTsv()], { type: contentType });
         break;
       case 2: // json
-        blob = new Blob([JSON.stringify(this.data)], {type: contentType});
+        blob = new Blob([JSON.stringify(this.data)], { type: contentType });
         break;
       default:
         blob = new Blob([]);

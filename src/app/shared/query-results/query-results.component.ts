@@ -1,10 +1,9 @@
 import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
 import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   Input,
   OnDestroy,
+  OnInit,
   ViewChild,
   inject
 } from '@angular/core';
@@ -12,12 +11,16 @@ import { MatCardModule } from '@angular/material/card';
 import {
   MatPaginator,
   MatPaginatorModule,
-  PageEvent,
+  PageEvent
 } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription
+} from 'rxjs';
 import { ResultType } from 'src/app/core/models/result-type';
 import { DownloadComponent } from '../download/download.component';
 
@@ -35,14 +38,11 @@ import { DownloadComponent } from '../download/download.component';
     DownloadComponent
   ],
   templateUrl: './query-results.component.html',
-  styleUrls: ['./query-results.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default
+  styleUrls: ['./query-results.component.scss']
 })
-export class QueryResultsComponent implements AfterViewInit, OnDestroy {
-  @Input({required: true}) resultType!: ResultType;
-  @Input() inputResults: any[] | null;
-  @Input({ required: true }) sortBy: string = '';
-  @Input({ required: true }) sortOrder: string = '';
+export class QueryResultsComponent implements OnInit, OnDestroy {
+  @Input({ required: true }) resultType!: ResultType;
+  @Input() inputResults!: Observable<any[]>;
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -55,10 +55,10 @@ export class QueryResultsComponent implements AfterViewInit, OnDestroy {
   columnTypes: ColumnType[] = []; // Determined column type (numeric or non-numeric) for sorting purposes
   columnStyles: string[] = [];
   subscriptions: Subscription = new Subscription();
-
+  ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   pageSize = 25;
   pageIndex = 0;
-  length = this.pageSize;
+  length = 0;
   pageSizeOptions = [5, 10, 25, 100];
   pageEvent!: PageEvent;
 
@@ -67,31 +67,27 @@ export class QueryResultsComponent implements AfterViewInit, OnDestroy {
   showFirstLastButtons = true;
   disabled = false;
 
-  constructor() {
-    this.inputResults = [];
-  }
-  ngAfterViewInit(): void {
-    this.buildDataSource();
+  ngOnInit(): void {
+    this.subscriptions.add(this.inputResults.subscribe((input) => {
+      this.results = [...input];
+      if (this.results.length > 0) {
+        this.displayColumns = this.results[0];
+        this.results.shift();
+        this.length = this.results.length;
+        this.dataSource = new MatTableDataSource(this.results);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.numbifyValues(this.results);
+        this.setColumnStyles(this.results[0]);
+
+      }
+    }));
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  buildDataSource = () => {
-    if (this.inputResults!.length > 0) {
-      this.displayColumns = this.inputResults![0];
-      this.results = [...this.inputResults!];
-      this.results.shift();
-      this.length = this.results.length;
-      this.dataSource = new MatTableDataSource(this.results);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.numbifyValues(this.results);
-      this.setColumnStyles(this.results[0]);
-    }
-  };
-  
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
     this.length = e.length;
