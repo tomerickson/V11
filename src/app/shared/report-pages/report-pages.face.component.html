@@ -11,7 +11,7 @@
           else reactionNo
         "></ng-container>
       <ng-template #reactionNo>
-        <h3>No results found</h3>
+        <mat-progress-bar class="progress-bar" mode="query"></mat-progress-bar>
       </ng-template>
       <ng-template #reactionYes>
         <mfmp-query-results
@@ -27,7 +27,7 @@
           else nuclidesNo
         "></ng-container>
       <ng-template #nuclidesNo>
-        <h3>No results found</h3>
+        <mat-progress-bar class="progress-bar" mode="query"></mat-progress-bar>
       </ng-template>
       <ng-template #nuclidesYes>
         <mfmp-query-results
@@ -43,7 +43,7 @@
           else elementsNo
         "></ng-container>
       <ng-template #elementsNo>
-        <h3>No results found</h3>
+        <mat-progress-bar class="progress-bar" mode="query"></mat-progress-bar>
       </ng-template>
       <ng-template #elementsYes>
         <mfmp-query-results

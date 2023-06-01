@@ -1,5 +1,7 @@
 import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
 import {
+  AfterContentInit,
+  AfterViewInit,
   Component,
   Input,
   OnDestroy,
@@ -40,7 +42,7 @@ import { DownloadComponent } from '../download/download.component';
   templateUrl: './query-results.component.html',
   styleUrls: ['./query-results.component.scss']
 })
-export class QueryResultsComponent implements OnInit, OnDestroy {
+export class QueryResultsComponent implements AfterViewInit, AfterContentInit, OnDestroy {
   @Input({ required: true }) resultType!: ResultType;
   @Input() inputResults!: Observable<any[]>;
   @ViewChild('paginator') paginator!: MatPaginator;
@@ -67,7 +69,7 @@ export class QueryResultsComponent implements OnInit, OnDestroy {
   showFirstLastButtons = true;
   disabled = false;
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.subscriptions.add(this.inputResults.subscribe((input) => {
       this.results = [...input];
       if (this.results.length > 0) {
@@ -76,6 +78,7 @@ export class QueryResultsComponent implements OnInit, OnDestroy {
         this.length = this.results.length;
         this.dataSource = new MatTableDataSource(this.results);
         this.dataSource.paginator = this.paginator;
+        this.paginator.firstPage();
         this.dataSource.sort = this.sort;
         this.numbifyValues(this.results);
         this.setColumnStyles(this.results[0]);
@@ -84,6 +87,9 @@ export class QueryResultsComponent implements OnInit, OnDestroy {
     }));
   }
 
+  ngAfterContentInit(): void {
+   // this.dataSource.paginator = this.paginator;
+  }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

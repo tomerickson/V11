@@ -6,6 +6,11 @@
       matSort
       (matSortChange)="sortData($event)"
       class="mat-elevation-z2">
+      
+      <!-- Column definitions
+      --
+      --
+      -->
       <ng-container
         *ngFor="let column of displayColumns; let colIndex = index"
         [matColumnDef]="column">

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule} from '@angular/material/progress-bar'
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -24,6 +25,7 @@ import { Observable, count, map, of, tap } from 'rxjs';
   imports: [
     MatButtonModule,
     MatCardModule,
+    MatProgressBarModule,
     MatTabsModule,
     QueryResultsComponent,
     AsyncPipe,
