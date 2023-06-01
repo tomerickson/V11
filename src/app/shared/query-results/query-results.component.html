@@ -6,21 +6,26 @@
       matSort
       (matSortChange)="sortData($event)"
       class="mat-elevation-z2">
-      
-      <!-- Column definitions
-      --
-      --
-      -->
       <ng-container
         *ngFor="let column of displayColumns; let colIndex = index"
         [matColumnDef]="column">
-        <th
-          mat-header-cell
-          mat-sort-header
-          [class]="columnStyles[colIndex]"
-          *matHeaderCellDef>
-          {{ column }}
-        </th>
+        <ng-container *ngIf="sortableColumns[colIndex] == true">
+          <th
+            mat-header-cell
+            mat-sort-header
+            [class]="columnStyles[colIndex]"
+            *matHeaderCellDef>
+            {{ column }}
+          </th>
+        </ng-container>
+        <ng-container *ngIf="sortableColumns[colIndex] == false">
+          <th
+            mat-header-cell
+            [class]="columnStyles[colIndex]"
+            *matHeaderCellDef>
+            {{ column }}
+          </th>
+        </ng-container>
         <td mat-cell [class]="columnStyles[colIndex]" *matCellDef="let row">
           {{ row[colIndex] }}
         </td>

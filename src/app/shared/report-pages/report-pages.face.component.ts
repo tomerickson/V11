@@ -10,12 +10,12 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatProgressBarModule} from '@angular/material/progress-bar'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { QueryResultsComponent } from '../query-results/query-results.component';
-import { Observable, count, map, of, tap } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -25,7 +25,7 @@ import { Observable, count, map, of, tap } from 'rxjs';
   imports: [
     MatButtonModule,
     MatCardModule,
-    MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatTabsModule,
     QueryResultsComponent,
     AsyncPipe,

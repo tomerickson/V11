@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { AsyncPipe, CommonModule, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -31,6 +31,7 @@ import { DownloadComponent } from '../download/download.component';
   standalone: true,
   imports: [
     NgIf,
+    NgTemplateOutlet,
     AsyncPipe,
     CommonModule,
     MatCardModule,
@@ -56,6 +57,7 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
   sortedData: any[] = [];
   columnTypes: ColumnType[] = []; // Determined column type (numeric or non-numeric) for sorting purposes
   columnStyles: string[] = [];
+  sortableColumns: boolean[] = [];
   subscriptions: Subscription = new Subscription();
   ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   pageSize = 25;
@@ -82,6 +84,7 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
         this.dataSource.sort = this.sort;
         this.numbifyValues(this.results);
         this.setColumnStyles(this.results[0]);
+        this.setSortableColumns(this.results, this.displayColumns);
 
       }
     }));
@@ -101,6 +104,11 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
     this.pageIndex = e.pageIndex;
   }
 
+  /**
+   * Identify non-sortable columns
+   * 
+   * @param setPageSizeOptionsInput
+   */
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput
@@ -108,6 +116,7 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
         .map((str) => +str);
     }
   }
+
   /**
    * Convert numeric array elements to numbers
    * @param array
@@ -122,6 +131,19 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
       }
     } */
   };
+
+  setSortableColumns = (data: any[][], columns: any[]) => {
+    this.sortableColumns.length = columns.length;
+    for (let column = 0; column < columns.length; column++) {
+      this.sortableColumns[column] = true;
+    for (let row = 0; row < data.length; row++) {
+      if (data[row][column] == 'null') {
+        this.sortableColumns[column] = false;
+        break;
+      }
+    }
+  }
+}
 
   setColumnStyles = (columns: any[]) => {
     for (let i = 0; i < columns.length; i++) {
@@ -143,8 +165,8 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
 
   setColumnType = (data: any[], column: number): ColumnType => {
     let strings: number = 0;
-    for (let i = 0; i < data.length; i++) {
-      let cell = data[i][column];
+    for (let row = 0; row < data.length; row++) {
+      let cell = data[row][column];
       cell !== null;
       strings += cell !== null && isNaN(cell) ? 1 : 0;
     }
