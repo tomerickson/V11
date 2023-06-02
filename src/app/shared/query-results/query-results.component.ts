@@ -1,4 +1,9 @@
-import { AsyncPipe, CommonModule, NgIf, NgTemplateOutlet } from '@angular/common';
+import {
+  AsyncPipe,
+  CommonModule,
+  NgIf,
+  NgTemplateOutlet
+} from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -7,7 +12,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  inject
+  inject,
+  signal
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import {
@@ -18,11 +24,7 @@ import {
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Store } from '@ngrx/store';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription
-} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ResultType } from 'src/app/core/models/result-type';
 import { DownloadComponent } from '../download/download.component';
 
@@ -43,7 +45,7 @@ import { DownloadComponent } from '../download/download.component';
   templateUrl: './query-results.component.html',
   styleUrls: ['./query-results.component.scss']
 })
-export class QueryResultsComponent implements AfterViewInit, AfterContentInit, OnDestroy {
+export class QueryResultsComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input({ required: true }) resultType!: ResultType;
   @Input() inputResults!: Observable<any[]>;
   @ViewChild('paginator') paginator!: MatPaginator;
@@ -54,12 +56,13 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
 
   displayColumns: string[] = [];
   results: any[] = [];
+  download: any[] = [];
   sortedData: any[] = [];
   columnTypes: ColumnType[] = []; // Determined column type (numeric or non-numeric) for sorting purposes
   columnStyles: string[] = [];
   sortableColumns: boolean[] = [];
   subscriptions: Subscription = new Subscription();
-  ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  ready = signal(false);
   pageSize = 25;
   pageIndex = 0;
   length = 0;
@@ -71,28 +74,29 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
   showFirstLastButtons = true;
   disabled = false;
 
+  ngOnInit(): void {}
   ngAfterViewInit(): void {
-    this.subscriptions.add(this.inputResults.subscribe((input) => {
-      this.results = [...input];
-      if (this.results.length > 0) {
-        this.displayColumns = this.results[0];
-        this.results.shift();
-        this.length = this.results.length;
-        this.dataSource = new MatTableDataSource(this.results);
-        this.dataSource.paginator = this.paginator;
-        this.paginator.firstPage();
-        this.dataSource.sort = this.sort;
-        this.numbifyValues(this.results);
-        this.setColumnStyles(this.results[0]);
-        this.setSortableColumns(this.results, this.displayColumns);
-
-      }
-    }));
+    this.subscriptions.add(
+      this.inputResults.subscribe((input) => {
+        this.results = [...input];
+        this.download = [...input];
+        if (this.results.length > 0) {
+          this.displayColumns = this.results[0];
+          this.results.shift();
+          this.length = this.results.length;
+          this.dataSource = new MatTableDataSource(this.results);
+          this.dataSource.paginator = this.paginator;
+          this.paginator.firstPage();
+          this.dataSource.sort = this.sort;
+          this.numbifyValues(this.results);
+          this.setColumnStyles(this.results[0]);
+          this.setSortableColumns(this.results, this.displayColumns);
+          this.ready.set(true);
+        }
+      })
+    );
   }
 
-  ngAfterContentInit(): void {
-   // this.dataSource.paginator = this.paginator;
-  }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
@@ -106,7 +110,7 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
 
   /**
    * Identify non-sortable columns
-   * 
+   *
    * @param setPageSizeOptionsInput
    */
   setPageSizeOptions(setPageSizeOptionsInput: string) {
@@ -136,14 +140,14 @@ export class QueryResultsComponent implements AfterViewInit, AfterContentInit, O
     this.sortableColumns.length = columns.length;
     for (let column = 0; column < columns.length; column++) {
       this.sortableColumns[column] = true;
-    for (let row = 0; row < data.length; row++) {
-      if (data[row][column] == 'null') {
-        this.sortableColumns[column] = false;
-        break;
+      for (let row = 0; row < data.length; row++) {
+        if (data[row][column] == 'null') {
+          this.sortableColumns[column] = false;
+          break;
+        }
       }
     }
-  }
-}
+  };
 
   setColumnStyles = (columns: any[]) => {
     for (let i = 0; i < columns.length; i++) {

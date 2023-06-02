@@ -11,8 +11,8 @@ import { AsyncPipe } from '@angular/common';
   standalone: true,
   selector: 'mfmp-report-pages',
   template: `
-    <ng-container (exit)="reset()">
-      <mfmp-report-pages-face
+    <ng-container>
+      <mfmp-report-pages-face (exit)="reset()"
         [coreQuery]="coreQuery"
         [reactionResults]="reactions"
         [nuclideResults]="nuclides"
