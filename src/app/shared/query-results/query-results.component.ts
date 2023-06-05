@@ -65,7 +65,7 @@ export class QueryResultsComponent implements OnInit, AfterViewInit, OnDestroy {
   ready = signal(false);
   pageSize = 25;
   pageIndex = 0;
-  length = 0;
+  length = signal(0);
   pageSizeOptions = [5, 10, 25, 100];
   pageEvent!: PageEvent;
 
@@ -83,7 +83,7 @@ export class QueryResultsComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.results.length > 0) {
           this.displayColumns = this.results[0];
           this.results.shift();
-          this.length = this.results.length;
+          this.length.set(this.results.length);
           this.dataSource = new MatTableDataSource(this.results);
           this.dataSource.paginator = this.paginator;
           this.paginator.firstPage();
@@ -103,7 +103,7 @@ export class QueryResultsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   handlePageEvent(e: PageEvent) {
     this.pageEvent = e;
-    this.length = e.length;
+    // this.length = e.length;
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
   }

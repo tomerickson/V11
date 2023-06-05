@@ -1,23 +1,24 @@
 import {
-    AbstractControl,
-    FormGroup,
-    ValidationErrors,
-    ValidatorFn
-  } from '@angular/forms';
-  
-  /**
-   * Confirm that there are elements selected in both nuclide pickers
-   * before submitting
-   * @param control
-   * @returns
-   */
-  export const downloadFormValidator: ValidatorFn = (
-    control: AbstractControl
-  ): ValidationErrors | null => {
-    const fileType: number | null = control.get('fileType')?.value;
-    const fileName: string | null = control.get('fileName')?.value;
-    const error = (!fileType || !fileName);
-    console.log('downloadValidator: ', error)
-    return (error) ? { missingElements: true } : null;
-  };
-  
+  AbstractControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn
+} from '@angular/forms';
+import { Downloadable } from 'src/app/core/models/downloadable.model';
+
+/**
+ * Confirm that file name and extension are valid
+ * before submitting
+ * @param control
+ * @returns
+ */
+export const downloadFormValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  const fileType: Downloadable | null = control.get('fileType')?.value || null;
+  const fileName: string | null = control.get('fileName')?.value;
+  const ok: boolean =
+    fileType !== null && fileName !== null && fileName.length > 0;
+  console.log('downloadValidator: ', ok);
+  return (ok) ? null : { missingElements: true }
+};

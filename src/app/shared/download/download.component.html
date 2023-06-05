@@ -2,19 +2,19 @@
   <button
     type="button"
     mat-icon-button
-    title="Download results"
-    (click)="showDownload()">
+    title="Download {{resultType}}"
+    (click)="toggleDownload()">
     <mat-icon>download</mat-icon>
   </button>
-  <form *ngIf="ready" id="download" [formGroup]="downloadForm">
+  <form *ngIf="showForm()" id="download" [formGroup]="downloadForm">
     <div class="flexrow">
-      <mat-form-field [floatLabel]="getFloatLabelValue()">
-        <label>Select a file type:</label>
-        <mat-select formControlName="fileType">
+      <mat-form-field>
+        <label>File type</label>
+        <mat-select formControlName="fileType" placeholder="Select a file type">
           <mat-option
-            *ngFor="let fileType of fileTypes"
-            value="{{fileType.id}}">
-            {{ fileType.name }}
+            *ngFor="let option of downloadOptions"
+            [value]="option">
+            {{ option.name }}
           </mat-option>
         </mat-select>
         <input
@@ -31,11 +31,11 @@
           placeholder="Choose a file name."/>
       </mat-form-field>
       <mat-form-field>
-        <label>{{fileLabel}}&nbsp;</label>
+        <label>{{fullNameSignal()}}</label>
         <button
           mat-raised-button
           type="button"
-          [disabled]="!(downloadForm.valid)"
+          [disabled]="!goodForm()"
           (click)="downloadBlob()">
           Download
         </button>

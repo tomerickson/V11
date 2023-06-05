@@ -1,5 +1,6 @@
 <mat-card>
   <mat-card-content>
+    <div class="table-wrapper">
     <table
       mat-table
       [dataSource]="dataSource"
@@ -36,7 +37,7 @@
             #paginator
             [pageSize]="pageSize"
             [pageSizeOptions]="showPageSizeOptions ? this.pageSizeOptions : []"
-            [length]="length"
+            [length]="length()"
             [pageIndex]="pageIndex"
             showFirstLastButtons
             (page)="handlePageEvent($event)"></mat-paginator>
@@ -46,9 +47,10 @@
       <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
       <tr mat-footer-row *matFooterRowDef="['paginator']"></tr>
     </table>
+  </div>
   </mat-card-content>
   <mat-card-actions>
-    <ng-container *ngIf="length > 0">
+    <ng-container *ngIf="length() > 0">
       <mfmp-download
         [data]="download"
         [resultType]="resultType"

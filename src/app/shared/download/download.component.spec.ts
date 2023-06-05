@@ -19,5 +19,5 @@ describe('DownloadComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should have fileTypes', () => { component.fileTypes !== null });
+  it('should have fileTypes', () => { component.downloadOptions !== null });
 });
