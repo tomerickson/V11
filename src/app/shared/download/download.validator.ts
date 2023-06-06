@@ -19,6 +19,5 @@ export const downloadFormValidator: ValidatorFn = (
   const fileName: string | null = control.get('fileName')?.value;
   const ok: boolean =
     fileType !== null && fileName !== null && fileName.length > 0;
-  console.log('downloadValidator: ', ok);
-  return (ok) ? null : { missingElements: true }
+  return ok ? null : { missingElements: true };
 };

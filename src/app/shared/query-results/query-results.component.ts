@@ -7,6 +7,8 @@ import {
 import {
   AfterContentInit,
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnDestroy,
@@ -52,6 +54,7 @@ export class QueryResultsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   store: Store = inject(Store);
+  changeDetector = inject(ChangeDetectorRef);
   dataSource!: MatTableDataSource<any>;
 
   displayColumns: string[] = [];
@@ -88,13 +91,13 @@ export class QueryResultsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.dataSource.paginator = this.paginator;
           this.paginator.firstPage();
           this.dataSource.sort = this.sort;
-          this.numbifyValues(this.results);
           this.setColumnStyles(this.results[0]);
           this.setSortableColumns(this.results, this.displayColumns);
           this.ready.set(true);
         }
       })
     );
+    this.changeDetector.detectChanges();
   }
 
   ngOnDestroy(): void {
@@ -120,21 +123,6 @@ export class QueryResultsComponent implements OnInit, AfterViewInit, OnDestroy {
         .map((str) => +str);
     }
   }
-
-  /**
-   * Convert numeric array elements to numbers
-   * @param array
-   * @returns
-   */
-  numbifyValues = (array: Array<any>): void => {
-    /*     for (let row of array) {
-      for (let cell of row) {
-        if (!isNaN(cell)) {
-          cell = +cell;
-        }
-      }
-    } */
-  };
 
   setSortableColumns = (data: any[][], columns: any[]) => {
     this.sortableColumns.length = columns.length;
