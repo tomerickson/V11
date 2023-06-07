@@ -7,6 +7,7 @@ import { IElementDataModel } from '../core/models/element-data.model';
 import { ILookupDataModel } from '../core/models/lookup.-data.model';
 import sortFieldsJson from '../../assets/tables/reaction-result-sort-fields.json';
 import { ElementActions, LookupActions, PageActions } from './global.actions';
+import { IReportParameters } from '../core/models/report-parameters.model';
 
 export interface GlobalState {
   pageTitle: string;
@@ -23,6 +24,7 @@ export interface GlobalState {
   radiationTypes: ILookupDataModel[];
   radiationDecayModes: ILookupDataModel[];
   reactionSortFields: ILookupDataModel[];
+  reportParameters: IReportParameters
 }
 
 export const globalInitialState: GlobalState = {
@@ -40,13 +42,14 @@ export const globalInitialState: GlobalState = {
   radiationDecayModes: radDecayModesJson.map(row => {return {category: 'RDM', code: row.code, description: row.description}}),
   radiationTypes: radTypesJson.map(row => {return {category: 'RT', code: row.code, description: row.description}}),
   reactionSortFields: sortFieldsJson.map(row => {return {category: 'SORT', code: row.code, description: row.description}}),
+  reportParameters: {url: '', type: '', query: ''}
 };
 
 export const globalFeature = createFeature({
   name: 'global',
   reducer: createReducer(
     globalInitialState,
-    on(ElementActions.loadElements, (state, action) => {
+    on(ElementActions.loadElements, (state) => {
       return {
         ...state,
         elementsReady: false,
@@ -127,6 +130,9 @@ export const globalFeature = createFeature({
         showMenuText: state.showMenu ? 'Show menu' : 'Hide menu',
         showMenu: !state.showMenu
       };
+    }),
+    on(PageActions.setReportParameters, (state, action) => {
+      return {...state, reportParameters: action.payload}
     })
   )
 });
@@ -143,6 +149,7 @@ export const {
   selectRadiationDecayModes,
   selectRadiationTypes,
   selectReactionSortFields,
+  selectReportParameters,
   selectShowMenu,
   selectShowMenuText
 } = globalFeature;

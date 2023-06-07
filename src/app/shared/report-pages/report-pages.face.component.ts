@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { QueryResultsComponent } from '../query-results/query-results.component';
+import { IReportParameters } from 'src/app/core/models/report-parameters.model';
 
 @Component({
   standalone: true,
@@ -33,7 +34,7 @@ import { QueryResultsComponent } from '../query-results/query-results.component'
   ]
 })
 export class ReportPagesFaceComponent implements OnInit, AfterContentInit {
-  @Input({ required: true }) coreQuery!: string;
+  @Input({ required: true }) parameters!: IReportParameters | null;
   @Input({ required: true }) reactionResults!: Observable<any[]>;
   @Input({ required: true }) nuclideResults!: Observable<any[]>;
   @Input({ required: true }) elementResults!: Observable<any[]>;

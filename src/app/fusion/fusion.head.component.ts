@@ -13,9 +13,10 @@ import {
 import { ILookupDataModel } from '../core/models/lookup.-data.model';
 import { CrudService } from '../core/services/crud.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
-import { globalFeature } from '../state';
+import { PageActions, globalFeature } from '../state';
 import { FusionActions } from '../state/fusion';
 import { FusionFaceComponent } from './fusion-face/fusion.face.component';
+import { IReportParameters } from '../core/models/report-parameters.model';
 
 @Component({
   standalone: true,
@@ -49,16 +50,14 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
 
   submit_query = (fusionForms: FormGroup[]): void => {
     const kvp = this.buildRequestForm(fusionForms);
-    const extras: NavigationExtras = {
-      queryParams: {
+    const extras: IReportParameters = {
         url: 'fusion',
         type: 'fusion',
         query: this.query
-      },
-      relativeTo: this.route
-    };
+      };
+    this.store.dispatch(PageActions.setReportParameters({payload: extras}))
     this.store.dispatch(FusionActions.fetchAllResults({ payload: kvp }));
-    this.router.navigate(['/fusion/reports'], extras);
+    this.router.navigate(['/fusion/reports']);
   };
 
   forceReset = () => {

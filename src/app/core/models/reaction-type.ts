@@ -1,1 +1,1 @@
-export type ReactionType = 'fusion' | 'fission'
+export type ReactionType = 'fusion' | 'fission' | ''
