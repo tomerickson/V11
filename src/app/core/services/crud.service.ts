@@ -53,12 +53,34 @@ export class CrudService {
     return this.http.get<ILookupDataModel[]>(page).pipe(retry(1));
   }
 
-  getFusionResults(payload: IKeyValuePair[]): Observable<string> {
+  /**
+   * Postback for the fusion page.
+   *
+   * We can use POST (default) or GET.
+   *
+   * @param payload
+   * @param method
+   * @returns request body
+   * @remarks
+   * Using GET lets us insert CORS proxy servers that don't support the POST method.
+   */
+  getFusionResults(
+    payload: KeyValuePair[],
+    method: 'GET' | 'POST' = 'POST'
+  ): Observable<string> {
     let page: string = `${this.endPoint}Fusion.php`;
-    return this.http.post(page, this.buildFormData(payload), {
-      responseType: 'text',
-      observe: 'body'
-    });
+    if (method === 'POST') {
+      return this.http.post(page, this.buildFormData(payload), {
+        responseType: 'text',
+        observe: 'body'
+      });
+    } else {
+      const url =
+        page + '/?' + encodeURI( payload.map((each) => each.asString()).join('&'));
+      return this.http.get<any>(url, {
+        observe: 'body'
+      });
+    }
   }
 
   getDummyResults(): Observable<any> {
@@ -106,11 +128,11 @@ export class CrudService {
    * Match up the first fields of the incoming
    * header to the expected columns to determine the
    * result type.
-   * 
+   *
    * @param thead
-   * @param tbody 
-   * @param output 
-   * @returns 
+   * @param tbody
+   * @param output
+   * @returns
    */
   parseTable = (
     thead: string[],
@@ -129,12 +151,11 @@ export class CrudService {
 
   modelMatches = (head: string[], model: string[]): boolean => {
     let matches = 0;
-    for (let i = 0; i < model.length; i++)
-    {
+    for (let i = 0; i < model.length; i++) {
       if (model[i] === head[i]) {
         matches++;
       }
-    }  
+    }
     return matches === model.length;
   };
   /**

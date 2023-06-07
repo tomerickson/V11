@@ -101,10 +101,10 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
    * @param fusionForm
    * @returns KeyValuePairs[]
    */
-  buildRequestForm(forms: FormGroup[]): IKeyValuePair[] {
+  buildRequestForm(forms: FormGroup[]): KeyValuePair[] {
     let fusionForm: FormGroup = forms[0];
     let sqlForm: FormGroup = forms[1];
-    let kvp = new Array<IKeyValuePair>();
+    let kvp = new Array<KeyValuePair>();
     const inputNeutrinos = fusionForm.get('inputNeutrinos')?.value;
     const noNeutrinos = fusionForm.get('noNeutrinos')?.value;
     const outputNeutrinos = fusionForm.get('outputNeutrinos')?.value;

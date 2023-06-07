@@ -8,18 +8,20 @@
         ngDefaultControl>
         <label>{{ title }}</label>
         <mat-select
+          #matElements
           formControlName="selectedElements"
           multiple
           title="select elements"
           [placeholder]="
-            role === 'query' ? 'click here to begin.' : 'selected elements.'
-          ">
-          <mat-option
-            [disabled]="role == 'result'"
-            *ngFor="let element of elements"
-            [value]="element.E">
-            {{ this.elementOptionValue(element) }}
-          </mat-option>
+            role === 'query' ? 'click here to begin.' : 'selected elements.'">
+          <div (mouseleave)="closeSelectPanel(500)">
+            <mat-option
+              [disabled]="role == 'result'"
+              *ngFor="let element of elements"
+              [value]="element.E">
+              {{ this.elementOptionValue(element) }}
+            </mat-option>
+          </div>
         </mat-select>
       </mat-form-field>
     </section>

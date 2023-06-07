@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -38,11 +35,14 @@ import { SpinPickerComponent } from '../spin-picker/spin-picker.component';
 })
 export class NuclidePickerComponent implements OnInit {
   @Input() title!: string | null;
-  @Input() role!: string;
+  @Input() role!: 'query' | 'result';
   @Input() elements: IElementDataModel[] | null = null;
   @Input() formGroupName!: string; // the subgroup in fusionForm
   @Input() form!: FormGroup;
   @Input() caption!: string;
+  @ViewChild('matElements') matElements: any;
+
+  panelHandler: number[] = [];
 
   constructor() {}
 
@@ -57,5 +57,11 @@ export class NuclidePickerComponent implements OnInit {
     return this.role === 'query'
       ? (element.E + ' - ' + element.EName).padEnd(50)
       : element.E;
+  };
+
+  closeSelectPanel = (delay: number): any => {
+    if (this.role === 'query') {
+      setTimeout(() => this.matElements.close(), delay);
+    }
   };
 }

@@ -5,23 +5,13 @@ import { NotificationComponent } from 'src/app/core/notification.component';
 import { CrudService } from 'src/app/core/services/crud.service';
 import { FusionActions } from './fusion.actions';
 
-/* export const dummyEffect = createEffect(
-  (actions$ = inject(Actions)) => {
-    return actions$.pipe(
-      ofType(FusionActions.fetchAllResults),
-      tap(() => console.log('dummyEffect is running'))
-    );
-  },
-  { functional: true, dispatch: false }
-); */
-
 export const fetchAllResultsEffect = createEffect(
   (actions$ = inject(Actions)) => {
     const crud = inject(CrudService);
     return actions$.pipe(
       ofType(FusionActions.fetchAllResults),
       switchMap((action) =>
-        crud.getFusionResults(action.payload).pipe(
+        crud.getFusionResults(action.payload, 'POST').pipe(
           map((html) => crud.parseFusionResults(html)),
           map((tables) =>
             FusionActions.loadAllResultsSuccess({ results: tables })
