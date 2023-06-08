@@ -1,0 +1,472 @@
+[
+	{
+		"z" : 1,
+		"e" : "H",
+		"ename" : "Hydrogen"
+	},
+	{
+		"z" : 2,
+		"e" : "He",
+		"ename" : "Helium"
+	},
+	{
+		"z" : 3,
+		"e" : "Li",
+		"ename" : "Lithium"
+	},
+	{
+		"z" : 4,
+		"e" : "Be",
+		"ename" : "Beryllium"
+	},
+	{
+		"z" : 5,
+		"e" : "B",
+		"ename" : "Boron"
+	},
+	{
+		"z" : 6,
+		"e" : "C",
+		"ename" : "Carbon"
+	},
+	{
+		"z" : 7,
+		"e" : "N",
+		"ename" : "Nitrogen"
+	},
+	{
+		"z" : 8,
+		"e" : "O",
+		"ename" : "Oxygen"
+	},
+	{
+		"z" : 9,
+		"e" : "F",
+		"ename" : "Fluorine"
+	},
+	{
+		"z" : 10,
+		"e" : "Ne",
+		"ename" : "Neon"
+	},
+	{
+		"z" : 11,
+		"e" : "Na",
+		"ename" : "Sodium"
+	},
+	{
+		"z" : 12,
+		"e" : "Mg",
+		"ename" : "Magnesium"
+	},
+	{
+		"z" : 13,
+		"e" : "Al",
+		"ename" : "Aluminium"
+	},
+	{
+		"z" : 14,
+		"e" : "Si",
+		"ename" : "Silicon"
+	},
+	{
+		"z" : 15,
+		"e" : "P",
+		"ename" : "Phosphorus"
+	},
+	{
+		"z" : 16,
+		"e" : "S",
+		"ename" : "Sulfur"
+	},
+	{
+		"z" : 17,
+		"e" : "Cl",
+		"ename" : "Chlorine"
+	},
+	{
+		"z" : 18,
+		"e" : "Ar",
+		"ename" : "Argon"
+	},
+	{
+		"z" : 19,
+		"e" : "K",
+		"ename" : "Potassium"
+	},
+	{
+		"z" : 20,
+		"e" : "Ca",
+		"ename" : "Calcium"
+	},
+	{
+		"z" : 21,
+		"e" : "Sc",
+		"ename" : "Scandium"
+	},
+	{
+		"z" : 22,
+		"e" : "Ti",
+		"ename" : "Titanium"
+	},
+	{
+		"z" : 23,
+		"e" : "V",
+		"ename" : "Vanadium"
+	},
+	{
+		"z" : 24,
+		"e" : "Cr",
+		"ename" : "Chromium"
+	},
+	{
+		"z" : 25,
+		"e" : "Mn",
+		"ename" : "Manganese"
+	},
+	{
+		"z" : 26,
+		"e" : "Fe",
+		"ename" : "Iron"
+	},
+	{
+		"z" : 27,
+		"e" : "Co",
+		"ename" : "Cobalt"
+	},
+	{
+		"z" : 28,
+		"e" : "Ni",
+		"ename" : "Nickel"
+	},
+	{
+		"z" : 29,
+		"e" : "Cu",
+		"ename" : "Copper"
+	},
+	{
+		"z" : 30,
+		"e" : "Zn",
+		"ename" : "Zinc"
+	},
+	{
+		"z" : 31,
+		"e" : "Ga",
+		"ename" : "Gallium"
+	},
+	{
+		"z" : 32,
+		"e" : "Ge",
+		"ename" : "Germanium"
+	},
+	{
+		"z" : 33,
+		"e" : "As",
+		"ename" : "Arsenic"
+	},
+	{
+		"z" : 34,
+		"e" : "Se",
+		"ename" : "Selenium"
+	},
+	{
+		"z" : 35,
+		"e" : "Br",
+		"ename" : "Bromine"
+	},
+	{
+		"z" : 36,
+		"e" : "Kr",
+		"ename" : "Krypton"
+	},
+	{
+		"z" : 37,
+		"e" : "Rb",
+		"ename" : "Rubidium"
+	},
+	{
+		"z" : 38,
+		"e" : "Sr",
+		"ename" : "Strontium"
+	},
+	{
+		"z" : 39,
+		"e" : "Y",
+		"ename" : "Yttrium"
+	},
+	{
+		"z" : 40,
+		"e" : "Zr",
+		"ename" : "Zirconium"
+	},
+	{
+		"z" : 41,
+		"e" : "Nb",
+		"ename" : "Niobium"
+	},
+	{
+		"z" : 42,
+		"e" : "Mo",
+		"ename" : "Molybdenum"
+	},
+	{
+		"z" : 43,
+		"e" : "Tc",
+		"ename" : "Technetium"
+	},
+	{
+		"z" : 44,
+		"e" : "Ru",
+		"ename" : "Ruthenium"
+	},
+	{
+		"z" : 45,
+		"e" : "Rh",
+		"ename" : "Rhodium"
+	},
+	{
+		"z" : 46,
+		"e" : "Pd",
+		"ename" : "Palladium"
+	},
+	{
+		"z" : 47,
+		"e" : "Ag",
+		"ename" : "Silver"
+	},
+	{
+		"z" : 48,
+		"e" : "Cd",
+		"ename" : "Cadmium"
+	},
+	{
+		"z" : 49,
+		"e" : "In",
+		"ename" : "Indium"
+	},
+	{
+		"z" : 50,
+		"e" : "Sn",
+		"ename" : "Tin"
+	},
+	{
+		"z" : 51,
+		"e" : "Sb",
+		"ename" : "Antimony"
+	},
+	{
+		"z" : 52,
+		"e" : "Te",
+		"ename" : "Tellurium"
+	},
+	{
+		"z" : 53,
+		"e" : "I",
+		"ename" : "Iodine"
+	},
+	{
+		"z" : 54,
+		"e" : "Xe",
+		"ename" : "Xenon"
+	},
+	{
+		"z" : 55,
+		"e" : "Cs",
+		"ename" : "Caesium"
+	},
+	{
+		"z" : 56,
+		"e" : "Ba",
+		"ename" : "Barium"
+	},
+	{
+		"z" : 57,
+		"e" : "La",
+		"ename" : "Lanthanum"
+	},
+	{
+		"z" : 58,
+		"e" : "Ce",
+		"ename" : "Cerium"
+	},
+	{
+		"z" : 59,
+		"e" : "Pr",
+		"ename" : "Praseodymium"
+	},
+	{
+		"z" : 60,
+		"e" : "Nd",
+		"ename" : "Neodymium"
+	},
+	{
+		"z" : 61,
+		"e" : "Pm",
+		"ename" : "Promethium"
+	},
+	{
+		"z" : 62,
+		"e" : "Sm",
+		"ename" : "Samarium"
+	},
+	{
+		"z" : 63,
+		"e" : "Eu",
+		"ename" : "Europium"
+	},
+	{
+		"z" : 64,
+		"e" : "Gd",
+		"ename" : "Gadolinium"
+	},
+	{
+		"z" : 65,
+		"e" : "Tb",
+		"ename" : "Terbium"
+	},
+	{
+		"z" : 66,
+		"e" : "Dy",
+		"ename" : "Dysprosium"
+	},
+	{
+		"z" : 67,
+		"e" : "Ho",
+		"ename" : "Holmium"
+	},
+	{
+		"z" : 68,
+		"e" : "Er",
+		"ename" : "Erbium"
+	},
+	{
+		"z" : 69,
+		"e" : "Tm",
+		"ename" : "Thulium"
+	},
+	{
+		"z" : 70,
+		"e" : "Yb",
+		"ename" : "Ytterbium"
+	},
+	{
+		"z" : 71,
+		"e" : "Lu",
+		"ename" : "Lutetium"
+	},
+	{
+		"z" : 72,
+		"e" : "Hf",
+		"ename" : "Hafnium"
+	},
+	{
+		"z" : 73,
+		"e" : "Ta",
+		"ename" : "Tantalum"
+	},
+	{
+		"z" : 74,
+		"e" : "W",
+		"ename" : "Tungsten"
+	},
+	{
+		"z" : 75,
+		"e" : "Re",
+		"ename" : "Rhenium"
+	},
+	{
+		"z" : 76,
+		"e" : "Os",
+		"ename" : "Osmium"
+	},
+	{
+		"z" : 77,
+		"e" : "Ir",
+		"ename" : "Iridium"
+	},
+	{
+		"z" : 78,
+		"e" : "Pt",
+		"ename" : "Platinum"
+	},
+	{
+		"z" : 79,
+		"e" : "Au",
+		"ename" : "Gold"
+	},
+	{
+		"z" : 80,
+		"e" : "Hg",
+		"ename" : "Mercury"
+	},
+	{
+		"z" : 81,
+		"e" : "Tl",
+		"ename" : "Thallium"
+	},
+	{
+		"z" : 82,
+		"e" : "Pb",
+		"ename" : "Lead"
+	},
+	{
+		"z" : 83,
+		"e" : "Bi",
+		"ename" : "Bismuth"
+	},
+	{
+		"z" : 84,
+		"e" : "Po",
+		"ename" : "Polonium"
+	},
+	{
+		"z" : 85,
+		"e" : "At",
+		"ename" : "Astatine"
+	},
+	{
+		"z" : 86,
+		"e" : "Rn",
+		"ename" : "Radon"
+	},
+	{
+		"z" : 87,
+		"e" : "Fr",
+		"ename" : "Francium"
+	},
+	{
+		"z" : 88,
+		"e" : "Ra",
+		"ename" : "Radium"
+	},
+	{
+		"z" : 89,
+		"e" : "Ac",
+		"ename" : "Actinium"
+	},
+	{
+		"z" : 90,
+		"e" : "Th",
+		"ename" : "Thorium"
+	},
+	{
+		"z" : 91,
+		"e" : "Pa",
+		"ename" : "Protactinium"
+	},
+	{
+		"z" : 92,
+		"e" : "U",
+		"ename" : "Uranium"
+	},
+	{
+		"z" : 93,
+		"e" : "Np",
+		"ename" : "Neptunium"
+	},
+	{
+		"z" : 94,
+		"e" : "Pu",
+		"ename" : "Plutonium"
+	}
+]

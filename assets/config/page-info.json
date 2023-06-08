@@ -1,0 +1,20 @@
+[
+    {
+        "pageName": "fusion",
+        "pageTitle": "Fusion Reactions",
+        "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
+        "pageDescription": "This program (\"Fusion.php\") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov's spreadsheets."
+    },
+    {
+        "pageName": "intro",
+        "pageTitle": "Introduction",
+        "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
+        "pageDescription": "Introduction to the Parkhomov reaction calculators"
+    },
+    {
+        "pageName": "fission",
+        "pageTitle": "Fission Reactions",
+        "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
+        "pageDescription": "This program (\"Fission.php\") enables SQL commands to query the Fission tables originally created from Dr Parkhomov's spreadsheets."
+    }
+]
