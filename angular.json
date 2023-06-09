@@ -85,6 +85,7 @@
                   "with": "src/assets/config/app-config.json"
                 }
               ],
+              "baseHref": "./",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -151,6 +152,9 @@
         },
         "test": {
           "builder": "@angular-devkit/build-angular:app-shell"
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

@@ -14,7 +14,7 @@
           title="select elements"
           [placeholder]="
             role === 'query' ? 'click here to begin.' : 'selected elements.'">
-          <div (mouseleave)="closeSelectPanel(500)">
+          <div>
             <mat-option
               [disabled]="role == 'result'"
               *ngFor="let element of elements"
