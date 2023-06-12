@@ -1,1 +1,3 @@
-export type ReactionType = 'fusion' | 'fission' | ''
+import { ReactionTypeEnum } from "./reaction-type-enum.model";
+
+export type ReactionType = ReactionTypeEnum

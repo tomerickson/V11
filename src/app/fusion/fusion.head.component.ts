@@ -16,7 +16,8 @@ import { HeaderProviderService } from '../shared/header/header.provider.service'
 import { PageActions, globalFeature } from '../state';
 import { FusionActions } from '../state/fusion';
 import { FusionFaceComponent } from './fusion-face/fusion.face.component';
-import { IReportParameters } from '../core/models/report-parameters.model';
+import { ReportParameters } from '../core/models/report-parameters.model';
+import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
 
 @Component({
   standalone: true,
@@ -50,9 +51,9 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
 
   submit_query = (fusionForms: FormGroup[]): void => {
     const kvp = this.buildRequestForm(fusionForms);
-    const extras: IReportParameters = {
+    const extras: ReportParameters = {
         url: 'fusion',
-        type: 'fusion',
+        reactionType: ReactionTypeEnum.Fusion,
         query: this.query
       };
     this.store.dispatch(PageActions.setReportParameters({payload: extras}))

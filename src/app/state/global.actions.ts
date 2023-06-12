@@ -5,7 +5,7 @@ import {
 } from '@ngrx/store';
 import { ILookupDataModel } from '../core/models/lookup.-data.model';
 import { IElementDataModel } from '../core/models/element-data.model';
-import { IReportParameters } from '../core/models/report-parameters.model';
+import { ReportParameters } from '../core/models/report-parameters.model';
 
 export const ElementActions = createActionGroup({
   source: 'Global API',
@@ -37,7 +37,7 @@ export const PageActions = createActionGroup({
     'Set Page Title': props<{ title: string }>(),
     'Set Page Credits': props<{ credits: string }>(),
     'Set Page Description': props<{description: string}>(),
-    'Set Report Parameters': props<{payload: IReportParameters}>(),
+    'Set Report Parameters': props<{payload: ReportParameters}>(),
     'Toggle Menu': emptyProps,
     exit: emptyProps()
   }

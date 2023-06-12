@@ -48,7 +48,7 @@ export const fusionReducer = createReducer(
     };
   }),
   on(FusionActions.loadAllResultsFailure, (state, action) => {
-    return { ...state, loading: false, error: action.error, ready: true };
+    return { ...state, loading: false, error: action.error, ready: false };
   }),
   on(FusionActions.loadAllResultsSuccess, (state, action) => {
     return {

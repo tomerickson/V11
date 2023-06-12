@@ -15,8 +15,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { QueryResultsComponent } from '../query-results/query-results.component';
-import { IReportParameters } from 'src/app/core/models/report-parameters.model';
+import { ReportParameters } from 'src/app/core/models/report-parameters.model';
+import { QueryResultsHeadComponent } from '../query-results/query-results.head.component';
 
 @Component({
   standalone: true,
@@ -28,29 +28,32 @@ import { IReportParameters } from 'src/app/core/models/report-parameters.model';
     MatCardModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-    QueryResultsComponent,
+    QueryResultsHeadComponent,
     AsyncPipe,
     NgIf
   ]
 })
 export class ReportPagesFaceComponent implements OnInit, AfterContentInit {
-  @Input({ required: true }) parameters!: IReportParameters | null;
+  @Input({ required: true }) parameters!: ReportParameters | null;
   @Input({ required: true }) reactionResults!: Observable<any[]>;
   @Input({ required: true }) nuclideResults!: Observable<any[]>;
   @Input({ required: true }) elementResults!: Observable<any[]>;
-  @Input({required: true}) reactionRows!: Observable<number>;
-  @Input({required: true}) nuclideRows!: Observable<number>;
-  @Input({required: true}) elementRows!: Observable<number>;
-
+  @Input({ required: true }) reactionRows!: Observable<number>;
+  @Input({ required: true }) nuclideRows!: Observable<number>;
+  @Input({ required: true }) elementRows!: Observable<number>;
+  @Input({ required: true }) loading!: Observable<boolean>;
+  @Input({ required: true }) ready!: Observable<boolean>;
   @Output() exit: EventEmitter<void> = new EventEmitter<void>();
   @Output() query: EventEmitter<string> = new EventEmitter<string>();
 
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void {
+  
+  }
 
   ngOnInit(): void {
     this.url = this.router.routerState.snapshot.url;
   }
-  
+
   store = inject(Store);
   router = inject(Router);
   url = '';

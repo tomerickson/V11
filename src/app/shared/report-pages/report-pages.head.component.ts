@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactionType } from 'src/app/core/models/reaction-type';
 import { ReportPagesFaceComponent } from './report-pages.face.component';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { fusionFeature } from 'src/app/state/fusion';
 import { AsyncPipe } from '@angular/common';
 import { globalFeature } from 'src/app/state';
-import { IReportParameters } from 'src/app/core/models/report-parameters.model';
+import { ReportParameters } from 'src/app/core/models/report-parameters.model';
 
 @Component({
   standalone: true,
@@ -22,7 +22,9 @@ import { IReportParameters } from 'src/app/core/models/report-parameters.model';
         [elementResults]="elements"
         [reactionRows]="reactionRows"
         [nuclideRows]="nuclideRows"
-        [elementRows]="elementRows"></mfmp-report-pages-face>
+        [elementRows]="elementRows"
+        [loading]="loading"
+        [ready]="ready"></mfmp-report-pages-face>
     </ng-container>
   `,
   imports: [ReportPagesFaceComponent, AsyncPipe]
@@ -31,14 +33,17 @@ export class ReportPagesHeadComponent implements OnInit, OnDestroy {
   router: Router = inject(Router);
   store: Store = inject(Store);
 
-  parameters!: IReportParameters;
+  parameters!: ReportParameters;
   reactions!: Observable<any[]>;
   nuclides!: Observable<any[]>;
   elements!: Observable<any[]>;
+  loading!: Observable<boolean>;
+  ready!: Observable<boolean>;
   reactionRows!: Observable<number>;
   nuclideRows!: Observable<number>;
   elementRows!: Observable<number>;
   subscriptions: Subscription = new Subscription();
+  returnUrl!: string;
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -46,7 +51,8 @@ export class ReportPagesHeadComponent implements OnInit, OnDestroy {
         .select(globalFeature.selectReportParameters)
         .subscribe((parms) => {
           this.parameters = parms;
-          this.provideReports(this.parameters.type);
+          this.returnUrl = parms.url;
+          this.provideReports(this.parameters.reactionType);
         })
     );
   }
@@ -64,15 +70,17 @@ export class ReportPagesHeadComponent implements OnInit, OnDestroy {
         this.reactionRows = this.store.select(fusionFeature.selectReactionRows);
         this.nuclideRows = this.store.select(fusionFeature.selectNuclideRows);
         this.elementRows = this.store.select(fusionFeature.selectElementRows);
+        this.loading = this.store.select(fusionFeature.selectLoading);
+        this.ready = this.store.select(fusionFeature.selectReady);
         break;
       default:
-        throw `type '${type}' is Not implemented!`;
+        console.log(`ReactionType '${type}' is undefined.`);
+        break;
     }
   };
   reset = () => {
     this.router
-      .navigate([this.parameters.url], { queryParams: { reset: true } })
-      .then((rsp) => console.log('url', this.parameters.url, 'rsp:', rsp))
+      .navigate([this.returnUrl], { queryParams: { reset: true } })
       .catch((err) => console.error(err));
   };
 }

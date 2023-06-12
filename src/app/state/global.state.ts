@@ -7,7 +7,8 @@ import { IElementDataModel } from '../core/models/element-data.model';
 import { ILookupDataModel } from '../core/models/lookup.-data.model';
 import sortFieldsJson from '../../assets/tables/reaction-result-sort-fields.json';
 import { ElementActions, LookupActions, PageActions } from './global.actions';
-import { IReportParameters } from '../core/models/report-parameters.model';
+import { ReportParameters } from '../core/models/report-parameters.model';
+import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
 
 export interface GlobalState {
   pageTitle: string;
@@ -24,7 +25,7 @@ export interface GlobalState {
   radiationTypes: ILookupDataModel[];
   radiationDecayModes: ILookupDataModel[];
   reactionSortFields: ILookupDataModel[];
-  reportParameters: IReportParameters
+  reportParameters: ReportParameters
 }
 
 export const globalInitialState: GlobalState = {
@@ -42,7 +43,7 @@ export const globalInitialState: GlobalState = {
   radiationDecayModes: radDecayModesJson.map(row => {return {category: 'RDM', code: row.code, description: row.description}}),
   radiationTypes: radTypesJson.map(row => {return {category: 'RT', code: row.code, description: row.description}}),
   reactionSortFields: sortFieldsJson.map(row => {return {category: 'SORT', code: row.code, description: row.description}}),
-  reportParameters: {url: '', type: '', query: ''}
+  reportParameters: {url: '', reactionType: ReactionTypeEnum.TBD, query: ''}
 };
 
 export const globalFeature = createFeature({

@@ -2,24 +2,34 @@
   <mat-card-header>
     <p>{{ parameters?.query }}</p>
   </mat-card-header>
+  <mat-card-content>
+    <ng-container *ngIf="(loading | async); then waiting else working">
+
+    </ng-container>
+    <ng-template #waiting>
+      <mat-progress-spinner
+      class="progress-spinner"
+      mode="indeterminate"></mat-progress-spinner>
+    </ng-template>
+    <ng-template #working>
   <mat-tab-group mat-stretch-tabs="false" animationDuration="250ms">
-    <mat-tab label="Results ({{reactionRows | async}})">
+    <mat-tab label="Results ({{ reactionRows | async }})">
       <ng-container
         *ngIf="
-          (reactionRows | async);
+          reactionResults;
           then reactionYes;
           else reactionNo
         "></ng-container>
       <ng-template #reactionNo>
-        <mat-progress-spinner class="progress-spinner" mode="indeterminate"></mat-progress-spinner>
+        <h3>No results found</h3>
       </ng-template>
       <ng-template #reactionYes>
-        <mfmp-query-results
+        <mfmp-query-head
           [resultType]="'results'"
-          [inputResults]="reactionResults"></mfmp-query-results>
+          [inputResults]="reactionResults"></mfmp-query-head>
       </ng-template>
     </mat-tab>
-    <mat-tab label="Nuclides ({{ nuclideRows | async}})">
+    <mat-tab label="Nuclides ({{ nuclideRows | async }})">
       <ng-container
         *ngIf="
           nuclideResults;
@@ -27,15 +37,15 @@
           else nuclidesNo
         "></ng-container>
       <ng-template #nuclidesNo>
-        <mat-progress-spinner class="progress-spinner" mode="indeterminate"></mat-progress-spinner>
+        <h3>No results found</h3>
       </ng-template>
       <ng-template #nuclidesYes>
-        <mfmp-query-results
+        <mfmp-query-head
           [resultType]="'nuclides'"
-          [inputResults]="nuclideResults"></mfmp-query-results>
+          [inputResults]="nuclideResults"></mfmp-query-head>
       </ng-template>
     </mat-tab>
-    <mat-tab label="ELements ({{ elementRows | async}})">
+    <mat-tab label="ELements ({{ elementRows | async }})">
       <ng-container
         *ngIf="
           elementResults;
@@ -43,15 +53,17 @@
           else elementsNo
         "></ng-container>
       <ng-template #elementsNo>
-        <mat-progress-spinner class="progress-spinner" mode="indeterminate"></mat-progress-spinner>
+        <h3>No results found</h3>
       </ng-template>
       <ng-template #elementsYes>
-        <mfmp-query-results
+        <mfmp-query-head
           [resultType]="'elements'"
-          [inputResults]="elementResults"></mfmp-query-results>
+          [inputResults]="elementResults"></mfmp-query-head>
       </ng-template>
     </mat-tab>
   </mat-tab-group>
+</ng-template>
+</mat-card-content>
   <mat-card-actions align="end">
     <button type="button" mat-raised-button color="primary" (click)="reset()">
       Again?
