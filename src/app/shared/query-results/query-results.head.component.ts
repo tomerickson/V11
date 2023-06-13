@@ -26,6 +26,7 @@ import { Observable, Subject, Subscription, of } from 'rxjs';
 import { ResultType } from 'src/app/core/models/result-type';
 import { DownloadComponent } from '../download/download.component';
 import { QueryResultsFaceComponent } from './query-results.face.component';
+import { ColumnType } from 'src/app/core/models/column-type.type';
 
 @Component({
   selector: 'mfmp-query-head',
@@ -99,9 +100,11 @@ export class QueryResultsHeadComponent
           const dataSource = new MatTableDataSource(rows);
           this.download.next(input);
           this.headers = headers;
-          this.columnStyles = this.setColumnStyles(rows);
-          this.sortableColumns = this.setSortableColumns(rows, headers);
-          this.columnTypes = this.setColumnTypes(rows, headers);
+
+          this.setColumnTypes(rows, headers);
+          this.setColumnStyles();
+          this.setSortableColumns();
+
           this.dataSource = of(dataSource);
           this.ready.set(true);
           this.length.set(rows.length);
@@ -125,58 +128,64 @@ export class QueryResultsHeadComponent
   }
 
   /**
-   * Identify non-sortable columns
+   * Identify sortable columns
    *
    * @param setPageSizeOptionsInput
    */
-  setPageSizeOptions(setPageSizeOptionsInput: string) {
-    if (setPageSizeOptionsInput) {
-      this.pageSizeOptions = setPageSizeOptionsInput
-        .split(',')
-        .map((str) => +str);
+  setSortableColumns = (): void => {
+    const sortableColumns = new Array<boolean>(this.columnTypes.length);
+    for (let column = 0; column < this.columnTypes.length; column++) {
+      sortableColumns[column] = (this.columnTypes[column] != 'null');
     }
-  }
-
-  setSortableColumns = (data: any[][], columns: any[]): boolean[] => {
-    const sortableColumns = new Array<boolean>(columns.length);
-    for (let column = 0; column < columns.length; column++) {
-      sortableColumns[column] = true;
-      for (let row = 0; row < data.length; row++) {
-        if (data[row][column] == 'null') {
-          sortableColumns[column] = false;
-          break;
-        }
-      }
-    }
-    return sortableColumns;
+    this.sortableColumns = sortableColumns;
   };
 
-  setColumnStyles = (columns: any[]): string[] => {
-    const columnStyles: string[] = new Array<string>(columns.length);
-    for (let i = 0; i < columns.length; i++) {
-      if (!isNaN(columns[i])) {
-        columnStyles[i] = 'mat-column-number';
+  /**
+   * Select classes to align text based on columnTypes 
+   * @param columnTypes 
+   * @returns 
+   */
+  setColumnStyles = (): void => {
+    const columnStyles: string[] = new Array<string>(this.columnTypes.length);
+    const textStyle = '';
+    const numberStyle = 'mat-column-number';
+    const nullStyle = 'mat-column-null';
+
+    for (let i = 0; i < this.columnTypes.length; i++) {
+      const value = this.columnTypes[i];
+      if (value === 'null') {
+        columnStyles[i] = nullStyle;
+      } else if (value === 'number') {
+        columnStyles[i] = numberStyle;
       } else {
-        columnStyles[i] = 'mat-column-text';
+        columnStyles[i] = textStyle;
       }
     }
-    return columnStyles;
+    this.columnStyles = columnStyles;
   };
 
-  setColumnTypes = (data: any[], columns: any[]): ColumnType[] => {
+  /**
+   * For styling purposes we need to know if a column's content
+   * contains numbers, strings, or if there are null values
+   * @param data 
+   * @param columns 
+   * @returns arrary of ['string', 'number', 'null']
+   */
+  setColumnTypes = (data: any[], columns: any[]): void => {
     const columnTypes = new Array<ColumnType>(columns.length);
     for (let column = 0; column < columns.length; column++) {
       let strings: number = 0;
+      let numerics: number = 0;
+      let nulls: number = 0;
       for (let row = 0; row < data.length; row++) {
         let cell = data[row][column];
-        cell !== null;
-        strings += cell !== null && isNaN(cell) ? 1 : 0;
+        nulls += ((cell === 'null') ? 1 : 0);
+        strings += ((cell !== null && isNaN(cell)) ? 1 : 0)
+        numerics += ((cell !== null && !isNaN(cell)) ? 1 : 0);
       }
-      const columnType: ColumnType = strings > 0 ? 'string' : 'number';
+      const columnType: ColumnType = (nulls > 0) ? 'null' : (numerics > 0) ? 'number' : 'string';
       columnTypes[column] = columnType;
     }
-    return columnTypes;
+    this.columnTypes = columnTypes;
   };
 }
-
-declare type ColumnType = 'string' | 'number';
