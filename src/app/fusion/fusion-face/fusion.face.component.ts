@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input, OnDestroy,
@@ -24,19 +25,20 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
-import { BehaviorSubject, Subscription, pairwise } from 'rxjs';
+import { Router } from '@angular/router';
+import { Subscription, pairwise } from 'rxjs';
 import { IElementDataModel } from '../../core/models/element-data.model';
 import { ILookupDataModel } from '../../core/models/lookup.-data.model';
 import { HeaderProviderService } from '../../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../../shared/nuclide-picker/nuclide-picker.component';
 import { ReportPagesFaceComponent } from '../../shared/report-pages/report-pages.face.component';
 import { missingElementsValidator } from './fusion-form.validator';
-import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'mfmp-fusion-face',
-  templateUrl: './fusion.face.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+   templateUrl: './fusion.face.component.html',
   styleUrls: ['./fusion.face.component.scss'],
   imports: [
     CommonModule,
@@ -69,7 +71,7 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
   rightNuclides!: FormGroup;
   resultNuclides!: FormGroup;
 
-  ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  // ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   subscriptions: Subscription = new Subscription();
   sortDescendingProxy!: boolean;
   submittable = false;
@@ -77,8 +79,8 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
   sortOrder = '';
   coreQuery = '';
 
-  @Input({ required: true }) elements: IElementDataModel[] | null = null;
-  @Input({ required: true }) sortFields: ILookupDataModel[] | null = null;
+  @Input({ required: true }) elements!: IElementDataModel[] | null;
+  @Input({ required: true }) sortFields!: ILookupDataModel[] | null;
   @Output() doit: EventEmitter<FormGroup[]> = new EventEmitter<FormGroup[]>();
   
 
@@ -86,7 +88,7 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
     'This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov\'s spreadsheets.';
 readonly initialCoreQuery = ' order by MeV desc limit 1000';
 
-  constructor(private headerService: HeaderProviderService) {
+  constructor() {
     this.route = this.router.routerState.snapshot.url;
   }
 
@@ -117,7 +119,7 @@ readonly initialCoreQuery = ' order by MeV desc limit 1000';
     this.leftNuclides = this.fusionForm.get('leftNuclides') as FormGroup;
     this.rightNuclides = this.fusionForm.get('rightNuclides') as FormGroup;
     this.resultNuclides = this.fusionForm.get('resultNuclides') as FormGroup;
-    this.ready.next(true);
+    // this.ready.next(true);
   }
 
   buildForm = () => {
@@ -254,6 +256,9 @@ readonly initialCoreQuery = ' order by MeV desc limit 1000';
     return this.fusionForm.get('resultLimit')?.value;
   };
 
+  /**
+   * We can't submit the query until there's a filter clause present, i.e. E1 in('H','Ni')
+   */
   setSubmittable = () => {
     this.submittable = this.fusionForm.valid || !this.coreQuery.trimStart().startsWith('order');
   }

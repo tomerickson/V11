@@ -67,9 +67,9 @@ export class QueryResultsFaceComponent
   sortedData: any[] = [];
 
   ready = signal(false);
-  pageSize = 25;
+  pageSize = 20;
   pageIndex = 0;
-  pageSizeOptions = [5, 10, 25, 100];
+  pageSizeOptions = [10, 20, 25, 50, 100];
   pageEvent!: PageEvent;
   hidePageSize = false;
   showPageSizeOptions = true;

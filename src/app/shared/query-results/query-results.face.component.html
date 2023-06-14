@@ -14,7 +14,6 @@
             <th
               mat-header-cell
               mat-sort-header
-              [class]="columnStyles[colIndex]"
               *matHeaderCellDef>
               {{ column }}
             </th>
@@ -22,12 +21,13 @@
           <ng-container *ngIf="sortableColumns[colIndex] == false">
             <th
               mat-header-cell
-              [class]="columnStyles[colIndex]"
               *matHeaderCellDef>
               {{ column }}
             </th>
           </ng-container>
-          <td mat-cell [class]="columnStyles[colIndex]" *matCellDef="let row">
+          <td mat-cell 
+          *matCellDef="let row"
+          [ngClass]="columnStyles[colIndex]">
             {{ row[colIndex] }}
           </td>
         </ng-container>

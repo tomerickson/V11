@@ -1,1 +1,1 @@
-export type ColumnType = 'string' | 'number';
+export type ColumnType = 'string' | 'number' | 'null';
