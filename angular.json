@@ -119,7 +119,8 @@
               "browserTarget": "v11:build:production"
             },
             "development": {
-              "browserTarget": "v11:build:development"
+              "browserTarget": "v11:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           }
         },

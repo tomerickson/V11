@@ -38,8 +38,8 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
   router: Router = inject(Router);
   query!: string;
   route: ActivatedRoute = this.router.routerState.root;
-  elements: Observable<IElementDataModel[]> | null = null;
-  sortFields: Observable<ILookupDataModel[]> | null = null;
+  elements!: Observable<IElementDataModel[]>;
+  sortFields!: Observable<ILookupDataModel[]>;
   ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   subscriptions: Subscription = new Subscription();
   submittable = false;

@@ -1,0 +1,11 @@
+{
+    "/api/": {
+      "target": "https://nanosoft.co.nz",
+      "secure": false,
+      "pathRewrite": {
+        "^/api": ""
+      },
+      "changeOrigin": true
+    },
+    "logLevel": "debug"
+  }

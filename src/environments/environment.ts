@@ -9,7 +9,7 @@ export const environment = {
   version: pkg.version,
   // proxy: 'https://cors-anywhere.azm.workers.dev/',
   proxy: '',
-  apiUrl: 'https://nanosoft.co.nz/',
+  apiUrl: '/api/',
   // apiUrl: 'http://parkhomov/',
   /**
    * Number of time to retry an http request
@@ -30,4 +30,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
