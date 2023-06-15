@@ -17,6 +17,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ReportParameters } from 'src/app/core/models/report-parameters.model';
 import { QueryResultsHeadComponent } from '../query-results/query-results.head.component';
+import { CodeCopyCompoonent } from '../code-copy/code-copy.component';
 
 @Component({
   standalone: true,
@@ -30,7 +31,8 @@ import { QueryResultsHeadComponent } from '../query-results/query-results.head.c
     MatTabsModule,
     QueryResultsHeadComponent,
     AsyncPipe,
-    NgIf
+    NgIf,
+    CodeCopyCompoonent
   ]
 })
 export class ReportPagesFaceComponent implements OnInit, AfterContentInit {

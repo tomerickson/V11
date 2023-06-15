@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-header>
-    <p>{{ parameters?.query }}</p>
+    <code-copy [text]="parameters?.query"></code-copy>
   </mat-card-header>
   <mat-card-content>
     <ng-container *ngIf="(loading | async); then waiting else working">
