@@ -8,43 +8,63 @@
         To make full use of this and the other database tables, a good grasp of
         SQL is essential.
       </p>
+
       <p>
-        An atom's nucleus is considered a Boson ('b') if its A number is even;
-        if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
-        its number of neutrons (A - Z) is even; if odd a Fermion ('f').
+        But note that it, TwoToTwo and Fission is each dedicated to querying
+        only one of two tables.
       </p>
+
+      <p>
+        The "universal" program All Tables can accept full SQL commands that
+        query any of the 12 "Parkhomov" tables, together with the
+        "ElementProperties", "Nuclides", "RadioNuclides" and "Atomic Radii"
+        tables as well.
+      </p>
+
+      <p>
+        You may indicate which of the three neutrino conditions to include:
+        "left" and/or "none" and/or "right". The default condition is include
+        all three.
+      </p>
+
       <p>
         In all the above tables, except the Periodic, each atom, in either the
         input or the output, as well as its 'A' and 'Z' numbers now also has a
         'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or
         Fermion') parameter associated with it.
       </p>
+
+      <p>
+        An atom's nucleus is considered a Boson ('b') if its A number is even;
+        if odd a Fermion ('f'). The atom itself is considered a Boson ('b') if
+        its number of neutrons (A - Z) is even; if odd a Fermion ('f').
+      </p>
+
       <p>
         These parameters can be used either passively, by observing the
         distributions of 'b' and 'f' in inputs and/or outputs, and/or actively,
-        by checking the 'Boson' or 'Fermion' boxes below.
+        by selecting 'b only', 'f only' or 'either' in the boxes below.
       </p>
+
       <p>
-        As you select elements from the drop-down lists, or as you change the
-        sort field, the sort order or the result limit, the core query will
-        change to reflect your choices.
-      </p>
-      <p>
-        You can override the core query if you wish, but if you do it must be
-        the last change you make before you click the SUBMIT button, because
-        changes you make to other fields on the page will cause the core query
-        to be re-generated.
+        NB: To avoid unnecessary duplication in all Fusion tables, A1 is never
+        greater than A2 in any row, i.e. A1 <= A2. This also applies implicitly
+        in that, if the input side of the Core Query only involves E1 and E2,
+        only rows whose associated mass numbers obey A1 <= A2 will appear in the
+        results
       </p>
 
       <p>
         To protect the table, only SQL compatible "selection" queries can be
         allowed and you must enter only the CORE part of that query.
       </p>
+
       <p>
-        Once you do this and click on the "SUBMIT" button, the front part (here
-        "select * from FusionAll where ") will be automatically prepended and
-        the full query sent to the database.
+        Once you do this and click on the "Execute Query" button, the front part
+        (here "select * from FusionAll where ") will be automatically prepended
+        and the full query sent to the database.
       </p>
+
       <p>
         Latest: All queries will now be limited to 1000 possible rows of
         results; any requested 'limit' greater than 1000 will be reset to 1000;
@@ -53,16 +73,9 @@
       </p>
 
       <p>
-        NB: To avoid unnecessary duplication in all Fusion tables, A1 is never
-        greater than A2 in any row, i.e. A1 &le; A2. This also applies
-        implicitly in that, if the input side of the Core Query only involves E1
-        and E2, only rows whose associated mass numbers obey A1 &le; A2 will
-        appear in the results
-      </p>
-      <p>
-        You may indicate which of the three neutrino conditions to include:
-        "left" and/or "none" and/or "right". The default condition is include
-        all three.
+        This Fusion Core Query can refer to any and all of E1, A1, nBorF1, Z1,
+        aBorF1, E2, A2, nBorF2, Z2 or aBorF2 (the inputs) and to any and all of
+        E, A, nBorF, Z or aBorF (the output).
       </p>
     </mat-expansion-panel>
   </mat-card-content>
