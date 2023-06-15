@@ -21,12 +21,12 @@ export const APP_ROUTES: Routes = [
     loadChildren: () =>
       import('./fusion/fusion-routes').then((m) => m.FUSION_ROUTES)
   },
-/*     {
+    {
     path: 'fission',
     pathMatch: 'full',
     loadChildren: () =>
       import('./fission/fission-routes').then((m) => m.FISSION_ROUTES)
-  }, */
+  },
   { path: 'testpage', pathMatch: 'full', component: TestpageHeadComponent },
   { path: '**', component: NotFoundComponent }
 ];

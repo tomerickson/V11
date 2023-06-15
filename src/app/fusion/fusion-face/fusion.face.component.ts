@@ -17,7 +17,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -58,7 +58,8 @@ import { missingElementsValidator } from './fusion-form.validator';
     ReactiveFormsModule,
     ReportPagesFaceComponent
   ],
-  providers: [{ provide: HeaderProviderService }]
+  providers: [{ provide: HeaderProviderService }],
+  viewProviders: [MatExpansionPanel]
 })
 export class FusionFaceComponent implements OnInit, OnDestroy {
 
