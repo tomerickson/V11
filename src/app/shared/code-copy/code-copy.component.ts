@@ -35,7 +35,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
   `,
   styles: [
     `
-      .icon-display: {
+      .icon-display {
         transform: scale(0.5);
       }
       div {
@@ -51,10 +51,10 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
         cursor: pointer;
       }
       div:hover {
-        mat-icon {
+        :is(mat-icon) {
           visibility: visible;
         }
-        code {
+        :is(code) {
           opacity: '.5';
         }
       }
