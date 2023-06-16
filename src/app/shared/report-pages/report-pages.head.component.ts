@@ -15,7 +15,6 @@ import { ReportParameters } from 'src/app/core/models/report-parameters.model';
   template: `
     <ng-container>
       <mfmp-report-pages-face
-        (exit)="reset()"
         [parameters]="parameters"
         [reactionResults]="reactions"
         [nuclideResults]="nuclides"
@@ -77,10 +76,5 @@ export class ReportPagesHeadComponent implements OnInit, OnDestroy {
         console.log(`ReactionType '${type}' is undefined.`);
         break;
     }
-  };
-  reset = () => {
-    this.router
-      .navigate([this.returnUrl], { queryParams: { reset: true } })
-      .catch((err) => console.error(err));
   };
 }

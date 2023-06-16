@@ -33,7 +33,12 @@ table.mat-mdc-table {
 div.block {
   vertical-align: middle;
 }
-
+div.action {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 div.table-wrapper {
   width: 100%;
   overflow-x: scroll;

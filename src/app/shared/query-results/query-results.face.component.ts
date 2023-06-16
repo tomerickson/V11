@@ -27,23 +27,25 @@ import { Observable, Subscription } from 'rxjs';
 import { ResultType } from 'src/app/core/models/result-type';
 import { DownloadComponent } from '../download/download.component';
 import { ColumnType } from 'src/app/core/models/column-type.type';
+import { RestartFeatureComponent } from "../restart-feature/restart-feature.component";
 
 @Component({
-  selector: 'mfmp-query-face',
-  standalone: true,
-  imports: [
-    NgIf,
-    NgTemplateOutlet,
-    AsyncPipe,
-    CommonModule,
-    MatCardModule,
-    MatSortModule,
-    MatTableModule,
-    MatPaginatorModule,
-    DownloadComponent
-  ],
-  templateUrl: './query-results.face.component.html',
-  styleUrls: ['./query-results.face.component.scss']
+    selector: 'mfmp-query-face',
+    standalone: true,
+    templateUrl: './query-results.face.component.html',
+    styleUrls: ['./query-results.face.component.scss'],
+    imports: [
+        NgIf,
+        NgTemplateOutlet,
+        AsyncPipe,
+        CommonModule,
+        MatCardModule,
+        MatSortModule,
+        MatTableModule,
+        MatPaginatorModule,
+        DownloadComponent,
+        RestartFeatureComponent
+    ]
 })
 export class QueryResultsFaceComponent
   implements OnInit, AfterViewInit, OnDestroy

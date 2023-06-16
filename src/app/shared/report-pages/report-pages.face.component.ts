@@ -45,7 +45,6 @@ export class ReportPagesFaceComponent implements OnInit, AfterContentInit {
   @Input({ required: true }) elementRows!: Observable<number>;
   @Input({ required: true }) loading!: Observable<boolean>;
   @Input({ required: true }) ready!: Observable<boolean>;
-  @Output() exit: EventEmitter<void> = new EventEmitter<void>();
   @Output() query: EventEmitter<string> = new EventEmitter<string>();
 
   ngAfterContentInit(): void {
@@ -59,8 +58,4 @@ export class ReportPagesFaceComponent implements OnInit, AfterContentInit {
   store = inject(Store);
   router = inject(Router);
   url = '';
-
-  reset = () => {
-    this.exit.emit();
-  };
 }
