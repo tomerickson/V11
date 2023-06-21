@@ -15,9 +15,10 @@ import { CrudService } from '../core/services/crud.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { PageActions, globalFeature } from '../state';
 import { FusionActions } from '../state/fusion';
-import { FusionFaceComponent } from './fusion-face/fusion.face.component';
+import { FusionFaceComponent } from './fusion-face/fusion-face.component';
 import { ReportParameters } from '../core/models/report-parameters.model';
 import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
+import { formatSpinChoices } from '../core/services/page.services';
 
 @Component({
   standalone: true,
@@ -82,18 +83,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     this.headerService.buildPageHeader('fusion');
     this.ready.next(true);
   }
-  /**
-   * Convert spin choices to a string for postback
-  
-   * @param bosons 
-   * @param fermions 
-   * @returns 
-   * @remarks
-   * If both choices are false convert them to true
-   */
-  formatSpinChoices = (bosons: boolean, fermions: boolean): string => {
-    return bosons && fermions ? 'bf' : bosons ? 'b' : fermions ? 'f' : 'bf';
-  };
+
 
   /**
    * map the formgroup to an array of key-value pairs
@@ -172,31 +162,31 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     kvp.push(
       new KeyValuePair({
         key: 'nBorF1',
-        value: this.formatSpinChoices(leftNuclearBosons, leftNuclearFermions)
+        value: formatSpinChoices(leftNuclearBosons, leftNuclearFermions)
       })
     );
     kvp.push(
       new KeyValuePair({
         key: 'aBorF1',
-        value: this.formatSpinChoices(leftAtomicBosons, leftAtomicFermions)
+        value: formatSpinChoices(leftAtomicBosons, leftAtomicFermions)
       })
     );
     kvp.push(
       new KeyValuePair({
         key: 'nBorF2',
-        value: this.formatSpinChoices(rightNuclearBosons, rightNuclearFermions)
+        value: formatSpinChoices(rightNuclearBosons, rightNuclearFermions)
       })
     );
     kvp.push(
       new KeyValuePair({
         key: 'aBorF2',
-        value: this.formatSpinChoices(rightAtomicBosons, rightAtomicFermions)
+        value: formatSpinChoices(rightAtomicBosons, rightAtomicFermions)
       })
     );
     kvp.push(
       new KeyValuePair({
         key: 'nBorF',
-        value: this.formatSpinChoices(
+        value: formatSpinChoices(
           resultNuclearBosons,
           resultNuclearFermions
         )
@@ -205,7 +195,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     kvp.push(
       new KeyValuePair({
         key: 'aBorF',
-        value: this.formatSpinChoices(resultAtomicBosons, resultAtomicFermions)
+        value: formatSpinChoices(resultAtomicBosons, resultAtomicFermions)
       })
     );
     return kvp;

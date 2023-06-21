@@ -38,8 +38,8 @@ import { missingElementsValidator } from './fusion-form.validator';
   standalone: true,
   selector: 'mfmp-fusion-face',
   changeDetection: ChangeDetectionStrategy.OnPush,
-   templateUrl: './fusion.face.component.html',
-  styleUrls: ['./fusion.face.component.scss'],
+   templateUrl: './fusion-face.component.html',
+  styleUrls: ['./fusion-face.component.scss'],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -92,19 +92,6 @@ readonly initialCoreQuery = ' order by MeV desc limit 1000';
   constructor() {
     this.route = this.router.routerState.snapshot.url;
   }
-
-  /**
-   * Convert spin choices to a string for postback
-  
-   * @param bosons 
-   * @param fermions 
-   * @returns 
-   * @remarks
-   * If both choices are false convert them to true
-   */
-  formatSpinChoices = (bosons: boolean, fermions: boolean): string => {
-    return bosons && fermions ? 'bf' : bosons ? 'b' : fermions ? 'f' : 'bf';
-  };
 
   buildRequestForm(): void {
     this.doit.emit([this.fusionForm, this.sqlForm]);

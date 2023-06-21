@@ -8,6 +8,7 @@ import { IFusionCompositeResults } from '../models/fusion-composite-results.mode
 import { IKeyValuePair, KeyValuePair } from '../models/key-value-pair.model';
 import { ILookupDataModel } from '../models/lookup.-data.model';
 import { extractTablesFromPage } from './page.services';
+import { IFissionCompositeResults } from '../models/fission-composite-results.model';
 
 export interface User {
   id: string;
@@ -83,6 +84,14 @@ export class CrudService {
     }
   }
 
+  getFissionResults = (payload: KeyValuePair[]): Observable<string> => {
+    let page: string =  `${this.endPoint}Fission.php`;
+    return this.http.post(page, this.buildFormData(payload), {
+      responseType: 'text',
+      observe: 'body'
+    });
+  }
+
   getDummyResults(): Observable<any> {
     console.log('getting dummy data');
     let page = 'http://localhost:4200/assets/demo.txt';
@@ -115,7 +124,7 @@ export class CrudService {
       const table: any[] = data[i];
       const thead: any[] = table[0];
       const tbody: any[] = table;
-      result = this.parseTable(thead, tbody, result);
+      result = this.parseFusionTable(thead, tbody, result);
     }
     result.ok =
       result.fusionResults.length > 0 &&
@@ -123,6 +132,37 @@ export class CrudService {
       result.elementResults.length > 0;
     return result;
   };
+
+  /**
+   * 
+   * Extract the results tables from the page and convert them
+   * into DTOs, then bundle them into a IFissionCompositeResults object.
+   * 
+   * @param html 
+   * @returns 
+   */
+  parseFissionResults = (html: string): IFissionCompositeResults => {
+    let result: IFissionCompositeResults = {
+      fissionResults: [],
+      nuclideResults: [],
+      elementResults: [],
+      ok: true
+    }
+    const data = extractTablesFromPage(html);
+    for (let i = 0; i < 3; i++) {
+      const table: any[] = data[i];
+      const thead: any[] = table[0];
+      const tbody: any[] = table;
+      result = this.parseFissionTable(thead, tbody, result);
+    }
+    for (let i = 0; i < 3; i++) {
+      result.ok =
+      result.fissionResults.length > 0 &&
+      result.nuclideResults.length > 0 &&
+      result.elementResults.length > 0;
+    }
+    return result;
+  }
 
   /**
    * Match up the first fields of the incoming
@@ -134,13 +174,37 @@ export class CrudService {
    * @param output
    * @returns
    */
-  parseTable = (
+  parseFusionTable = (
     thead: string[],
     tbody: any[],
     output: IFusionCompositeResults
   ) => {
     if (this.modelMatches(thead, ['id', 'neutrino'])) {
       output.fusionResults = tbody;
+    } else if (this.modelMatches(thead, ['id', 'A', 'Z'])) {
+      output.nuclideResults = tbody;
+    } else if (this.modelMatches(thead, ['Z', 'E', 'EName'])) {
+      output.elementResults = tbody;
+    }
+    return output;
+  };
+  /**
+   * Match up the first fields of the incoming
+   * header to the expected columns to determine the
+   * result type.
+   *
+   * @param thead
+   * @param tbody
+   * @param output
+   * @returns
+   */
+  parseFissionTable = (
+    thead: string[],
+    tbody: any[],
+    output: IFissionCompositeResults
+  ) => {
+    if (this.modelMatches(thead, ['id', 'neutrino'])) {
+      output.fissionResults = tbody;
     } else if (this.modelMatches(thead, ['id', 'A', 'Z'])) {
       output.nuclideResults = tbody;
     } else if (this.modelMatches(thead, ['Z', 'E', 'EName'])) {
@@ -172,44 +236,6 @@ export class CrudService {
     }
     return formData;
   };
-  /*
-  create(employee): Observable<User> {
-    return this.http.post<User>(this.endPoint + '/users', JSON.stringify(employee), this.httpHeader)
-    .pipe(
-      retry(1),
-      catchError(this.httpError)
-    )
-  }  ;
-
-  update(id, data): Observable<User> {
-    return this.http.put<User>(this.endPoint + '/users/' + id, JSON.stringify(data), this.httpHeader)
-    .pipe(
-      retry(1),
-      catchError(this.httpError)
-    )
-  }
-
-  delete(id){
-    return this.http.delete<User>(this.endPoint + '/users/' + id, this.httpHeader)
-    .pipe(
-      retry(1),
-      catchError(this.httpError)
-    )
-  }
-
-  httpError(error) {
-    let msg = '';
-    if(error.error instanceof ErrorEvent) {
-      // client side error
-      msg = error.error.message;
-    } else {
-      // server side error
-      msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(msg);
-    return throwError(msg);
-  }
-
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {

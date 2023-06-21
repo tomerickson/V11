@@ -14,7 +14,18 @@ export const extractTablesFromPage = (html: string): any[] => {
   }
   return result; // const xPathResult = document.evaluate(xPath, document, null, XPathResult.ANY_TYPE, null);
 };
-
+  /**
+   * Convert spin choices to a string for postback
+  
+   * @param bosons 
+   * @param fermions 
+   * @returns 
+   * @remarks
+   * If both choices are false convert them to true
+   */
+  export const formatSpinChoices = (bosons: boolean, fermions: boolean): string => {
+    return bosons && fermions ? 'bf' : bosons ? 'b' : fermions ? 'f' : 'bf';
+  };
 /**
  * Expect the right number of tables,
  * with each table containing a tbody and optional thead

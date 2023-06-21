@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansion';
+import { IElementDataModel } from 'src/app/core/models/element-data.model';
+import { ILookupDataModel } from 'src/app/core/models/lookup.-data.model';
 
 @Component({
   selector: 'mfmp-fission-face',
@@ -13,5 +16,10 @@ import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansi
 })
 export class FissionFaceComponent {
 
-    description = 'Fetch from state';
+  
+  @Input({ required: true }) elements!: IElementDataModel[] | null;
+  @Input({ required: true }) sortFields!: ILookupDataModel[] | null;
+  @Output() doit: EventEmitter<FormGroup[]> = new EventEmitter<FormGroup[]>();
+  
+    description = 'This program ("Fission.php") enables SQL commands to query the Fission tables created from Dr Parkhomov\'s spreadsheets.';
 }
