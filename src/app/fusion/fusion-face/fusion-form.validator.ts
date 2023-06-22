@@ -6,12 +6,12 @@ import {
 } from '@angular/forms';
 
 /**
- * Confirm that there are elements selected in both nuclide pickers
+ * Confirm that there are elements selected
  * before submitting
  * @param control
  * @returns
  */
-export const missingElementsValidator: ValidatorFn = (
+export const fusionElementsValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
   const leftElements: string[] = control.get('leftNuclides')?.get('selectedElements')?.value || [];

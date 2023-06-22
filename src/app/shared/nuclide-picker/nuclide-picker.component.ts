@@ -37,6 +37,7 @@ export class NuclidePickerComponent implements OnInit {
   @Input() title!: string | null;
   @Input() role!: 'query' | 'result';
   @Input() elements: IElementDataModel[] | null = null;
+  @Input({required: true}) multiselect!: boolean;
   @Input() formGroupName!: string; // the subgroup in fusionForm
   @Input() form!: FormGroup;
   @Input() caption!: string;

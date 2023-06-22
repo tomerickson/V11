@@ -7,6 +7,10 @@
         appearance="fill"
         ngDefaultControl>
         <label>{{ title }}</label>
+        <ng-container *ngIf="(multiselect) then multiTemplate else singleTemplate">
+
+        </ng-container>
+        <ng-template #multiTemplate>
         <mat-select
           #matElements
           formControlName="selectedElements"
@@ -22,7 +26,25 @@
               {{ this.elementOptionValue(element) }}
             </mat-option>
           </div>
-        </mat-select>
+        </mat-select>    
+        </ng-template>
+        <ng-template #singleTemplate>
+          <mat-select
+          #matElements
+          formControlName="selectedElements"
+          title="select elements"
+          [placeholder]="
+            role === 'query' ? 'click here to begin.' : 'selected elements.'">
+          <div>
+            <mat-option
+              [disabled]="role == 'result'"
+              *ngFor="let element of elements"
+              [value]="element.E">
+              {{ this.elementOptionValue(element) }}
+            </mat-option>
+          </div>
+        </mat-select> 
+        </ng-template>    
       </mat-form-field>
     </section>
     <mfmp-spin-picker

@@ -32,7 +32,7 @@ import { ILookupDataModel } from '../../core/models/lookup.-data.model';
 import { HeaderProviderService } from '../../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../../shared/nuclide-picker/nuclide-picker.component';
 import { ReportPagesFaceComponent } from '../../shared/report-pages/report-pages.face.component';
-import { missingElementsValidator } from './fusion-form.validator';
+import { fusionElementsValidator } from './fusion-form.validator';
 
 @Component({
   standalone: true,
@@ -145,7 +145,7 @@ readonly initialCoreQuery = ' order by MeV desc limit 1000';
           nuclearFermions: new FormControl(true)
         })
       },
-      { validators: missingElementsValidator }
+      { validators: fusionElementsValidator }
     );
     this.subscriptions.add(
       this.fusionForm.valueChanges
