@@ -10,8 +10,9 @@
       </p>
 
       <p>
-        But note that it, TwoToTwo and <a routerLink="fission" href="/fission">Fission</a> is each dedicated to querying
-        only one of two tables.
+        But note that it, TwoToTwo and
+        <a routerLink="fission" href="/fission">Fission</a>
+        is each dedicated to querying only one of two tables.
       </p>
 
       <p>
@@ -78,7 +79,10 @@
         E, A, nBorF, Z or aBorF (the output).
       </p>
     </mat-expansion-panel>
-    <h3 class="start">Select elements from the 'Left Side (E1)' and/or the 'Right Side (E2)' to begin. </h3>
+    <h3 class="start">
+      Select elements from the 'Left Side (E1)' and/or the 'Right Side (E2)' to
+      begin.
+    </h3>
     <form [formGroup]="fusionForm">
       <!-- <h3>Nuclides</h3> -->
       <div class="children">
@@ -154,27 +158,29 @@
             </mat-radio-group>
           </div>
           <div>
-            <mat-form-field
-              id="orderBy"
-              formControlName="orderBy"
-              value="orderBy"
-              ngDefaultControl>
-              <mat-label>Order By:</mat-label>
-              <mat-select title="Order by" formControlName="orderBy">
-                <mat-option *ngFor="let f of sortFields" [value]="f.code">
-                  {{ f.code }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div>
-            <form-field formControlName="sortDescending" ngDefaultControl>
-              <mat-checkbox
-                title="when checked."
-                formControlName="sortDescending">
-                Descending
-              </mat-checkbox>
-            </form-field>
+            <div>
+              <mat-form-field
+                id="orderBy"
+                formControlName="orderBy"
+                value="orderBy"
+                ngDefaultControl>
+                <mat-label>Order By:</mat-label>
+                <mat-select title="Order by" formControlName="orderBy">
+                  <mat-option *ngFor="let f of sortFields" [value]="f.code">
+                    {{ f.code }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div>
+              <form-field formControlName="sortDescending" ngDefaultControl>
+                <mat-checkbox
+                  title="when checked."
+                  formControlName="sortDescending">
+                  Descending
+                </mat-checkbox>
+              </form-field>
+            </div>
           </div>
         </div>
       </mat-expansion-panel>
@@ -190,30 +196,13 @@
                 value="coreQuery"
                 rows="1"></textarea>
             </div>
-            <div>
-              <div class="resultLimitHeader">
-                <span>
-                  Limit results to
-                  {{ getResultLimit()}} rows.
-                </span>
-                <span>Use the slider below to change the result limit.</span>
-              </div>
-              <div class="resultLimit">
-                <form-field formControlName="resultLimit" ngDefaultControl>
-                  <mat-slider
-                    [min]="0"
-                    [max]="1000"
-                    [step]="50"
-                    showTickMarks="true"
-                    discrete>
-                    <input
-                      placeholder="thumb"
-                      matSliderThumb
-                      [value]="getResultLimit()" />
-                  </mat-slider>
-                </form-field>
-              </div>
-            </div>
+            <mfmp-resultsize-picker
+              [defaultLimit]="1000"
+              [minimum]="0"
+              [maximum]="1000"
+              [step]="50"
+              [limitVerbiage]="'Limit results to ... rows.'"
+              (limitSize)="setResultLimit($event)"></mfmp-resultsize-picker>
           </div>
         </mat-card-content>
       </mat-card>

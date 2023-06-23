@@ -47,7 +47,11 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    justify-content: space-between;
+    :last-child {
+      display: flex;
+      flex-direction: row;
+    }
   }
  
   mat-card.coreQuery {
@@ -80,17 +84,6 @@
     flex-direction: row !important;
   }
  
-  span.resultLimitHeader {
-    display: flex;
-    flex-direction: row;
- 
-    span {
-      display: inline-block;
-      flex: 1;
-      font-size: smaller;
-    }
-  }
- 
   div.flexrow {
     width: 100%;
     display: flex;
@@ -105,17 +98,17 @@
   .fill {
     margin: 1em;
   }
- 
-  div.resultLimit {
+
+  span.resultLimitHeader {
     display: flex;
     flex-direction: row;
-    justify-content: stretch;
  
-    mat-slider {
-      width: 30%;
+    span {
+      display: inline-block;
+      flex: 1;
+      font-size: smaller;
     }
   }
- 
   p.header {
     text-overflow: ellipsis;
     padding-right: 2em;

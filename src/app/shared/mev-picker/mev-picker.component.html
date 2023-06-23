@@ -1,0 +1,21 @@
+<div class="mev-picker">
+    <div class="mev-header">
+      <p>{{limitText}}
+      </p>
+      <p>{{usageVerbiage}}</p>
+    </div>
+    <div class="mev-slider">
+        <mat-slider
+          [min]="minimum"
+          [max]="maximum"
+          [step]="step"
+          showTickMarks="false"
+          discrete>
+          <input
+            placeholder="thumb"
+            matSliderThumb
+            [(ngModel)]="limit" />
+        </mat-slider>
+    </div>
+  </div>
+

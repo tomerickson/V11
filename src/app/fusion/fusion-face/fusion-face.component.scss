@@ -44,11 +44,15 @@ div.neutrinos {
  }
 
  div.sql {
-   width: 100%;
-   display: flex;
-   flex-direction: row;
-   align-items: stretch;
- }
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  :last-child {
+    display: flex;
+    flex-direction: row;
+  }
+}
 
  mat-card.coreQuery {
    mat-form-field {

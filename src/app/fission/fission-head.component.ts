@@ -22,7 +22,7 @@ import { KeyValuePair } from '../core/models/key-value-pair.model';
   template: `<mfmp-fission-face
   [elements]="elements()"
   [sortFields]="sortFields()"
-  (doit)="submit_query($event)"></mfmp-fission-face>`,
+  (doit)="submitQuery($event)"></mfmp-fission-face>`,
   styles: [''],
   imports: [CommonModule, HttpClientModule, FissionFaceComponent],
   providers: [AsyncPipe,
@@ -47,7 +47,7 @@ submittable = false;
 readonly description = 'This program ("Fission.php") enables SQL commands to query the Fission tables created from Dr Parkhomov\'s spreadsheets.'
   constructor() {}
 
-  submit_query = (fissionForms: FormGroup[]): void => {
+  submitQuery = (fissionForms: FormGroup[]): void => {
     const kvp = this.buildRequestForm(fissionForms);
     const extras: ReportParameters = {
       url: 'fission',
@@ -56,7 +56,7 @@ readonly description = 'This program ("Fission.php") enables SQL commands to que
     }
     this.store.dispatch(PageActions.setReportParameters({payload: extras}));
     this.store.dispatch(FissionActions.fetchAllResults({payload: kvp}));
-    this.router.navigate(['/fission/reorts']);  
+    this.router.navigate(['/fission/reports']);  
   };
 
   forceReset = () => {
@@ -68,11 +68,11 @@ readonly description = 'This program ("Fission.php") enables SQL commands to que
       this.router.navigate(['/fission']);
     }
   }
-  ngOnDestroy = () => {
+  ngOnDestroy = (): void => {
     this.subscriptions.unsubscribe();
   }
 
-  ngOnInit(): void {
+  ngOnInit = (): void => {
     this.forceReset();
  this.headerService.buildPageHeader('fission');
      this.ready.mutate(() => true);
@@ -83,7 +83,7 @@ readonly description = 'This program ("Fission.php") enables SQL commands to que
    * @param fusionForm
    * @returns KeyValuePairs[]
    */
-buildRequestForm(forms: FormGroup[]): KeyValuePair[] {
+buildRequestForm = (forms: FormGroup[]): KeyValuePair[] => {
   let fusionForm: FormGroup = forms[0];
   let sqlForm: FormGroup = forms[1];
   let kvp = new Array<KeyValuePair>();

@@ -33,6 +33,7 @@ import { HeaderProviderService } from '../../shared/header/header.provider.servi
 import { NuclidePickerComponent } from '../../shared/nuclide-picker/nuclide-picker.component';
 import { ReportPagesFaceComponent } from '../../shared/report-pages/report-pages.face.component';
 import { fusionElementsValidator } from './fusion-form.validator';
+import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
 
 @Component({
   standalone: true,
@@ -56,7 +57,8 @@ import { fusionElementsValidator } from './fusion-form.validator';
     MatFormFieldModule,
     NuclidePickerComponent,
     ReactiveFormsModule,
-    ReportPagesFaceComponent
+    ReportPagesFaceComponent,
+    ResultsizePickerComponent
   ],
   providers: [{ provide: HeaderProviderService }],
   viewProviders: [MatExpansionPanel]
@@ -244,6 +246,9 @@ readonly initialCoreQuery = ' order by MeV desc limit 1000';
     return this.fusionForm.get('resultLimit')?.value;
   };
 
+  setResultLimit = (limit: number) => {
+    this.fusionForm.get('resultLimit')?.patchValue(limit);
+  }
   /**
    * We can't submit the query until there's a filter clause present, i.e. E1 in('H','Ni')
    */

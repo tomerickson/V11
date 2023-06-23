@@ -22,6 +22,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
+import { MevPickerComponent } from 'src/app/shared/mev-picker/mev-picker.component';
 
 @Component({
   selector: 'mfmp-fission-face',
@@ -41,7 +43,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatSliderModule,
     NuclidePickerComponent,
     ReactiveFormsModule,
-    ReportPagesFaceComponent
+    ReportPagesFaceComponent,
+    ResultsizePickerComponent,
+    MevPickerComponent
   ],
   templateUrl: './fission-face.component.html',
   styleUrls: ['./fission-face.component.scss'],
@@ -62,6 +66,8 @@ export class FissionFaceComponent {
     fissionForm!: FormGroup;
   sqlForm!: FormGroup;
   nuclides!: FormGroup;
+  output1!: FormGroup;
+  output2!: FormGroup;
   initialCoreQuery!: string;
   route: string;
   sortDescendingProxy!: boolean;
@@ -85,6 +91,8 @@ export class FissionFaceComponent {
   ngOnInit(): void {
     this.buildForm();
     this.nuclides = this.fissionForm.get('nuclides') as FormGroup;
+    this.output1 = this.fissionForm.get('output1') as FormGroup;
+    this.output2 = this.fissionForm.get('output2') as FormGroup;
     // this.ready.next(true);
   }
 
@@ -108,7 +116,21 @@ export class FissionFaceComponent {
           atomicFermions: new FormControl(true),
           nuclearBosons: new FormControl(true),
           nuclearFermions: new FormControl(true)
-        })
+        }),
+        output1: this.fb.nonNullable.group({
+          selectedElements: new FormControl(''),
+          atomicBosons: new FormControl(true),
+          atomicFermions: new FormControl(true),
+          nuclearBosons: new FormControl(true),
+          nuclearFermions: new FormControl(true)
+        }),
+        output2: this.fb.nonNullable.group({
+          selectedElements: new FormControl(''),
+          atomicBosons: new FormControl(true),
+          atomicFermions: new FormControl(true),
+          nuclearBosons: new FormControl(true),
+          nuclearFermions: new FormControl(true)
+        }),
       },
       { validators: fissionElementsValidator }
     );
@@ -135,6 +157,20 @@ export class FissionFaceComponent {
       outputNeutrinos: true,
       noNeutrinos: true,
       nuclides: {
+        selectedElements: null,
+        atomicBosons: true,
+        atomicFermions: true,
+        nuclearBosons: true,
+        nuclearFermions: true
+      },
+      output1: {
+        selectedElements: null,
+        atomicBosons: true,
+        atomicFermions: true,
+        nuclearBosons: true,
+        nuclearFermions: true
+      },
+      output2: {
         selectedElements: null,
         atomicBosons: true,
         atomicFermions: true,
@@ -188,6 +224,9 @@ export class FissionFaceComponent {
     return this.fissionForm.get('resultLimit')?.value;
   };
 
+  setResultLimit = (limit: number) => {
+    this.fissionForm.get('resultLimit')?.patchValue(limit);
+  }
   /**
    * We can't submit the query until there's a filter clause present, i.e. E1 in('H','Ni')
    */

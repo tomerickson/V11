@@ -1,0 +1,16 @@
+   div.resultsize-picker {
+       display: flex;
+       flex-direction: column;
+       justify-content: stretch;
+   }
+
+   div.resultsize-header {
+       p {
+           font-size: smaller;
+           line-height: 1em;
+       }
+   }
+
+   mat-slider {
+       width: 30%;
+   }

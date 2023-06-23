@@ -1,0 +1,19 @@
+<div class="resultsize-picker">
+    <div class="resultsize-header">
+      <p>{{limitText}}</p>
+      <p>Use the slider to change the result limit.</p>
+    </div>
+    <div class="resultsize-slider">
+        <mat-slider
+          [min]="minimum"
+          [max]="maximum"
+          [step]="step"
+          showTickMarks="true"
+          discrete>
+          <input
+            placeholder="thumb"
+            matSliderThumb
+            [(ngModel)]="limit" />
+        </mat-slider>
+    </div>
+  </div>
