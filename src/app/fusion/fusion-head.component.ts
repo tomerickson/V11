@@ -10,7 +10,7 @@ import {
   IKeyValuePair,
   KeyValuePair
 } from '../core/models/key-value-pair.model';
-import { ILookupDataModel } from '../core/models/lookup.-data.model';
+import { ILookupDataModel } from '../core/models/lookup-data.model';
 import { CrudService } from '../core/services/crud.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { PageActions, globalFeature } from '../state';

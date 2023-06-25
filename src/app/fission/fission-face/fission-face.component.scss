@@ -1,115 +1,123 @@
 .mat-expansion-panel-header.mat-expanded {
-    background-color: rgba(250, 250, 250, .5);
-  }
- 
-  .mat-expansion-panel-header.mat-expanded:hover {
-    background-color: rgba(250, 250, 250, .5);
-  }
- 
-  .mat-card-content {
-    width: 100%;
-  }
- 
-  mat-expansion-panel#blurb {
+  background-color: rgba(250, 250, 250, .5);
+}
+
+.mat-expansion-panel-header.mat-expanded:hover {
+  background-color: rgba(250, 250, 250, .5);
+}
+
+.mat-card-content {
+  width: 100%;
+}
+
+mat-expansion-panel#blurb {
+  margin-bottom: 1ex;
+}
+
+h3.start {
+  margin-top: 2ex;
+  width: 100%;
+  font-weight: 500;
+  text-align: center;
+}
+
+div.children {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+
+  div.nuclides {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-around;
     margin-bottom: 1ex;
   }
-  h3.start {
-   margin-top: 2ex;
-   width: 100%;
-   font-weight: 500;
-   text-align: center;
-  }
-  div.children {
+}
+
+div.neutrinos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1ex;
+}
+
+div.vl {
+  border-left: 1px solid darkgray;
+  margin-top: 1ex;
+  margin-bottom: 1ex;
+}
+
+div.sql {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  :last-child {
     display: flex;
-    flex-direction: column;
- 
-    div.nuclides {
-      display: flex;
-      flex-direction: row;
-      align-items: stretch;
-      justify-content: space-around;
-      margin-bottom: 1ex;
-    }
+    flex-direction: row;
   }
- div.neutrinos {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   margin-bottom: 1ex;
- }
-  div.vl {
-    border-left: 1px solid darkgray;
-    margin-top: 1ex;
-    margin-bottom: 1ex;
-  }
- 
-  div.sql {
+}
+
+mat-card.coreQuery {
+  background-color: transparent;
+  mat-form-field {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    :last-child {
-      display: flex;
-      flex-direction: row;
-    }
   }
- 
-  mat-card.coreQuery {
-    mat-form-field {
-      width: 100%;
-    }
-  }
- 
-  div.coreQuery {
-    padding: 1em;
-    display: flex;
-    flex-direction: row;
-    justify-content: stretch;
- 
-    :first-child {
-      display: block;
-      flex: 1;
-    }
- 
-    :last-child {
-      display: block;
-      flex: 4;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-shadow: 1px 1px 1px #999;
-    }
-  }
- 
-  mat-form-field#orderBy {
-    flex-direction: row !important;
-  }
- 
-  div.flexrow {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: stretch;
- 
-    >div {
-      flex: 1;
-    }
-  }
- 
-  .fill {
-    margin: 1em;
+}
+
+div.coreQuery {
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+
+  :first-child {
+    display: block;
+    flex: 1;
   }
 
-  span.resultLimitHeader {
-    display: flex;
-    flex-direction: row;
- 
-    span {
-      display: inline-block;
-      flex: 1;
-      font-size: smaller;
-    }
+  :last-child {
+    display: block;
+    flex: 4;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
   }
-  p.header {
-    text-overflow: ellipsis;
-    padding-right: 2em;
+}
+
+mat-form-field#orderBy {
+  flex-direction: row !important;
+}
+
+div.flexrow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+
+  >div {
+    flex: 1;
   }
+}
+
+.fill {
+  margin: 1em;
+}
+
+span.resultLimitHeader {
+  display: flex;
+  flex-direction: row;
+
+  span {
+    display: inline-block;
+    flex: 1;
+    font-size: smaller;
+  }
+}
+
+p.header {
+  text-overflow: ellipsis;
+  padding-right: 2em;
+}

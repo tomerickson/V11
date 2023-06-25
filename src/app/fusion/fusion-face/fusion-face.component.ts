@@ -28,12 +28,13 @@ import { MatSliderModule } from '@angular/material/slider';
 import { Router } from '@angular/router';
 import { Subscription, pairwise } from 'rxjs';
 import { IElementDataModel } from '../../core/models/element-data.model';
-import { ILookupDataModel } from '../../core/models/lookup.-data.model';
+import { ILookupDataModel } from '../../core/models/lookup-data.model';
 import { HeaderProviderService } from '../../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../../shared/nuclide-picker/nuclide-picker.component';
 import { ReportPagesFaceComponent } from '../../shared/report-pages/report-pages.face.component';
 import { fusionElementsValidator } from './fusion-form.validator';
 import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
+import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable-box.component';
 
 @Component({
   standalone: true,
@@ -58,7 +59,8 @@ import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resu
     NuclidePickerComponent,
     ReactiveFormsModule,
     ReportPagesFaceComponent,
-    ResultsizePickerComponent
+    ResultsizePickerComponent,
+    ExpandableBoxComponent
   ],
   providers: [{ provide: HeaderProviderService }],
   viewProviders: [MatExpansionPanel]
@@ -90,7 +92,7 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
   readonly description =
     'This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov\'s spreadsheets.';
 readonly initialCoreQuery = ' order by MeV desc limit 1000';
-
+readonly tablesText = "Select Fusion data table from 'FusionAll' (original: MeV > 0.0; 3,921 rows; based on the 'Nuclides' table, 293 nuclides), or FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the 'NuclidesPlus' table, 324 nuclides)";
   constructor() {
     this.route = this.router.routerState.snapshot.url;
   }

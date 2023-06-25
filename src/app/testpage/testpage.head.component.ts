@@ -1,63 +1,24 @@
-import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { Observable, from, of, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { TestPageFaceComponent } from './testpage.face.component';
+import { Store } from '@ngrx/store';
+import { globalFeature } from '../state/global.state';
 import { IElementDataModel } from '../core/models/element-data.model';
-import { CrudService } from '../core/services/crud.service';
-import { TestpageFaceComponent } from './testpage.face.component';
+import { Observable } from 'rxjs';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, TestpageFaceComponent, NgIf],
-  template: `<mfmp-testpage
-    [test]="this.testResults | async"
-    [demo]="this.dummyResults | async"
-    [elements]="this.elements | async"
-    (testit)="testFusion()"
-    (demoit)="testDummy()"
-    (getElements)="loadElements()"
-  ></mfmp-testpage>`
+  selector: 'dummy',
+    standalone: true,
+    template: `<p>test page head works</p>
+    <mfmp-testpage [elements]="elements | async"></mfmp-testpage>`,
+    imports: [CommonModule, TestPageFaceComponent]
 })
 export class TestpageHeadComponent
-
-  implements OnInit, OnDestroy
 {
-  private crudService = inject(CrudService)
-  testResults: Observable<string> = of();
-  dummyResults: Observable<string> = of();
-  elements: Observable<IElementDataModel[]> | null = from([]);
+  store = inject(Store)
+  elements: Observable<IElementDataModel[]> | null;
 
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {
-    // this.refresher.unsubscribe();
-  }
-
-  loadElements() {
-    console.log('loading elements');
-    this.elements = this.crudService.getElements();
-  }
-
-  reloadFusion() {
-  }
-
-  reloadDemo() {
-    this.crudService.getDummyResults().pipe(
-      tap((res) => console.log(res)),
-      (res) => (this.dummyResults = res)
-    );
-  }
-
-  testFusion(): void {
-    console.log('testing');
-  }
-
-  testDummy(): void {
-    console.log('demo');
-    this.reloadDemo();
-  }
-
-  showIt(): void {
-    console.log('testResults:', this.testResults);
-  }
+  constructor() {
+  this.elements = this.store.select(globalFeature.selectElements);
+}
 }

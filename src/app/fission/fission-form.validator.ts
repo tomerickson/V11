@@ -14,7 +14,6 @@ export const fissionElementsValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
   const elements: string[] = control.get('nuclides')?.get('selectedElements')?.value || [];
-
   const error = (elements.length === 0);
   return (error) ? { missingElements: true } : null;
 };

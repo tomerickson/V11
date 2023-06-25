@@ -10,7 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { Subscription, pairwise } from 'rxjs';
 import { IElementDataModel } from 'src/app/core/models/element-data.model';
-import { ILookupDataModel } from 'src/app/core/models/lookup.-data.model';
+import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { NuclidePickerComponent } from 'src/app/shared/nuclide-picker/nuclide-picker.component';
 import { fissionElementsValidator } from '../fission-form.validator';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
 import { MevPickerComponent } from 'src/app/shared/mev-picker/mev-picker.component';
+import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable-box.component';
 
 @Component({
   selector: 'mfmp-fission-face',
@@ -45,7 +46,8 @@ import { MevPickerComponent } from 'src/app/shared/mev-picker/mev-picker.compone
     ReactiveFormsModule,
     ReportPagesFaceComponent,
     ResultsizePickerComponent,
-    MevPickerComponent
+    MevPickerComponent,
+    ExpandableBoxComponent
   ],
   templateUrl: './fission-face.component.html',
   styleUrls: ['./fission-face.component.scss'],
@@ -61,8 +63,8 @@ export class FissionFaceComponent {
 
   description =
     'This program ("Fission.php") enables SQL commands to query the Fission tables created from Dr Parkhomov\'s spreadsheets.';
-  
-  subscriptions = new Subscription();
+  tablesText = "Select Fission data table from FissionAll (original: MeV > 0.0; 1,733 rows based on the 'Nuclides' table, 293 nuclides), or FissionAllNewPlus (MeV = +/- any; 8037 rows; based on the 'NuclidesPlus' table, 324 Nuclides)";
+   subscriptions = new Subscription();
     fissionForm!: FormGroup;
   sqlForm!: FormGroup;
   nuclides!: FormGroup;

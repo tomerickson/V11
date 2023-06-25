@@ -1,4 +1,5 @@
- .mat-expansion-panel-header.mat-expanded {
+
+  .mat-expansion-panel-header.mat-expanded {
    background-color: rgba(250, 250, 250, .5);
  }
 
@@ -22,6 +23,7 @@
  div.children {
    display: flex;
    flex-direction: column;
+   padding-top: 1em;
 
    div.nuclides {
      display: flex;
@@ -47,7 +49,7 @@ div.neutrinos {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   :last-child {
     display: flex;
     flex-direction: row;
@@ -55,6 +57,7 @@ div.neutrinos {
 }
 
  mat-card.coreQuery {
+  background-color: transparent;
    mat-form-field {
      width: 100%;
    }

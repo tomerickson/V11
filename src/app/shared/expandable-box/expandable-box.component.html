@@ -1,0 +1,11 @@
+<div class="expando">
+    <div class="caption">
+      <span>{{ caption }}&nbsp;</span>
+      <sup [className]="hidden ? 'normal' : 'hidden'">
+        <a (click)="toggle()">[click to expand]</a>
+      </sup>
+    </div>
+    <div [className]="hidden ? 'hidden' : 'normmal'" (click)="toggle()">
+      {{ text }}
+    </div>
+  </div>

@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { IElementDataModel } from '../models/element-data.model';
 import { IFusionCompositeResults } from '../models/fusion-composite-results.model';
 import { IKeyValuePair, KeyValuePair } from '../models/key-value-pair.model';
-import { ILookupDataModel } from '../models/lookup.-data.model';
+import { ILookupDataModel } from '../models/lookup-data.model';
 import { extractTablesFromPage } from './page.services';
 import { IFissionCompositeResults } from '../models/fission-composite-results.model';
 

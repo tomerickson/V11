@@ -1,5 +1,5 @@
-<ng-container [formGroup]="form" class="flexcolumn">
-  <section [formGroupName]="formGroupName" class="margins">
+<mat-card [formGroup]="nuclideForm" class="flexcolumn">
+  <section class="margins">
     <section [className]="'elements'">
       <div></div>
       <mat-form-field
@@ -17,11 +17,11 @@
           multiple
           title="select elements"
           [placeholder]="
-            role === 'query' ? 'click here to begin.' : 'selected elements.'">
+            (role === 'query') ? 'click here to begin.' : 'selected elements.'">
           <div>
             <mat-option
-              [disabled]="role == 'result'"
-              *ngFor="let element of elements"
+              [disabled]="(role == 'result')"
+              *ngFor="let element of elementsList"
               [value]="element.E">
               {{ this.elementOptionValue(element) }}
             </mat-option>
@@ -34,11 +34,11 @@
           formControlName="selectedElements"
           title="select elements"
           [placeholder]="
-            role === 'query' ? 'click here to begin.' : 'selected elements.'">
+            (role === 'query') ? 'click here to begin.' : 'selected elements.'">
           <div>
             <mat-option
-              [disabled]="role == 'result'"
-              *ngFor="let element of elements"
+              [disabled]="(role == 'result')"
+              *ngFor="let element of elementsList"
               [value]="element.E">
               {{ this.elementOptionValue(element) }}
             </mat-option>
@@ -47,10 +47,20 @@
         </ng-template>    
       </mat-form-field>
     </section>
-    <mfmp-spin-picker
-      [title]="'Spin'"
-      [role]="role"
-      [formGroupName]="formGroupName"
-      [form]="form"></mfmp-spin-picker>
+        <section name="spin">
+      <h3>Spin:</h3>
+      <div class="flexrow">
+        <div class="flexcolumn">
+          <mat-label>Atomic</mat-label>
+          <mat-checkbox formControlName="atomicBosons">Boson</mat-checkbox>
+          <mat-checkbox formControlName="atomicFermions">Fermion</mat-checkbox>
+        </div>
+        <div class="flexcolumn">
+          <mat-label>Nuclear</mat-label>
+          <mat-checkbox formControlName="nuclearBosons">Boson</mat-checkbox>
+          <mat-checkbox formControlName="nuclearFermions">Fermion</mat-checkbox>
+        </div>
+      </div>
+    </section>
   </section>
-</ng-container>
+</mat-card>
