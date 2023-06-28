@@ -227,8 +227,8 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
 
     this.coreQuery = sqlForm.get('coreQuery')?.value;
 
-    kvp.push(new KeyValuePair({ key: 'doit', value: 'execute_coreQuery' }));
-    kvp.push(new KeyValuePair({ key: 'coreQuery', value: this.coreQuery }));
+    kvp.push(new KeyValuePair({ key: 'doit', value: 'execute_query' }));
+    kvp.push(new KeyValuePair({ key: 'query', value: this.coreQuery }));
     kvp.push(
       new KeyValuePair({ key: 'table_name', value: fusionForm.tableSet })
     );
