@@ -171,13 +171,13 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
      * Limit
      */
     if (resultLimit) {
-      limitClause = ` limit ${resultLimit}`;
+      limitClause = `limit ${resultLimit}`;
     }
 
-    this.coreQuery = `${filterClause} ${orderByClause} ${limitClause}`
+    this.coreQuery = `${elementsClause} ${orderByClause} ${limitClause}`
       .trim()
       .replace(/\s\s/g, ' ');
-    this.fullQuery = `${columnsClause} ${tablesClause} where ${this.coreQuery}`;
+    this.fullQuery = `${columnsClause} ${tablesClause} where ${filterClause} ${orderByClause} ${limitClause}`;
   };
 
   submit_coreQuery = (fusionForms: FormGroup[]): void => {
@@ -288,11 +288,11 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     let parts: string[] = [];
     let clause: string = '';
     if (left) parts.push(`neutrino = 'left'`);
-    if (none) parts.push(apostrophise(`neutrino = 'none'`));
-    if (right) parts.push(apostrophise(`neutrino = 'right'`));
+    if (none) parts.push(`neutrino = 'none'`);
+    if (right) parts.push(`neutrino = 'right'`);
 
     if (parts.length > 0 && parts.length < 3) {
-      clause = `(${parts.join(' or ')})`;
+      clause = `(${parts.join(" or ")})`;
     }
     return clause;
   };
