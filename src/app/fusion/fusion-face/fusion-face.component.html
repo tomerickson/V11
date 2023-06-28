@@ -128,50 +128,58 @@
   <mat-card class="coreQuery">
     <mat-card-content>
       <mfmp-expandable-box
-      [caption]="'Tables:'"
-      [text]="tablesText"></mfmp-expandable-box>
-    <div class="sql">
-      <div>
-        <mat-radio-group
-          labelPosition="before"
-          formControlName="tableSet"
-          name="tableSet"
-          value="FusionAll">
-          <mat-radio-button value="FusionAll" selected>
-            FusionAll
-          </mat-radio-button>
-          <mat-radio-button value="FusionAllNewPlus">
-            FusionAllNewPlus
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
-      <div>
+        [caption]="'Tables:'"
+        [text]="tablesText"></mfmp-expandable-box>
+      <div class="sql">
         <div>
-          <mat-form-field
-            id="orderBy"
-            formControlName="orderBy"
-            value="orderBy"
-            ngDefaultControl>
-            <mat-label>Order By:</mat-label>
-            <mat-select title="Order by" formControlName="orderBy">
-              <mat-option *ngFor="let f of sortFields" [value]="f.code">
-                {{ f.code }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mat-radio-group
+            labelPosition="before"
+            formControlName="tableSet"
+            name="tableSet"
+            value="FusionAll">
+            <mat-radio-button value="FusionAll" selected>
+              FusionAll
+            </mat-radio-button>
+            <mat-radio-button value="FusionAllNewPlus">
+              FusionAllNewPlus
+            </mat-radio-button>
+          </mat-radio-group>
         </div>
         <div>
-          <form-field formControlName="sortDescending" ngDefaultControl>
+          <div>
+            <mat-form-field
+              id="orderBy"
+              formControlName="orderBy"
+              value="orderBy"
+              ngDefaultControl>
+              <mat-label>Order By:</mat-label>
+              <mat-select title="Order by" formControlName="orderBy">
+                <mat-option *ngFor="let f of sortFields" [value]="f.code">
+                  {{ f.code }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
             <mat-checkbox
               title="when checked."
-              formControlName="sortDescending">
+              formControlName="sortDescending"
+              value="sortDescending">
               Descending
             </mat-checkbox>
-          </form-field>
+          </div>
         </div>
       </div>
-    </div>
       <div class="flexrow">
+        <div class="coreQuery" [formGroup]="sqlForm">
+          <mat-label>Full Query</mat-label>
+          <textarea
+            matInput
+            formControlName="fullQuery"
+            title="'full query'"
+            value="fullQuery"
+            rows="4"></textarea>
+        </div>
         <div class="coreQuery" [formGroup]="sqlForm">
           <mat-label>Core Query</mat-label>
           <textarea
@@ -179,7 +187,7 @@
             formControlName="coreQuery"
             title="'core query'"
             value="coreQuery"
-            rows="1"></textarea>
+            rows="4"></textarea>
         </div>
         <mfmp-resultsize-picker
           [defaultLimit]="1000"
@@ -191,10 +199,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <button
-        type="button"
-        mat-raised-button
-        (click)="resetForm(); resetResults()">
+      <button type="button" mat-raised-button (click)="resetForm()">
         RESET
       </button>
       <button

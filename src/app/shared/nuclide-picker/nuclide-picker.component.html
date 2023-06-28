@@ -1,64 +1,75 @@
 <mat-card [formGroup]="nuclideForm" class="flexcolumn">
   <section class="margins">
     <section [className]="'elements'">
-      <div></div>
       <mat-form-field
         formControlName="selectedElements"
         appearance="fill"
+        subscriptSizing="dynamic"
         ngDefaultControl>
         <label>{{ title }}</label>
-        <ng-container *ngIf="(multiselect) then multiTemplate else singleTemplate">
-
-        </ng-container>
+        <ng-container
+          *ngIf="
+            multiselect;
+            then multiTemplate;
+            else singleTemplate
+          "></ng-container>
         <ng-template #multiTemplate>
-        <mat-select
-          #matElements
-          formControlName="selectedElements"
-          multiple
-          title="select elements"
-          [placeholder]="
-            (role === 'query') ? 'click here to begin.' : 'selected elements.'">
-          <div>
-            <mat-option
-              [disabled]="(role == 'result')"
-              *ngFor="let element of elementsList"
-              [value]="element.E">
-              {{ this.elementOptionValue(element) }}
-            </mat-option>
-          </div>
-        </mat-select>    
+          <mat-select
+            #matElements
+            formControlName="selectedElements"
+            multiple
+            title="select elements"
+            [placeholder]="
+              role === 'query' ? 'click here to begin.' : 'selected elements.'
+            ">
+            <div>
+              <mat-option
+                [disabled]="role == 'result'"
+                *ngFor="let element of elementsList"
+                [value]="element.E">
+                {{ this.elementOptionValue(element) }}
+              </mat-option>
+            </div>
+          </mat-select>
         </ng-template>
         <ng-template #singleTemplate>
           <mat-select
-          #matElements
-          formControlName="selectedElements"
-          title="select elements"
-          [placeholder]="
-            (role === 'query') ? 'click here to begin.' : 'selected elements.'">
-          <div>
-            <mat-option
-              [disabled]="(role == 'result')"
-              *ngFor="let element of elementsList"
-              [value]="element.E">
-              {{ this.elementOptionValue(element) }}
-            </mat-option>
-          </div>
-        </mat-select>
-        </ng-template>    
+            #matElements
+            formControlName="selectedElements"
+            title="select elements"
+            [placeholder]="
+              role === 'query' ? 'click here to begin.' : 'selected elements.'
+            ">
+            <div>
+              <mat-option
+                [disabled]="role == 'result'"
+                *ngFor="let element of elementsList"
+                [value]="element.E">
+                {{ this.elementOptionValue(element) }}
+              </mat-option>
+            </div>
+          </mat-select>
+        </ng-template>
       </mat-form-field>
     </section>
-        <section name="spin">
+    <section class="spin">
       <h3>Spin:</h3>
       <div class="flexrow">
         <div class="flexcolumn">
           <mat-label>Atomic</mat-label>
-          <mat-checkbox formControlName="atomicBosons">Boson</mat-checkbox>
-          <mat-checkbox formControlName="atomicFermions">Fermion</mat-checkbox>
+          <mat-radio-group class="spinbutton" defaultTabIndex=2 value="bf">
+            <mat-radio-button value="b">Boson</mat-radio-button>
+            <mat-radio-button value="f">Fermion</mat-radio-button>
+            <mat-radio-button value="bf">Either</mat-radio-button>
+          </mat-radio-group>
         </div>
         <div class="flexcolumn">
           <mat-label>Nuclear</mat-label>
-          <mat-checkbox formControlName="nuclearBosons">Boson</mat-checkbox>
-          <mat-checkbox formControlName="nuclearFermions">Fermion</mat-checkbox>
+          <mat-radio-group class="spinbutton" formControlName="nuclearSpin" value="bf">
+            <mat-radio-button value="b">Boson</mat-radio-button>
+            <mat-radio-button value="f">Fermion</mat-radio-button>
+            <mat-radio-button value="bf">Either</mat-radio-button>
+          </mat-radio-group>
         </div>
       </div>
     </section>

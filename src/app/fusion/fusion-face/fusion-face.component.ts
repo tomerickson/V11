@@ -4,9 +4,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input, OnDestroy,
+  Input,
+  OnDestroy,
   OnInit,
-  Output, inject
+  Output,
+  inject
 } from '@angular/core';
 import {
   FormBuilder,
@@ -17,7 +19,10 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansion';
+import {
+  MatExpansionModule,
+  MatExpansionPanel
+} from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,21 +31,23 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { Router } from '@angular/router';
-import { Subscription, pairwise } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable-box.component';
+import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
 import { IElementDataModel } from '../../core/models/element-data.model';
 import { ILookupDataModel } from '../../core/models/lookup-data.model';
 import { HeaderProviderService } from '../../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../../shared/nuclide-picker/nuclide-picker.component';
 import { ReportPagesFaceComponent } from '../../shared/report-pages/report-pages.face.component';
-import { fusionElementsValidator } from './fusion-form.validator';
-import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
-import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable-box.component';
+import { fusionElementsValidator } from '../fusion-form.validator';
+import { FusionForm } from 'src/app/core/models/fusion-form.model';
+import { SqlForm } from 'src/app/core/models/sql-form.model';
 
 @Component({
   standalone: true,
   selector: 'mfmp-fusion-face',
   changeDetection: ChangeDetectionStrategy.OnPush,
-   templateUrl: './fusion-face.component.html',
+  templateUrl: './fusion-face.component.html',
   styleUrls: ['./fusion-face.component.scss'],
   imports: [
     CommonModule,
@@ -66,35 +73,65 @@ import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable
   viewProviders: [MatExpansionPanel]
 })
 export class FusionFaceComponent implements OnInit, OnDestroy {
+  private _coreQuery = '';
+  private _fullQuery = '';
 
   fb: FormBuilder = inject(FormBuilder);
   router: Router = inject(Router);
   route: string;
   fusionForm!: FormGroup;
-  sqlForm!: FormGroup;
-  leftNuclides!: FormGroup;
-  rightNuclides!: FormGroup;
-  resultNuclides!: FormGroup;
+  sqlForm: FormGroup;
 
-  // ready: BehaviorSubject<boolean> = new BehaviorSubject(false);
   subscriptions: Subscription = new Subscription();
   sortDescendingProxy!: boolean;
   submittable = false;
   sortBy = '';
   sortOrder = '';
-  coreQuery = '';
 
   @Input({ required: true }) elements!: IElementDataModel[] | null;
   @Input({ required: true }) sortFields!: ILookupDataModel[] | null;
+
+  /**
+   * Core query
+   */
+  @Input({ required: true }) set coreQuery(value: string) {
+    this._coreQuery = value;
+    if (this.sqlForm)
+      this.sqlForm.get('coreQuery')?.patchValue(value, { emitEvents: false });
+  }
+  get coreQuery(): string {
+    return this._coreQuery;
+  }
+
+  /**
+   * Full query
+   */
+  @Input({ required: true }) set fullQuery(value: string) {
+    this._fullQuery = value;
+    if (this.sqlForm)
+      this.sqlForm.get('fullQuery')?.patchValue(value, { emitEvents: false });
+  }
+  get fullQuery(): string {
+    return this._fullQuery;
+  }
+
   @Output() doit: EventEmitter<FormGroup[]> = new EventEmitter<FormGroup[]>();
-  
+  @Output() formChanges: EventEmitter<FusionForm> =
+    new EventEmitter<FusionForm>();
+  @Output() sqlChanges: EventEmitter<SqlForm> = new EventEmitter<SqlForm>();
 
   readonly description =
     'This program ("Fusion.php") enables SQL commands to query the Fusion tables originally created from Dr Parkhomov\'s spreadsheets.';
-readonly initialCoreQuery = ' order by MeV desc limit 1000';
-readonly tablesText = "Select Fusion data table from 'FusionAll' (original: MeV > 0.0; 3,921 rows; based on the 'Nuclides' table, 293 nuclides), or FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the 'NuclidesPlus' table, 324 nuclides)";
+  readonly initialCoreQuery = ' order by MeV desc limit 1000';
+  readonly tablesText =
+    "Select Fusion data table from 'FusionAll' (original: MeV > 0.0; 3,921 rows; based on the 'Nuclides' table, 293 nuclides), or FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the 'NuclidesPlus' table, 324 nuclides)";
+
   constructor() {
     this.route = this.router.routerState.snapshot.url;
+    this.sqlForm = this.fb.nonNullable.group({
+      coreQuery: new FormControl(this.initialCoreQuery),
+      fullQuery: new FormControl(this.fullQuery)
+    });
   }
 
   buildRequestForm(): void {
@@ -106,99 +143,82 @@ readonly tablesText = "Select Fusion data table from 'FusionAll' (original: MeV 
   }
 
   ngOnInit(): void {
-
     this.buildForm();
-    this.leftNuclides = this.fusionForm.get('leftNuclides') as FormGroup;
-    this.rightNuclides = this.fusionForm.get('rightNuclides') as FormGroup;
-    this.resultNuclides = this.fusionForm.get('resultNuclides') as FormGroup;
-    // this.ready.next(true);
   }
 
   buildForm = () => {
-    this.sqlForm = this.fb.nonNullable.group({
-      coreQuery: new FormControl(this.initialCoreQuery)
-    });
     this.fusionForm = this.fb.nonNullable.group(
       {
         tableSet: new FormControl('FusionAll', { nonNullable: true }),
         resultLimit: new FormControl(1000),
         orderBy: new FormControl('MeV'),
-        sortDescending: new FormControl(true),
+        sortDescending: new FormControl('desc'),
         inputNeutrinos: new FormControl(true),
         outputNeutrinos: new FormControl(true),
         noNeutrinos: new FormControl(true),
         leftNuclides: this.fb.nonNullable.group({
-          selectedElements: new FormControl(''),
-          atomicBosons: new FormControl(true),
-          atomicFermions: new FormControl(true),
-          nuclearBosons: new FormControl(true),
-          nuclearFermions: new FormControl(true)
+          selectedElements: new FormControl([]),
+          nuclearSpin: new FormControl('bf'),
+          atomicSpin: new FormControl('bf')
         }),
         rightNuclides: this.fb.nonNullable.group({
-          selectedElements: new FormControl(''),
-          atomicBosons: new FormControl(true),
-          atomicFermions: new FormControl(true),
-          nuclearBosons: new FormControl(true),
-          nuclearFermions: new FormControl(true)
+          selectedElements: new FormControl([]),
+          nuclearSpin: new FormControl('bf'),
+          atomicSpin: new FormControl('bf')
         }),
         resultNuclides: this.fb.nonNullable.group({
-          selectedElements: new FormControl(''),
-          atomicBosons: new FormControl(true),
-          atomicFermions: new FormControl(true),
-          nuclearBosons: new FormControl(true),
-          nuclearFermions: new FormControl(true)
+          selectedElements: new FormControl([]),
+          nuclearSpin: new FormControl('bf'),
+          atomicSpin: new FormControl('bf')
         })
       },
       { validators: fusionElementsValidator }
     );
     this.subscriptions.add(
-      this.fusionForm.valueChanges
-        .pipe(pairwise())
-        .subscribe(([prev, next]) => this.handleFusionformChanges([prev, next]))
+      this.fusionForm.valueChanges.subscribe((values) =>
+        this.handleFusionformChanges(values)
+      )
     );
     this.subscriptions.add(
       this.sqlForm.valueChanges.subscribe((data) =>
         this.handleSqlFormChanges(data)
       )
     );
+    this.resetForm(false);
   };
 
-  resetForm = () => {
+  resetForm = (emitEvent = true) => {
     this.sqlForm.reset({ coreQuery: this.initialCoreQuery });
-    this.fusionForm.reset({
-      tableSet: 'FusionAll',
-      orderBy: 'MeV',
-      sortDescending: true,
-      resultLimit: 1000,
-      inputNeutrinos: true,
-      outputNeutrinos: true,
-      noNeutrinos: true,
-      leftNuclides: {
-        selectedElements: null,
-        atomicBosons: true,
-        atomicFermions: true,
-        nuclearBosons: true,
-        nuclearFermions: true
+    this.fusionForm.reset(
+      {
+        tableSet: 'FusionAll',
+        orderBy: 'MeV',
+        sortDescending: true,
+        resultLimit: 1000,
+        inputNeutrinos: true,
+        outputNeutrinos: true,
+        noNeutrinos: true,
+        leftNuclides: {
+          selectedElements: [],
+          atomicSpin: 'bf',
+          nuclearSpin: 'bf'
+        },
+        rightNuclides: {
+          selectedElements: [],
+          atomicSpin: 'bf',
+          nuclearSpin: 'bf'
+        },
+        resultNuclides: {
+          selectedElements: [],
+          atomicSpin: 'bf',
+          nuclearSpin: 'bf'
+        }
       },
-      rightNuclides: {
-        selectedElements: null,
-        atomicBosons: true,
-        atomicFermions: true,
-        nuclearBosons: true,
-        nuclearFermions: true
-      },
-      resultNuclides: {
-        selectedElements: [],
-        atomicBosons: true,
-        atomicFermions: true,
-        nuclearBosons: true,
-        nuclearFermions: true
-      }
-    });
+      { emitEvent: emitEvent }
+    );
     // To initialize coreQuery
     //
-    // this.handleFusionformChanges([this.fusionForm.value, this.fusionForm.value]);
-    this.handleSqlFormChanges(this.sqlForm.value);
+    // this.handleSqlFormChanges(this.sqlForm.value);
   };
 
   resetResults = () => {};
@@ -207,40 +227,15 @@ readonly tablesText = "Select Fusion data table from 'FusionAll' (original: MeV 
    * Build out the coreQuery field
    * and the resultNuclides.selectedElements field
    */
-  handleFusionformChanges = ([prev, next]: [any, any]) => {
-    let elementChanges = false;
-    let queryChanges = false;
-    const leftElements = next.leftNuclides.selectedElements;
-    const rightElements = next.rightNuclides.selectedElements;
-    const orderBy = next.orderBy;
-    const sortDescending = next.sortDescending;
-    const resultLimit = next.resultLimit;
-    if (
-      prev.leftNuclides.selectedElements != next.leftNuclides.selectedElements ||
-      prev.rightNuclides.selectedElements != next.leftNuclides.selectedElements ||
-      !prev.leftNuclides.selectedElements ||
-      !prev.rightNuclides.selectedElements
-    ) {
-      elementChanges = true;
-    }
-    if (
-      prev.orderBy != orderBy ||
-      prev.sortDescending != sortDescending ||
-      prev.resultLimit != resultLimit
-    ) {
-      queryChanges = true;
-    }
-    if (elementChanges) {
-      this.buildResultElements(leftElements, rightElements);
-    }
-    if (queryChanges || elementChanges) {
-      this.buildCoreQuery(next, leftElements, rightElements);
-    }
+  handleFusionformChanges = (next: FusionForm) => {
+    console.log('form:', next);
+    this.formChanges.emit(next);
     this.setSubmittable();
   };
 
   handleSqlFormChanges = (changes: any) => {
-    this.coreQuery = changes?.coreQuery;
+    this.sqlChanges.emit(changes);
+    // this.coreQuery = changes?.coreQuery;
     this.setSubmittable();
   };
 
@@ -250,13 +245,14 @@ readonly tablesText = "Select Fusion data table from 'FusionAll' (original: MeV 
 
   setResultLimit = (limit: number) => {
     this.fusionForm.get('resultLimit')?.patchValue(limit);
-  }
+  };
   /**
    * We can't submit the query until there's a filter clause present, i.e. E1 in('H','Ni')
    */
   setSubmittable = () => {
-    this.submittable = this.fusionForm.valid || !this.coreQuery.trimStart().startsWith('order');
-  }
+    this.submittable =
+      this.fusionForm.valid || !this.coreQuery.trimStart().startsWith('order');
+  };
   /**
    * concatenate the elements selected  in the
    * left and right element pickers, convert
@@ -265,73 +261,13 @@ readonly tablesText = "Select Fusion data table from 'FusionAll' (original: MeV 
    * @param changes
    */
   buildResultElements = (
-    leftElements: string[] | null,
-    rightElements: string[] | null
+    leftElements: string[] | [],
+    rightElements: string[] | []
   ) => {
     let resultElements = this.combineElements(leftElements, rightElements);
     this.fusionForm
       .get('resultNuclides.selectedElements')
       ?.patchValue(resultElements, { onlySelf: true, emitEvents: false });
-  };
-
-  /**
-   * Gather the relevant fields (tableSet, resultLimit,
-   * orderBy, orderDirection and the left/right elements) to build the core query.
-   * Then update the fusionform.coreQuery field.
-   * @param changes
-   */
-  buildCoreQuery = (
-    changes: any,
-    leftElements: string[] | null,
-    rightElements: string[] | null
-  ) => {
-    const resultLimit = changes.resultLimit;
-    const orderBy = changes.orderBy;
-    let sortDescending = changes.sortDescending;
-
-    /**
-     * @remarks
-     * This is a hack.
-     *
-     * Valuechanges is firing twice when patchValue is called
-     * in spite of the emitEvents: false
-     *
-     * Using the sortDescendingProxy to hold the valid
-     * state of the sortDescending property.
-     *
-     */
-    if (typeof sortDescending === 'boolean') {
-      this.sortDescendingProxy = sortDescending;
-    } else {
-      sortDescending = this.sortDescendingProxy;
-    }
-
-    let query = '';
-    if (leftElements == null) leftElements = [];
-    if (rightElements == null) rightElements = [];
-    if (leftElements.length > 0) {
-      query += `E1 in ${this.combineElements(leftElements, null, true)}`;
-    }
-    if (rightElements.length > 0) {
-      if (leftElements.length > 0) {
-        query += ' and ';
-      }
-      query += `E2 in ${this.combineElements(rightElements, null, true)}`;
-    }
-    if (orderBy) {
-      query += ` order by ${orderBy}`;
-      if (sortDescending === true) {
-        query += ` desc`;
-      }
-    }
-    if (resultLimit) {
-      query += ` limit ${resultLimit}`;
-    }
-
-    this.sqlForm
-      .get('coreQuery')
-      ?.patchValue(query, { onlySelf: true});
-    this.coreQuery = query;
   };
 
   /**
@@ -344,31 +280,16 @@ readonly tablesText = "Select Fusion data table from 'FusionAll' (original: MeV 
    * @description if stringify is true, combine
    */
   combineElements = (
-    leftElements: string[] | null,
-    rightElements: string[] | null,
+    a: string[],
+    b: string[],
     stringify: boolean = false
-  ): string[] | null | string => {
-    if (leftElements || rightElements) {
-      let result: string | string[];
-      if (leftElements && rightElements) {
-        result = leftElements.concat(rightElements);
-      } else {
-        if (leftElements) {
-          result = leftElements;
-        } else {
-          if (rightElements) {
-            result = rightElements;
-          } else {
-            throw 'unreachable code reached!';
-          }
-        }
-      }
-      if (stringify) {
-        result = `('${result.join("','")}')`;
-      }
-      return result;
+  ): string[] | string => {
+    const c = a.concat(b.filter((item) => a.indexOf(item) < 0));
+
+    if (stringify) {
+      return `('${c.join("','")}')`;
     } else {
-      return null;
+      return c;
     }
   };
 }

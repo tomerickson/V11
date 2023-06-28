@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
@@ -63,13 +68,11 @@ export class FissionFaceComponent {
 
   description =
     'This program ("Fission.php") enables SQL commands to query the Fission tables created from Dr Parkhomov\'s spreadsheets.';
-  tablesText = "Select Fission data table from FissionAll (original: MeV > 0.0; 1,733 rows based on the 'Nuclides' table, 293 nuclides), or FissionAllNewPlus (MeV = +/- any; 8037 rows; based on the 'NuclidesPlus' table, 324 Nuclides)";
-   subscriptions = new Subscription();
-    fissionForm!: FormGroup;
+  tablesText =
+    "Select Fission data table from FissionAll (original: MeV > 0.0; 1,733 rows based on the 'Nuclides' table, 293 nuclides), or FissionAllNewPlus (MeV = +/- any; 8037 rows; based on the 'NuclidesPlus' table, 324 Nuclides)";
+  subscriptions = new Subscription();
+  fissionForm!: FormGroup;
   sqlForm!: FormGroup;
-  nuclides!: FormGroup;
-  output1!: FormGroup;
-  output2!: FormGroup;
   initialCoreQuery!: string;
   route: string;
   sortDescendingProxy!: boolean;
@@ -92,12 +95,8 @@ export class FissionFaceComponent {
 
   ngOnInit(): void {
     this.buildForm();
-    this.nuclides = this.fissionForm.get('nuclides') as FormGroup;
-    this.output1 = this.fissionForm.get('output1') as FormGroup;
-    this.output2 = this.fissionForm.get('output2') as FormGroup;
     // this.ready.next(true);
   }
-
 
   buildForm = () => {
     this.sqlForm = this.fb.nonNullable.group({
@@ -114,32 +113,28 @@ export class FissionFaceComponent {
         noNeutrinos: new FormControl(true),
         nuclides: this.fb.nonNullable.group({
           selectedElements: new FormControl(''),
-          atomicBosons: new FormControl(true),
-          atomicFermions: new FormControl(true),
-          nuclearBosons: new FormControl(true),
-          nuclearFermions: new FormControl(true)
+          nuclearSpin: new FormControl(''),
+          atomicSpin: new FormControl('')
         }),
         output1: this.fb.nonNullable.group({
           selectedElements: new FormControl(''),
-          atomicBosons: new FormControl(true),
-          atomicFermions: new FormControl(true),
-          nuclearBosons: new FormControl(true),
-          nuclearFermions: new FormControl(true)
+          nuclearSpin: new FormControl(''),
+          atomicSpin: new FormControl('')
         }),
         output2: this.fb.nonNullable.group({
           selectedElements: new FormControl(''),
-          atomicBosons: new FormControl(true),
-          atomicFermions: new FormControl(true),
-          nuclearBosons: new FormControl(true),
-          nuclearFermions: new FormControl(true)
-        }),
+          nuclearSpin: new FormControl(''),
+          atomicSpin: new FormControl('')
+        })
       },
       { validators: fissionElementsValidator }
     );
     this.subscriptions.add(
       this.fissionForm.valueChanges
         .pipe(pairwise())
-        .subscribe(([prev, next]) => this.handleFissionFormChanges([prev, next]))
+        .subscribe(([prev, next]) =>
+          this.handleFissionFormChanges([prev, next])
+        )
     );
     this.subscriptions.add(
       this.sqlForm.valueChanges.subscribe((data) =>
@@ -160,29 +155,20 @@ export class FissionFaceComponent {
       noNeutrinos: true,
       nuclides: {
         selectedElements: null,
-        atomicBosons: true,
-        atomicFermions: true,
-        nuclearBosons: true,
-        nuclearFermions: true
+        nuclearSpin: 'bf',
+        atomicSpin: 'bf'
       },
       output1: {
         selectedElements: null,
-        atomicBosons: true,
-        atomicFermions: true,
-        nuclearBosons: true,
-        nuclearFermions: true
+        nuclearSpin: 'bf',
+        atomicSpin: 'bf'
       },
       output2: {
         selectedElements: null,
-        atomicBosons: true,
-        atomicFermions: true,
-        nuclearBosons: true,
-        nuclearFermions: true
+        nuclearSpin: 'bf',
+        atomicSpin: 'bf'
       }
     });
-    // To initialize coreQuery
-    //
-    // this.handleFissionFormChanges([this.fissionForm.value, this.fissionForm.value]);
     this.handleSqlFormChanges(this.sqlForm.value);
   };
 
@@ -199,9 +185,7 @@ export class FissionFaceComponent {
     const orderBy = next.orderBy;
     const sortDescending = next.sortDescending;
     const resultLimit = next.resultLimit;
-    if (
-      prev.nuclides.selectedElements != next.nuclides.selectedElements 
-    ) {
+    if (prev.nuclides.selectedElements != next.nuclides.selectedElements) {
       elementChanges = true;
     }
     if (
@@ -228,13 +212,14 @@ export class FissionFaceComponent {
 
   setResultLimit = (limit: number) => {
     this.fissionForm.get('resultLimit')?.patchValue(limit);
-  }
+  };
   /**
    * We can't submit the query until there's a filter clause present, i.e. E1 in('H','Ni')
    */
   setSubmittable = () => {
-    this.submittable = this.fissionForm.valid || !this.coreQuery.trimStart().startsWith('order');
-  }
+    this.submittable =
+      this.fissionForm.valid || !this.coreQuery.trimStart().startsWith('order');
+  };
 
   /**
    * Gather the relevant fields (tableSet, resultLimit,
@@ -242,10 +227,7 @@ export class FissionFaceComponent {
    * Then update the fissionform.coreQuery field.
    * @param changes
    */
-  buildCoreQuery = (
-    changes: any,
-    elements: string[] | null
-  ) => {
+  buildCoreQuery = (changes: any, elements: string[] | null) => {
     const resultLimit = changes.resultLimit;
     const orderBy = changes.orderBy;
     let sortDescending = changes.sortDescending;
@@ -269,7 +251,7 @@ export class FissionFaceComponent {
 
     let query = '';
     if (elements == null) elements = [];
- 
+
     if (elements.length > 0) {
       query += `E1 in ${this.combineElements(elements, null, true)}`;
     }
@@ -283,9 +265,7 @@ export class FissionFaceComponent {
       query += ` limit ${resultLimit}`;
     }
 
-    this.sqlForm
-      .get('coreQuery')
-      ?.patchValue(query, { onlySelf: true});
+    this.sqlForm.get('coreQuery')?.patchValue(query, { onlySelf: true });
     this.coreQuery = query;
   };
 

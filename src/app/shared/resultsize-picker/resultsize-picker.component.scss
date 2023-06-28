@@ -1,11 +1,15 @@
    div.resultsize-picker {
        display: flex;
        flex-direction: column;
-       justify-content: stretch;
+       justify-content: flex-end;
    }
 
    div.resultsize-header {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
        p {
+        display: inline-block;
            font-size: smaller;
            line-height: 1em;
        }

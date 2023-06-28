@@ -14,7 +14,6 @@ import { FissionActions } from '../state/fission';
 import { HttpClientModule } from '@angular/common/http';
 import { ReportParameters } from '../core/models/report-parameters.model';
 import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
-import { formatSpinChoices } from '../core/services/page.services';
 import { KeyValuePair } from '../core/models/key-value-pair.model';
 @Component({
   selector: 'mfmp-fission-head',
@@ -77,13 +76,13 @@ export class FissionHeadComponent implements OnInit {
   };
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
-  };
+  }
 
   ngOnInit() {
     this.forceReset();
     this.headerService.buildPageHeader('fission');
     this.ready.mutate(() => true);
-  };
+  }
   /**
    * map the formgroup to an array of key-value pairs
    * to be processed upstream
@@ -91,49 +90,10 @@ export class FissionHeadComponent implements OnInit {
    * @returns KeyValuePairs[]
    */
   buildRequestForm = (forms: FormGroup[]): KeyValuePair[] => {
-    let fusionForm: FormGroup = forms[0];
+    let fissionForm: FissionForm = forms[0].value as FissionForm;
     let sqlForm: FormGroup = forms[1];
     let kvp = new Array<KeyValuePair>();
-    const inputNeutrinos = fusionForm.get('inputNeutrinos')?.value;
-    const noNeutrinos = fusionForm.get('noNeutrinos')?.value;
-    const outputNeutrinos = fusionForm.get('outputNeutrinos')?.value;
-    const leftNuclearBosons: boolean = fusionForm.get(
-      'leftNuclides.nuclearBosons'
-    )?.value;
-    const leftNuclearFermions: boolean = fusionForm.get(
-      'leftNuclides.nuclearFermions'
-    )?.value;
-    const leftAtomicBosons: boolean = fusionForm.get(
-      'leftNuclides.atomicBosons'
-    )?.value;
-    const leftAtomicFermions: boolean = fusionForm.get(
-      'leftNuclides.atomicFermions'
-    )?.value;
-    const rightNuclearBosons: boolean = fusionForm.get(
-      'rightNuclides.nuclearBosons'
-    )?.value;
-    const rightNuclearFermions: boolean = fusionForm.get(
-      'rightNuclides.nuclearFermions'
-    )?.value;
-    const rightAtomicBosons: boolean = fusionForm.get(
-      'rightNuclides.atomicBosons'
-    )?.value;
-    const rightAtomicFermions: boolean = fusionForm.get(
-      'rightNuclides.atomicFermions'
-    )?.value;
-    const resultNuclearBosons: boolean = fusionForm.get(
-      'resultNuclides.nuclearBosons'
-    )?.value;
-    const resultNuclearFermions: boolean = fusionForm.get(
-      'resultNuclides.nuclearFermions'
-    )?.value;
-    const resultAtomicBosons: boolean = fusionForm.get(
-      'resultNuclides.atomicBosons'
-    )?.value;
-    const resultAtomicFermions: boolean = fusionForm.get(
-      'resultNuclides.atomicFermions'
-    )?.value;
-
+  
     this.query = sqlForm.get('coreQuery')?.value;
 
     kvp.push(new KeyValuePair({ key: 'doit', value: 'execute_query' }));
@@ -146,54 +106,77 @@ export class FissionHeadComponent implements OnInit {
     kvp.push(
       new KeyValuePair({
         key: 'table_name',
-        value: fusionForm.get('tableSet')?.value
+        value: fissionForm.tableSet
       })
     );
-    if (inputNeutrinos) {
+    if (fissionForm.leftNeutrinos) {
       kvp.push(new KeyValuePair({ key: 'sql_tables[]', value: 'left' }));
     }
-    if (noNeutrinos) {
+    if (fissionForm.noNeutrinos) {
       kvp.push(new KeyValuePair({ key: 'sql_tables[]', value: 'none' }));
     }
-    if (outputNeutrinos) {
+    if (fissionForm.rightNeutrinos) {
       kvp.push(new KeyValuePair({ key: 'sql_tables[]', value: 'right' }));
     }
     kvp.push(
       new KeyValuePair({
         key: 'nBorF1',
-        value: formatSpinChoices(leftNuclearBosons, leftNuclearFermions)
+        value: fissionForm.output1.nuclearSpin
       })
     );
     kvp.push(
       new KeyValuePair({
         key: 'aBorF1',
-        value: formatSpinChoices(leftAtomicBosons, leftAtomicFermions)
+        value: fissionForm.output1.atomicSpin
       })
     );
     kvp.push(
       new KeyValuePair({
         key: 'nBorF2',
-        value: formatSpinChoices(rightNuclearBosons, rightNuclearFermions)
+        value: fissionForm.output2.nuclearSpin
       })
     );
     kvp.push(
       new KeyValuePair({
         key: 'aBorF2',
-        value: formatSpinChoices(rightAtomicBosons, rightAtomicFermions)
+        value: fissionForm.output2.atomicSpin
       })
     );
     kvp.push(
       new KeyValuePair({
         key: 'nBorF',
-        value: formatSpinChoices(resultNuclearBosons, resultNuclearFermions)
+        value: fissionForm.nuclides.nuclearSpin
       })
     );
     kvp.push(
       new KeyValuePair({
         key: 'aBorF',
-        value: formatSpinChoices(resultAtomicBosons, resultAtomicFermions)
+        value: fissionForm.nuclides.atomicSpin
       })
     );
     return kvp;
   };
 }
+
+export type FissionForm = {
+  tableSet: string;
+  resultLimit: number;
+  orderBy: string;
+  sortDescending: boolean;
+  leftNeutrinos: boolean;
+  noNeutrinos: boolean;
+  rightNeutrinos: boolean;
+  nuclides: {
+    selectedElements: string[];
+    atomicSpin: string;
+    nuclearSpin: string;
+  };
+  output1: {
+    atomicSpin: string;
+    nuclearSpin: string;
+  };
+  output2: {
+    atomicSpin: string;
+    nuclearSpin: string;
+  };
+};
