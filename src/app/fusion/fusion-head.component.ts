@@ -126,12 +126,12 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
 
     if (leftElements.length > 0) {
       elementChoices.push(
-        `E1 in (${this.combineElements(leftElements, [], true)})`
+        `E1 in ${this.combineElements(leftElements, [], true)}`
       );
     }
     if (rightElements.length > 0) {
       elementChoices.push(
-        `E2 in (${this.combineElements(rightElements, [], true)})`
+        `E2 in ${this.combineElements(rightElements, [], true)}`
       );
     }
     if (elementChoices.length > 0) {

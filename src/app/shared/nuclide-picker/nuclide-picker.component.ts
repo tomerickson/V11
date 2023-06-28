@@ -51,7 +51,7 @@ export class NuclidePickerComponent implements OnInit
    nuclideForm!: FormGroup;
 
   ngOnInit(): void {
-    this.nuclideForm = this.fgd.control.get(this.formGroupName) as FormGroup;
+    this.nuclideForm = this.fgd.control;//.get(this.formGroupName) as FormGroup;
   }
 
   elementOptionValue = (element: IElementDataModel): string => {

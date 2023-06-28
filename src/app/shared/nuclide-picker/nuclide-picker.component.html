@@ -1,5 +1,5 @@
 <mat-card [formGroup]="nuclideForm" class="flexcolumn">
-  <section class="margins">
+  <section class="margins" formGroupName="{{formGroupName}}">
     <section [className]="'elements'">
       <mat-form-field
         formControlName="selectedElements"
@@ -57,7 +57,7 @@
       <div class="flexrow">
         <div class="flexcolumn">
           <mat-label>Atomic</mat-label>
-          <mat-radio-group class="spinbutton" defaultTabIndex=2 value="bf">
+          <mat-radio-group class="spinbutton" formControlName="atomicSpin" defaultTabIndex=2 value="bf">
             <mat-radio-button value="b">Boson</mat-radio-button>
             <mat-radio-button value="f">Fermion</mat-radio-button>
             <mat-radio-button value="bf">Either</mat-radio-button>
