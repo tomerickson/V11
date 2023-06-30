@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -29,7 +28,7 @@ import { MatSliderModule } from '@angular/material/slider';
  * 
  * Use class names resultsize-picker, resultsize-header,  or resultsize-slider to style the component
  */
-export class ResultsizePickerComponent implements AfterViewInit {
+export class ResultsizePickerComponent {
   @Input({ required: true }) defaultLimit: number = 1000;
   @Input({ required: true }) minimum: number = 0;
   @Input({ required: true }) maximum: number = 1000;
@@ -49,6 +48,4 @@ export class ResultsizePickerComponent implements AfterViewInit {
   get limitText(): string {
     return this.limitVerbiage.replace('...', `${this.limit}`);
   }
-
-  ngAfterViewInit() {}
 }

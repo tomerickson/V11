@@ -27,9 +27,9 @@ export class MevPickerComponent {
   @Input({ required: true }) defaultLimit: number = 10;
   @Input({ required: true }) minimum: number = 0;
   @Input({ required: true }) maximum: number = 1000;
-  @Input({ required: true }) step: number = 1;
+  @Input({ required: true }) step: number = 0.1;
   @Input({ required: true }) limitVerbiage!: string; // Ex: Limit results to ... MeV.
-  @Input({ required: true }) usageVerbiage!: string; // Ex: Use the slider below to change the MeV limit.
+  @Input() usageVerbiage!: string; // Ex: Use the slider below to change the MeV limit.
   @Output() mevLimit: EventEmitter<number> = new EventEmitter<number>();
 
   private _limit: number = this.defaultLimit;
@@ -44,6 +44,4 @@ export class MevPickerComponent {
   get limitText(): string {
     return this.limitVerbiage.replace('...', `${this.limit}`);
   }
-
-  ngAfterViewInit() {}
 }

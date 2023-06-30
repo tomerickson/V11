@@ -2,7 +2,7 @@
     <div class="mev-header">
       <p>{{limitText}}
       </p>
-      <p>{{usageVerbiage}}</p>
+      <p *ngIf="usageVerbiage">{{usageVerbiage}}</p>
     </div>
     <div class="mev-slider">
         <mat-slider

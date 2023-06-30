@@ -30,8 +30,8 @@ import {
   downloadOptions
 } from 'src/app/core/models/downloadable.model';
 import { ResultType } from '../../core/models/result-type';
-import { DownloadService } from './download.service';
 import { downloadFormValidator } from './download.validator';
+import { DownloadService } from './download.service';
 
 @Component({
   selector: 'mfmp-download',
@@ -47,7 +47,8 @@ import { downloadFormValidator } from './download.validator';
     ReactiveFormsModule
   ],
   templateUrl: './download.component.html',
-  styleUrls: ['./download.component.scss']
+  styleUrls: ['./download.component.scss'],
+  providers: [DownloadService]
 })
 export class DownloadComponent implements OnInit, OnDestroy {
   @Input({ required: true }) data!: any;

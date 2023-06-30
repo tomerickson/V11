@@ -30,6 +30,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
 import { MevPickerComponent } from 'src/app/shared/mev-picker/mev-picker.component';
 import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable-box.component';
+import { FissionForm } from 'src/app/core/models/fission-form.model';
+import { SqlForm } from 'src/app/core/models/sql-form.model';
 
 @Component({
   selector: 'mfmp-fission-face',
@@ -59,6 +61,10 @@ import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable
   viewProviders: [MatExpansionPanel]
 })
 export class FissionFaceComponent {
+
+  private _coreQuery = '';
+  private _fullQuery = '';
+
   @Input({ required: true }) elements!: IElementDataModel[] | null;
   @Input({ required: true }) sortFields!: ILookupDataModel[] | null;
   @Output() doit: EventEmitter<FormGroup[]> = new EventEmitter<FormGroup[]>();
@@ -66,23 +72,55 @@ export class FissionFaceComponent {
   fb = inject(FormBuilder);
   router = inject(Router);
 
-  description =
+  readonly description =
     'This program ("Fission.php") enables SQL commands to query the Fission tables created from Dr Parkhomov\'s spreadsheets.';
-  tablesText =
+  readonly tablesText =
     "Select Fission data table from FissionAll (original: MeV > 0.0; 1,733 rows based on the 'Nuclides' table, 293 nuclides), or FissionAllNewPlus (MeV = +/- any; 8037 rows; based on the 'NuclidesPlus' table, 324 Nuclides)";
+  readonly initialCoreQuery = ' order by MeV desc limit 1000';
   subscriptions = new Subscription();
   fissionForm!: FormGroup;
   sqlForm!: FormGroup;
-  initialCoreQuery!: string;
+
   route: string;
   sortDescendingProxy!: boolean;
   submittable = false;
   sortBy = '';
   sortOrder = '';
-  coreQuery = '';
+
+  /**
+   * Core query
+   */
+  @Input({ required: true }) set coreQuery(value: string) {
+    this._coreQuery = value;
+    if (this.sqlForm)
+      this.sqlForm.get('coreQuery')?.patchValue(value, { emitEvents: false });
+  }
+  get coreQuery(): string {
+    return this._coreQuery;
+  }
+
+  /**
+   * Full query
+   */
+  @Input({ required: true }) set fullQuery(value: string) {
+    this._fullQuery = value;
+    if (this.sqlForm)
+      this.sqlForm.get('fullQuery')?.patchValue(value, { emitEvents: false });
+  }
+  get fullQuery(): string {
+    return this._fullQuery;
+  }
+
+  @Output() formChanges: EventEmitter<FissionForm> =
+    new EventEmitter<FissionForm>();
+  @Output() sqlChanges: EventEmitter<SqlForm> = new EventEmitter<SqlForm>();
 
   constructor() {
     this.route = this.router.routerState.snapshot.url;
+    this.sqlForm = this.fb.nonNullable.group({
+      coreQuery: new FormControl(this.initialCoreQuery),
+      fullQuery: new FormControl('')
+    });
   }
 
   buildRequestForm(): void {
@@ -100,61 +138,63 @@ export class FissionFaceComponent {
 
   buildForm = () => {
     this.sqlForm = this.fb.nonNullable.group({
-      coreQuery: new FormControl(this.initialCoreQuery)
+      coreQuery: new FormControl(this.initialCoreQuery),
+      fullQuery: new FormControl('')
     });
     this.fissionForm = this.fb.nonNullable.group(
       {
         tableSet: new FormControl('FissionAll', { nonNullable: true }),
         resultLimit: new FormControl(1000),
+        mevLimit: new FormControl(0),
         orderBy: new FormControl('MeV'),
         sortDescending: new FormControl(true),
         inputNeutrinos: new FormControl(true),
         outputNeutrinos: new FormControl(true),
         noNeutrinos: new FormControl(true),
         nuclides: this.fb.nonNullable.group({
-          selectedElements: new FormControl(''),
-          nuclearSpin: new FormControl(''),
-          atomicSpin: new FormControl('')
+          selectedElements: new FormControl([]),
+          nuclearSpin: new FormControl('bf'),
+          atomicSpin: new FormControl('bf')
         }),
         output1: this.fb.nonNullable.group({
-          selectedElements: new FormControl(''),
-          nuclearSpin: new FormControl(''),
-          atomicSpin: new FormControl('')
+          selectedElements: new FormControl([]),
+          nuclearSpin: new FormControl('bf'),
+          atomicSpin: new FormControl('bf')
         }),
         output2: this.fb.nonNullable.group({
-          selectedElements: new FormControl(''),
-          nuclearSpin: new FormControl(''),
-          atomicSpin: new FormControl('')
+          selectedElements: new FormControl([]),
+          nuclearSpin: new FormControl('bf'),
+          atomicSpin: new FormControl('bf')
         })
       },
       { validators: fissionElementsValidator }
     );
     this.subscriptions.add(
       this.fissionForm.valueChanges
-        .pipe(pairwise())
-        .subscribe(([prev, next]) =>
-          this.handleFissionFormChanges([prev, next])
+        .subscribe(data =>
+          this.handleFissionFormChanges(data)
         )
     );
     this.subscriptions.add(
-      this.sqlForm.valueChanges.subscribe((data) =>
+      this.sqlForm.valueChanges.subscribe(data =>
         this.handleSqlFormChanges(data)
       )
     );
   };
 
   resetForm = () => {
-    this.sqlForm.reset({ coreQuery: this.initialCoreQuery });
+    this.sqlForm.reset({ coreQuery: this.initialCoreQuery, fullQuery:'' });
     this.fissionForm.reset({
       tableSet: 'FissionAll',
       orderBy: 'MeV',
       sortDescending: true,
       resultLimit: 1000,
+      mevLimit: 0,
       inputNeutrinos: true,
       outputNeutrinos: true,
       noNeutrinos: true,
       nuclides: {
-        selectedElements: null,
+        selectedElements: [],
         nuclearSpin: 'bf',
         atomicSpin: 'bf'
       },
@@ -178,31 +218,14 @@ export class FissionFaceComponent {
    * Build out the coreQuery field
    * and the resultNuclides.selectedElements field
    */
-  handleFissionFormChanges = ([prev, next]: [any, any]) => {
-    let elementChanges = false;
-    let queryChanges = false;
-    const elements = next.nuclides.selectedElements;
-    const orderBy = next.orderBy;
-    const sortDescending = next.sortDescending;
-    const resultLimit = next.resultLimit;
-    if (prev.nuclides.selectedElements != next.nuclides.selectedElements) {
-      elementChanges = true;
-    }
-    if (
-      prev.orderBy != orderBy ||
-      prev.sortDescending != sortDescending ||
-      prev.resultLimit != resultLimit
-    ) {
-      queryChanges = true;
-    }
-    if (queryChanges || elementChanges) {
-      this.buildCoreQuery(next, elements);
-    }
+  handleFissionFormChanges = (data: any) => {
+    console.log('form:', data);
+    this.formChanges.emit(data as FissionForm);
     this.setSubmittable();
   };
 
   handleSqlFormChanges = (changes: any) => {
-    this.coreQuery = changes?.coreQuery;
+    this.sqlChanges.emit(changes);
     this.setSubmittable();
   };
 
@@ -213,6 +236,10 @@ export class FissionFaceComponent {
   setResultLimit = (limit: number) => {
     this.fissionForm.get('resultLimit')?.patchValue(limit);
   };
+
+  setMevLimit = (limit: number) => {
+    this.fissionForm.get('mevLimit')?.patchValue(limit);
+  }
   /**
    * We can't submit the query until there's a filter clause present, i.e. E1 in('H','Ni')
    */
@@ -227,46 +254,14 @@ export class FissionFaceComponent {
    * Then update the fissionform.coreQuery field.
    * @param changes
    */
-  buildCoreQuery = (changes: any, elements: string[] | null) => {
-    const resultLimit = changes.resultLimit;
-    const orderBy = changes.orderBy;
-    let sortDescending = changes.sortDescending;
-
-    /**
-     * @remarks
-     * This is a hack.
-     *
-     * Valuechanges is firing twice when patchValue is called
-     * in spite of the emitEvents: false
-     *
-     * Using the sortDescendingProxy to hold the valid
-     * state of the sortDescending property.
-     *
-     */
-    if (typeof sortDescending === 'boolean') {
-      this.sortDescendingProxy = sortDescending;
-    } else {
-      sortDescending = this.sortDescendingProxy;
-    }
-
-    let query = '';
-    if (elements == null) elements = [];
-
-    if (elements.length > 0) {
-      query += `E1 in ${this.combineElements(elements, null, true)}`;
-    }
-    if (orderBy) {
-      query += ` order by ${orderBy}`;
-      if (sortDescending === true) {
-        query += ` desc`;
-      }
-    }
-    if (resultLimit) {
-      query += ` limit ${resultLimit}`;
-    }
-
-    this.sqlForm.get('coreQuery')?.patchValue(query, { onlySelf: true });
-    this.coreQuery = query;
+  buildResultElements = (
+    leftElements: string[] | [],
+    rightElements: string[] | []
+  ) => {
+    let resultElements = this.combineElements(leftElements, rightElements);
+    this.fissionForm
+      .get('resultNuclides.selectedElements')
+      ?.patchValue(resultElements, { onlySelf: true, emitEvents: false });
   };
 
   /**
@@ -279,31 +274,16 @@ export class FissionFaceComponent {
    * @description if stringify is true, combine
    */
   combineElements = (
-    elements: string[] | null,
-    rightElements: string[] | null,
+    a: string[],
+    b: string[],
     stringify: boolean = false
-  ): string[] | null | string => {
-    if (elements || rightElements) {
-      let result: string | string[];
-      if (elements && rightElements) {
-        result = elements.concat(rightElements);
-      } else {
-        if (elements) {
-          result = elements;
-        } else {
-          if (rightElements) {
-            result = rightElements;
-          } else {
-            throw 'unreachable code reached!';
-          }
-        }
-      }
-      if (stringify) {
-        result = `('${result.join("','")}')`;
-      }
-      return result;
+  ): string[] | string => {
+    const c = a.concat(b.filter((item) => a.indexOf(item) < 0));
+
+    if (stringify) {
+      return `('${c.join("','")}')`;
     } else {
-      return null;
+      return c;
     }
   };
 }

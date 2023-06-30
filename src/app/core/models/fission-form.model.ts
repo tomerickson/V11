@@ -1,23 +1,23 @@
-export type FusionForm = {
+export type FissionForm = {
   tableSet: string;
   resultLimit: number;
   mevLimit: number;
-  orderBy: string;
+    orderBy: string;
   sortDescending: boolean;
   inputNeutrinos: boolean;
   outputNeutrinos: boolean;
   noNeutrinos: boolean;
-  leftNuclides: {
+  nuclides: {
     selectedElements: string[];
     nuclearSpin: string;
     atomicSpin: string;
   };
-  rightNuclides: {
+  output1: {
     selectedElements: string[];
     nuclearSpin: string;
     atomicSpin: string;
   };
-  resultNuclides: {
+  output2: {
     selectedElements: string[];
     nuclearSpin: string;
     atomicSpin: string;

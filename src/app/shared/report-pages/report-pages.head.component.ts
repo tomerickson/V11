@@ -5,6 +5,7 @@ import { ReportPagesFaceComponent } from './report-pages.face.component';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { fusionFeature } from 'src/app/state/fusion';
+import { fissionFeature } from 'src/app/state/fission';
 import { AsyncPipe } from '@angular/common';
 import { globalFeature } from 'src/app/state';
 import { ReportParameters } from 'src/app/core/models/report-parameters.model';
@@ -72,6 +73,16 @@ export class ReportPagesHeadComponent implements OnInit, OnDestroy {
         this.loading = this.store.select(fusionFeature.selectLoading);
         this.ready = this.store.select(fusionFeature.selectReady);
         break;
+        case 'fission':
+          this.reactions = this.store.select(fissionFeature.selectReactionResults);
+          this.nuclides = this.store.select(fissionFeature.selectNuclideResults);
+          this.elements = this.store.select(fissionFeature.selectElementResults);
+          this.reactionRows = this.store.select(fissionFeature.selectReactionRows);
+          this.nuclideRows = this.store.select(fissionFeature.selectNuclideRows);
+          this.elementRows = this.store.select(fissionFeature.selectElementRows);
+          this.loading = this.store.select(fissionFeature.selectLoading);
+          this.ready = this.store.select(fissionFeature.selectReady);
+          break;
       default:
         console.log(`ReactionType '${type}' is undefined.`);
         break;

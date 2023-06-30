@@ -37,8 +37,9 @@ div.children {
 
 div.neutrinos {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  justify-content:center;
+  align-items: baseline;
   margin-bottom: 1ex;
 }
 
@@ -53,7 +54,6 @@ div.sql {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
   :last-child {
     display: flex;
     flex-direction: row;
@@ -96,6 +96,7 @@ div.flexrow {
   display: flex;
   flex-direction: row;
   justify-content: stretch;
+  align-items: baseline;
 
   >div {
     flex: 1;
@@ -117,6 +118,16 @@ span.resultLimitHeader {
   }
 }
 
+
+ div.resultLimit {
+   display: flex;
+   flex-direction: row;
+   justify-content: stretch;
+
+   mat-slider {
+     width: 30%;
+   }
+ }
 p.header {
   text-overflow: ellipsis;
   padding-right: 2em;

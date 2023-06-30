@@ -1,5 +1,5 @@
 {
-    "production": false,
+    "production": true,
     "name": "Uninitiialized",
     "version": "5.0",
     "proxy": null,

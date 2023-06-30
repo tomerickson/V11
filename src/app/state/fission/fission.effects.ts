@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, map, of, switchMap, tap } from 'rxjs';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { NotificationComponent } from 'src/app/core/notification.component';
 import { CrudService } from 'src/app/core/services/crud.service';
 import { FissionActions } from './fission.actions';

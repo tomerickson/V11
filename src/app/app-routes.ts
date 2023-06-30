@@ -23,7 +23,6 @@ export const APP_ROUTES: Routes = [
   },
     {
     path: 'fission',
-    pathMatch: 'full',
     loadChildren: () =>
       import('./fission/fission-routes').then((m) => m.FISSION_ROUTES)
   },
