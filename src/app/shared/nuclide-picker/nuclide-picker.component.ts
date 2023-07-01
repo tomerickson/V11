@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   ControlContainer,
@@ -34,24 +34,41 @@ import { IElementDataModel } from '../../core/models/element-data.model';
     MatRadioModule,
     MatSelectModule,
     MatTooltipModule,
+    NgSwitch,
+    NgSwitchCase
   ],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
-
+  viewProviders: [
+    { provide: ControlContainer, useExisting: FormGroupDirective }
+  ]
 })
-export class NuclidePickerComponent implements OnInit
-{
+export class NuclidePickerComponent implements OnInit {
   @Input({ required: true }) title!: string | null;
   @Input({ required: true }) role!: 'query' | 'result';
   @Input({ required: true }) elementsList: IElementDataModel[] | null = null;
   @Input({ required: true }) multiselect!: boolean;
   @Input({ required: true }) caption!: string;
-  @Input({ required: true}) formGroupName!: string;
+  @Input({ required: true }) formGroupName!: string;
 
   fgd = inject(FormGroupDirective);
-   nuclideForm!: FormGroup;
+  nuclideForm!: FormGroup;
+
+  /**
+   * flavor - used to select the correct template
+   * 
+   * 0 = multiselect query
+   * 1 = single query
+   * 2 = multiselect result
+   * 3 = single result;
+   */
+  flavor = (): number => {
+    const result: number = (this.role === 'result') as any as number;
+    const multi: number = !this.multiselect as any as number;
+    return multi * 2 + result;
+  };
 
   ngOnInit(): void {
-    this.nuclideForm = this.fgd.control;//.get(this.formGroupName) as FormGroup;
+    this.nuclideForm = this.fgd.control; //.get(this.formGroupName) as FormGroup;
+    console.log(`title: ${this.title}, flavor: ${this.flavor()} `);
   }
 
   elementOptionValue = (element: IElementDataModel): string => {
