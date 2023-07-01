@@ -74,6 +74,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
   buildCoreQuery = (form: FusionForm) => {
     const resultLimit = form.resultLimit;
     const orderBy = form.orderBy;
+    const elementJoin = form.elementJoin;
     const sortDescending = form.sortDescending;
     const inputNeutrinos = form.inputNeutrinos;
     const noNeutrinos = form.noNeutrinos;
@@ -135,10 +136,14 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
       );
     }
     if (elementChoices.length > 0) {
-      elementsClause = elementChoices.join(' and ');
-      /*       if (elementChoices.length > 1) {
+      elementsClause = elementChoices[0];
+    }
+    if (elementChoices.length > 1) {
+      elementsClause = elementsClause + ` ${elementJoin} `
+      elementsClause += elementChoices[1];
+      if (elementJoin === 'or') {
         elementsClause = `(${elementsClause})`;
-      } */
+      }
     }
 
     /**
@@ -165,7 +170,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
       if (sortDescending === true) {
         orderByClause += ` desc`;
       }
-      console.log('descending', sortDescending)
+      console.log('descending', sortDescending);
     }
     /**
      * Limit
@@ -292,7 +297,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     if (right) parts.push(`neutrino = 'right'`);
 
     if (parts.length > 0 && parts.length < 3) {
-      clause = `(${parts.join(" or ")})`;
+      clause = `(${parts.join(' or ')})`;
     }
     return clause;
   };

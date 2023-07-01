@@ -3,6 +3,7 @@ export type FusionForm = {
   resultLimit: number;
   mevLimit: number;
   orderBy: string;
+  elementJoin: string;
   sortDescending: boolean;
   inputNeutrinos: boolean;
   outputNeutrinos: boolean;

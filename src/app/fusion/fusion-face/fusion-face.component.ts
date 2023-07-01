@@ -115,6 +115,10 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
     return this._fullQuery;
   }
 
+  get elementJoin(): string {
+    return this.fusionForm.get('elementJoin')?.value;
+  }
+
   @Output() doit: EventEmitter<FormGroup[]> = new EventEmitter<FormGroup[]>();
   @Output() formChanges: EventEmitter<FusionForm> =
     new EventEmitter<FusionForm>();
@@ -152,6 +156,7 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
         tableSet: new FormControl('FusionAll', { nonNullable: true }),
         resultLimit: new FormControl(1000),
         orderBy: new FormControl('MeV'),
+        elementJoin: new FormControl('and'),
         sortDescending: new FormControl('desc'),
         inputNeutrinos: new FormControl(true),
         outputNeutrinos: new FormControl(true),
@@ -193,6 +198,7 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
       {
         tableSet: 'FusionAll',
         orderBy: 'MeV',
+        elementJoin: 'and',
         sortDescending: true,
         resultLimit: 1000,
         inputNeutrinos: true,
@@ -236,6 +242,12 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
     this.setSubmittable();
   };
 
+  toggleJoin = () => {
+    let join = this.fusionForm.get('elementJoin')?.value;
+    join = (join === 'and') ? 'or' : 'and';
+    this.fusionForm.get('elementJoin')?.patchValue(join);
+  }
+  
   handleSqlFormChanges = (changes: any) => {
     this.sqlChanges.emit(changes);
     // this.coreQuery = changes?.coreQuery;

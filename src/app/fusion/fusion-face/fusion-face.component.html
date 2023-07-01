@@ -82,27 +82,40 @@
       begin.
     </h3>
     <div class="nuclides">
-      <mfmp-nuclide-picker
-        [role]="'query'"
-        [title]="'Left side (E1)'"
-        [multiselect]="true"
-        [formGroupName]="'leftNuclides'"
-        [caption]="'Left'"
-        [elementsList]="elements"></mfmp-nuclide-picker>
-      <mfmp-nuclide-picker
-        [role]="'query'"
-        [title]="'Right side (E2)'"
-        [multiselect]="true"
-        [formGroupName]="'rightNuclides'"
-        [caption]="'Right'"
-        [elementsList]="elements"></mfmp-nuclide-picker>
-      <mfmp-nuclide-picker
-        [role]="'result'"
-        [title]="'Results'"
-        [multiselect]="true"
-        [formGroupName]="'resultNuclides'"
-        [caption]="'Result'"
-        [elementsList]="elements"></mfmp-nuclide-picker>
+      <div class="elements">
+        <mfmp-nuclide-picker
+          [role]="'query'"
+          [title]="'Left side (E1)'"
+          [multiselect]="true"
+          [formGroupName]="'leftNuclides'"
+          [caption]="'Left'"
+          [elementsList]="elements"></mfmp-nuclide-picker>
+        <div class="join">
+          <button
+            mat-raised-button
+            (click)="toggleJoin()"
+            formControlName="elementJoin"
+            ngDefaultControl>
+            {{ fusionForm.get('elementJoin')?.value }}
+          </button>
+        </div>
+        <mfmp-nuclide-picker
+          [role]="'query'"
+          [title]="'Right side (E2)'"
+          [multiselect]="true"
+          [formGroupName]="'rightNuclides'"
+          [caption]="'Right'"
+          [elementsList]="elements"></mfmp-nuclide-picker>
+      </div>
+      <div class="results">
+        <mfmp-nuclide-picker
+          [role]="'result'"
+          [title]="'Results'"
+          [multiselect]="true"
+          [formGroupName]="'resultNuclides'"
+          [caption]="'Result'"
+          [elementsList]="elements"></mfmp-nuclide-picker>
+      </div>
     </div>
     <div class="neutrinos">
       <div>
@@ -171,7 +184,7 @@
         </div>
       </div>
       <div class="flexrow">
-        <div class="coreQuery" [formGroup]="sqlForm">
+        <div class="fullQuery" [formGroup]="sqlForm">
           <mat-label>Full Query</mat-label>
           <textarea
             matInput
