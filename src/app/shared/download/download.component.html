@@ -10,7 +10,7 @@
     <div class="flexrow">
       <mat-form-field>
         <label>File type</label>
-        <mat-select formControlName="fileType" placeholder="Select a file type">
+        <mat-select formControlName="fileType" placeholder="Select a file type.">
           <mat-option
             *ngFor="let option of downloadOptions"
             [value]="option">
@@ -28,10 +28,10 @@
         <input
         matInput
           formControlName="fileName"
-          placeholder="Choose a file name."/>
+          placeholder="Enter a file name."/>
       </mat-form-field>
       <mat-form-field>
-        <label>{{fullNameSignal()}}</label>
+        <label>{{fullNameSignal()}}&nbsp;</label>
         <button
           mat-raised-button
           type="button"
