@@ -1,0 +1,14 @@
+div.flexrow {
+    display: flex;
+    flex-direction:row;
+}
+div.flexcolumn {
+    display: flex;
+    flex-direction: column;
+    input {
+        width: 100%;
+    }
+}
+.space-evenly {
+    justify-content: space-evenly;
+}

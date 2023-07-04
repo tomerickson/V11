@@ -26,6 +26,12 @@ export const APP_ROUTES: Routes = [
     loadChildren: () =>
       import('./fission/fission-routes').then((m) => m.FISSION_ROUTES)
   },
+  {
+    path: 'lenr-events',
+    loadChildren: () =>
+    import('./lenr-events/lenr-events.routes').then((m) => m.LENR_EVENTS_ROUTES)
+  },
+
   { path: 'testpage', pathMatch: 'full', component: TestpageHeadComponent },
   { path: '**', component: NotFoundComponent }
 ];

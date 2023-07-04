@@ -1,0 +1,189 @@
+<div class="wrapper">
+  <mat-card>
+    <mat-card-content>
+      <div class="flexrow">
+        <div #leftside [formGroup]="eventForm">
+          <div>
+            Exploring the new 'LENR_Events' database (4996 entries): Core data
+            thanks to
+            <a href="https://www.LENR-CANR.org">LENR-CANR</a>
+            - more being added by the MFMP.
+            <p>
+              <input
+                type="button"
+                value="Clear/Reset All"
+                name="btn_restart"
+                tabindex="&nbsp;++"
+                onclick="restart()" />
+              OR select an Entry: First, set the pre-filtering criteria below,
+              then click on the "Refresh Pre-Filtering" button
+            </p>
+          </div>
+          <div class="grid">
+            <div class="cell1 label">
+              <label>Year from:</label>
+            </div>
+            <div class="cell2">
+              <mat-form-field>
+                <input
+                  matInput
+                  type="number"
+                  formControlName="s_Year_from"
+                  min="1800"
+                  max="99999"
+                  value="{{ now | date : 'yyyy' }}"
+                  placeholder="min. 1800"
+                  required="true"
+                  onfocus="this.select()" />
+              </mat-form-field>
+            </div>
+            <div class="cell3 label">
+              <label>Year to:</label>
+            </div>
+            <div class="cell4">
+              <mat-form-field>
+                <input
+                  matInput
+                  type="number"
+                  formControlName="s_Year_to"
+                  min="{{ minYear }}"
+                  placeholder="{{ now | date : 'yyyy' }}"
+                  onfocus="this.select()" />
+              </mat-form-field>
+            </div>
+            <div class="cell5 label">
+              <label>Index from:</label>
+            </div>
+            <div class="cell6">
+              <mat-form-field>
+                <input
+                  matInput
+                  type="number"
+                  formControlName="s_Index_from"
+                  onfocus="this.select()" />
+              </mat-form-field>
+            </div>
+            <div class="cell7 label">
+              <label>Index to:</label>
+            </div>
+            <div class="cell8">
+              <mat-form-field>
+                <input
+                  matInput
+                  type="number"
+                  formControlName="s_Index_to"
+                  min="{{ minIndex }}"
+                  placeholder="9999"
+                  onfocus="this.select()" />
+                <mat-hint>(max = 5001)</mat-hint>
+              </mat-form-field>
+            </div>
+            <div class="cell9 label"><label>Category:</label></div>
+            <div class="cell10">
+              <mat-form-field>
+                <mat-select formControlName="s_Category">
+                  <mat-option value="All" selected="selected">All</mat-option>
+                  <mat-option value="Book">Book</mat-option>
+                  <mat-option value="Book Section">Book Section</mat-option>
+                  <mat-option value="Conference Paper">
+                    Conference Paper
+                  </mat-option>
+                  <mat-option value="Conference Proceedings">
+                    Conference Proceedings
+                  </mat-option>
+                  <mat-option value="Edited Book">Edited Book</mat-option>
+                  <mat-option value="Encyclopedia">Encyclopedia</mat-option>
+                  <mat-option value="Film or Broadcast">
+                    Film or Broadcast
+                  </mat-option>
+                  <mat-option value="Government Document">
+                    Government Document
+                  </mat-option>
+                  <mat-option value="Journal Article">
+                    Journal Article
+                  </mat-option>
+                  <mat-option value="Letter or Email">
+                    Letter or Email
+                  </mat-option>
+                  <mat-option value="Magazine Article">
+                    Magazine Article
+                  </mat-option>
+                  <mat-option value="Manuscript">Manuscript</mat-option>
+                  <mat-option value="Newspaper Article">
+                    Newspaper Article
+                  </mat-option>
+                  <mat-option value="Online Database">
+                    Online Database
+                  </mat-option>
+                  <mat-option value="Patent">Patent</mat-option>
+                  <mat-option value="Personal Communication">
+                    Personal Communication
+                  </mat-option>
+                  <mat-option value="Project">Project</mat-option>
+                  <mat-option value="Report">Report</mat-option>
+                  <mat-option value="Thesis">Thesis</mat-option>
+                  <mat-option value="Unpublished Work">
+                    Unpublished Work
+                  </mat-option>
+                  <mat-option value="Video">Video</mat-option>
+                  <mat-option value="Website of Interest">
+                    Website of Interest
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="cell11 label">
+              <label>Author Surname:</label>
+            </div>
+            <div class="cell12">
+              <mat-form-field>
+                <input matInput type="text"
+                formControlName="s_Author"
+                placeholder="Surname of one author"
+                />
+              </mat-form-field>
+            </div>
+            <div class="cell13 label">
+              <label>Title</label>
+            </div>
+            <div class="cell14">
+              <mat-form-field>
+                <input matInput type="text"
+                formControlName="s_Title"
+                placeholder="Word or phrase in the Title">
+              </mat-form-field>
+            </div>
+            <div class="cell15 label">
+              <label>Keyword(s)</label>
+            </div>
+            <div class="cell16">
+              <mat-form-field>
+                <input matInput type="text"
+                formCotrolName="s_Keywords"
+                placeholder="Word or phrase in the Keywords">
+              </mat-form-field>
+            </div>
+            <div class="buttoncell label">
+              <button type="button" mat-raised-button color="primary">
+                Search
+              </button>
+              <button type="button" mat-raised-button color="primary">
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr
+          class="splitter"
+          cdkDragLockAxis="x"
+          cdkDrag
+          (cdkDragStarted)="trackPanels()"
+          (cdkDragMoved)="resizePanels($event)" />
+        <div #rightside>
+          <mfmp-lenr-events-detail></mfmp-lenr-events-detail>
+          <p></p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

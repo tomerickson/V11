@@ -9,6 +9,9 @@ import { IKeyValuePair, KeyValuePair } from '../models/key-value-pair.model';
 import { ILookupDataModel } from '../models/lookup-data.model';
 import { extractTablesFromPage } from './page.services';
 import { IFissionCompositeResults } from '../models/fission-composite-results.model';
+import { LenrEventsLookup } from '../models/lenr-events-lookup.model';
+import { LenrEventDetail } from '../models/lenr-event-detail.model';
+import { observeNotification } from 'rxjs/internal/Notification';
 
 export interface User {
   id: string;
@@ -92,6 +95,13 @@ export class CrudService {
     });
   }
 
+  getLenrEvents = (payload: FormData): Observable<string> => {
+    const page = `${this.endPoint}Select_LENR_Events.php`;
+    return this.http.post(page, payload, {
+      responseType: 'text',
+      observe: 'body'
+    })
+  }
   getDummyResults(): Observable<any> {
     console.log('getting dummy data');
     let page = 'http://localhost:4200/assets/demo.txt';

@@ -1,0 +1,90 @@
+
+
+    <div class="flexrow space-evenly">
+      <div>Category:</div>
+      <div><input matInput type="text" value="{{event.category}}" /></div>
+      <div>Year of Publication:</div>
+      <div><input type="text" value="{{event.year}}" /></div>
+      <div>Database Index:</div>
+      <div><input type="text" value="{{event.id}}"/></div>
+    </div>
+    <div class="flexcolumn">
+      <div>Author (last name, initials) or comma-separated list of Authors</div>
+      <div><input type="text" value="{{event.author}}"/></div>
+    </div>
+    <div class="flexcolumn">
+      <div>Title: The formal title of this entry, if applicable</div>
+      <div><input type="text" value="{{event.title}}"/></div>
+    </div>
+    <div class="flexcolumn">
+      <div>Journal Title: Title of the Journal, Proceedings, Book, etc</div>
+      <div><input type="text" /></div>
+    </div>
+    <div class="flexcolumn">
+      <div>
+        Editor (last name, initials) of the collective work, or comma-separated
+        list of Editors
+      </div>
+      <div><input type="text" /></div>
+    </div>
+    <div class="flexcolumn">
+      <div>Publisher of the Journal, Proceedings, Book, etc</div>
+      <div><input type="text" /></div>
+    </div>
+    <div class="flexrow">
+      <div>City hosting research, conference, etc:</div>
+      <div><input type="text" /></div>
+    </div>
+    <div class="flexrow">
+      <div>Publishing date or span of dates of conference:</div>
+      <div><input type="text" value="{{event.date | date}}" /></div>
+    </div>
+    <div class="flexcolumn">
+      <div>
+        Comment: Informed comments, by-lines and info not captured elsewhere.
+      </div>
+      <div>
+        <textarea>
+ Cold Fusion Synthesis of Helium
+        Isotopes in Interaction of Deuterium and of Hydrogen Nuclei with Metals</textarea
+        >
+      </div>
+    </div>
+    <div class="flexcolumn">
+      <div>Keywords: A comma separated list of keywords or short phrases</div>
+      <div><input type="text" /></div>
+    </div>
+    <div class="flexcolumn">
+      <div>Abstract</div>
+      <div>
+        <textarea>
+Theoretical outcomes and their connections with the experimental outcomes
+            i) Increase of the temperature (T) increases the probabilities for both fusion reactions ? it is connected with the experimental facts that the concentrations of both 4He and 3He increase with the increase of the temperature;
+            ii) Increase of the kinetic energies of the interacting nuclei (D and D, and D and H) increases the probability for both fusion reactions ? it is connected with the experimental facts that the concentrations of both 4He and 3He increase with the increase of the plasma voltage;
+            iii) The released energies of the fusion reactions partially destroy the crystal lattice making that the corresponding regions not to be able to participate in immediate further reactions ? it corresponds to the cyclic change of the temperature that was observed experimentally, i.e. time for recovery of the crystal lattice is needed in order fusion reactions to be re-established again;
+            iv) Any partial destroy of the crystal lattice (mechanical or as result of fusion reaction) brings the corresponding destroyed regions out of order regarding the fusion reaction.</textarea
+        >
+      </div>
+    </div>
+    <div class="flexcolumn">
+      <div>Active Link(s): (click on each to open it in another tab)</div>
+      <div>
+        <a href="http://lenr-canr.org/acrobat/Alexandrovcoldfusion.pdf">
+          http://lenr-canr.org/acrobat/Alexandrovcoldfusion.pdf
+        </a>
+      </div>
+    </div>
+    <div class="flexcolumn">
+      <div>
+        Citations: An 'Enter' key separated list of links (with optional notes)
+        that cite this.
+      </div>
+      <div><textarea></textarea></div>
+    </div>
+    <div class="flexcolumn">
+      <div>
+        Headline: As you or the popular or scientific press might or did
+        describe it.
+      </div>
+      <div><input type="text" /></div>
+    </div>
