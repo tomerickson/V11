@@ -10,12 +10,14 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { FloatLabelType, MatFormFieldModule } from '@angular/material/form-field';
+import {
+  FloatLabelType,
+  MatFormFieldModule
+} from '@angular/material/form-field';
 import { LenrEventsDetailComponent } from '../lenr-events-detail/lenr-events-detail.component';
 import { RouterModule } from '@angular/router';
 import { AngularSplitModule } from 'angular-split';
 import { CdkDrag, CdkDragMove } from '@angular/cdk/drag-drop';
-import { EventRequest } from '../lenr-events-head.component';
 import {
   Form,
   FormBuilder,
@@ -26,6 +28,8 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { ILenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
+import { MatExpansionModule } from '@angular/material/expansion';
 @Component({
   selector: 'mfmp-lenr-events-face',
   standalone: true,
@@ -36,6 +40,7 @@ import { MatButtonModule } from '@angular/material/button';
     RouterModule,
     MatButtonModule,
     MatCardModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -47,7 +52,10 @@ import { MatButtonModule } from '@angular/material/button';
   providers: [AngularSplitModule]
 })
 export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
-  @Input({ required: true }) request!: EventRequest;
+  @Input({ required: true }) categories!: string[] | null;
+  @Input({ required: true }) eventCount!: number | null;
+  @Input({ required: true }) maxId!: number | null;
+  @Input({required: true}) description!: string | null;
   @ViewChild('leftside') leftSide!: ElementRef;
   @ViewChild('rightside') rightSide!: ElementRef;
 
@@ -59,7 +67,7 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   rightWidth = 0;
   now = new Date();
   year = this.now.getFullYear();
-  
+
   eventForm!: FormGroup;
 
   get minYear(): number | null {
@@ -67,7 +75,7 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   }
 
   get minIndex(): number | null {
-    return this.minValue('s_Index_from')
+    return this.minValue('s_Index_from');
   }
 
   floatLabelControl = new FormControl('auto' as FloatLabelType);
@@ -95,8 +103,8 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
 
   minValue = (fieldName: string): number | null => {
     const min = this.eventForm.get(fieldName)?.value;
-    return (min) ? (min) : null;
-  }
+    return min ? min : null;
+  };
 
   getChildren = () => {
     this.leftDiv = this.leftSide.nativeElement;

@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { IntroComponent } from './intro/intro.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { TestpageHeadComponent } from './testpage/testpage.head.component';
+import { DomParserComponent } from './dom-parser/dom-parser.component';
 
 export const APP_ROUTES: Routes = [
   {
@@ -33,5 +34,6 @@ export const APP_ROUTES: Routes = [
   },
 
   { path: 'testpage', pathMatch: 'full', component: TestpageHeadComponent },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent },
+  { path: 'dom-parser', component: DomParserComponent}
 ];

@@ -7,7 +7,11 @@ export interface LenrEventsState {
   loading: boolean;
   ready: boolean;
   error: any;
+  eventCount: number;
+  maxEventId: number;
+  categories: string[];
   lenrEvents: LenrEventDetail[];
+  html: any;
 }
 
 export const initialState: LenrEventsState = {
@@ -15,7 +19,11 @@ export const initialState: LenrEventsState = {
   loading: false,
   ready: false,
   error: null,
-  lenrEvents: []
+  eventCount: 0,
+  maxEventId: 0,
+  categories: [],
+  lenrEvents: [],
+  html: null
 };
 
 export const lenrEventReducer = createReducer(
@@ -34,6 +42,26 @@ export const lenrEventReducer = createReducer(
       error: null,
       lenrEvents: []
     };
+  }),
+  on(LenrEventActions.prefetch, (state) => {
+    return {
+      ...state,
+      eventCount: 0,
+      maxEventId: 0,
+      categories: [],
+      error: null
+    };
+  }),
+   on(LenrEventActions.prefetchSuccess, (state, action) => {
+    return {
+      ...state,
+      eventCount: action.payload.eventCount,
+      maxEventId: action.payload.maxId,
+      categories: action.payload.categories
+    };
+  }),
+  on(LenrEventActions.fetchAllResults, (state) => {
+    return { ...state, loading: true, ready: false, error: null };
   }),
   on(LenrEventActions.loadAllResultsFailure, (state, action) => {
     return { ...state, loading: false, error: action.error, ready: false };
@@ -58,5 +86,8 @@ export const {
   selectLoading,
   selectReady,
   selectError,
+  selectEventCount,
+  selectMaxEventId,
+  selectCategories,
   selectLenrEvents
 } = lenrEventsFeature;

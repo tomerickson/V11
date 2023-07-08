@@ -27,7 +27,7 @@ export interface GlobalCollections {
 
 @Injectable({ providedIn: 'root' })
 export class CrudService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
 
   private _endPoint: string = environment.proxy + environment.apiUrl;
   // private user: User;
@@ -80,7 +80,9 @@ export class CrudService {
       });
     } else {
       const url =
-        page + '/?' + encodeURI( payload.map((each) => each.asString()).join('&'));
+        page +
+        '/?' +
+        encodeURI(payload.map((each) => each.asString()).join('&'));
       return this.http.get<any>(url, {
         observe: 'body'
       });
@@ -88,20 +90,33 @@ export class CrudService {
   }
 
   getFissionResults = (payload: KeyValuePair[]): Observable<string> => {
-    let page: string =  `${this.endPoint}Fission.php`;
+    let page: string = `${this.endPoint}Fission.php`;
     return this.http.post(page, this.buildFormData(payload), {
       responseType: 'text',
       observe: 'body'
     });
-  }
+  };
+
+  getPage = (page: string): Observable<string> => {
+    const url = `${this.endPoint}${page}`;
+    return this.http.get(url, { responseType: 'text', observe: 'body' });
+  };
+
+  postPage = (page: string, payload: FormData): Observable<string> => {
+    const url = `${this.endPoint}${page}`;
+    return this.http.post(url, payload, {
+      responseType: 'text',
+      observe: 'body'
+    });
+  };
 
   getLenrEvents = (payload: FormData): Observable<string> => {
     const page = `${this.endPoint}Select_LENR_Events.php`;
     return this.http.post(page, payload, {
       responseType: 'text',
       observe: 'body'
-    })
-  }
+    });
+  };
   getDummyResults(): Observable<any> {
     console.log('getting dummy data');
     let page = 'http://localhost:4200/assets/demo.txt';
@@ -144,12 +159,12 @@ export class CrudService {
   };
 
   /**
-   * 
+   *
    * Extract the results tables from the page and convert them
    * into DTOs, then bundle them into a IFissionCompositeResults object.
-   * 
-   * @param html 
-   * @returns 
+   *
+   * @param html
+   * @returns
    */
   parseFissionResults = (html: string): IFissionCompositeResults => {
     let result: IFissionCompositeResults = {
@@ -157,7 +172,7 @@ export class CrudService {
       nuclideResults: [],
       elementResults: [],
       ok: true
-    }
+    };
     const data = extractTablesFromPage(html);
     for (let i = 0; i < 3; i++) {
       const table: any[] = data[i];
@@ -167,12 +182,12 @@ export class CrudService {
     }
     for (let i = 0; i < 3; i++) {
       result.ok =
-      result.fissionResults.length > 0 &&
-      result.nuclideResults.length > 0 &&
-      result.elementResults.length > 0;
+        result.fissionResults.length > 0 &&
+        result.nuclideResults.length > 0 &&
+        result.elementResults.length > 0;
     }
     return result;
-  }
+  };
 
   /**
    * Match up the first fields of the incoming

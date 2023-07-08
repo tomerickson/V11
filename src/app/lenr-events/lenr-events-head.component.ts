@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, combineLatest, map } from 'rxjs';
+import { ILenrEventsRequest } from '../core/models/lenr-events-request.model';
+import { HeaderProviderService } from '../shared/header/header.provider.service';
+import { globalFeature } from '../state';
+import * as eventStore from '../state/lenr-events';
 import { LenrEventsFaceComponent } from './lenr-event-face/lenr-events-face.component';
 
 @Component({
@@ -7,22 +13,52 @@ import { LenrEventsFaceComponent } from './lenr-event-face/lenr-events-face.comp
   standalone: true,
   imports: [CommonModule, LenrEventsFaceComponent],
   template: `
-    <mfmp-lenr-events-face [request]="request"></mfmp-lenr-events-face>
+    <mfmp-lenr-events-face
+      [categories]="categories | async"
+      [eventCount]="eventCount | async"
+      [maxId]="maxId | async"
+      [description]="pageDescription | async"
+      ]></mfmp-lenr-events-face>
   `,
   styles: []
 })
-export class LenrEventsHeadComponent {
-  
-  request: EventRequest = {} as EventRequest;
-}
+export class LenrEventsHeadComponent implements OnInit {
+  store = inject(Store);
+  headerService = inject(HeaderProviderService);
+  categories!: Observable<string[]>;
+  eventCount!: Observable<number>;
+  maxId!: Observable<number>;
+  pageDescription!: Observable<string>;
+  derivedDescription!: Observable<string>;
 
-export interface EventRequest {
-  s_Year_from: number;
-  s_Year_to: number;
-  s_Index_from: number;
-  s_Index_to: number;
-  s_Category: string;
-  s_Author: string;
-  s_Title: string;
-  s_Keywords: string[];
+  ngOnInit(): void {
+/*     this.derivedDescription = combineLatest([
+      this.pageDescription,
+      this.eventCount
+    ]).pipe(
+      map(([text, value]: [string, number]) => {
+        const newText = text.replace('eventCount', value.toString());
+        console.log('newText', newText);
+        return newText;
+      })
+    ); */
+    this.categories = this.store.select(
+      eventStore.lenrEventsFeature.selectCategories
+    );
+    this.eventCount = this.store.select(
+      eventStore.lenrEventsFeature.selectEventCount
+    );
+    this.maxId = this.store.select(
+      eventStore.lenrEventsFeature.selectMaxEventId
+    );
+    this.pageDescription = this.store.select(
+      globalFeature.selectPageDescription
+    );
+    this.headerService.buildPageHeader('lenr-events');
+    this.store.dispatch(
+      eventStore.LenrEventActions.prefetch({ payload: Date.now() })
+    );
+  }
+
+  request: ILenrEventsRequest = {} as ILenrEventsRequest;
 }

@@ -1,11 +1,12 @@
 <div class="wrapper">
+  <mat-expansion-panel expanded="false"></mat-expansion-panel>
   <mat-card>
     <mat-card-content>
       <div class="flexrow">
         <div #leftside [formGroup]="eventForm">
           <div>
-            Exploring the new 'LENR_Events' database (4996 entries): Core data
-            thanks to
+            Exploring the new 'LENR_Events' database ({{ eventCount }} entries):
+            Core data thanks to
             <a href="https://www.LENR-CANR.org">LENR-CANR</a>
             - more being added by the MFMP.
             <p>
@@ -73,9 +74,10 @@
                   type="number"
                   formControlName="s_Index_to"
                   min="{{ minIndex }}"
+                  max="{{ maxId }}"
                   placeholder="9999"
                   onfocus="this.select()" />
-                <mat-hint>(max = 5001)</mat-hint>
+                <mat-hint>(max = {{ maxId }})</mat-hint>
               </mat-form-field>
             </div>
             <div class="cell9 label"><label>Category:</label></div>
@@ -137,10 +139,11 @@
             </div>
             <div class="cell12">
               <mat-form-field>
-                <input matInput type="text"
-                formControlName="s_Author"
-                placeholder="Surname of one author"
-                />
+                <input
+                  matInput
+                  type="text"
+                  formControlName="s_Author"
+                  placeholder="Surname of one author" />
               </mat-form-field>
             </div>
             <div class="cell13 label">
@@ -148,9 +151,11 @@
             </div>
             <div class="cell14">
               <mat-form-field>
-                <input matInput type="text"
-                formControlName="s_Title"
-                placeholder="Word or phrase in the Title">
+                <input
+                  matInput
+                  type="text"
+                  formControlName="s_Title"
+                  placeholder="Word or phrase in the Title" />
               </mat-form-field>
             </div>
             <div class="cell15 label">
@@ -158,9 +163,11 @@
             </div>
             <div class="cell16">
               <mat-form-field>
-                <input matInput type="text"
-                formCotrolName="s_Keywords"
-                placeholder="Word or phrase in the Keywords">
+                <input
+                  matInput
+                  type="text"
+                  formCotrolName="s_Keywords"
+                  placeholder="Word or phrase in the Keywords" />
               </mat-form-field>
             </div>
             <div class="buttoncell label">

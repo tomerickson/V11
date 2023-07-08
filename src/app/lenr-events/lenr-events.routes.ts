@@ -5,7 +5,8 @@ import { DownloadService } from '../shared/download/download.service';
 import * as eventState from '../state/lenr-events';
 import { LenrEventsDetailComponent } from './lenr-events-detail/lenr-events-detail.component';
 import { LenrEventsHeadComponent } from './lenr-events-head.component';
-import { AngularSplitModule } from 'angular-split';
+import { EventServices } from './lenr-events.service';
+import { HeaderProviderService } from '../shared/header/header.provider.service';
 
 export const LENR_EVENTS_ROUTES: Routes = [
   {
@@ -14,6 +15,8 @@ export const LENR_EVENTS_ROUTES: Routes = [
     providers: [
       provideState(eventState.lenrEventsFeature),
       provideEffects([eventState.effects]),
+      {provide: EventServices, useClass: EventServices},
+      {provide: HeaderProviderService, useClass: HeaderProviderService}
     ]
   },
   {
