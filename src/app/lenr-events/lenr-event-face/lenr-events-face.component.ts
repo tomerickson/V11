@@ -1,41 +1,36 @@
+import { CdkDrag, CdkDragMove } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
   ElementRef,
   Input,
   OnInit,
-  Output,
   ViewChild,
   inject
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
 import {
-  FloatLabelType,
-  MatFormFieldModule
-} from '@angular/material/form-field';
-import { LenrEventsDetailComponent } from '../lenr-events-detail/lenr-events-detail.component';
-import { RouterModule } from '@angular/router';
-import { AngularSplitModule } from 'angular-split';
-import { CdkDrag, CdkDragMove } from '@angular/cdk/drag-drop';
-import {
-  Form,
   FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import {
+  FloatLabelType,
+  MatFormFieldModule
+} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { ILenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { RouterModule } from '@angular/router';
+import { LenrEventsDetailComponent } from '../lenr-events-detail/lenr-events-detail.component';
 @Component({
   selector: 'mfmp-lenr-events-face',
   standalone: true,
   imports: [
     CdkDrag,
-    AngularSplitModule,
     CommonModule,
     RouterModule,
     MatButtonModule,
@@ -48,8 +43,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     LenrEventsDetailComponent
   ],
   templateUrl: './lenr-events-face.component.html',
-  styleUrls: ['./lenr-events-face.component.scss'],
-  providers: [AngularSplitModule]
+  styleUrls: ['./lenr-events-face.component.scss']
 })
 export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) categories!: string[] | null;
