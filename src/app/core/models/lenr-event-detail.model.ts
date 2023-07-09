@@ -15,4 +15,5 @@ export interface LenrEventDetail {
     abstract: string;
     citations: string[];
     headline: string;
+    hyperlinks: string[];
 }

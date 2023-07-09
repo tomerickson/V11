@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable, combineLatest, from, map, of } from 'rxjs';
 import { ILenrEventsRequest } from '../core/models/lenr-events-request.model';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { globalFeature } from '../state';
 import * as eventStore from '../state/lenr-events';
-import { LenrEventsFaceComponent } from './lenr-event-face/lenr-events-face.component';
+import { LenrEventsFaceComponent } from './lenr-events-face/lenr-events-face.component';
 
 @Component({
   selector: 'mfmp-lenr-events-head',
@@ -18,7 +18,7 @@ import { LenrEventsFaceComponent } from './lenr-event-face/lenr-events-face.comp
       [eventCount]="eventCount | async"
       [maxId]="maxId | async"
       [description]="pageDescription | async"
-      ]></mfmp-lenr-events-face>
+      ></mfmp-lenr-events-face>
   `,
   styles: []
 })
@@ -32,16 +32,13 @@ export class LenrEventsHeadComponent implements OnInit {
   derivedDescription!: Observable<string>;
 
   ngOnInit(): void {
-/*     this.derivedDescription = combineLatest([
-      this.pageDescription,
-      this.eventCount
-    ]).pipe(
-      map(([text, value]: [string, number]) => {
-        const newText = text.replace('eventCount', value.toString());
-        console.log('newText', newText);
-        return newText;
-      })
-    ); */
+
+    this.headerService.buildPageHeader('lenr-events');
+
+    this.store.dispatch(
+      eventStore.LenrEventActions.prefetch({ payload: Date.now() })
+    );
+
     this.categories = this.store.select(
       eventStore.lenrEventsFeature.selectCategories
     );
@@ -54,10 +51,8 @@ export class LenrEventsHeadComponent implements OnInit {
     this.pageDescription = this.store.select(
       globalFeature.selectPageDescription
     );
-    this.headerService.buildPageHeader('lenr-events');
-    this.store.dispatch(
-      eventStore.LenrEventActions.prefetch({ payload: Date.now() })
-    );
+
+
   }
 
   request: ILenrEventsRequest = {} as ILenrEventsRequest;

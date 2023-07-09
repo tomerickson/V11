@@ -1,0 +1,59 @@
+div.wrapper {
+    height: 100%;
+}
+
+.mdc-card {
+    height: 100%;
+}
+
+div#description {
+    text-align: center;
+}
+div.label {
+    padding-right: 1em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+div.prompts {
+    align-items: center !important;
+
+    >* {
+        margin-left: 1em;
+    }
+}
+
+div.pips {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    margin-right: 1em;
+
+    >div {
+        justify-content: center;
+    }
+}
+div.spacer {
+    height: 2em;
+}
+div.filters {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    margin-right: 1em;
+
+/*     div.label {
+        padding-right: 1em;;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    } */
+
+    .mat-mdc-form-field {
+        width: 50% !important;
+    }
+}
+
+div.buttoncell {
+    grid-column: 4;
+    grid-row: 6;
+}
