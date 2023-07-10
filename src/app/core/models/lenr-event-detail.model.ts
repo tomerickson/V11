@@ -1,4 +1,4 @@
-export interface LenrEventDetail {
+export interface ILenrEventDetail {
     id: number;
     category: string;
     year: number;

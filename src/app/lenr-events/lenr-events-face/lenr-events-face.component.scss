@@ -54,6 +54,10 @@ div.filters {
 }
 
 div.buttoncell {
-    grid-column: 4;
-    grid-row: 6;
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ :first-child {
+    margin-right: 1em;
+ }
 }

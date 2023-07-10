@@ -4,14 +4,11 @@ import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IElementDataModel } from '../models/element-data.model';
+import { IFissionCompositeResults } from '../models/fission-composite-results.model';
 import { IFusionCompositeResults } from '../models/fusion-composite-results.model';
-import { IKeyValuePair, KeyValuePair } from '../models/key-value-pair.model';
+import { KeyValuePair } from '../models/key-value-pair.model';
 import { ILookupDataModel } from '../models/lookup-data.model';
 import { extractTablesFromPage } from './page.services';
-import { IFissionCompositeResults } from '../models/fission-composite-results.model';
-import { LenrEventsLookup } from '../models/lenr-events-lookup.model';
-import { LenrEventDetail } from '../models/lenr-event-detail.model';
-import { observeNotification } from 'rxjs/internal/Notification';
 
 export interface User {
   id: string;

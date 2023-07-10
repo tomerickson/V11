@@ -1,46 +1,42 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { LenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
+import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
 import { LenrEventActions } from './lenr-events.actions';
+import { ILenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
+import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 
 export interface LenrEventsState {
-  formData: FormData;
+  formData: ILenrEventsRequest;
   loading: boolean;
   ready: boolean;
   error: any;
   eventCount: number;
   maxEventId: number;
+  currentEventId: number;
+  currentEvent: ILenrEventDetail;
   categories: string[];
-  lenrEvents: LenrEventDetail[];
+  lenrEvents: ILenrEventsLookup[];
   html: any;
 }
 
 export const initialState: LenrEventsState = {
-  formData: {} as FormData,
+  formData: {} as ILenrEventsRequest,
   loading: false,
   ready: false,
   error: null,
   eventCount: 0,
   maxEventId: 0,
+  currentEventId: 0,
+  currentEvent: {} as ILenrEventDetail,
   categories: [],
   lenrEvents: [],
   html: null
 };
 
-export const lenrEventReducer = createReducer(
+export const lenrEventsReducer = createReducer(
   initialState,
   on(LenrEventActions.reset, () => {
     return {
       ...initialState
-    };
-  }),
-  on(LenrEventActions.fetchAllResults, (state, action) => {
-    return {
-      ...state,
-      formData: action.payload,
-      loading: true,
-      ready: false,
-      error: null,
-      lenrEvents: []
     };
   }),
   on(LenrEventActions.prefetch, (state) => {
@@ -49,10 +45,11 @@ export const lenrEventReducer = createReducer(
       eventCount: 0,
       maxEventId: 0,
       categories: [],
+      lenrDetails: [],
       error: null
     };
   }),
-   on(LenrEventActions.prefetchSuccess, (state, action) => {
+  on(LenrEventActions.prefetchSuccess, (state, action) => {
     return {
       ...state,
       eventCount: action.payload.eventCount,
@@ -60,25 +57,56 @@ export const lenrEventReducer = createReducer(
       categories: action.payload.categories
     };
   }),
-  on(LenrEventActions.fetchAllResults, (state) => {
+  on(LenrEventActions.prefetchFailure, (state, action) => {
+    return { ...state, loading: false, ready: false, error: action.error };
+  }),
+
+  on(LenrEventActions.fetchSearchResults, (state) => {
     return { ...state, loading: true, ready: false, error: null };
   }),
-  on(LenrEventActions.loadAllResultsFailure, (state, action) => {
+  on(LenrEventActions.fetchSearchResultsFailure, (state, action) => {
     return { ...state, loading: false, error: action.error, ready: false };
   }),
-  on(LenrEventActions.loadAllResultsSuccess, (state, action) => {
+  on(LenrEventActions.fetchSearchResultsSuccess, (state, action) => {
     return {
       ...state,
       lenrEvents: action.payload,
       loading: false,
       ready: true
     };
+  }),
+  on(LenrEventActions.findEventId, (state, action) => {
+    return {
+      ...state,
+      currentEventId: action.payload
+    };
+  }),
+  on(LenrEventActions.loadEventDetail, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+      ready: false,
+      error: false,
+      currentEventId: action.payload.r_id
+    };
+  }),
+  on(LenrEventActions.loadEventDetailFailure, (state, action) => {
+    return { ...state, loading: false, ready: false, error: action.error };
+  }),
+  on(LenrEventActions.loadEventDetailSuccess, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      ready: false,
+      error: false,
+      currentEvent: action.payload
+    };
   })
 );
 
 export const lenrEventsFeature = createFeature({
   name: 'lenrevents',
-  reducer: lenrEventReducer
+  reducer: lenrEventsReducer
 });
 
 export const {
@@ -89,5 +117,7 @@ export const {
   selectEventCount,
   selectMaxEventId,
   selectCategories,
-  selectLenrEvents
+  selectLenrEvents,
+  selectCurrentEvent,
+  selectCurrentEventId
 } = lenrEventsFeature;

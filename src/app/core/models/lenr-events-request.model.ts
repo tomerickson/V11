@@ -10,5 +10,6 @@
     s_Author: string;
     s_Title: string;
     s_Keywords: string[];
+    r_id: number;
     doit: string;
   }

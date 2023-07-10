@@ -137,22 +137,24 @@
                 </mat-form-field>
               </div>
             </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
             <div class="buttoncell label">
-              <button type="button" mat-raised-button color="primary">
+              <button type="button" mat-raised-button color="primary" (click)="search()">
                 Search
               </button>
               <button type="button" mat-raised-button color="primary">
                 Clear
               </button>
             </div>
-          </mat-card-content>
+          </mat-card-actions>
         </mat-card>
       </mat-tab>
-      <mat-tab label="Results"></mat-tab>
+      <mat-tab label="Results">
+        <mfmp-lenr-events-results></mfmp-lenr-events-results>
+      </mat-tab>
       <mat-tab label="Detail">
-        <div #rightside>
           <mfmp-lenr-events-detail></mfmp-lenr-events-detail>
-        </div>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>

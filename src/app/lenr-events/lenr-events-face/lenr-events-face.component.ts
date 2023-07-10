@@ -1,12 +1,12 @@
-import { CdkDrag, CdkDragMove } from '@angular/cdk/drag-drop';
+import { CdkDrag } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
-  ElementRef,
+  EventEmitter,
   Input,
   OnInit,
-  ViewChild,
+  Output,
   inject
 } from '@angular/core';
 import {
@@ -24,9 +24,11 @@ import {
 } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { LenrEventsDetailComponent } from '../lenr-events-detail/lenr-events-detail.component';
-import { MatTabsModule } from '@angular/material/tabs';
+import { LenrEventsResultsComponent } from '../lenr-events-results/lenr-events-results.component';
+import { ILenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
 @Component({
   selector: 'mfmp-lenr-events-face',
   standalone: true,
@@ -42,37 +44,38 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatSelectModule,
     MatTabsModule,
     ReactiveFormsModule,
-    LenrEventsDetailComponent
+    LenrEventsDetailComponent,
+    LenrEventsResultsComponent
   ],
   templateUrl: './lenr-events-face.component.html',
   styleUrls: ['./lenr-events-face.component.scss']
 })
 export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   private _maxId!: number | null;
-  private _categories!: string[] | null;
-
+  private _categories: string[] = [];
   initialCategory!: string;
 
-  @Input({ required: true }) categories! : string[] | null;
+  @Output() searcher: EventEmitter<ILenrEventsRequest> =
+    new EventEmitter<ILenrEventsRequest>();
   @Input({ required: true }) eventCount!: number | null;
+  @Input({ required: true }) description!: string | null;
 
+  get categories(): string[] {
+    return this._categories !== null ? this._categories : [];
+  }
+  @Input({ required: true }) set categories(value: string[] | null) {
+    if (value) this._categories = value;
+  }
   get maxId(): number | null {
     return this._maxId;
   }
-  
   @Input({ required: true }) set maxId(value: number | null) {
     this._maxId = value;
     this.eventForm?.get('s_Index_to')?.setValue(value);
   }
 
-  @Input({ required: true }) description!: string | null;
-
   fb = inject(FormBuilder);
 
-  leftDiv!: HTMLElement;
-  rightDiv!: HTMLElement;
-  leftWidth = 0;
-  rightWidth = 0;
   now = new Date();
   year = this.now.getFullYear();
   get pageDescription() {
@@ -137,4 +140,10 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   getFloatLabelValue(): FloatLabelType {
     return this.floatLabelControl.value || 'auto';
   }
+
+  search = () => {
+    const request = { ...this.eventForm.value } as ILenrEventsRequest;
+    request.doit = 'refresh';
+    this.searcher.emit(request);
+  };
 }

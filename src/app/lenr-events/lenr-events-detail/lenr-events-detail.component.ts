@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { LenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
+import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
@@ -12,11 +12,11 @@ import { MatInputModule } from '@angular/material/input';
   styleUrls: ['./lenr-events-detail.component.scss']
 })
 export class LenrEventsDetailComponent {
-  event!: LenrEventDetail;
+  event!: ILenrEventDetail;
 
   constructor() {
     const strings = ['a', 'b'];
-    this.event = {} as LenrEventDetail;
+    this.event = {} as ILenrEventDetail;
     this.event.year = 2000;
     this.event.category = 'category';
     this.event.author = 'author';

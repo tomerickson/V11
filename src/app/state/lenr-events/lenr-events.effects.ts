@@ -4,6 +4,7 @@ import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { NotificationComponent } from 'src/app/core/notification.component';
 import { LenrEventActions } from './lenr-events.actions';
 import { EventServices } from '../../lenr-events/lenr-events.service';
+import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 
 export type LenrPrefetchProperties = {
   categories: string[];
@@ -31,18 +32,19 @@ export const prefetchEffect = createEffect(
   { functional: true }
 );
 
-export const fetchAllResultsEffect = createEffect(
+export const fetchSearchResultsEffect = createEffect(
   (actions$ = inject(Actions)) => {
     const svc = inject(EventServices);
     return actions$.pipe(
-      ofType(LenrEventActions.fetchAllResults),
+      ofType(LenrEventActions.fetchSearchResults),
       switchMap((action) =>
-        svc.fetchEventDetails(action.payload).pipe(
-          map((results) =>
-            LenrEventActions.loadAllResultsSuccess({ payload: results })
-          ),
+        svc.fetchEventsPage(action.payload).pipe(
+          map((html) => {
+            const events:ILenrEventsLookup[] = svc.parseEventList(html);
+            return LenrEventActions.fetchSearchResultsSuccess({ payload: events })
+          }),
           catchError((error) =>
-            of(LenrEventActions.loadAllResultsFailure({ error: error }))
+            of(LenrEventActions.fetchSearchResultsFailure({ error: error }))
           )
         )
       )
@@ -55,7 +57,7 @@ export const loadAllEventsErrorAlert = createEffect(
   () => {
     const notifier = inject(NotificationComponent);
     return inject(Actions).pipe(
-      ofType(LenrEventActions.loadAllResultsFailure),
+      ofType(LenrEventActions.fetchSearchResultsFailure),
       tap(() => notifier.showClientError('No results found.'))
     );
   },
