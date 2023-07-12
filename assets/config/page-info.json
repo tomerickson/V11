@@ -1,5 +1,11 @@
 [
     {
+        "pageName": "lenr-events",
+        "pageTitle": "Select LENR Events",
+        "pageCredits":"Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
+        "pageDescription": "Exploring the new \"LENR_Events\" database (eventCount entries):"
+    },
+    {
         "pageName": "fusion",
         "pageTitle": "Fusion Reactions",
         "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
