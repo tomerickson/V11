@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { retry } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IElementDataModel } from '../models/element-data.model';
 import { IFissionCompositeResults } from '../models/fission-composite-results.model';
@@ -31,27 +30,6 @@ export class CrudService {
 
   public get endPoint(): string {
     return this._endPoint;
-  }
-
-  getUsers(): Observable<User> {
-    return this.http.get<User>(this.endPoint + '/users').pipe(retry(1));
-  }
-
-  /*   getGlobalData(): Observable<GlobalCollections> {
-    let result: GlobalCollections = { elements: [], lookups: [] };
-    this.getElements().pipe(map((res) => result.elements));
-    this.getLookups().pipe(map((res) => result.lookups));
-    return of(result);
-  } */
-
-  getElements(): Observable<IElementDataModel[]> {
-    let page = `${this.endPoint}Elements.php`;
-    return this.http.get<IElementDataModel[]>(page).pipe(retry(1));
-  }
-
-  getLookups(): Observable<ILookupDataModel[]> {
-    let page = `${this.endPoint}Lookups.php`;
-    return this.http.get<ILookupDataModel[]>(page).pipe(retry(1));
   }
 
   /**
@@ -96,35 +74,26 @@ export class CrudService {
 
   getPage = (page: string): Observable<string> => {
     const url = `${this.endPoint}${page}`;
+    console.log('getPage url', url);
     return this.http.get(url, { responseType: 'text', observe: 'body' });
   };
 
-  postPage = (page: string, payload: FormData): Observable<string> => {
+  postPage = (page: string, payload: any, headers?: HttpHeaders): Observable<string> => {
     const url = `${this.endPoint}${page}`;
-    return this.http.post(url, payload, {
+    console.log('postPage url', url);
+    return this.http.post(url, payload, {headers: headers,
       responseType: 'text',
       observe: 'body'
     });
   };
 
-  getLenrEvents = (payload: FormData): Observable<string> => {
-    const page = `${this.endPoint}Select_LENR_Events.php`;
-    return this.http.post(page, payload, {
-      responseType: 'text',
-      observe: 'body'
-    });
-  };
   getDummyResults(): Observable<any> {
     console.log('getting dummy data');
     let page = 'http://localhost:4200/assets/demo.txt';
     return this.http.get<any>(page, { observe: 'body' });
   }
 
-  getUser(id: string): Observable<User> {
-    return this.http.get<User>(`${this.endPoint}/users/${id}`).pipe(retry(1));
-  }
-
-  /**
+   /**
    * Extract the results tables from the page and convert them
    * into DTOs, then bundle them into a IFusionCompositeResults object.
    *

@@ -1,7 +1,7 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
 import { LenrEventActions } from './lenr-events.actions';
-import { ILenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
+import { ILenrEventsRequest, LenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 
 export interface LenrEventsState {
@@ -19,7 +19,7 @@ export interface LenrEventsState {
 }
 
 export const initialState: LenrEventsState = {
-  formData: {} as ILenrEventsRequest,
+  formData: {} as LenrEventsRequest,
   loading: false,
   ready: false,
   error: null,
@@ -87,7 +87,7 @@ export const lenrEventsReducer = createReducer(
       loading: true,
       ready: false,
       error: false,
-      currentEventId: action.payload.r_id
+      currentEventId: action.payload.r_id as number
     };
   }),
   on(LenrEventActions.loadEventDetailFailure, (state, action) => {

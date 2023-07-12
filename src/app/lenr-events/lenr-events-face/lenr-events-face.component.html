@@ -10,10 +10,11 @@
         - more being added by the MFMP.
       </p>
     </div>
-    <mat-tab-group mat-stretch-tabs="false" animationDuration="250ms">
+    <form [formGroup]="eventForm">
+          <mat-tab-group mat-stretch-tabs="false" animationDuration="250ms">
       <mat-tab label="Search">
         <mat-card>
-          <mat-card-content [formGroup]="eventForm">
+          <mat-card-content>
             <div class="pips">
               <div class="label">
                 <label>Year from:</label>
@@ -151,11 +152,13 @@
         </mat-card>
       </mat-tab>
       <mat-tab label="Results">
-        <mfmp-lenr-events-results></mfmp-lenr-events-results>
+        <mfmp-lenr-events-results
+        [eventList]="eventList"></mfmp-lenr-events-results>
       </mat-tab>
       <mat-tab label="Detail">
           <mfmp-lenr-events-detail></mfmp-lenr-events-detail>
       </mat-tab>
     </mat-tab-group>
+    </form>
   </mat-card-content>
 </mat-card>

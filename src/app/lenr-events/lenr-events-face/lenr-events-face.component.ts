@@ -28,7 +28,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { LenrEventsDetailComponent } from '../lenr-events-detail/lenr-events-detail.component';
 import { LenrEventsResultsComponent } from '../lenr-events-results/lenr-events-results.component';
-import { ILenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
+import { LenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
+import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 @Component({
   selector: 'mfmp-lenr-events-face',
   standalone: true,
@@ -55,11 +56,11 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   private _categories: string[] = [];
   initialCategory!: string;
 
-  @Output() searcher: EventEmitter<ILenrEventsRequest> =
-    new EventEmitter<ILenrEventsRequest>();
+  @Output() searcher: EventEmitter<LenrEventsRequest> =
+    new EventEmitter<LenrEventsRequest>();
   @Input({ required: true }) eventCount!: number | null;
   @Input({ required: true }) description!: string | null;
-
+@Input({required: true}) eventList!: ILenrEventsLookup[] | null;
   get categories(): string[] {
     return this._categories !== null ? this._categories : [];
   }
@@ -142,7 +143,7 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   }
 
   search = () => {
-    const request = { ...this.eventForm.value } as ILenrEventsRequest;
+    const request = { ...this.eventForm.value } as LenrEventsRequest;
     request.doit = 'refresh';
     this.searcher.emit(request);
   };

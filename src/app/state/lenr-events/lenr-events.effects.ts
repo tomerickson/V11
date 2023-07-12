@@ -10,7 +10,7 @@ export type LenrPrefetchProperties = {
   categories: string[];
   eventCount: number;
   maxId: number;
-}
+};
 export const prefetchEffect = createEffect(
   (actions$ = inject(Actions)) => {
     const svc = inject(EventServices);
@@ -20,7 +20,7 @@ export const prefetchEffect = createEffect(
         svc.preFetchProperty(action.payload).pipe(
           map((html) => {
             const props: LenrPrefetchProperties = svc.parseProperties(html);
-             return LenrEventActions.prefetchSuccess({ payload: props });
+            return LenrEventActions.prefetchSuccess({ payload: props });
           }),
           catchError((error) =>
             of(LenrEventActions.prefetchFailure({ error: error }))
@@ -38,10 +38,12 @@ export const fetchSearchResultsEffect = createEffect(
     return actions$.pipe(
       ofType(LenrEventActions.fetchSearchResults),
       switchMap((action) =>
-        svc.fetchEventsPage(action.payload).pipe(
+        svc.postEventPage(action.payload).pipe(
           map((html) => {
-            const events:ILenrEventsLookup[] = svc.parseEventList(html);
-            return LenrEventActions.fetchSearchResultsSuccess({ payload: events })
+            const events: ILenrEventsLookup[] = svc.parseEventList(html);
+            return LenrEventActions.fetchSearchResultsSuccess({
+              payload: events
+            });
           }),
           catchError((error) =>
             of(LenrEventActions.fetchSearchResultsFailure({ error: error }))
@@ -70,7 +72,7 @@ export const prefetchErrorAlert = createEffect(
     return inject(Actions).pipe(
       ofType(LenrEventActions.prefetchFailure),
       tap(() => notifier.showClientError('Something went wrong'))
-    )
+    );
   },
-  {functional: true, dispatch: false}
+  { functional: true, dispatch: false }
 );
