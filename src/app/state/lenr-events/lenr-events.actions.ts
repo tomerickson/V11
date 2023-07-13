@@ -1,7 +1,7 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { ILenrEventDetail } from "src/app/core/models/lenr-event-detail.model";
 import { ILenrEventsRequest, LenrEventsRequest } from "src/app/core/models/lenr-events-request.model";
-import { LenrPrefetchProperties } from "./lenr-events.effects";
+import { LenrEventsPrefetchModel } from '../../core/models/lenr-events-prefetch.model.';
 import { ILenrEventsLookup } from "src/app/core/models/lenr-events-lookup.model";
 
 export const LenrEventActions = createActionGroup({
@@ -9,7 +9,7 @@ export const LenrEventActions = createActionGroup({
     events: {
       'Reset': emptyProps(),
       'Prefetch': props<{payload: LenrEventsRequest}>(),
-      'Prefetch Success': props<{payload: LenrPrefetchProperties}>(),
+      'Prefetch Success': props<{payload: LenrEventsPrefetchModel}>(),
       'Prefetch Failure': (error: any) => ({error}),
       'Fetch Search Results': props<{payload: LenrEventsRequest}>(),
       'Fetch Search Results Success': props<{payload: ILenrEventsLookup[]}>(),

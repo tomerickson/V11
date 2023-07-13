@@ -1,7 +1,40 @@
 <mat-card>
   <mat-card-content>
-    <ul>
-        <li *ngFor="let event of eventList">{{stringify(event)}}</li>
-    </ul>
+    <ng-container *ngIf="loading; then waiting; else working"></ng-container>
+    <ng-template #waiting>
+      <mat-progress-spinner
+        class="progress-spinner"
+        mode="indeterminate"></mat-progress-spinner>
+    </ng-template>
+    <ng-template #working>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort #tableSort="matSort"
+        class="mat-elevation-z2">
+        <ng-container [matColumnDef]="column" *ngFor="let column of displayColumns">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{column}}</th>
+          <td mat-cell *matCellDef="let row">{{row[column]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="paginatorColumn">
+          <td mat-footer-cell *matFooterCellDef colspan="99">
+            <ng-container *ngTemplateOutlet="footerCell"></ng-container>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns" (click)="clicked(row)"></tr>
+        <tr mat-footer-row *matFooterRowDef="['paginatorColumn']"></tr>
+      </table>
+    </ng-template>
   </mat-card-content>
 </mat-card>
+<ng-template #footerCell>
+</ng-template>
+<mat-paginator
+#paginator
+[pageSize]="25"
+[pageSizeOptions]="[10, 25, 50, 100]"
+[length]="length"
+[pageIndex]="0"
+showFirstLastButtons
+(page)="handlePageEvent($event)"></mat-paginator>

@@ -7,6 +7,7 @@ import {
   Input,
   OnInit,
   Output,
+  ViewChild,
   inject
 } from '@angular/core';
 import {
@@ -24,12 +25,13 @@ import {
 } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { LenrEventsDetailComponent } from '../lenr-events-detail/lenr-events-detail.component';
 import { LenrEventsResultsComponent } from '../lenr-events-results/lenr-events-results.component';
 import { LenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
+
 @Component({
   selector: 'mfmp-lenr-events-face',
   standalone: true,
@@ -54,13 +56,17 @@ import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model'
 export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   private _maxId!: number | null;
   private _categories: string[] = [];
-  initialCategory!: string;
+
+  @ViewChild('tabGroup') tabGroup!: MatTabGroup;
 
   @Output() searcher: EventEmitter<LenrEventsRequest> =
     new EventEmitter<LenrEventsRequest>();
+  @Output() fetcher: EventEmitter<number> = new EventEmitter();
+  
   @Input({ required: true }) eventCount!: number | null;
   @Input({ required: true }) description!: string | null;
-@Input({required: true}) eventList!: ILenrEventsLookup[] | null;
+  @Input({ required: true }) eventList: ILenrEventsLookup[] | null = null;
+  @Input({ required: true }) loading!: boolean | null;
   get categories(): string[] {
     return this._categories !== null ? this._categories : [];
   }
@@ -77,6 +83,7 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
 
   fb = inject(FormBuilder);
 
+  initialCategory!: string;
   now = new Date();
   year = this.now.getFullYear();
   get pageDescription() {
@@ -146,5 +153,10 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
     const request = { ...this.eventForm.value } as LenrEventsRequest;
     request.doit = 'refresh';
     this.searcher.emit(request);
+    this.tabGroup.selectedIndex = 1;
+  };
+
+  fetch = (eventId: number) => {
+    this.fetcher.emit(eventId);
   };
 }

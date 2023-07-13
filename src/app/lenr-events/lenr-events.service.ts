@@ -7,7 +7,7 @@ import {
 } from '../core/models/lenr-events-request.model';
 import { CrudService } from '../core/services/crud.service';
 import { getFormData, getFormDataString } from '../core/services/helpers';
-import { LenrPrefetchProperties } from '../state/lenr-events/lenr-events.effects';
+import { LenrEventsPrefetchModel } from '../core/models/lenr-events-prefetch.model.';
 import { ILenrEventsLookup } from '../core/models/lenr-events-lookup.model';
 import { LenrEventsPageScraperService } from './lenr-events-page-scraper.service';
 import { HttpHeaders } from '@angular/common/http';
@@ -102,9 +102,9 @@ export class EventServices {
    *     maxId: number | null;
    *     categories: (string | null)[];  }
    */
-  parseProperties = (html: string): LenrPrefetchProperties => {
+  parseProperties = (html: string): LenrEventsPrefetchModel => {
     const page = new LenrEventsPageScraperService(html);
-    const props = {} as LenrPrefetchProperties;
+    const props = {} as LenrEventsPrefetchModel;
     props.eventCount = page.eventCount;
     props.maxId = page.maxId;
     props.categories = page.categories;

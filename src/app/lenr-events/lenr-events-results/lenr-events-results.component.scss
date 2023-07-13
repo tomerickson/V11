@@ -1,0 +1,37 @@
+.mat-mdc-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    ;
+    width: 100%;
+}
+
+table.mat-mdc-table {
+    // border-spacing: 0;
+    border-collapse: collapse;
+    border: 1px solid lightgray;
+}
+
+.mdc-data-table__header-row {
+    height: auto !important;
+}
+
+.mdc-data-table__header-cell {
+    border: 1px solid lightgray;
+    padding: 3px 8px !important;
+}
+
+.mdc-data-table__row {
+    height: auto !important;
+}
+
+.mdc-data-table__cell {
+    border: 1px solid lightgray;
+    padding: 3px 8px !important;
+}
+
+.progress-spinner {
+    margin-top: 3em;
+    margin-left: auto;
+    margin-right: auto;
+}

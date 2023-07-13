@@ -11,154 +11,160 @@
       </p>
     </div>
     <form [formGroup]="eventForm">
-          <mat-tab-group mat-stretch-tabs="false" animationDuration="250ms">
-      <mat-tab label="Search">
-        <mat-card>
-          <mat-card-content>
-            <div class="pips">
-              <div class="label">
-                <label>Year from:</label>
+      <mat-tab-group #tabGroup mat-stretch-tabs="false" animationDuration="250ms">
+        <mat-tab label="Search">
+          <mat-card>
+            <mat-card-content>
+              <div class="pips">
+                <div class="label">
+                  <label>Year from:</label>
+                </div>
+                <div>
+                  <mat-form-field [hideRequiredMarker]="false">
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="s_Year_from"
+                      min="1800"
+                      max="{{ year }}"
+                      value="{{ now | date: 'yyyy' }}"
+                      placeholder="min. 1800"
+                      required="true"
+                      onfocus="this.select()" />
+                    <mat-hint>(min = 1800)</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="label">
+                  <label>Year to:</label>
+                </div>
+                <div>
+                  <mat-form-field [hideRequiredMarker]="false">
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="s_Year_to"
+                      min="{{ minYear }}"
+                      max="{{ year }}"
+                      placeholder="{{ now | date: 'yyyy' }}"
+                      required="true"
+                      onfocus="this.select()" />
+                    <mat-hint>(max = {{ year }})</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="label">
+                  <label>Index from:</label>
+                </div>
+                <div>
+                  <mat-form-field [hideRequiredMarker]="false">
+                    <input
+                      matInput
+                      type="number"
+                      min="1"
+                      max="{{ maxId }}"
+                      formControlName="s_Index_from"
+                      required="true"
+                      value="1"
+                      onfocus="this.select()" />
+                  </mat-form-field>
+                </div>
+                <div class="label">
+                  <label>Index to:</label>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <input
+                      matInput
+                      type="number"
+                      formControlName="s_Index_to"
+                      min="{{ minIndex }}"
+                      max="{{ maxId }}"
+                      placeholder="{{ maxId }}"
+                      required="true"
+                      onfocus="this.select()" />
+                    <mat-hint>(max = {{ maxId }})</mat-hint>
+                  </mat-form-field>
+                </div>
               </div>
-              <div>
-                <mat-form-field [hideRequiredMarker]="false">
-                  <input
-                    matInput
-                    type="number"
-                    formControlName="s_Year_from"
-                    min="1800"
-                    max="{{ year }}"
-                    value="{{ now | date: 'yyyy' }}"
-                    placeholder="min. 1800"
-                    required="true"
-                    onfocus="this.select()" />
-                  <mat-hint>(min = 1800)</mat-hint>
-                </mat-form-field>
+              <div class="spacer"></div>
+              <div class="filters">
+                <div class="label">
+                  <label>Category:</label>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <mat-select title="Categories" formControlName="s_Category">
+                      <mat-option
+                        *ngFor="let category of categories"
+                        [value]="category">
+                        {{ category }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="label">
+                  <label>Author Surname:</label>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="s_Author"
+                      placeholder="Surname of one author" />
+                  </mat-form-field>
+                </div>
+                <div class="label">
+                  <label>Title</label>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="s_Title"
+                      placeholder="Word or phrase in the Title" />
+                  </mat-form-field>
+                </div>
+                <div class="label">
+                  <label>Keyword(s)</label>
+                </div>
+                <div>
+                  <mat-form-field>
+                    <input
+                      matInput
+                      type="text"
+                      formCotrolName="s_Keywords"
+                      placeholder="Word or phrase in the Keywords" />
+                  </mat-form-field>
+                </div>
               </div>
-              <div class="label">
-                <label>Year to:</label>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <div class="buttoncell label">
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="primary"
+                  (click)="search()">
+                  Search
+                </button>
+                <button type="button" mat-raised-button color="primary">
+                  Clear
+                </button>
               </div>
-              <div>
-                <mat-form-field [hideRequiredMarker]="false">
-                  <input
-                    matInput
-                    type="number"
-                    formControlName="s_Year_to"
-                    min="{{ minYear }}"
-                    max="{{ year }}"
-                    placeholder="{{ now | date: 'yyyy' }}"
-                    required="true"
-                    onfocus="this.select()" />
-                  <mat-hint>(max = {{ year }})</mat-hint>
-                </mat-form-field>
-              </div>
-              <div class="label">
-                <label>Index from:</label>
-              </div>
-              <div>
-                <mat-form-field [hideRequiredMarker]="false">
-                  <input
-                    matInput
-                    type="number"
-                    min="1"
-                    max="{{ maxId }}"
-                    formControlName="s_Index_from"
-                    required="true"
-                    value="1"
-                    onfocus="this.select()" />
-                </mat-form-field>
-              </div>
-              <div class="label">
-                <label>Index to:</label>
-              </div>
-              <div>
-                <mat-form-field>
-                  <input
-                    matInput
-                    type="number"
-                    formControlName="s_Index_to"
-                    min="{{ minIndex }}"
-                    max="{{ maxId }}"
-                    placeholder="{{ maxId }}"
-                    required="true"
-                    onfocus="this.select()" />
-                  <mat-hint>(max = {{ maxId }})</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="spacer"></div>
-            <div class="filters">
-              <div class="label">
-                <label>Category:</label>
-              </div>
-              <div>
-                <mat-form-field>
-                  <mat-select title="Categories" formControlName="s_Category">
-                    <mat-option
-                      *ngFor="let category of categories"
-                      [value]="category">
-                      {{ category }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="label">
-                <label>Author Surname:</label>
-              </div>
-              <div>
-                <mat-form-field>
-                  <input
-                    matInput
-                    type="text"
-                    formControlName="s_Author"
-                    placeholder="Surname of one author" />
-                </mat-form-field>
-              </div>
-              <div class="label">
-                <label>Title</label>
-              </div>
-              <div>
-                <mat-form-field>
-                  <input
-                    matInput
-                    type="text"
-                    formControlName="s_Title"
-                    placeholder="Word or phrase in the Title" />
-                </mat-form-field>
-              </div>
-              <div class="label">
-                <label>Keyword(s)</label>
-              </div>
-              <div>
-                <mat-form-field>
-                  <input
-                    matInput
-                    type="text"
-                    formCotrolName="s_Keywords"
-                    placeholder="Word or phrase in the Keywords" />
-                </mat-form-field>
-              </div>
-            </div>
-          </mat-card-content>
-          <mat-card-actions align="end">
-            <div class="buttoncell label">
-              <button type="button" mat-raised-button color="primary" (click)="search()">
-                Search
-              </button>
-              <button type="button" mat-raised-button color="primary">
-                Clear
-              </button>
-            </div>
-          </mat-card-actions>
-        </mat-card>
-      </mat-tab>
-      <mat-tab label="Results">
-        <mfmp-lenr-events-results
-        [eventList]="eventList"></mfmp-lenr-events-results>
-      </mat-tab>
-      <mat-tab label="Detail">
+            </mat-card-actions>
+          </mat-card>
+        </mat-tab>
+        <mat-tab label="Results">
+          <mfmp-lenr-events-results
+            [eventList]="eventList ?? []"
+            [loading]="loading"
+            (fetch)="fetch($event)"></mfmp-lenr-events-results>
+        </mat-tab>
+        <mat-tab label="Detail">
           <mfmp-lenr-events-detail></mfmp-lenr-events-detail>
-      </mat-tab>
-    </mat-tab-group>
+        </mat-tab>
+      </mat-tab-group>
     </form>
   </mat-card-content>
 </mat-card>

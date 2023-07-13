@@ -19,5 +19,6 @@
           "source.fixAll.eslint": true
         },
         "editor.formatOnSave": false
-      }
+      },
+      "findUnusedExports.detectCircularImports": true
 }

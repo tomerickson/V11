@@ -5,12 +5,8 @@ import { NotificationComponent } from 'src/app/core/notification.component';
 import { LenrEventActions } from './lenr-events.actions';
 import { EventServices } from '../../lenr-events/lenr-events.service';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
+import { LenrEventsPrefetchModel } from '../../core/models/lenr-events-prefetch.model.';
 
-export type LenrPrefetchProperties = {
-  categories: string[];
-  eventCount: number;
-  maxId: number;
-};
 export const prefetchEffect = createEffect(
   (actions$ = inject(Actions)) => {
     const svc = inject(EventServices);
@@ -19,7 +15,7 @@ export const prefetchEffect = createEffect(
       switchMap((action) =>
         svc.preFetchProperty(action.payload).pipe(
           map((html) => {
-            const props: LenrPrefetchProperties = svc.parseProperties(html);
+            const props: LenrEventsPrefetchModel = svc.parseProperties(html);
             return LenrEventActions.prefetchSuccess({ payload: props });
           }),
           catchError((error) =>
