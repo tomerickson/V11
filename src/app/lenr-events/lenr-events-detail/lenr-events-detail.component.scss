@@ -1,14 +1,60 @@
+.mdc-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.mat-mdc-card-content {
+    max-height: 100%;
+    overflow: auto;
+}
+
 div.flexrow {
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1vh;
+    :first-child {
+        padding-right: 1em;
+    }
 }
+
 div.flexcolumn {
     display: flex;
     flex-direction: column;
-    input {
-        width: 100%;
-    }
+}
+div.grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 1vh;
+    margin-bottom: 1vh;
 }
 .space-evenly {
     justify-content: space-evenly;
+}
+
+.content {
+    width: fit-content;
+    min-width: 10em;
+    padding-left: 1ex;
+    padding-right: 1ex;
+    border: 1px solid darkgray;
+}
+.hidden {visibility: hidden;}
+li {
+    list-style-type: none;
+}
+mat-label {
+    display: block;
+}
+mat-label.abstract {
+    max-height: 2cm;
+    overflow-y: scroll;
+}
+div.actions {
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

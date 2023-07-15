@@ -1,35 +1,41 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
 
 @Component({
   selector: 'mfmp-lenr-events-detail',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatInputModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule
+  ],
   templateUrl: './lenr-events-detail.component.html',
   styleUrls: ['./lenr-events-detail.component.scss']
 })
 export class LenrEventsDetailComponent {
-  event!: ILenrEventDetail;
+  @Input({ required: true }) event!: ILenrEventDetail | null;
+  @Output() next: EventEmitter<any> = new EventEmitter();
+  @Output() prior: EventEmitter<any> = new EventEmitter();
+  @Output() back: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
-    const strings = ['a', 'b'];
-    this.event = {} as ILenrEventDetail;
-    this.event.year = 2000;
-    this.event.category = 'category';
-    this.event.author = 'author';
-    this.event.title = 'title';
-    this.event.journal = 'journal';
-    this.event.editor = 'editor';
-    this.event.pubisher = 'pubisher';
-    this.event.city = 'city';
-    this.event.date = new Date();
-    this.event.comment = 'comment';
-    this.event.keywords = strings;
-    this.event.abstract = 'abstract';
-    this.event.citations = strings;
-    this.event.headline = 'headline';
+  goBack = () => {
+    this.back.emit();
+  }
+  goPrior = () => {
+    this.prior.emit();
+  }
+  goNext = () => {
+    this.next.emit();
   }
 }

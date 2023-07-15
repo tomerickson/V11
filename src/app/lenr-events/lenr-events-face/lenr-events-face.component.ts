@@ -31,6 +31,8 @@ import { LenrEventsDetailComponent } from '../lenr-events-detail/lenr-events-det
 import { LenrEventsResultsComponent } from '../lenr-events-results/lenr-events-results.component';
 import { LenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
+import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
+import { ProgressSpinnerComponent } from 'src/app/shared/progress-spinner/progress-spinner.component';
 
 @Component({
   selector: 'mfmp-lenr-events-face',
@@ -48,12 +50,13 @@ import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model'
     MatTabsModule,
     ReactiveFormsModule,
     LenrEventsDetailComponent,
-    LenrEventsResultsComponent
+    LenrEventsResultsComponent,
+    ProgressSpinnerComponent
   ],
   templateUrl: './lenr-events-face.component.html',
   styleUrls: ['./lenr-events-face.component.scss']
 })
-export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
+export class LenrEventsFaceComponent implements OnInit {
   private _maxId!: number | null;
   private _categories: string[] = [];
 
@@ -61,12 +64,16 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
 
   @Output() searcher: EventEmitter<LenrEventsRequest> =
     new EventEmitter<LenrEventsRequest>();
-  @Output() fetcher: EventEmitter<number> = new EventEmitter();
-  
+  @Output() fetcher: EventEmitter<LenrEventsRequest> =
+    new EventEmitter<LenrEventsRequest>();
+
   @Input({ required: true }) eventCount!: number | null;
   @Input({ required: true }) description!: string | null;
   @Input({ required: true }) eventList: ILenrEventsLookup[] | null = null;
   @Input({ required: true }) loading!: boolean | null;
+  @Input({ required: true }) ready!: boolean | null;
+  @Input({ required: true }) event!: ILenrEventDetail | null;
+
   get categories(): string[] {
     return this._categories !== null ? this._categories : [];
   }
@@ -119,7 +126,6 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.buildForm();
   }
-  ngAfterViewInit(): void {}
 
   buildForm = () => {
     this.eventForm = this.fb.group({
@@ -157,6 +163,17 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   };
 
   fetch = (eventId: number) => {
-    this.fetcher.emit(eventId);
+    const request = { ...this.eventForm.value } as LenrEventsRequest;
+    request.r_id = eventId;
+    request.doit = 'refresh';
+
+    this.fetcher.emit(request);
+    this.tabGroup.selectedIndex = 2;
   };
+  back() {
+    this.tabGroup.selectedIndex = 1;
+  }
+
+  nextRow = () => {}
+  priorRow = () => {}
 }

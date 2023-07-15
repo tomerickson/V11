@@ -29,7 +29,10 @@ table.mat-mdc-table {
     border: 1px solid lightgray;
     padding: 3px 8px !important;
 }
-
+/* Row hover bakground */
+.mat-row:hover .mat-cell{
+    background-color: hsla(37, 50%, 73%, 0.956) !important;;
+}
 .progress-spinner {
     margin-top: 3em;
     margin-left: auto;

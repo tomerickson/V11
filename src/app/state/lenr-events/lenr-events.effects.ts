@@ -6,6 +6,8 @@ import { LenrEventActions } from './lenr-events.actions';
 import { EventServices } from '../../lenr-events/lenr-events.service';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 import { LenrEventsPrefetchModel } from '../../core/models/lenr-events-prefetch.model.';
+import { Action } from 'rxjs/internal/scheduler/Action';
+import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
 
 export const prefetchEffect = createEffect(
   (actions$ = inject(Actions)) => {
@@ -43,6 +45,27 @@ export const fetchSearchResultsEffect = createEffect(
           }),
           catchError((error) =>
             of(LenrEventActions.fetchSearchResultsFailure({ error: error }))
+          )
+        )
+      )
+    );
+  },
+  { functional: true }
+);
+
+export const loadEventDetailEffect = createEffect(
+  (actions$ = inject(Actions)) => {
+    const svc = inject(EventServices);
+    return actions$.pipe(
+      ofType(LenrEventActions.loadEventDetail),
+      switchMap((action) =>
+        svc.postEventPage(action.payload).pipe(
+          map((html) => {
+            const detail: ILenrEventDetail = svc.parseEventDetail(html, action.payload.r_id);
+            return LenrEventActions.loadEventDetailSuccess({ payload: detail });
+          }),
+          catchError((error) =>
+            of(LenrEventActions.loadEventDetailFailure({ error: error }))
           )
         )
       )

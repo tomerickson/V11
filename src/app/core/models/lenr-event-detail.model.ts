@@ -7,9 +7,9 @@ export interface ILenrEventDetail {
     title: string;
     journal: string;
     editor: string;
-    pubisher: string;
+    publisher: string;
     city: string;
-    date: Date;
+    date: string;
     comment: string;
     keywords: string[];
     abstract: string;

@@ -1,90 +1,111 @@
+<mat-card>
+  <mat-card-content>
+    <div *ngIf="event">
+      <div class="flexrow space-evenly">
+        <mat-label>Category:</mat-label>
+        <mat-label class="content">{{ event.category }}</mat-label>
+        <mat-label>Year of Publication:</mat-label>
+        <mat-label class="content">{{ event.year }}</mat-label>
+        <mat-label>Database Index:</mat-label>
+        <mat-label class="content">{{ event.id }}</mat-label>
+      </div>
+      <div class="grid">
+        <mat-label>
+          Author (last name, initials) or comma-separated list of Authors
+        </mat-label>
+        <mat-label class="content">{{ event.author }}</mat-label>
 
+        <mat-label>
+          Title: The formal title of this entry, if applicable
+        </mat-label>
+        <mat-label class="content">{{ event.title }}</mat-label>
 
-    <div class="flexrow space-evenly">
-      <div>Category:</div>
-      <div><input matInput type="text" value="{{event.category}}" /></div>
-      <div>Year of Publication:</div>
-      <div><input type="text" value="{{event.year}}" /></div>
-      <div>Database Index:</div>
-      <div><input type="text" value="{{event.id}}"/></div>
-    </div>
-    <div class="flexcolumn">
-      <div>Author (last name, initials) or comma-separated list of Authors</div>
-      <div><input type="text" value="{{event.author}}"/></div>
-    </div>
-    <div class="flexcolumn">
-      <div>Title: The formal title of this entry, if applicable</div>
-      <div><input type="text" value="{{event.title}}"/></div>
-    </div>
-    <div class="flexcolumn">
-      <div>Journal Title: Title of the Journal, Proceedings, Book, etc</div>
-      <div><input type="text" /></div>
-    </div>
-    <div class="flexcolumn">
-      <div>
-        Editor (last name, initials) of the collective work, or comma-separated
-        list of Editors
+        <mat-label>
+          Journal Title: Title of the Journal, Proceedings, Book, etc
+        </mat-label>
+        <mat-label class="content">{{ event.journal }}</mat-label>
+
+        <mat-label>
+          Editor (last name, initials) of the collective work, or
+          comma-separated list of Editors
+        </mat-label>
+        <mat-label class="content">{{ event.editor }}</mat-label>
+
+        <mat-label>Publisher of the Journal, Proceedings, Book, etc:</mat-label>
+        <mat-label class="content">{{ event.publisher }}</mat-label>
+
+        <mat-label>City hosting research, conference, etc:</mat-label>
+        <mat-label class="content">{{ event.city }}</mat-label>
+
+        <mat-label>Publishing date or span of dates of conference:</mat-label>
+        <mat-label class="content">{{ event.date }}</mat-label>
+
+        <mat-label>
+          Comment:
+          <sub>
+            Informed comments, by-lines and info not captured elsewhere.
+          </sub>
+        </mat-label>
+        <mat-label class="content">
+          {{ event.comment }}
+        </mat-label>
+
+        <mat-label>
+          Keywords: A comma separated list of keywords or short phrases
+        </mat-label>
+        <mat-label class="content">{{ event.keywords }}</mat-label>
       </div>
-      <div><input type="text" /></div>
-    </div>
-    <div class="flexcolumn">
-      <div>Publisher of the Journal, Proceedings, Book, etc</div>
-      <div><input type="text" /></div>
-    </div>
-    <div class="flexrow">
-      <div>City hosting research, conference, etc:</div>
-      <div><input type="text" /></div>
-    </div>
-    <div class="flexrow">
-      <div>Publishing date or span of dates of conference:</div>
-      <div><input type="text" value="{{event.date | date}}" /></div>
-    </div>
-    <div class="flexcolumn">
-      <div>
-        Comment: Informed comments, by-lines and info not captured elsewhere.
+      <div class="flexrow" *ngIf="event.abstract">
+        <mat-label>Abstract</mat-label>
+        <mat-label class="content abstract">{{ event.abstract }}</mat-label>
       </div>
-      <div>
-        <textarea>
- Cold Fusion Synthesis of Helium
-        Isotopes in Interaction of Deuterium and of Hydrogen Nuclei with Metals</textarea
-        >
+      <div class="flexrow" *ngIf="event.hyperlinks">
+        <mat-label>
+          Active Link(s): (click on each to open it in another tab)
+        </mat-label>
+        <mat-label class="content">
+          <ul>
+            <li *ngFor="let link of event.hyperlinks">
+              <a href="{{ link }}" _target="_blank" noreferrer noopener>
+                {{ link }}
+              </a>
+            </li>
+          </ul>
+        </mat-label>
       </div>
-    </div>
-    <div class="flexcolumn">
-      <div>Keywords: A comma separated list of keywords or short phrases</div>
-      <div><input type="text" /></div>
-    </div>
-    <div class="flexcolumn">
-      <div>Abstract</div>
-      <div>
-        <textarea>
-Theoretical outcomes and their connections with the experimental outcomes
-            i) Increase of the temperature (T) increases the probabilities for both fusion reactions ? it is connected with the experimental facts that the concentrations of both 4He and 3He increase with the increase of the temperature;
-            ii) Increase of the kinetic energies of the interacting nuclei (D and D, and D and H) increases the probability for both fusion reactions ? it is connected with the experimental facts that the concentrations of both 4He and 3He increase with the increase of the plasma voltage;
-            iii) The released energies of the fusion reactions partially destroy the crystal lattice making that the corresponding regions not to be able to participate in immediate further reactions ? it corresponds to the cyclic change of the temperature that was observed experimentally, i.e. time for recovery of the crystal lattice is needed in order fusion reactions to be re-established again;
-            iv) Any partial destroy of the crystal lattice (mechanical or as result of fusion reaction) brings the corresponding destroyed regions out of order regarding the fusion reaction.</textarea
-        >
+      <div class="flexrow" *ngIf="event.citations">
+        <mat-label>
+          Citations: An 'Enter' key separated list of links (with optional
+          notes) that cite this.
+        </mat-label>
+        <mat-label class="content">
+          <ul>
+            <li *ngFor="let cite of event.citations">
+              <a href="{{ cite }}" target="_blank" noopener noreferrer>
+                {{ cite }}
+              </a>
+            </li>
+          </ul>
+        </mat-label>
       </div>
-    </div>
-    <div class="flexcolumn">
-      <div>Active Link(s): (click on each to open it in another tab)</div>
-      <div>
-        <a href="http://lenr-canr.org/acrobat/Alexandrovcoldfusion.pdf">
-          http://lenr-canr.org/acrobat/Alexandrovcoldfusion.pdf
-        </a>
+      <div class="flexcolumn" *ngIf="event.headline">
+        <mat-label>
+          Headline: As you or the popular or scientific press might or did
+          describe it.
+        </mat-label>
+        <mat-label class="content mat-elevation-z2">
+          {{ event.headline }}
+        </mat-label>
       </div>
     </div>
-    <div class="flexcolumn">
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="actions">
       <div>
-        Citations: An 'Enter' key separated list of links (with optional notes)
-        that cite this.
+      <mat-icon title="Prior event">navigate_before</mat-icon>
+      <mat-icon title="Next event">navigate_next</mat-icon>
       </div>
-      <div><textarea></textarea></div>
+      <button mat-raised-button color="primary" (click)="goBack()">Back</button>
     </div>
-    <div class="flexcolumn">
-      <div>
-        Headline: As you or the popular or scientific press might or did
-        describe it.
-      </div>
-      <div><input type="text" /></div>
-    </div>
+  </mat-card-actions>
+</mat-card>

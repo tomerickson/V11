@@ -156,13 +156,18 @@
           </mat-card>
         </mat-tab>
         <mat-tab label="Results">
-          <mfmp-lenr-events-results
+          <mfmp-progress-spinner *ngIf="loading"></mfmp-progress-spinner>
+          <mfmp-lenr-events-results *ngIf="ready"
             [eventList]="eventList ?? []"
             [loading]="loading"
             (fetch)="fetch($event)"></mfmp-lenr-events-results>
         </mat-tab>
         <mat-tab label="Detail">
-          <mfmp-lenr-events-detail></mfmp-lenr-events-detail>
+          <mfmp-lenr-events-detail
+          [event]="event"
+          (next)="nextRow()"
+          (prior)="priorRow()"
+          (back)="back()"></mfmp-lenr-events-detail>
         </mat-tab>
       </mat-tab-group>
     </form>
