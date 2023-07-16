@@ -63,7 +63,7 @@
         <mat-label>
           Active Link(s): (click on each to open it in another tab)
         </mat-label>
-        <mat-label class="content">
+        <mat-label>
           <ul>
             <li *ngFor="let link of event.hyperlinks">
               <a href="{{ link }}" _target="_blank" noreferrer noopener>
@@ -78,7 +78,7 @@
           Citations: An 'Enter' key separated list of links (with optional
           notes) that cite this.
         </mat-label>
-        <mat-label class="content">
+        <mat-label>
           <ul>
             <li *ngFor="let cite of event.citations">
               <a href="{{ cite }}" target="_blank" noopener noreferrer>
@@ -99,13 +99,7 @@
       </div>
     </div>
   </mat-card-content>
-  <mat-card-actions>
-    <div class="actions">
-      <div>
-      <mat-icon title="Prior event">navigate_before</mat-icon>
-      <mat-icon title="Next event">navigate_next</mat-icon>
-      </div>
+  <mat-card-actions align="end">
       <button mat-raised-button color="primary" (click)="goBack()">Back</button>
-    </div>
   </mat-card-actions>
 </mat-card>

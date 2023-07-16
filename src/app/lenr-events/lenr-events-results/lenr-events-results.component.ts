@@ -42,7 +42,7 @@ export class LenrEventsResultsComponent implements OnInit {
   private tableSort!: MatSort;
   @Input({ required: true }) loading!: boolean | null;
   @Input({ required: true }) eventList!: ILenrEventsLookup[];
-  @Output() fetch: EventEmitter<number> = new EventEmitter();
+  @Output() eventClicked: EventEmitter<number> = new EventEmitter();
 
   @ViewChild('paginator', {static: true}) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
@@ -55,7 +55,7 @@ export class LenrEventsResultsComponent implements OnInit {
   pageSize = 20;
   pageIndex = 0;
   sortedData: any[] = [];
-  pageSizeOptions = [10, 15, 20, 50, 100];
+  pageSizeOptions = [10, 20, 50, 100];
   displayColumns = 'year,category,author,title,id'.split(',');
   pageEvent!: PageEvent;
   hidePageSize = false;
@@ -95,8 +95,7 @@ export class LenrEventsResultsComponent implements OnInit {
     this.pageIndex = e.pageIndex;
   }
 
-  clicked(e: Event, id: number) {
-    e.stopPropagation();
-    this.fetch.emit(id);
+  getEvent(e: any, row: ILenrEventsLookup, index: number) {  
+    this.eventClicked.emit(row.id);
   }  
 }

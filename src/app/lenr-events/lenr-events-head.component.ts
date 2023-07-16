@@ -98,7 +98,6 @@ export class LenrEventsHeadComponent implements OnInit {
   }
 
   fetch(request: LenrEventsRequest): void {
-    // this.notifier.showNonErrorSnackBar('Coming soon!', 4000);
     this.store.dispatch(
       eventStore.LenrEventActions.loadEventDetail({ payload: request })
     );

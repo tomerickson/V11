@@ -14,7 +14,8 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -33,6 +34,10 @@ import { LenrEventsRequest } from 'src/app/core/models/lenr-events-request.model
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
 import { ProgressSpinnerComponent } from 'src/app/shared/progress-spinner/progress-spinner.component';
+import {
+  indexRangeValidator,
+  yearRangeValidator
+} from '../lenr-events-form.validators';
 
 @Component({
   selector: 'mfmp-lenr-events-face',
@@ -93,6 +98,8 @@ export class LenrEventsFaceComponent implements OnInit {
   initialCategory!: string;
   now = new Date();
   year = this.now.getFullYear();
+  selectedTabIndex = 0;
+
   get pageDescription() {
     if (this.eventCount) {
       return this.description?.replace(
@@ -104,6 +111,7 @@ export class LenrEventsFaceComponent implements OnInit {
     }
   }
 
+  eventId!: number | null; // Selected event Id
   eventForm!: FormGroup;
 
   get minYear(): number | null {
@@ -128,16 +136,19 @@ export class LenrEventsFaceComponent implements OnInit {
   }
 
   buildForm = () => {
-    this.eventForm = this.fb.group({
-      s_Year_from: new FormControl(this.year),
-      s_Year_to: new FormControl(this.year),
-      s_Index_from: new FormControl(1),
-      s_Index_to: new FormControl(this.maxId),
-      s_Category: new FormControl('All'),
-      s_Author: new FormControl(),
-      s_Title: new FormControl(),
-      s_Keywords: new FormControl()
-    });
+    this.eventForm = this.fb.group(
+      {
+        s_Year_from: new FormControl(this.year, [Validators.required]),
+        s_Year_to: new FormControl(this.year, [Validators.required]),
+        s_Index_from: new FormControl(1, [Validators.required]),
+        s_Index_to: new FormControl(this.maxId, [Validators.required]),
+        s_Category: new FormControl('All', [Validators.required]),
+        s_Author: new FormControl(),
+        s_Title: new FormControl(),
+        s_Keywords: new FormControl()
+      },
+      { validators: [indexRangeValidator, yearRangeValidator] }
+    );
     this.eventForm.get('s_Category')?.setValue('All');
   };
 
@@ -155,25 +166,51 @@ export class LenrEventsFaceComponent implements OnInit {
     return this.floatLabelControl.value || 'auto';
   }
 
+  max(a: number | null, b: number | null) {
+    return a && b ? (a > b ? a : b) : a ? a : b;
+  }
+  min(a: number | null, b: number | null) {
+    return a && b ? (a < b ? a : b) : a ? a : b;
+  }
+
+  selectEvent = (eventId: number) => {
+    this.eventId = eventId;
+    this.tabGroup.selectedIndex = 2;
+  };
+
   search = () => {
     const request = { ...this.eventForm.value } as LenrEventsRequest;
     request.doit = 'refresh';
     this.searcher.emit(request);
-    this.tabGroup.selectedIndex = 1;
   };
 
-  fetch = (eventId: number) => {
+  fetch = () => {
     const request = { ...this.eventForm.value } as LenrEventsRequest;
-    request.r_id = eventId;
+    request.r_id = this.eventId;
     request.doit = 'refresh';
-
     this.fetcher.emit(request);
-    this.tabGroup.selectedIndex = 2;
   };
+
   back() {
     this.tabGroup.selectedIndex = 1;
   }
 
-  nextRow = () => {}
-  priorRow = () => {}
+  onSelectedIndexChange(index: number) {
+    switch (index) {
+      case 0:
+        this.eventId = null;
+        break;
+      case 1: {
+        this.search();
+        break;
+      }
+      case 2: {
+        this.fetch();
+        break;
+      }
+    }
+  }
+
+  nextRow = () => {};
+  priorRow = () => {};
 }
