@@ -1,27 +1,25 @@
 import { Routes } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
-import * as fusionState from '../state/fusion';
-import { FusionHeadComponent } from './fusion-head.component';
+import * as twoUpState from '../state/fusion';
+import { TwoUpHeadComponent } from './two-up.head.component'
 import { ReportPagesHeadComponent } from '../shared/report-pages/report-pages.head.component';
 import { DownloadService } from '../shared/download/download.service';
-import { FusionService } from './fusion.service';
-export const FUSION_ROUTES: Routes = [
+export const TWO_UP_ROUTES: Routes = [
   {
     path: '',
-    component: FusionHeadComponent,
+    component: TwoUpHeadComponent,
     providers: [
       provideState(fusionState.fusionFeature),
-      provideEffects([fusionState.effects]),
-      {provide: FusionService, useClass: FusionService}
+      provideEffects([fusionState.effects])
     ]
   },
   {
     path: 'reports',
     component: ReportPagesHeadComponent,
     providers: [
-      provideState(fusionState.fusionFeature),
-      provideEffects([fusionState.effects]),
+      provideState(twoUpState.twoUpFeature),
+      provideEffects([twoUpState.effects]),
       {provide: DownloadService, useClass: DownloadService}
     ]
   }

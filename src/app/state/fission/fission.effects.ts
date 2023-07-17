@@ -2,17 +2,17 @@ import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { NotificationComponent } from 'src/app/core/notification.component';
-import { CrudService } from 'src/app/core/services/crud.service';
+import { FissionService } from 'src/app/fission/fission.service';
 import { FissionActions } from './fission.actions';
 
 export const fetchAllResultsEffect = createEffect(
   (actions$ = inject(Actions)) => {
-    const crud = inject(CrudService);
+    const svc = inject(FissionService);
     return actions$.pipe(
       ofType(FissionActions.fetchAllResults),
       switchMap((action) =>
-        crud.getFissionResults(action.payload).pipe(
-          map((html) => crud.parseFissionResults(html)),
+        svc.getFissionResults(action.payload).pipe(
+          map((html) => svc.parseFissionResults(html)),
           map((tables) =>
             FissionActions.loadAllResultsSuccess({ results: tables })
           ),

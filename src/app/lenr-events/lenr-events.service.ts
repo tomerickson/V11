@@ -36,8 +36,6 @@ export class EventServices {
     const headers: HttpHeaders = new HttpHeaders()
      .set('Accept', 'text/html')
      .set('Content-Type','application/x-www-form-urlencoded');
-
-  
     return this.crud.postPage(this.page, form, headers);
   }
 

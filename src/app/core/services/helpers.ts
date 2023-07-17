@@ -1,3 +1,21 @@
+import { KeyValuePair } from '../models/key-value-pair.model';
+
+/**
+ * Compare array contents to expected model
+ * @param head the first row of a data stream representing the column names
+ * @param model an array of expected column names
+ * @returns
+ */
+export const modelMatches = (head: string[], model: string[]): boolean => {
+  let matches = 0;
+  for (let i = 0; i < model.length; i++) {
+    if (model[i] === head[i]) {
+      matches++;
+    }
+  }
+  return matches === model.length;
+};
+
 /**
  * Wrap a word in apostrophes
  * @param word
@@ -33,6 +51,24 @@ export const getFormData = (object: any): FormData => {
   return formData;
 };
 
+/**
+ * 
+ * @param form 
+ * @returns 
+ */
+const stringifyFormData = (form: FormData): string => {
+  const arr = Array.from(form.entries());
+  const result = [];
+  for (let i = 0; i < arr.length; i++) {
+    const key: string = arr[i][0];
+    let value: FormDataEntryValue = arr[i][1];
+    if (value === 'null') value = '';
+    const kvp = `${key}=${value}`;
+    result.push(kvp);
+  }
+  return result.join('&').toString();
+};
+
 export const getFormDataString = (object: any): string => {
   const formData = getFormData(object);
   const result = [];
@@ -50,15 +86,15 @@ export const getFormDataString = (object: any): string => {
 
 /**
  * Convert an object to FormData
- * (ignore property names starting with _ 
+ * (ignore property names starting with _
  *  they're assumed to be private)
- * @param obj 
+ * @param obj
  * @returns FormData
  */
 export const asFormData = (obj: any): FormData => {
   type T = keyof typeof obj;
   const formData: FormData = new FormData();
-  const props = Object.getOwnPropertyNames(obj)
+  const props = Object.getOwnPropertyNames(obj);
 
   for (const op of props) {
     const prop = op as T;
@@ -67,7 +103,6 @@ export const asFormData = (obj: any): FormData => {
       let ok = true;
       if (String(prop).startsWith('_')) ok = false; // exclude private properties
       if (ok) {
-        
         if (value == undefined) {
           value = '';
         }
@@ -76,4 +111,26 @@ export const asFormData = (obj: any): FormData => {
     }
   }
   return formData;
+};
+
+/**
+ * Convert kvp array to FormData object
+ * for consumption by http.post
+ *
+ * @param kvp
+ * @returns
+ */
+const buildFormData = (kvp: KeyValuePair[]): FormData => {
+  let formData: FormData = new FormData();
+  for (let pair of kvp) {
+    formData.append(pair.key, pair.value);
+  }
+  return formData;
+};
+
+export const KvpsToFormData = (kvp: KeyValuePair[]): string => {
+
+  return stringifyFormData(buildFormData(kvp));
+
+
 }
