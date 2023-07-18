@@ -12,7 +12,7 @@ import {
   MatExpansionModule,
   MatExpansionPanel
 } from '@angular/material/expansion';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Subscription, pairwise } from 'rxjs';
 import { IElementDataModel } from 'src/app/core/models/element-data.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
@@ -53,6 +53,7 @@ import { SqlForm } from 'src/app/core/models/sql-form.model';
     ReactiveFormsModule,
     ReportPagesFaceComponent,
     ResultsizePickerComponent,
+    RouterModule,
     MevPickerComponent,
     ExpandableBoxComponent
   ],

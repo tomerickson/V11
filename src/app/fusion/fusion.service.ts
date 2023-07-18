@@ -35,7 +35,7 @@ export class FusionService {
    */
   parseFusionResults = (html: string): IFusionCompositeResults => {
     let result: IFusionCompositeResults = {
-      fusionResults: [],
+      reactionResults: [],
       nuclideResults: [],
       elementResults: [],
       ok: true
@@ -51,7 +51,7 @@ export class FusionService {
       result = this.parseFusionTable(thead, tbody, result);
     }
     result.ok =
-      result.fusionResults.length > 0 &&
+      result.reactionResults.length > 0 &&
       result.nuclideResults.length > 0 &&
       result.elementResults.length > 0;
     return result;
@@ -73,7 +73,7 @@ export class FusionService {
     output: IFusionCompositeResults
   ) => {
     if (helpers.modelMatches(thead, ['id', 'neutrino'])) {
-      output.fusionResults = tbody;
+      output.reactionResults = tbody;
     } else if (helpers.modelMatches(thead, ['id', 'A', 'Z'])) {
       output.nuclideResults = tbody;
     } else if (helpers.modelMatches(thead, ['Z', 'E', 'EName'])) {

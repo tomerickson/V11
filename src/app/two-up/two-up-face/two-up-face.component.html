@@ -1,1 +1,247 @@
-<p>two-up-face.component works!</p>
+<mat-expansion-panel expanded="false">
+  <mat-expansion-panel-header>
+    <p class="header">{{ description }}</p>
+  </mat-expansion-panel-header>
+  <p>
+    To make full use of this and the other database tables, a good grasp of SQL
+    is essential.
+  </p>
+
+  <p>
+    But note that it and
+    <a [routerLink]="['/fission']">Fission</a>
+    and
+    <a [routerLink]="['/fusion']" href="">Fusion</a>
+    is each dedicated to querying only one of two tables.
+  </p>
+
+  <p>
+    The "universal" program
+    <a [routerLink]="['/all-tables']" href="">All Tables</a>
+    can accept full SQL commands that query any of the 12 "Parkhomov" tables,
+    together with the "ElementProperties", "Nuclides", "RadioNuclides" and
+    "Atomic Radii" tables as well.
+  </p>
+
+  <p>
+    You may indicate which of the three neutrino conditions to include: "left"
+    and/or "none" and/or "right". The default condition is include all three.
+  </p>
+
+  <p>
+    In all the above tables, except the Periodic, each atom, in either the input
+    or the output, as well as its 'A' and 'Z' numbers now also has a 'nBorF'
+    ('nuclear Boson or Fermion') and a 'aBorF' ('atomic Boson or Fermion')
+    parameter associated with it.
+  </p>
+
+  <p>
+    An atom's nucleus is considered a Boson ('b') if its A number is even; if
+    odd a Fermion ('f'). The atom itself is considered a Boson ('b') if its
+    number of neutrons (A - Z) is even; if odd a Fermion ('f').
+  </p>
+
+  <p>
+    These parameters can be used either passively, by observing the
+    distributions of 'b' and 'f' in inputs and/or outputs, and/or actively, by
+    selecting 'b only', 'f only' or 'either' in the boxes below.
+  </p>
+
+  <p>
+    NB: To avoid unnecessary duplication in all TwoToTwo tables, two rules
+    independently apply: A1 <= A2 and A3 <= A4. These rules also apply
+    implicitly in that, if the input side of the Core Query only involves E1 and
+    E2, only rows whose associated mass numbers obey A1 <= A2 will appear in the
+    results. Similarly with E3 and E4 on the output side, only rows whose
+    associated mass numbers obey A3 <= A4 will appear in the results.
+  </p>
+
+  <p>
+    To protect the table, only SQL-compatible "selection" queries can be allowed
+    and you must enter only the CORE part of that query. Once you do this and
+    click on the "Execute Query" button, the front part (here "select * from
+    TwoToTwoAll where ") will be automatically prepended and the full query sent
+    to the database.
+  </p>
+
+  <p>
+    Once you do this and click on the "Execute Query" button, the front part
+    (here "select * from TwoToTwoAll where ") will be automatically prepended
+    and the full query sent to the database.
+  </p>
+
+  <p>
+    Latest: All queries will now be limited to 1000 possible rows of results;
+    any requested 'limit' greater than 1000 will be reset to 1000; to any core
+    query not including any 'limit' command will be appended 'limit 1000'.
+  </p>
+
+  <p>
+    This TwoToTwo Core Query can refer to any and all of E1, A1, nBorF1, Z1,
+    aBorF1, E2, A2, nBorF2, Z2 or aBorF2 (the inputs) and to any and all of E3,
+    A3, nBorF3, Z3, aBorF3, E4, A4, nBorF4, Z4 or aBorF4 (the outputs).
+  </p>
+</mat-expansion-panel>
+
+<form [formGroup]="twoupForm">
+  <!-- <h3>Nuclides</h3> -->
+  <div class="children mat-elevation-z2">
+    <h3 class="start">
+      Select elements from the 'Input (E1)' and/or the 'Input (E2)' to begin.
+    </h3>
+    <div class="nuclides">
+      <div class="elements">
+        <mfmp-nuclide-picker
+          [role]="'query'"
+          [title]="'Input (E1)'"
+          [multiselect]="true"
+          [formGroupName]="'leftNuclides'"
+          [caption]="'Left'"
+          [elementsList]="elements"></mfmp-nuclide-picker>
+        <div class="join">
+          <button
+            class="mat-elevation-z2"
+            mat-flat-button
+            (click)="toggleJoin()"
+            formControlName="elementJoin"
+            ngDefaultControl>
+            {{ twoupForm.get('elementJoin')?.value }}
+          </button>
+        </div>
+        <mfmp-nuclide-picker
+          [role]="'query'"
+          [title]="'Input (E2)'"
+          [multiselect]="true"
+          [formGroupName]="'rightNuclides'"
+          [caption]="'Right'"
+          [elementsList]="elements"></mfmp-nuclide-picker>
+      </div>
+      <div class="results">
+        <mfmp-nuclide-picker
+          [role]="'result'"
+          [title]="'Output (E3)'"
+          [multiselect]="true"
+          [formGroupName]="'leftResults'"
+          [caption]="'E3'"
+          [elementsList]="elements"></mfmp-nuclide-picker>
+      </div>
+      <div class="results">
+        <mfmp-nuclide-picker
+          [role]="'result'"
+          [title]="'Output (E4)'"
+          [multiselect]="true"
+          [formGroupName]="'rightResults'"
+          [caption]="'E4'"
+          [elementsList]="elements"></mfmp-nuclide-picker>
+      </div>
+    </div>
+    <div class="neutrinos">
+      <div>
+        <p>
+          Tick neutrino (nu) contributions to be included (default is all
+          three).
+        </p>
+      </div>
+      <div>
+        <mat-checkbox formControlName="inputNeutrinos" value="left">
+          Left
+        </mat-checkbox>
+        <mat-checkbox formControlName="noNeutrinos" value="none">
+          None
+        </mat-checkbox>
+        <mat-checkbox formControlName="outputNeutrinos" value="right">
+          Right
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <mat-card class="coreQuery">
+    <mat-card-content>
+      <mfmp-expandable-box
+        [caption]="'Tables:'"
+        [text]="tablesText"></mfmp-expandable-box>
+      <div class="sql">
+        <div>
+          <mat-radio-group
+            labelPosition="before"
+            formControlName="tableSet"
+            name="tableSet"
+            value="TwoToTwoAll">
+            <mat-radio-button value="TwoToTwoAll" selected>
+              TwoToTwoAll
+            </mat-radio-button>
+            <mat-radio-button value="TwoToTwoAllNewPlus">
+              TwoToTwoAllNewPlus
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div>
+          <div>
+            <mat-form-field
+              id="orderBy"
+              formControlName="orderBy"
+              value="orderBy"
+              ngDefaultControl>
+              <mat-label>Order By:</mat-label>
+              <mat-select title="Order by" formControlName="orderBy">
+                <mat-option *ngFor="let f of sortFields" [value]="f.code">
+                  {{ f.code }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-checkbox
+              title="when checked."
+              formControlName="sortDescending"
+              value="sortDescending">
+              Descending
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+      <div class="flexrow">
+        <div class="fullQuery" [formGroup]="sqlForm">
+          <mat-label>Full Query</mat-label>
+          <textarea
+            matInput
+            formControlName="fullQuery"
+            title="'full query'"
+            value="fullQuery"
+            rows="4"></textarea>
+        </div>
+        <div class="coreQuery" [formGroup]="sqlForm">
+          <mat-label>Core Query</mat-label>
+          <textarea
+            matInput
+            formControlName="coreQuery"
+            title="'core query'"
+            value="coreQuery"
+            rows="4"></textarea>
+        </div>
+        <mfmp-resultsize-picker
+          [defaultLimit]="1000"
+          [minimum]="0"
+          [maximum]="1000"
+          [step]="50"
+          [limitVerbiage]="'Limit results to ... rows.'"
+          (limitSize)="setResultLimit($event)"></mfmp-resultsize-picker>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button type="button" mat-raised-button (click)="resetForm()">
+        RESET
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        tooltip="(submittable) ? '' : 'Select elements to continue.'"
+        [disabled]="!submittable"
+        (click)="buildRequestForm()">
+        SUBMIT
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

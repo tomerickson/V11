@@ -61,7 +61,7 @@ import {
   templateUrl: './lenr-events-face.component.html',
   styleUrls: ['./lenr-events-face.component.scss']
 })
-export class LenrEventsFaceComponent implements OnInit {
+export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   private _maxId!: number | null;
   private _categories: string[] = [];
 
@@ -91,6 +91,7 @@ export class LenrEventsFaceComponent implements OnInit {
   @Input({ required: true }) set maxId(value: number | null) {
     this._maxId = value;
     this.eventForm?.get('s_Index_to')?.setValue(value);
+    this.formValueBackup = this.eventForm.value;
   }
 
   fb = inject(FormBuilder);
@@ -99,6 +100,7 @@ export class LenrEventsFaceComponent implements OnInit {
   now = new Date();
   year = this.now.getFullYear();
   selectedTabIndex = 0;
+  formValueBackup: any;
 
   get pageDescription() {
     if (this.eventCount) {
@@ -135,6 +137,10 @@ export class LenrEventsFaceComponent implements OnInit {
     this.buildForm();
   }
 
+  ngAfterViewInit(): void {    
+    this.formValueBackup = this.eventForm.value;
+  }
+
   buildForm = () => {
     this.eventForm = this.fb.group(
       {
@@ -150,8 +156,12 @@ export class LenrEventsFaceComponent implements OnInit {
       { validators: [indexRangeValidator, yearRangeValidator] }
     );
     this.eventForm.get('s_Category')?.setValue('All');
+
   };
 
+  resetForm = () => {
+    this.eventForm.setValue(this.formValueBackup);
+  }
   minValue = (fieldName: string): number | null => {
     const min = this.eventForm.get(fieldName)?.value;
     return min ? min : null;
@@ -195,6 +205,9 @@ export class LenrEventsFaceComponent implements OnInit {
     this.tabGroup.selectedIndex = 1;
   }
 
+  clear() {
+    this.tabGroup.selectedIndex = 0;
+  }
   onSelectedIndexChange(index: number) {
     switch (index) {
       case 0:

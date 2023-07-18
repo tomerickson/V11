@@ -1,7 +1,7 @@
-<mat-card>
+<mat-card class="wrapper">
   <mat-card-content>
     <div *ngIf="event">
-      <div class="flexrow space-evenly">
+      <div class="header flexrow space-evenly">
         <mat-label>Category:</mat-label>
         <mat-label class="content">{{ event.category }}</mat-label>
         <mat-label>Year of Publication:</mat-label>
@@ -9,97 +9,105 @@
         <mat-label>Database Index:</mat-label>
         <mat-label class="content">{{ event.id }}</mat-label>
       </div>
-      <div class="grid">
-        <mat-label>
-          Author (last name, initials) or comma-separated list of Authors
-        </mat-label>
-        <mat-label class="content">{{ event.author }}</mat-label>
+      <mat-card>
+        <mat-card-content class="mat-elevation-z2" style="margin-bottom: 6px">
+          <div class="grid">
+            <mat-label>
+              Author (last name, initials) or comma-separated list of Authors
+            </mat-label>
+            <mat-label class="content">{{ event.author }}</mat-label>
 
-        <mat-label>
-          Title: The formal title of this entry, if applicable
-        </mat-label>
-        <mat-label class="content">{{ event.title }}</mat-label>
+            <mat-label>
+              Title: The formal title of this entry, if applicable
+            </mat-label>
+            <mat-label class="content">{{ event.title }}</mat-label>
 
-        <mat-label>
-          Journal Title: Title of the Journal, Proceedings, Book, etc
-        </mat-label>
-        <mat-label class="content">{{ event.journal }}</mat-label>
+            <mat-label>
+              Journal Title: Title of the Journal, Proceedings, Book, etc
+            </mat-label>
+            <mat-label class="content">{{ event.journal }}</mat-label>
 
-        <mat-label>
-          Editor (last name, initials) of the collective work, or
-          comma-separated list of Editors
-        </mat-label>
-        <mat-label class="content">{{ event.editor }}</mat-label>
+            <mat-label>
+              Editor (last name, initials) of the collective work, or
+              comma-separated list of Editors
+            </mat-label>
+            <mat-label class="content">{{ event.editor }}</mat-label>
 
-        <mat-label>Publisher of the Journal, Proceedings, Book, etc:</mat-label>
-        <mat-label class="content">{{ event.publisher }}</mat-label>
+            <mat-label>
+              Publisher of the Journal, Proceedings, Book, etc:
+            </mat-label>
+            <mat-label class="content">{{ event.publisher }}</mat-label>
 
-        <mat-label>City hosting research, conference, etc:</mat-label>
-        <mat-label class="content">{{ event.city }}</mat-label>
+            <mat-label>City hosting research, conference, etc:</mat-label>
+            <mat-label class="content">{{ event.city }}</mat-label>
 
-        <mat-label>Publishing date or span of dates of conference:</mat-label>
-        <mat-label class="content">{{ event.date }}</mat-label>
+            <mat-label>
+              Publishing date or span of dates of conference:
+            </mat-label>
+            <mat-label class="content">{{ event.date }}</mat-label>
 
-        <mat-label>
-          Comment:
-          <sub>
-            Informed comments, by-lines and info not captured elsewhere.
-          </sub>
-        </mat-label>
-        <mat-label class="content">
-          {{ event.comment }}
-        </mat-label>
+            <mat-label>
+              Comment:
+              <sub>
+                Informed comments, by-lines and info not captured elsewhere.
+              </sub>
+            </mat-label>
+            <mat-label class="content">
+              {{ event.comment }}
+            </mat-label>
 
-        <mat-label>
-          Keywords: A comma separated list of keywords or short phrases
-        </mat-label>
-        <mat-label class="content">{{ event.keywords }}</mat-label>
-      </div>
-      <div class="flexrow" *ngIf="event.abstract">
-        <mat-label>Abstract</mat-label>
-        <mat-label class="content abstract">{{ event.abstract }}</mat-label>
-      </div>
-      <div class="flexrow" *ngIf="event.hyperlinks">
-        <mat-label>
-          Active Link(s): (click on each to open it in another tab)
-        </mat-label>
-        <mat-label>
-          <ul>
-            <li *ngFor="let link of event.hyperlinks">
-              <a href="{{ link }}" target="_blank" noreferrer noopener>
-                {{ link }}
-              </a>
-            </li>
-          </ul>
-        </mat-label>
-      </div>
-      <div class="flexrow" *ngIf="event.citations">
-        <mat-label>
-          Citations: An 'Enter' key separated list of links (with optional
-          notes) that cite this.
-        </mat-label>
-        <mat-label>
-          <ul>
-            <li *ngFor="let cite of event.citations">
-              <a href="{{ cite }}" target="_blank" noopener noreferrer>
-                {{ cite }}
-              </a>
-            </li>
-          </ul>
-        </mat-label>
-      </div>
-      <div class="flexcolumn" *ngIf="event.headline">
-        <mat-label>
-          Headline: As you or the popular or scientific press might or did
-          describe it.
-        </mat-label>
-        <mat-label class="content mat-elevation-z2">
-          {{ event.headline }}
-        </mat-label>
-      </div>
+            <mat-label>
+              Keywords: A comma separated list of keywords or short phrases
+            </mat-label>
+            <mat-label class="content">{{ event.keywords }}</mat-label>
+          </div>
+          <div class="flexrow" *ngIf="event.abstract">
+            <mat-label>Abstract</mat-label>
+            <mat-label class="content abstract">{{ event.abstract }}</mat-label>
+          </div>
+          <div class="flexrow" *ngIf="event.hyperlinks">
+            <mat-label>
+              Active Link(s): (click on each to open it in another tab)
+            </mat-label>
+            <mat-label>
+              <ul>
+                <li *ngFor="let link of event.hyperlinks">
+                  <a href="{{ link }}" target="_blank" noreferrer noopener>
+                    {{ link }}
+                  </a>
+                </li>
+              </ul>
+            </mat-label>
+          </div>
+          <div class="flexrow" *ngIf="event.citations">
+            <mat-label>
+              Citations: An 'Enter' key separated list of links (with optional
+              notes) that cite this.
+            </mat-label>
+            <mat-label>
+              <ul>
+                <li *ngFor="let cite of event.citations">
+                  <a href="{{ cite }}" target="_blank" noopener noreferrer>
+                    {{ cite }}
+                  </a>
+                </li>
+              </ul>
+            </mat-label>
+          </div>
+          <div class="flexcolumn" *ngIf="event.headline">
+            <mat-label>
+              Headline: As you or the popular or scientific press might or did
+              describe it.
+            </mat-label>
+            <mat-label class="content mat-elevation-z2">
+              {{ event.headline }}
+            </mat-label>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </mat-card-content>
   <mat-card-actions align="end">
-      <button mat-raised-button color="primary" (click)="goBack()">Back</button>
+    <button mat-raised-button color="primary" (click)="goBack()">Back</button>
   </mat-card-actions>
 </mat-card>

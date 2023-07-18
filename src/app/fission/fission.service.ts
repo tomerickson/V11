@@ -32,7 +32,7 @@ export class FissionService {
     output: IFissionCompositeResults
   ) => {
     if (helpers.modelMatches(thead, ['id', 'neutrino'])) {
-      output.fissionResults = tbody;
+      output.reactionResults = tbody;
     } else if (helpers.modelMatches(thead, ['id', 'A', 'Z'])) {
       output.nuclideResults = tbody;
     } else if (helpers.modelMatches(thead, ['Z', 'E', 'EName'])) {
@@ -51,7 +51,7 @@ export class FissionService {
    */
     parseFissionResults = (html: string): IFissionCompositeResults => {
       let result: IFissionCompositeResults = {
-        fissionResults: [],
+        reactionResults: [],
         nuclideResults: [],
         elementResults: [],
         ok: true
@@ -65,7 +65,7 @@ export class FissionService {
       }
       for (let i = 0; i < 3; i++) {
         result.ok =
-          result.fissionResults.length > 0 &&
+          result.reactionResults.length > 0 &&
           result.nuclideResults.length > 0 &&
           result.elementResults.length > 0;
       }

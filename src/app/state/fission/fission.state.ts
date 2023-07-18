@@ -55,9 +55,9 @@ export const fissionReducer = createReducer(
     return {
       ...state,
       elementResults: action.results.elementResults,
-      reactionResults: action.results.fissionResults,
+      reactionResults: action.results.reactionResults,
       nuclideResults: action.results.nuclideResults,
-      reactionRows: action.results.fissionResults.length-1,
+      reactionRows: action.results.reactionResults.length-1,
       nuclideRows: action.results.nuclideResults.length-1,
       elementRows: action.results.elementResults.length-1,
       loading: false,

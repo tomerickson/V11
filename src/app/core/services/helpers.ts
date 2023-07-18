@@ -52,9 +52,9 @@ export const getFormData = (object: any): FormData => {
 };
 
 /**
- * 
- * @param form 
- * @returns 
+ *
+ * @param form
+ * @returns
  */
 const stringifyFormData = (form: FormData): string => {
   const arr = Array.from(form.entries());
@@ -129,8 +129,15 @@ const buildFormData = (kvp: KeyValuePair[]): FormData => {
 };
 
 export const KvpsToFormData = (kvp: KeyValuePair[]): string => {
-
   return stringifyFormData(buildFormData(kvp));
+};
 
-
-}
+export const FormDataToQueryString = (form: FormData): string => {
+  const parameters = [];
+  for (var pair of form.entries()) {
+    parameters.push(
+      encodeURIComponent(pair[0]) + '=' + encodeURIComponent(pair[1].toString())
+    );
+  }
+  return parameters.join('&');
+};

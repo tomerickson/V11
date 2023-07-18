@@ -1,9 +1,9 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { IKeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { TwoUpActions } from './two-up.actions';
+import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 
 export interface TwoUpState {
-  formData: IKeyValuePair[];
+  formData: KeyValuePair[];
   loading: boolean;
   ready: boolean;
   error: any;

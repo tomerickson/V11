@@ -3,7 +3,7 @@ import { IFusionResultsModel } from './fusion-results.model';
 import { INuclideResultsModel } from './nuclide-results.model';
 
 export interface IFusionCompositeResults {
-  fusionResults: IFusionResultsModel[];
+  reactionResults: IFusionResultsModel[];
   nuclideResults: INuclideResultsModel[];
   elementResults: IElementResultsModel[];
   ok: boolean;

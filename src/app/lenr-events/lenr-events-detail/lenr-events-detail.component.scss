@@ -1,7 +1,8 @@
-.mdc-card {
+.mdc-card.wrapper {
     width: 100%;
     height: 100%;
-    position: relative
+    position: relative;
+    background-color: transparent;
 }
 
 .mat-mdc-card-content {
@@ -19,7 +20,9 @@ div.flexrow {
         padding-right: 1em;
     }
 }
-
+.header {
+    margin-bottom: 1em;
+}
 div.flexcolumn {
     display: flex;
     flex-direction: column;

@@ -30,7 +30,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable-box.component';
 import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
@@ -67,6 +67,7 @@ import { SqlForm } from 'src/app/core/models/sql-form.model';
     ReactiveFormsModule,
     ReportPagesFaceComponent,
     ResultsizePickerComponent,
+    RouterModule,
     ExpandableBoxComponent
   ],
   providers: [{ provide: HeaderProviderService }],
