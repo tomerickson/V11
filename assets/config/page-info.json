@@ -22,5 +22,11 @@
         "pageTitle": "Fission Reactions",
         "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
         "pageDescription": "This program (\"Fission.php\") enables SQL commands to query the Fission tables originally created from Dr Parkhomov's spreadsheets."
+    },
+    {
+        "pageName": "two-up",
+        "pageTitle": "Two-to-Two Reactions",
+        "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
+        "pageDescription": "This program enables SQL commands to query the TwoToTwo (2-2) tables originally created from Dr Parkhomov's spreadsheets."
     }
 ]
