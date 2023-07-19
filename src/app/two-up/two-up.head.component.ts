@@ -201,22 +201,18 @@ export class TwoUpHeadComponent {
     this.router.navigate(['/two-up/reports']);
   };
 
-  forceReset = () => {
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  ngOnInit(): void {
     const reset =
       this.router.lastSuccessfulNavigation?.extractedUrl.queryParamMap.get(
         'reset'
       );
     if (reset) {
       this.store.dispatch(TwoUpActions.reset());
-      this.router.navigate(['/twoup']);
     }
-  };
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
-  ngOnInit(): void {
-    this.forceReset();
     this.elements = this.store.select(globalFeature.selectElements);
     this.sortFields = this.store.select(globalFeature.selectReactionSortFields);
     this.headerService.buildPageHeader('two-up');
@@ -229,7 +225,6 @@ export class TwoUpHeadComponent {
    * @returns
    */
   buildRequestForm = (forms: FormGroup[]): KeyValuePair[] => {
-
     const form: TwoUpForm = forms[0].value as TwoUpForm;
     const sqlForm: FormGroup = forms[1];
     const payload: KeyValuePair[] = [];
