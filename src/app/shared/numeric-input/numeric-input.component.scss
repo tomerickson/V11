@@ -1,0 +1,14 @@
+div.numeric-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.inactive {
+    display: none;
+}
+div.active {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

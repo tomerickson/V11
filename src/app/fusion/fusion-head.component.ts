@@ -6,18 +6,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IElementDataModel } from '../core/models/element-data.model';
+import { FusionForm } from '../core/models/fusion-form.model';
 import { KeyValuePair } from '../core/models/key-value-pair.model';
 import { ILookupDataModel } from '../core/models/lookup-data.model';
 import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
 import { ReportParameters } from '../core/models/report-parameters.model';
+import { SqlForm } from '../core/models/sql-form.model';
 import { CrudService } from '../core/services/crud.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { PageActions, globalFeature } from '../state';
 import { FusionActions } from '../state/fusion';
 import { FusionFaceComponent } from './fusion-face/fusion-face.component';
-import { FusionForm } from '../core/models/fusion-form.model';
-import { apostrophise } from '../core/services/helpers';
-import { SqlForm } from '../core/models/sql-form.model';
 
 @Component({
   standalone: true,

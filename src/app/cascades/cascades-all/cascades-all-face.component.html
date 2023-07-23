@@ -1,0 +1,279 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <p>
+      CascadesAll: Uses the FusionAll and TwoToTwoAll supertables subject to
+      neutrino settings
+    </p>
+  </mat-expansion-panel-header>
+  <p class="aceenter">
+    Lists all energetically favourable reactions that cascade from both the
+    input and the output nuclei from one or more reactions defined by the Core
+    (starting) Query.
+  </p>
+</mat-expansion-panel>
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="cascadesForm">
+      <input type="hidden" name="doit" value="execute_query" readonly />
+      <div>
+        To conserve server resources, it will still SAVE all your results on the
+        file but only DISPLAY a summary
+      </div>
+      <div class="acenter">
+        Choose the working Fusion and 2-2 set of tables between the Original
+        (Parkhomov, MeV > 0.0: FusionAll and TwoToTwoAll) and the Extended (MeV
+        = +/- 0.0: FusionAllPlus and TwoToTwoAllPlus).
+        <br />
+        (note that either set will use the NuclidesPlus and the ElementsPlus
+        reference tables):
+      </div>
+      <div class="flexrow end">
+        <div>
+          <mat-slide-toggle
+            color="primary"
+            formControlName="mouseEntry"
+            labelPosition="before"
+            [disabled]="!cascadesForm.valid"
+            (toggleChange)="sliderChange()">
+            Mouse/Touch entry
+          </mat-slide-toggle>
+        </div>
+      </div>
+      <div>
+        <mat-radio-group formControlName="tableSet" value="Original">
+          <mat-label>Table set:</mat-label>
+          <mat-radio-button value="Original" selected>
+            Original
+          </mat-radio-button>
+          <mat-radio-button value="Extended">Extended</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <!-- Max. nuclei-->
+      <div class="flexrow end">
+        <div>
+          Maximum number of nuclei to be tried in all pairings as inputs to both
+          the Fusion and the TwoToTwo reaction tables:
+        </div>
+        <mfmp-numeric-input
+          [method]="mouseEntry() == true ? 'slider' : 'text'"
+          [min]="0"
+          [max]="1000"
+          [controlName]="'maxNuclei'"
+          [errorMessages]="errorMessages"
+          [initialValue]="maxNuclei"
+          (changes)="handleNumericInputs($event)"></mfmp-numeric-input>
+      </div>
+
+      <!-- Max. loops-->
+      <div class="flexrow end">
+        <div>
+          Maximum number of loops to be used in the recursion process (too many
+          will produce runaway):
+        </div>
+        <mfmp-numeric-input
+          [method]="mouseEntry() == true ? 'slider' : 'text'"
+          [min]="0"
+          [max]="20"
+          [controlName]="'maxLoops'"
+          [errorMessages]="errorMessages"
+          [initialValue]="maxLoops"
+          (changes)="handleNumericInputs($event)"></mfmp-numeric-input>
+      </div>
+
+      <!-- Max. reactor temperature -->
+      <div class="flexrow end">
+        <div>Maximum Reactor Temperature (Kelvin):</div>
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="maxReactorTemp"
+            type="number"
+            min="0"
+            max="5000"
+            step="100" />
+        </mat-form-field>
+      </div>
+      <div class="flexrow end">
+        <div>
+          <label>
+            Elements that will NOT have MELTED before reaching the Maximum
+            Reactor Temperature:
+          </label>
+        </div>
+        <mat-form-field appearance="fill">
+        <!-- <mat-label>Choose an option.</mat-label> -->
+        <mat-select formControlName="meltingSwitch" placeholder="Choose an option.">
+          <mat-option
+            *ngFor="let option of feedbackOptions"
+            [value]="option.value">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+
+      <div class="flexrow end">
+        <div>
+          Elements that WILL have BOILED before reaching the Maximum Reactor
+          Temperature:
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose an option.</mat-label>
+          <mat-select formControlName="boilingSwitch">
+            <mat-option
+              *ngFor="let option of feedbackOptions"
+              [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="flexrow end">
+        <div>Minimum energy (MeV) for any Fusion reaction to be counted:</div>
+        <mat-form-field appearance="fill" ngDefaultControl>
+          <input matInput type="number" formControlName="fusionMinEnergy" />
+        </mat-form-field>
+      </div>
+      <div class="flexrow end">
+        <div>
+          Minimum energy (MeV) for any TwoToTwo (2-2) reaction to be counted:
+        </div>
+        <mat-form-field appearance="fill">
+          <input matInput type="number" formControlName="twoUpMinEnergy" />
+        </mat-form-field>
+      </div>
+
+      <div class="flexrow end">
+        <div>Radioactive Isotopes:</div>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose an option.</mat-label>
+          <mat-select formControlName="isotopeSwitch">
+            <mat-option
+              *ngFor="let option of feedbackOptions"
+              [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flexrow end">
+        <div>
+          LHL [Log10(Half Life in Years)] Threshold, below which nuclides will
+          count as a Radioactive Isotopes:
+        </div>
+        <mat-form-field>
+          <input matInput type="number" formControlName="halfLifeThreshold" />
+        </mat-form-field>
+      </div>
+      <div class="flexrow end">
+        <div>Nuclear Fermions</div>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose an option.</mat-label>
+          <mat-select formControlName="nuclearFermionSwitch">
+            <mat-option
+              *ngFor="let option of feedbackOptions"
+              [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flexrow end">
+        <div>Atomic Fermions</div>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose an option.</mat-label>
+          <mat-select formControlName="atomicFermionSwitch">
+            <mat-option
+              *ngFor="let option of feedbackOptions"
+              [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flexrow end">
+        <div>
+          For H, D, T*, Li, N, O, F, Na, Cl, K, Cr, Br, Rb and I which can form
+          Dimers:
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose an option.</mat-label>
+          <mat-select formControlName="dimersSwitch">
+            <mat-option
+              *ngFor="let option of feedbackOptions"
+              [value]="option.value">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flexrow end">
+        <div>Order by which the Nuclei table will be presented :</div>
+        <mat-form-field appearance="outline">
+          <input matInput type="text" formControlName="nuclidesSort" />
+        </mat-form-field>
+      </div>
+      <div class="flexrow end">
+        <div>
+          Enter the order by which the Reactions table will be presented
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput type="text" formControlName="reactionSort" />
+          <mat-hint>(for order as tried, clear the box)</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="flexcolumn">
+        <div>
+          <h3>
+            Enter your Core Query below: (as in Fusion or TwoToTwo programs'
+            core queries)
+          </h3>
+        </div>
+        <mat-form-field appearance="outline">
+          <input matInput type="text" formControlName="coreQuery" />
+        </mat-form-field>
+        <h4>Tick the tables you want included in the calculations</h4>
+        <div class="flexrow">
+          <mat-checkbox
+            type="checkbox"
+            formControlName="leftElements"
+            value="left"
+            checked="checked">
+            E on Left
+          </mat-checkbox>
+          <mat-checkbox
+            type="checkbox"
+            formControlName="originalElements"
+            value="none"
+            checked="checked">
+            Original
+          </mat-checkbox>
+          <mat-checkbox
+            type="checkbox"
+            formControlName="rightElements"
+            value="right"
+            checked="checked">
+            E on Right
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <div class="acenter">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          onclick="execute_query()">
+          FIND CASCADES
+        </button>
+      </div>
+      <div class="acenter">
+        NB: This program may take up to 20 minutes to run - be patient. BUT,
+        even if it eventually shows an error message, still check out the All
+        Results page: the answer file (check dates and times) may yet be there
+        and complete.
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,43 @@
+<div class="numeric-input">
+  <div id="touch" #touch [class]="method === 'slider' ? 'active' : 'inactive'" [formGroup]="form">
+    <mat-slider
+      [min]="min"
+      [step]="step"
+      [max]="max < 0 ? null : max"
+      [discrete]="true">
+      <input
+        #slider
+        matSliderThumb
+        formControlName="numValue"
+        min="min"
+        max="max"
+        step="step"
+        [value]="initialValue"
+        (valueChange)="updateValueFromSlider($event)" />
+    </mat-slider>
+    <div>
+      <label>{{ this.value() }}</label>
+    </div>
+  </div>
+  <div id="key" #key [class]="method === 'text' ? 'active' : 'inactive'" [formGroup]="form">
+    <mat-form-field>
+      <input #prompt
+        id="numValue"
+        matInput
+        type="number"
+        min="min"
+        max="max"
+        formControlName="numValue"
+        (change)="updateValueFromInput($event)" />
+      <mat-error *ngIf="hasError('pattern')">
+        {{ getErrorMessage(controlName, 'pattern') }}
+      </mat-error>
+      <mat-error *ngIf="hasError('required')">
+        {{ getErrorMessage(controlName, 'required') }}
+      </mat-error>
+      <mat-error *ngIf="hasError('range')">
+        {{ getErrorMessage(controlName, 'range') }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+</div>

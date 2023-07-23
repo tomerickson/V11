@@ -28,5 +28,11 @@
         "pageTitle": "Two-to-Two Reactions",
         "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
         "pageDescription": "This program enables SQL commands to query the TwoToTwo (2-2) tables originally created from Dr Parkhomov's spreadsheets."
+    },
+    {
+        "pageName": "cascades-all",
+        "pageTitle": "CascadeAll Reactions",
+        "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
+        "pageDescription": "Lists all energetically favourable reactions that cascade from both the input and the output nuclei from one or more reactions defined by the Core (starting) Query."
     }
 ]

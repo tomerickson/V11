@@ -38,6 +38,11 @@ export const APP_ROUTES: Routes = [
     loadChildren: () =>
       import('./two-up/two-up.routes').then((m) => m.TWO_UP_ROUTES)
   },
+  {
+    path: 'cascades-all',
+    loadChildren: () =>
+      import('./cascades/cascades.routes').then((m) => m.CASCADE_ROUTES)
+  },
   { path: 'testpage', pathMatch: 'full', component: TestpageHeadComponent },
   { path: '**', component: NotFoundComponent }
 ];

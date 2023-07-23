@@ -44,7 +44,10 @@ export const fusionReducer = createReducer(
       error: null,
       reactionResults: [],
       nuclideResults: [],
-      elementResults: []
+      elementResults: [],
+      reactionRows: 0,
+      nuclideRows: 0,
+      elementRows: 0
     };
   }),
   on(FusionActions.loadAllResultsFailure, (state, action) => {
