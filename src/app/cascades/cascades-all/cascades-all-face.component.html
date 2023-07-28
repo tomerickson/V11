@@ -4,7 +4,7 @@
       <mat-expansion-panel-header>
         <h4 class="acenter">
           CascadesAll: Uses the FusionAll and TwoToTwoAll supertables subject to
-          neutrino settings
+          neutrino settings...
         </h4>
       </mat-expansion-panel-header>
       <h4 class="aceenter">
@@ -16,15 +16,17 @@
         To conserve server resources, it will still SAVE all your results on the
         file but only DISPLAY a summary
       </h4>
+      <p class="acenter">Hover over italicized text to reveal more infomation.</p>
     </mat-expansion-panel>
     <div class="slidetoggle">
       <mat-slide-toggle
         color="primary"
         labelPosition="before"
         [checked]="mouseEntry()"
-        matTooltip="Enabling mouse/touch entry will replace textboxes with sliders on range-bound controls."
+        matTooltip="{{ touchMessage }}"
+        [matTooltipShowDelay]="tooltipDelay"
         (toggleChange)="sliderChange()">
-        Mouse/Touch entry
+        <i>Mouse/Touch entry</i>
       </mat-slide-toggle>
     </div>
   </mat-card-header>
@@ -257,13 +259,10 @@
           <div>
             <mat-radio-group formControlName="tableSet" value="Original">
               <mat-label
-                matTooltip="Choose the working Fusion and 2-2 set of tables between the
-              Original (Parkhomov, MeV > 0.0: FusionAll and TwoToTwoAll) and the
-              Extended (MeV = +/- 0.0: FusionAllPlus and TwoToTwoAllPlus). (note
-              that either set will use the NuclidesPlus and the ElementsPlus
-              reference tables)"
-                [matTooltipPosition]="'left'">
-                Table set:
+                matTooltip="{{ tablesMessage }}"
+                [matTooltipPosition]="'left'"
+                [matTooltipShowDelay]="tooltipDelay">
+                <i>Table set:</i>
               </mat-label>
               <mat-radio-button value="Original" selected>
                 Original
@@ -306,9 +305,11 @@
           mat-raised-button
           color="primary"
           type="button"
-          matTooltip="NB: This program may take up to 20 minutes to run - be patient. BUT, even if it eventually shows an error message, still check out the All Results page: the answer file (check dates and times) may yet be there and complete."
+          [matTooltipShowDelay]="tooltipDelay"
+          [matTooltipPosition]="'left'"
+          matTooltip="{{ patienceMessage }}"
           (click)="submitForm()">
-          FIND CASCADES
+          <i>FIND CASCADES</i>
         </button>
       </div>
     </form>

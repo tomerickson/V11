@@ -76,12 +76,6 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
   input!: HTMLInputElement;
  
   form!: FormGroup;
-/*   form: FormGroup = new FormGroup({
-    numValue: new FormControl(this.initialValue, [
-      Validators.required,
-      Validators.pattern('[0-9]+')
-    ])
-  }); */
 
   get numValue(): number {
     return this.form.get('numValue')?.value;
@@ -95,16 +89,12 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
     this.buildForm();
     this.value.set(this.initialValue);
     this.form.get('numValue')?.setValue(this.value);
-/*     this.subscriptions.add(
-      this.form.valueChanges.subscribe((changes) =>
-        this.showFormChanges(changes)
-      )
-    ); */
   }
 
   ngAfterViewInit(): void {
     this.input = this.inputRef.nativeElement;
     this.toggleControls();
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {
@@ -119,9 +109,6 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
       ])
     });
   };
-
-  showFormChanges(changes: any) {
-  }
 
   toggleControls() {
     if (this.method === 'slider') {

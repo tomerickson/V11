@@ -56,7 +56,7 @@ export const getFormData = (object: any): FormData => {
  * @param form
  * @returns
  */
-const stringifyFormData = (form: FormData): string => {
+export const stringifyFormData = (form: FormData): string => {
   const arr = Array.from(form.entries());
   const result = [];
   for (let i = 0; i < arr.length; i++) {

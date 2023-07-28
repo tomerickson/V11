@@ -17,10 +17,15 @@ import {
   Validators
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+  MatFormFieldModule,
+  MatLabel
+} from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -42,6 +47,7 @@ import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
     MatCheckboxModule,
     MatExpansionModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
@@ -53,7 +59,12 @@ import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
   ],
   templateUrl: './cascades-all-face.component.html',
   styleUrls: ['./cascades-all-face.component.scss'],
-  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }]
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { subscriptSizing: 'dynamic' }
+    }
+  ]
 })
 export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   store = inject(Store);
@@ -69,7 +80,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
 
   errorMessages = [
     { control: '*', error: 'required', message: 'Required entry.' },
-    { control: '*', error: 'pattern', message: 'Digits [0-9] only.' },
+    { control: '*', error: 'pattern', message: 'Digits [0-9] only.' }
   ];
 
   /**
@@ -109,6 +120,20 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
 
   @Output() submitter: EventEmitter<ICascadesAllForm> = new EventEmitter();
 
+  /** Tooltip support
+   *
+   */
+  touchMessage = `Enabling mouse/touch entry will replace textboxes with sliders on range-bound controls.`;
+  tablesMessage = `Choose the working Fusion and 2-2 set of tables between the
+  Original (Parkhomov, MeV > 0.0: FusionAll and TwoToTwoAll) and the
+  Extended (MeV = +/- 0.0: FusionAllPlus and TwoToTwoAllPlus). (note
+  that either set will use the NuclidesPlus and the ElementsPlus
+  reference tables)`;
+  patienceMessage = `NB: This program may take up to 20 minutes to run - be patient.
+   BUT, even if it eventually shows an error message, still check out the All Results page:
+    the answer file (check dates and times) may yet be there and complete.`;
+  tooltipDelay = 1000;
+
   ngOnInit(): void {
     this.subscriptions = new Subscription();
     this.buildForm();
@@ -135,7 +160,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
       dimersSwitch: ['Include'],
       nuclidesSort: ['order by Z, A'],
       reactionSort: ['order by MeV desc'],
-      coreQuery: ['E1 = \'H\' and (E2 = \'Ni\') '],
+      coreQuery: ["E1 = 'H' and (E2 = 'Ni') "],
       leftElements: ['left'],
       originalElements: ['none'],
       rightElements: ['right'],
@@ -150,9 +175,10 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   };
 
   submitForm = () => {
-    const form: ICascadesAllForm = this.cascadesForm.value as unknown as ICascadesAllForm;
+    const form: ICascadesAllForm = this.cascadesForm
+      .value as unknown as ICascadesAllForm;
     this.submitter.emit(form);
-  }
+  };
   handleFormChanges = (changes: any): void => {
     this.mouseEntry.mutate((vlu) => (changes.mouseEntry = vlu));
     console.log('mouseEntry', this.mouseEntry());
@@ -161,7 +187,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   handleNumericInputs(kvp: KeyValuePair) {
     this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
   }
-  
+
   sliderChange() {
     const value = this.mouseEntry();
     this.mouseEntry.set(!value);
@@ -172,7 +198,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
 
   /**
    * Look for a matching error message:
-   * 
+   *
    */
   errorMessage = (controlName: string, errorName: string): string => {
     const errs = this.errorMessages
@@ -184,7 +210,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
       .sort((a, b) =>
         a.control < b.control ? 1 : a.control > b.control ? -1 : 0
       );
-      console.log('errs', errs);
+    console.log('errs', errs);
     return errs[0].message;
-  }
+  };
 }
