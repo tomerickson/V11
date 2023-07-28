@@ -17,10 +17,10 @@ export interface ICascadesAllRequestModel {
   order_by_N: string; //	"order+by+Z,+A"
   order_by_R: string; //	"order+by+MeV+desc"
   query: string; //	"E1+=+'H'+and+(E2+=+'Ni')+"
-  sql_tables: { left: string; right: string; none: string }; //	"left"	"none"	"right"
+  sql_tables: string[];// { left: string; right: string; none: string }; //	"left"	"none"	"right"
 }
 
-export class CascadesAllRequestModel implements ICascadesAllRequestModel {
+/* export class CascadesAllRequestModel implements ICascadesAllRequestModel {
   table_set!: string;
   max_nuclei!: number;
   max_loops!: number;
@@ -61,4 +61,4 @@ export class CascadesAllRequestModel implements ICascadesAllRequestModel {
     });
     return kvps;
   };
-}
+} */

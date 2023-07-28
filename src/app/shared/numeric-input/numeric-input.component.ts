@@ -48,17 +48,18 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input({ required: true }) set method(value: 'slider' | 'text') {
     this._method = value;
-    this.toggleControls();
+    // this.toggleControls();
   }
   get method() {
     return this._method;
   }
   @Input() min: number = 0;
   @Input({ required: true }) max!: number;
-  @Input() step: number = 1;
+  @Input() step: number = 0;
   @Input({ required: true }) controlName!: string;
   @Input({ required: true }) errorMessages!: IFormError[];
   @Input({ required: true }) initialValue!: number;
+  @Input() label!: string;
   @Output() changes: EventEmitter<KeyValuePair> = new EventEmitter();
   @ViewChild('prompt') inputRef!: ElementRef<HTMLInputElement>;
 
@@ -73,12 +74,14 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
    * used for text input
    */
   input!: HTMLInputElement;
-  form: FormGroup = new FormGroup({
+ 
+  form!: FormGroup;
+/*   form: FormGroup = new FormGroup({
     numValue: new FormControl(this.initialValue, [
       Validators.required,
       Validators.pattern('[0-9]+')
     ])
-  });
+  }); */
 
   get numValue(): number {
     return this.form.get('numValue')?.value;
@@ -92,11 +95,11 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
     this.buildForm();
     this.value.set(this.initialValue);
     this.form.get('numValue')?.setValue(this.value);
-    this.subscriptions.add(
+/*     this.subscriptions.add(
       this.form.valueChanges.subscribe((changes) =>
         this.showFormChanges(changes)
       )
-    );
+    ); */
   }
 
   ngAfterViewInit(): void {

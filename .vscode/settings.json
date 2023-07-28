@@ -20,5 +20,7 @@
         },
         "editor.formatOnSave": false
       },
-      "findUnusedExports.detectCircularImports": true
+      "findUnusedExports.detectCircularImports": true,
+      "debug.javascript.autoAttachFilter": "smart",
+      "html.format.wrapLineLength": 100
 }

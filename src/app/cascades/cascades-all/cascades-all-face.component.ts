@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   OnDestroy,
   OnInit,
+  Output,
   inject,
   signal
 } from '@angular/core';
@@ -18,7 +20,7 @@ import { Store } from '@ngrx/store';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -27,6 +29,8 @@ import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-inpu
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 
 @Component({
   selector: 'mfmp-cascades-all-face',
@@ -43,11 +47,13 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     MatSliderModule,
     MatSlideToggleModule,
+    MatTooltipModule,
     ReactiveFormsModule,
     NumericInputComponent
   ],
   templateUrl: './cascades-all-face.component.html',
-  styleUrls: ['./cascades-all-face.component.scss']
+  styleUrls: ['./cascades-all-face.component.scss'],
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }]
 })
 export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   store = inject(Store);
@@ -57,7 +63,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
 
   feedbackOptions = [
     { name: 'Feedback All', value: 'Include' },
-    { name: 'Feedback Core Fuel Only', value: 'Core' },
+    { name: 'Core Fuel Only', value: 'Core' },
     { name: 'Feedback None', value: 'Exclude' }
   ];
 
@@ -84,6 +90,9 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   get halfLifeThreshold(): string {
     return this.cascadesForm.get('halfLifeThreshold')?.value;
   }
+  get maxReactorTemp(): number {
+    return this.cascadesForm.get('maxReactorTemp')?.value;
+  }
   get nuclearFermionSwitch(): string {
     return this.cascadesForm.get('nuclearFermionSwitch')?.value;
   }
@@ -93,10 +102,12 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   get dimersSwitch(): string {
     return this.cascadesForm.get('dimersSwitch')?.value;
   }
-  get mouseEntryx(): boolean {
-    return this.cascadesForm.get('mouseEntry')?.value;
+  get coreQuery(): boolean {
+    return this.cascadesForm.get('coreQuery')?.value;
   }
   mouseEntry = signal(false);
+
+  @Output() submitter: EventEmitter<ICascadesAllForm> = new EventEmitter();
 
   ngOnInit(): void {
     this.subscriptions = new Subscription();
@@ -130,7 +141,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
       rightElements: ['right'],
       mouseEntry: new FormControl(true)
     });
-    this.mouseEntry = signal(this.cascadesForm.get('mouseEntry')?.value);
+
     this.subscriptions.add(
       this.cascadesForm.valueChanges.subscribe((values) =>
         this.handleFormChanges(values)
@@ -138,6 +149,10 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
     );
   };
 
+  submitForm = () => {
+    const form: ICascadesAllForm = this.cascadesForm.value as unknown as ICascadesAllForm;
+    this.submitter.emit(form);
+  }
   handleFormChanges = (changes: any): void => {
     this.mouseEntry.mutate((vlu) => (changes.mouseEntry = vlu));
     console.log('mouseEntry', this.mouseEntry());

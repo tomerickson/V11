@@ -1,12 +1,11 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
-import { ICascadesAllRequestModel } from "src/app/cascades/cascades-all-request.model";
-import { KeyValuePair } from "src/app/core/models/key-value-pair.model";
+import { ICascadesAllForm } from "src/app/core/models/cascades-all-form.model";
 
 export const CascadesAllActions = createActionGroup({
     source: 'CascadesAll API',
     events: {
         'Reset': emptyProps(),
-        'Fetch All Results': props<{payload: KeyValuePair[]}>(),
+        'Fetch All Results': props<{payload: ICascadesAllForm}>(),
         'Fetch All Results Success': props<{link: string}>(),
         'Fetch All Results Failure': (error: any) => ({error}),
         'Load All Results': emptyProps(),

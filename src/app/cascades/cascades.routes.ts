@@ -13,7 +13,7 @@ export const CASCADE_ROUTES: Routes = [
     component: CascadesAllHeadComponent,
     providers: [
       provideState(cascadeState.cascadesAllFeature),
-      // provideEffects([cascadeState.effects]),
+      provideEffects([cascadeState.effects]),
       {provide: CascadesService, useClass: CascadesService},
       {provide: HeaderProviderService, useClass: HeaderProviderService}
     ]

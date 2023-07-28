@@ -1,3 +1,19 @@
+.mat-mdc-card {
+    height: 100%;
+}
+.mat-mdc-card-header {
+    margin-bottom: 1em;
+}
+div.slidetoggle {
+    padding-left: 1em;
+}
+div.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1em;
+    row-gap: 1em;
+    margin-bottom: 1em;
+}
 div.flexrow {
     display: flex;
     flex-direction: row;
@@ -13,10 +29,16 @@ div.flexrow.end {
     display: flex;
     flex-direction: row;
     justify-content:flex-end;
-    align-items: center;
     :first-child {
         padding-right: 1em;
     }
+}
+div.flexcolumn.end {
+    display: flex;
+    flex-direction: column;
+    // justify-content: flex-end;
+    align-items:flex-end;
+    text-align: center;
 }
 .acenter {
     display: flex;
@@ -29,4 +51,7 @@ div.flexrow.end {
 } */
 mat-slider {
     margin-right: 1em;
+}
+textarea {
+    width: 30em;
 }

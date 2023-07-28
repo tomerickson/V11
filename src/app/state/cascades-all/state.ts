@@ -1,9 +1,9 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { IKeyValuePair } from 'src/app/core/models/key-value-pair.model';
+import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { CascadesAllActions } from './actions';
 
 export interface CascadesAllState {
-  formData: IKeyValuePair[];
+  formData: ICascadesAllForm | undefined;
   loading: boolean;
   ready: boolean;
   error: any;
@@ -17,7 +17,7 @@ export interface CascadesAllState {
 }
 
 export const cascadesAllInitialState: CascadesAllState = {
-  formData: [],
+  formData: undefined,
   loading: false,
   ready: false,
   error: null,

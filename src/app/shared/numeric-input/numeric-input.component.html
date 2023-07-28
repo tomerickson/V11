@@ -12,6 +12,7 @@
         min="min"
         max="max"
         step="step"
+        title="label"
         [value]="initialValue"
         (valueChange)="updateValueFromSlider($event)" />
     </mat-slider>
@@ -27,8 +28,10 @@
         type="number"
         min="min"
         max="max"
+        step="step"
         formControlName="numValue"
-        (change)="updateValueFromInput($event)" />
+        title="label"
+        (input)="updateValueFromInput($event)" />
       <mat-error *ngIf="hasError('pattern')">
         {{ getErrorMessage(controlName, 'pattern') }}
       </mat-error>
