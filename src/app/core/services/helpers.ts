@@ -17,6 +17,57 @@ export const modelMatches = (head: string[], model: string[]): boolean => {
 };
 
 /**
+ * Return one captured group from a regex match
+ * @param input
+ * @param regex
+ * @returns
+ */
+export const getMatchingString = (input: string, regex: string): string => {
+  let result = '';
+  let error = '';
+  let ok = false;
+  let matches = RegExp(regex).exec(input);
+  if (matches) {
+    if (matches.length == 1) {
+      result = matches[1];
+      ok = true;
+    } else {
+      error = `Expected 1 match, but found ${matches.length}.`;
+    }
+  } else {
+    error = 'No matches found.';
+  }
+  if (ok) return result;
+  throw error + ' parseMatchingString could not continue.';
+};
+
+/**
+ * Return two or more captured groups from a regex match
+ *
+ * @param input
+ * @param regex
+ * @param expected // # of matches expected
+ * @returns
+ */
+export const getMatchingStrings = (input: string, regex: string): string[] => {
+  let results: string[] = [];
+  let error = '';
+  let ok = false;
+  let matches: RegExpMatchArray | null = input.match(regex);
+  if (matches) {
+    for (let i = 1; i < matches.length; i++) {
+      results.push(matches[i]);
+    }
+    ok = true;
+  } else {
+    error = 'No matches found.';
+  }
+  console.log('results:', results);
+  if (ok) return results;
+  throw error + ' parseMatchingStrings could not continue.';
+};
+
+/**
  * Wrap a word in apostrophes
  * @param word
  * @returns
@@ -85,35 +136,6 @@ export const getFormDataString = (object: any): string => {
 };
 
 /**
- * Convert an object to FormData
- * (ignore property names starting with _
- *  they're assumed to be private)
- * @param obj
- * @returns FormData
- */
-export const asFormData = (obj: any): FormData => {
-  type T = keyof typeof obj;
-  const formData: FormData = new FormData();
-  const props = Object.getOwnPropertyNames(obj);
-
-  for (const op of props) {
-    const prop = op as T;
-    if (true) {
-      let value: any = obj[prop];
-      let ok = true;
-      if (String(prop).startsWith('_')) ok = false; // exclude private properties
-      if (ok) {
-        if (value == undefined) {
-          value = '';
-        }
-        formData.append(String(prop), value);
-      }
-    }
-  }
-  return formData;
-};
-
-/**
  * Convert kvp array to FormData object
  * for consumption by http.post
  *
@@ -130,14 +152,4 @@ const buildFormData = (kvp: KeyValuePair[]): FormData => {
 
 export const KvpsToFormData = (kvp: KeyValuePair[]): string => {
   return stringifyFormData(buildFormData(kvp));
-};
-
-export const FormDataToQueryString = (form: FormData): string => {
-  const parameters = [];
-  for (var pair of form.entries()) {
-    parameters.push(
-      encodeURIComponent(pair[0]) + '=' + encodeURIComponent(pair[1].toString())
-    );
-  }
-  return parameters.join('&');
 };

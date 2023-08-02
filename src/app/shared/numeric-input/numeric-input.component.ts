@@ -48,7 +48,6 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input({ required: true }) set method(value: 'slider' | 'text') {
     this._method = value;
-    // this.toggleControls();
   }
   get method() {
     return this._method;

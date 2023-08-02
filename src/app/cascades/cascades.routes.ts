@@ -7,15 +7,24 @@ import { HeaderProviderService } from '../shared/header/header.provider.service'
 import { CascadesAllHeadComponent } from './cascades-all/cascades-all-head.component';
 import * as cascadeState from '../state/cascades-all';
 import { CascadesService } from './cascades.service';
+import { CascadesSummaryComponent } from './cascades-summary/cascades-summary.component';
 export const CASCADE_ROUTES: Routes = [
-
-    {path: '',
+  {
+    path: '',
     component: CascadesAllHeadComponent,
     providers: [
       provideState(cascadeState.cascadesAllFeature),
       provideEffects([cascadeState.effects]),
-      {provide: CascadesService, useClass: CascadesService},
-      {provide: HeaderProviderService, useClass: HeaderProviderService}
+      { provide: CascadesService, useClass: CascadesService },
+      { provide: HeaderProviderService, useClass: HeaderProviderService }
+    ]
+  },
+  {
+    path: 'summary',
+    component: CascadesSummaryComponent,
+    providers: [
+      provideState(cascadeState.cascadesAllFeature),
+      provideEffects(cascadeState.effects)
     ]
   },
   {
@@ -24,7 +33,7 @@ export const CASCADE_ROUTES: Routes = [
     providers: [
       provideState(cascadeState.cascadesAllFeature),
       // provideEffects([cascadeState.effects]),
-      {provide: DownloadService, useClass: DownloadService}
+      { provide: DownloadService, useClass: DownloadService }
     ]
   }
 ];

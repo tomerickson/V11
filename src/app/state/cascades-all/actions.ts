@@ -5,6 +5,9 @@ export const CascadesAllActions = createActionGroup({
     source: 'CascadesAll API',
     events: {
         'Reset': emptyProps(),
+        'Request All Results': props<{payload: ICascadesAllForm}>(),
+        'Request All Results Success': props<{payload: ICascadesAllForm}>(),
+        'Request All Results Failure': (error: any) => ({error}),
         'Fetch All Results': props<{payload: ICascadesAllForm}>(),
         'Fetch All Results Success': props<{link: string}>(),
         'Fetch All Results Failure': (error: any) => ({error}),

@@ -6,7 +6,7 @@ import {
   LenrEventsRequest
 } from '../core/models/lenr-events-request.model';
 import { CrudService } from '../core/services/crud.service';
-import { getFormData, getFormDataString } from '../core/services/helpers';
+import { getFormDataString } from '../core/services/helpers';
 import { LenrEventsPrefetchModel } from '../core/models/lenr-events-prefetch.model.';
 import { ILenrEventsLookup } from '../core/models/lenr-events-lookup.model';
 import { LenrEventsPageScraperService } from './lenr-events-page-scraper.service';

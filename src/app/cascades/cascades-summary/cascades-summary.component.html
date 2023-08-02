@@ -1,0 +1,91 @@
+<ng-container
+  *ngIf="loading | async; then isLoading; else isRunning"></ng-container>
+<mat-card>
+  <mat-card-content>
+    <ng-template #isLoading>
+      <div id="isLoading">
+        <mfmp-progress-spinner></mfmp-progress-spinner>
+      </div>
+    </ng-template>
+    <ng-template #isRunning>
+      <div class="grid three-up">
+        <div>Full Starting Query on the Fusion table:</div>
+        <div>{{ (form | async)?.fusionQuery }}</div>
+        <div>{{ (form | async)?.fusionResults }}</div>
+        <div>Full Starting Query on the TwoToTwo table:</div>
+        <div>{{ (form | async)?.twoUpQuery }}</div>
+        <div>{{ (form | async)?.twoUpResults }}</div>
+      </div>
+      <div class="grid two-up">
+        <div>Core Fuel List</div>
+        <div>{{ (form | async)?.startingFuel }}</div>
+        <div>Fusion Table used =</div>
+        <div>{{ (form | async)?.fusionTable }}</div>
+        <div>2-2 Table used =</div>
+        <div>{{ (form | async)?.twoUpTable }}</div>
+        <div>
+          Maximmum number of nuclei allowed in all pairings as inputs to both
+          the Fusion and the TwoToTwo (2-2) reaction tables =
+        </div>
+        <div>{{ (form | async)?.maxNuclei }}</div>
+        <div>Maximum number of loops allowed for the recursion process =</div>
+        <div>{{ (form | async)?.maxLoops }}</div>
+        <div>Maximum Reactor Temperature (Kelvin) =</div>
+        <div>{{ (form | async)?.maxReactorTemp }}</div>
+        <div>
+          Elements that will NOT have MELTED at Maximum Reactor Temperature:
+        </div>
+        <div>{{ (form | async)?.meltingSwitch }}</div>
+        <div>
+          Elements that WILL have BOILED before Maximum Reactor Temperature:
+        </div>
+        <div>{{ (form | async)?.boilingSwitch }}</div>
+        <div>
+          Minimum energy (MeV) for any Fusion reaction that was counted =
+        </div>
+        <div>{{ (form | async)?.fusionMinEnergy }}</div>
+        <div>Minimum energy (MeV) for any 2-2 reaction that was counted =</div>
+        <div>{{ (form | async)?.twoUpMinEnergy }}</div>
+        <div>Radioactive Isotopes:</div>
+        <div>{{ (form | async)?.isotopeSwitch }}</div>
+        <div>
+          LHL threshold below which nuclides were counted as Radioactive
+          Isotopes =
+        </div>
+        <div>{{ (form | async)?.halfLifeThreshold }}</div>
+        <div>Nuclear Fermions:</div>
+        <div>{{ (form | async)?.nuclearFermionSwitch }}</div>
+        <div>Atomic Fermions:</div>
+        <div>{{ (form | async)?.atomicFermionSwitch }}</div>
+        <div>
+          Elements H, D, N, O, F, Cl, Br, I, Li, Na, Rb and Cr, being able to
+          form Dimers (always Bosonic):
+        </div>
+        <div>{{ (form | async)?.dimersSwitch }}</div>
+        <div>
+          SQL compatible string for the order by which the Nuclei Table is
+          presented =
+        </div>
+        <div>{{ (form | async)?.nuclidesSort }}</div>
+        <div>
+          SQL compatible string for the order by which the Reactions Table is
+          presented =
+        </div>
+        <div>{{ (form | async)?.reactionSort }}</div>
+      </div>
+      <div class="grid one-up">
+        <div>{{ (form | async)?.progressMessageOne }}</div>
+        <div>{{ (form | async)?.progressMessageTwo }}</div>
+        <div>Duration = {{(form | async)?.duration}}</div>
+        <div>
+          In the Reactions Table listing, the number 'id' reflects the original
+          order in which the reactions were looked for on this particular run,
+          while 'Tid' is the row number of the reaction as listed in either the
+          FusionAllPlus or the TwoToTwoAllPlus table (as indicated by the 'Type'
+          field)
+        </div>
+        <div>Duration = 124 seconds</div>
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

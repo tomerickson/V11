@@ -3,7 +3,7 @@ import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { CascadesAllActions } from './actions';
 
 export interface CascadesAllState {
-  formData: ICascadesAllForm | undefined;
+  formData: ICascadesAllForm | null;
   loading: boolean;
   ready: boolean;
   error: any;
@@ -17,7 +17,7 @@ export interface CascadesAllState {
 }
 
 export const cascadesAllInitialState: CascadesAllState = {
-  formData: undefined,
+  formData: null,
   loading: false,
   ready: false,
   error: null,
@@ -37,7 +37,7 @@ export const cascadesAllReducer = createReducer(
       ...cascadesAllInitialState
     };
   }),
-  on(CascadesAllActions.fetchAllResults, (state, action) => {
+  on(CascadesAllActions.requestAllResults, (state, action) => {
     return {
       ...state,
       formData: action.payload,
@@ -50,10 +50,10 @@ export const cascadesAllReducer = createReducer(
       elementRows: 0
     };
   }),
-  on(CascadesAllActions.fetchAllResultsSuccess, (state, action) => {
-    return { ...state, link: action.link };
+  on(CascadesAllActions.requestAllResultsSuccess, (state, action) => {
+    return { ...state, loading: false, ready: true, formData: action.payload };
   }),
-  on(CascadesAllActions.fetchAllResultsFailure, (state, error) => {
+  on(CascadesAllActions.requestAllResultsFailure, (state, error) => {
     return { ...state, loading: false, ready: false, error: error };
   }),
   on(CascadesAllActions.loadAllResultsSuccess, (state, action) => {

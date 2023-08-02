@@ -1,0 +1,23 @@
+div#loading {
+    width: 100%;
+}
+div.grid {
+    display: grid;
+    column-gap: 1em;
+    row-gap: 1em;
+    margin: 1em 1em;
+}
+div.four-up {
+    grid-template-columns: 3fr 1fr 3fr 1fr;
+
+}
+div.three-up {
+    grid-template-columns: 1fr 1fr 1fr;
+
+}
+div.two-up {
+    grid-template-columns: 1fr 1fr;
+}
+div.one-up {
+    grid-template-columns: 1fr;
+}

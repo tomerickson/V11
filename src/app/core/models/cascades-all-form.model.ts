@@ -18,6 +18,16 @@ export interface ICascadesAllForm {
   leftElements: string;
   originalElements: string;
   rightElements: string;
+  fusionQuery: string;
+  fusionResults: string;
+  twoUpQuery: string;
+  twoUpResults: string;
+  startingFuel: string;
+  fusionTable: string;
+  twoUpTable: string;
+  progressMessageOne: string;
+  progressMessageTwo: string;
+  duration: number;
 }
 
 /* export class CascadesAllForm implements ICascadesAllForm {

@@ -11,7 +11,6 @@ import { ReportParameters } from '../core/models/report-parameters.model';
 import { SqlForm } from '../core/models/sql-form.model';
 import { TwoUpForm } from '../core/models/two-up-form.model';
 import { CrudService } from '../core/services/crud.service';
-import { FormDataToQueryString } from '../core/services/helpers';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import { PageActions, globalFeature } from '../state';
 import { TwoUpActions } from '../state/two-up';

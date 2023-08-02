@@ -5,6 +5,7 @@ import { HeaderProviderService } from 'src/app/shared/header/header.provider.ser
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { Store } from '@ngrx/store';
 import * as featureStore from '../../state/cascades-all';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'mfmp-cascades-all-head',
@@ -18,6 +19,8 @@ import * as featureStore from '../../state/cascades-all';
 export class CascadesAllHeadComponent implements OnInit {
 
     store = inject(Store);
+    router = inject(Router);
+    activatedRoute = inject(ActivatedRoute);
     headerService = inject(HeaderProviderService);
 
     ngOnInit(): void {
@@ -25,6 +28,7 @@ export class CascadesAllHeadComponent implements OnInit {
     }
     
     submitForm(form: ICascadesAllForm) {
-        this.store.dispatch(featureStore.CascadesAllActions.fetchAllResults({payload: form}));
+        this.store.dispatch(featureStore.CascadesAllActions.requestAllResults({payload: form}));
+        this.router.navigate(['summary'], {relativeTo: this.activatedRoute});
     }
 }

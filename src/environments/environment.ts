@@ -9,6 +9,7 @@ export const environment = {
   version: pkg.version,
   // proxy: 'https://cors-anywhere.azm.workers.dev/',
   proxy: '',
+  // apiUrl: 'http://parkhomov/',
   apiUrl: 'https://nanosoft.co.nz/',
   // apiUrl: 'http://parkhomov/',
   /**
