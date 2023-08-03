@@ -29,7 +29,12 @@ export class CascadesService {
     const result = {} as ICascadesAllForm;
     const parser = new DOMParser();
     const document: Document = parser.parseFromString(html, 'text/html');
-    const pElements = Array.from(document.getElementsByTagName('p'));
+    const form = document.body.querySelector('form#f');
+    if (form) {
+      document.body.removeChild(form);
+    }
+
+    const pElements = Array.from(document.body.getElementsByTagName('p'));
     const paragraphs: string[] = [];
     for (let par of pElements) {
       if (par.textContent) paragraphs.push(par.textContent);
@@ -87,13 +92,13 @@ export class CascadesService {
       item.startsWith('Elements that will NOT have MELTED')
     );
     if (para) {
-      result.meltingSwitch = getMatchingString(para, this.equalScan);
+      result.meltingSwitch = getMatchingString(para, this.colonScan);
     }
     para = paragraphs.find((item) =>
       item.startsWith('Elements that WILL have BOILED')
     );
     if (para) {
-      result.boilingSwitch = getMatchingString(para, this.equalScan);
+      result.boilingSwitch = getMatchingString(para, this.colonScan);
     }
     para = paragraphs.find((item) =>
       item.startsWith('Minimum energy (MeV) for any Fusion reaction')
@@ -117,15 +122,15 @@ export class CascadesService {
     }
     para = paragraphs.find((item) => item.startsWith('Nuclear Fermions'));
     if (para) {
-      result.nuclearFermionSwitch = getMatchingString(para, this.equalScan);
+      result.nuclearFermionSwitch = getMatchingString(para, this.colonScan);
     }
     para = paragraphs.find((item) => item.startsWith('Atomic Fermions'));
     if (para) {
-      result.atomicFermionSwitch = getMatchingString(para, this.equalScan);
+      result.atomicFermionSwitch = getMatchingString(para, this.colonScan);
     }
     para = paragraphs.find((item) => item.includes('Dimers'));
     if (para) {
-      result.dimersSwitch = getMatchingString(para, this.equalScan);
+      result.dimersSwitch = getMatchingString(para, this.colonScan);
     }
     para = paragraphs.find((item) =>
       item.includes('order by which the Nuclei Table')
@@ -151,7 +156,7 @@ export class CascadesService {
     }
     para = paragraphs.find((item) => item.startsWith('Duration'));
     if (para) {
-      result.duration = +getMatchingString(para, this.equalScan);
+      result.duration = getMatchingString(para, this.equalScan);
     }
     console.log('result', result);
     return result;

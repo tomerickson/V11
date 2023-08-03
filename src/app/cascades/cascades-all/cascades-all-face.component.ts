@@ -1,14 +1,14 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
   inject,
   signal
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatExpansionModule } from '@angular/material/expansion';
 import {
   FormBuilder,
   FormControl,
@@ -16,26 +16,27 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+  MatFormFieldModule
+} from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import {
-  MAT_FORM_FIELD_DEFAULT_OPTIONS,
-  MatFormFieldModule,
-  MatLabel
-} from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { Subscription } from 'rxjs';
-import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-input.component';
-import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
+import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
+import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
+import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-input.component';
 
 @Component({
   selector: 'mfmp-cascades-all-face',
@@ -55,7 +56,7 @@ import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
     MatSlideToggleModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    NumericInputComponent
+    NumericInputComponent,
   ],
   templateUrl: './cascades-all-face.component.html',
   styleUrls: ['./cascades-all-face.component.scss'],
@@ -71,12 +72,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   fb = inject(FormBuilder);
   cascadesForm!: FormGroup;
   subscriptions!: Subscription;
-
-  feedbackOptions = [
-    { name: 'Feedback All', value: 'Include' },
-    { name: 'Core Fuel Only', value: 'Core' },
-    { name: 'Feedback None', value: 'Exclude' }
-  ];
+  
 
   errorMessages = [
     { control: '*', error: 'required', message: 'Required entry.' },
@@ -118,6 +114,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   }
   mouseEntry = signal(false);
 
+  @Input({required: true}) feedbackOptions!: ILookupDataModel[] | null;
   @Output() submitter: EventEmitter<ICascadesAllForm> = new EventEmitter();
 
   /** Tooltip support

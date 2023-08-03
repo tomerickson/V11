@@ -27,7 +27,7 @@ export interface ICascadesAllForm {
   twoUpTable: string;
   progressMessageOne: string;
   progressMessageTwo: string;
-  duration: number;
+  duration: string;
 }
 
 /* export class CascadesAllForm implements ICascadesAllForm {

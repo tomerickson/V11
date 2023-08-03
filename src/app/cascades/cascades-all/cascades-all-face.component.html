@@ -129,8 +129,8 @@
               placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
-                [value]="option.value">
-                {{ option.name }}
+                [value]="option.code">
+                {{ option.description }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -146,8 +146,8 @@
               placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
-                [value]="option.value">
-                {{ option.name }}
+                [value]="option.code">
+                {{ option.description }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -159,8 +159,8 @@
             <mat-select formControlName="isotopeSwitch">
               <mat-option
                 *ngFor="let option of feedbackOptions"
-                [value]="option.value">
-                {{ option.name }}
+                [value]="option.code">
+                {{ option.description }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -173,8 +173,8 @@
             <mat-select formControlName="nuclearFermionSwitch">
               <mat-option
                 *ngFor="let option of feedbackOptions"
-                [value]="option.value">
-                {{ option.name }}
+                [value]="option.code">
+                {{ option.description }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -186,8 +186,8 @@
             <mat-select formControlName="atomicFermionSwitch">
               <mat-option
                 *ngFor="let option of feedbackOptions"
-                [value]="option.value">
-                {{ option.name }}
+                [value]="option.code">
+                {{ option.description }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -202,8 +202,8 @@
             <mat-select formControlName="dimersSwitch">
               <mat-option
                 *ngFor="let option of feedbackOptions"
-                [value]="option.value">
-                {{ option.name }}
+                [value]="option.code">
+                {{ option.description }}
               </mat-option>
             </mat-select>
           </mat-form-field>

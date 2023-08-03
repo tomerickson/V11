@@ -9,6 +9,7 @@ import sortFieldsJson from '../../assets/tables/reaction-result-sort-fields.json
 import { ElementActions, LookupActions, PageActions } from './global.actions';
 import { ReportParameters } from '../core/models/report-parameters.model';
 import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
+import fuelFeedbackJson from '../../assets/tables/reaction-feedback-modes.json';
 
 export interface GlobalState {
   pageTitle: string;
@@ -25,7 +26,8 @@ export interface GlobalState {
   radiationTypes: ILookupDataModel[];
   radiationDecayModes: ILookupDataModel[];
   reactionSortFields: ILookupDataModel[];
-  reportParameters: ReportParameters
+  fuelFeedbackModes: ILookupDataModel[];
+  reportParameters: ReportParameters;
 }
 
 export const globalInitialState: GlobalState = {
@@ -38,12 +40,23 @@ export const globalInitialState: GlobalState = {
   elementsLoading: false,
   lookupsReady: false,
   lookupsLoading: false,
-  elements: elementsJson.map(row => {return {Z: row.z, E: row.e, EName: row.ename}}),
+  elements: elementsJson.map((row) => {
+    return { Z: row.z, E: row.e, EName: row.ename };
+  }),
   lookups: [],
-  radiationDecayModes: radDecayModesJson.map(row => {return {category: 'RDM', code: row.code, description: row.description}}),
-  radiationTypes: radTypesJson.map(row => {return {category: 'RT', code: row.code, description: row.description}}),
-  reactionSortFields: sortFieldsJson.map(row => {return {category: 'SORT', code: row.code, description: row.description}}),
-  reportParameters: {url: '', reactionType: ReactionTypeEnum.TBD, query: ''}
+  radiationDecayModes: radDecayModesJson.map((row) => {
+    return { category: 'RDM', code: row.code, description: row.description };
+  }),
+  radiationTypes: radTypesJson.map((row) => {
+    return { category: 'RT', code: row.code, description: row.description };
+  }),
+  reactionSortFields: sortFieldsJson.map((row) => {
+    return { category: 'SORT', code: row.code, description: row.description };
+  }),
+  fuelFeedbackModes: fuelFeedbackJson.map(row => {
+    return {category: 'FEEDBACK', code: row.code, description: row.description};
+  }),
+  reportParameters: { url: '', reactionType: ReactionTypeEnum.TBD, query: '' }
 };
 
 export const globalFeature = createFeature({
@@ -95,7 +108,7 @@ export const globalFeature = createFeature({
         ...state,
         lookupsReady: true,
         lookupsLoading: false,
-        lookups: action.lookups,
+        lookups: action.lookups
       };
     }),
     on(PageActions.enter, (state, action) => {
@@ -104,7 +117,9 @@ export const globalFeature = createFeature({
     on(PageActions.loadGlobals, (state) => {
       return {
         ...state,
-        elements: elementsJson.map(row => {return {Z: row.z, E: row.e, EName: row.ename}}),
+        elements: elementsJson.map((row) => {
+          return { Z: row.z, E: row.e, EName: row.ename };
+        }),
         lookups: [],
         lookupsLoading: true,
         lookupsReady: false
@@ -133,7 +148,7 @@ export const globalFeature = createFeature({
       };
     }),
     on(PageActions.setReportParameters, (state, action) => {
-      return {...state, reportParameters: action.payload}
+      return { ...state, reportParameters: action.payload };
     })
   )
 });
@@ -154,7 +169,6 @@ export const {
   selectShowMenu,
   selectShowMenuText
 } = globalFeature;
-
 
 /**
  * Effects

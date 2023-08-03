@@ -10,73 +10,73 @@
     <ng-template #isRunning>
       <div class="grid three-up">
         <div>Full Starting Query on the Fusion table:</div>
-        <div>{{ (form | async)?.fusionQuery }}</div>
-        <div>{{ (form | async)?.fusionResults }}</div>
+        <div>{{ form?.fusionQuery }}</div>
+        <div>{{ form?.fusionResults }}</div>
         <div>Full Starting Query on the TwoToTwo table:</div>
-        <div>{{ (form | async)?.twoUpQuery }}</div>
-        <div>{{ (form | async)?.twoUpResults }}</div>
+        <div>{{ form?.twoUpQuery }}</div>
+        <div>{{ form?.twoUpResults }}</div>
       </div>
       <div class="grid two-up">
         <div>Core Fuel List</div>
-        <div>{{ (form | async)?.startingFuel }}</div>
+        <div>{{ form?.startingFuel }}</div>
         <div>Fusion Table used =</div>
-        <div>{{ (form | async)?.fusionTable }}</div>
+        <div>{{ form?.fusionTable }}</div>
         <div>2-2 Table used =</div>
-        <div>{{ (form | async)?.twoUpTable }}</div>
+        <div>{{ form?.twoUpTable }}</div>
         <div>
           Maximmum number of nuclei allowed in all pairings as inputs to both
           the Fusion and the TwoToTwo (2-2) reaction tables =
         </div>
-        <div>{{ (form | async)?.maxNuclei }}</div>
+        <div>{{ form?.maxNuclei }}</div>
         <div>Maximum number of loops allowed for the recursion process =</div>
-        <div>{{ (form | async)?.maxLoops }}</div>
+        <div>{{ form?.maxLoops }}</div>
         <div>Maximum Reactor Temperature (Kelvin) =</div>
-        <div>{{ (form | async)?.maxReactorTemp }}</div>
+        <div>{{ form?.maxReactorTemp }}</div>
         <div>
           Elements that will NOT have MELTED at Maximum Reactor Temperature:
         </div>
-        <div>{{ (form | async)?.meltingSwitch }}</div>
+        <div>{{ feedbackDescription(form?.meltingSwitch) }}</div>
         <div>
           Elements that WILL have BOILED before Maximum Reactor Temperature:
         </div>
-        <div>{{ (form | async)?.boilingSwitch }}</div>
+        <div>{{ feedbackDescription(form?.boilingSwitch) }}</div>
         <div>
           Minimum energy (MeV) for any Fusion reaction that was counted =
         </div>
-        <div>{{ (form | async)?.fusionMinEnergy }}</div>
+        <div>{{ form?.fusionMinEnergy }}</div>
         <div>Minimum energy (MeV) for any 2-2 reaction that was counted =</div>
-        <div>{{ (form | async)?.twoUpMinEnergy }}</div>
+        <div>{{ form?.twoUpMinEnergy }}</div>
         <div>Radioactive Isotopes:</div>
-        <div>{{ (form | async)?.isotopeSwitch }}</div>
+        <div>{{ feedbackDescription(form?.isotopeSwitch) }}</div>
         <div>
           LHL threshold below which nuclides were counted as Radioactive
           Isotopes =
         </div>
-        <div>{{ (form | async)?.halfLifeThreshold }}</div>
+        <div>{{ form?.halfLifeThreshold }}</div>
         <div>Nuclear Fermions:</div>
-        <div>{{ (form | async)?.nuclearFermionSwitch }}</div>
+        <div>{{ feedbackDescription(form?.nuclearFermionSwitch) }}</div>
         <div>Atomic Fermions:</div>
-        <div>{{ (form | async)?.atomicFermionSwitch }}</div>
+        <div>{{ feedbackDescription(form?.atomicFermionSwitch) }}</div>
         <div>
           Elements H, D, N, O, F, Cl, Br, I, Li, Na, Rb and Cr, being able to
           form Dimers (always Bosonic):
         </div>
-        <div>{{ (form | async)?.dimersSwitch }}</div>
+        <div>{{ feedbackDescription(form?.dimersSwitch) }}</div>
         <div>
           SQL compatible string for the order by which the Nuclei Table is
           presented =
         </div>
-        <div>{{ (form | async)?.nuclidesSort }}</div>
+        <div>{{ form?.nuclidesSort }}</div>
         <div>
           SQL compatible string for the order by which the Reactions Table is
           presented =
         </div>
-        <div>{{ (form | async)?.reactionSort }}</div>
+        <div>{{ form?.reactionSort }}</div>
       </div>
       <div class="grid one-up">
-        <div>{{ (form | async)?.progressMessageOne }}</div>
-        <div>{{ (form | async)?.progressMessageTwo }}</div>
-        <div>Duration = {{(form | async)?.duration}}</div>
+        <div>{{ form?.progressMessageOne }}</div>
+        <div>{{ form?.progressMessageTwo }}</div>
+        <div>Duration = {{form?.duration}}</div>
         <div>
           In the Reactions Table listing, the number 'id' reflects the original
           order in which the reactions were looked for on this particular run,

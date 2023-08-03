@@ -23,23 +23,8 @@ export const modelMatches = (head: string[], model: string[]): boolean => {
  * @returns
  */
 export const getMatchingString = (input: string, regex: string): string => {
-  let result = '';
-  let error = '';
-  let ok = false;
-  let matches = RegExp(regex).exec(input);
-  if (matches) {
-    if (matches.length == 1) {
-      result = matches[1];
-      ok = true;
-    } else {
-      error = `Expected 1 match, but found ${matches.length}.`;
-    }
-  } else {
-    error = 'No matches found.';
-  }
-  if (ok) return result;
-  throw error + ' parseMatchingString could not continue.';
-};
+  return getMatchingStrings(input, regex)[0];
+}
 
 /**
  * Return two or more captured groups from a regex match
@@ -62,9 +47,16 @@ export const getMatchingStrings = (input: string, regex: string): string[] => {
   } else {
     error = 'No matches found.';
   }
-  console.log('results:', results);
-  if (ok) return results;
-  throw error + ' parseMatchingStrings could not continue.';
+
+  if (ok) {
+    return results;
+  } else {
+    const msg = `${error} parseMatchingStrings could not continue.\n
+    input: ${input}\n
+    regex: ${regex}`;
+    console.log(msg);
+    throw msg;
+  }
 };
 
 /**
