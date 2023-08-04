@@ -1,5 +1,5 @@
 <ng-container
-  *ngIf="loading | async; then isLoading; else isRunning"></ng-container>
+  *ngIf="loading; then isLoading; else isRunning"></ng-container>
 <mat-card>
   <mat-card-content>
     <ng-template #isLoading>

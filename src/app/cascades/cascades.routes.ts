@@ -7,7 +7,8 @@ import { HeaderProviderService } from '../shared/header/header.provider.service'
 import { CascadesAllHeadComponent } from './cascades-all/cascades-all-head.component';
 import * as cascadeState from '../state/cascades-all';
 import { CascadesService } from './cascades.service';
-import { CascadesSummaryComponent } from './cascades-summary/cascades-summary.component';
+import { CascadesSummaryFaceComponent } from './cascades-summary/cascades-summary.component';
+import { CascadesSummaryHeadComponent } from './cascades-summary/cascades-summary-head.component';
 export const CASCADE_ROUTES: Routes = [
   {
     path: '',
@@ -21,7 +22,7 @@ export const CASCADE_ROUTES: Routes = [
   },
   {
     path: 'summary',
-    component: CascadesSummaryComponent,
+    component: CascadesSummaryHeadComponent,
     providers: [
       provideState(cascadeState.cascadesAllFeature),
       provideEffects(cascadeState.effects)
