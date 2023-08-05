@@ -1,0 +1,3 @@
+[{"code": "Core", "description": "Feedback Core Fuel Only"},
+{"code": "Include", "description": "Feedback All"},
+{"code": "Exclude", "description": "Feedback None"}]
