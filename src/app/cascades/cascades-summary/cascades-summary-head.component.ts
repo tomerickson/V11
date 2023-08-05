@@ -6,7 +6,7 @@ import { ICascadesAllForm } from "src/app/core/models/cascades-all-form.model";
 import { ILookupDataModel } from "src/app/core/models/lookup-data.model";
 import { cascadesAllFeature } from 'src/app/state/cascades-all';
 import { globalFeature } from 'src/app/state/index';
-import { CascadesSummaryFaceComponent } from "./cascades-summary.component";
+import { CascadesSummaryFaceComponent } from "./cascades-summary-face.component";
 
 @Component({
     selector: 'mfmp-cascades-summary',

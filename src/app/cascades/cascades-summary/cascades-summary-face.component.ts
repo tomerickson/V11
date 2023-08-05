@@ -9,8 +9,8 @@ import { ProgressSpinnerComponent } from 'src/app/shared/progress-spinner/progre
   selector: 'mfmp-cascades-summary-face',
   standalone: true,
   imports: [CommonModule, MatCardModule, ProgressSpinnerComponent],
-  templateUrl: './cascades-summary.component.html',
-  styleUrls: ['./cascades-summary.component.scss']
+  templateUrl: './cascades-summary-face.component.html',
+  styleUrls: ['./cascades-summary-face.component.scss']
 })
 export class CascadesSummaryFaceComponent {
   
