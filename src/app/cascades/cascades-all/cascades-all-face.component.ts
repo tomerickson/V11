@@ -16,6 +16,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { MatBadgeModule} from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -43,6 +44,7 @@ import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-inpu
   standalone: true,
   imports: [
     CommonModule,
+    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,

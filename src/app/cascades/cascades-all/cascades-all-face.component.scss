@@ -5,7 +5,7 @@
     margin-bottom: 1em;
 }
 div.slidetoggle {
-    padding-left: 1em;
+    margin-left: 2em;
 }
 div.grid {
     display: grid;
@@ -23,6 +23,7 @@ div.flexrow {
 div.flexcolumn {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
 }
 div.flexrow.end {
@@ -46,9 +47,18 @@ div.flexcolumn.end {
     align-items: center;
     text-align: center;
 }
-/* .mat-mdc-form-field {
-    width: 16em !important;
-} */
+div.hint {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+    .mdc-fab--mini {
+        font-size: 12pt;
+        font-weight: 600;
+        height: 24px;
+        width: 24px;
+    }
+}
 mat-slider {
     margin-right: 1em;
 }

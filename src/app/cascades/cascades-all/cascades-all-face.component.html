@@ -16,9 +16,18 @@
         To conserve server resources, it will still SAVE all your results on the
         file but only DISPLAY a summary
       </h4>
-      <p class="acenter">Hover over italicized text to reveal more infomation.</p>
+      <div class="hint">
+        <div>Hint: hover over&nbsp;</div>
+        <div><button mat-mini-fab size="small">?</button></div>
+        <div>&nbsp;highlighted text to reveal more infomation.</div>
+      </div>
     </mat-expansion-panel>
-    <div class="slidetoggle">
+    <div
+      class="slidetoggle"
+      matBadge="?"
+      matBadgePosition="above before"
+      matBadgeOverlap="true"
+      [matBadgeColor]="'accent'">
       <mat-slide-toggle
         color="primary"
         labelPosition="before"
@@ -26,7 +35,7 @@
         matTooltip="{{ touchMessage }}"
         [matTooltipShowDelay]="tooltipDelay"
         (toggleChange)="sliderChange()">
-        <i>Mouse/Touch entry</i>
+        Mouse/Touch entry
       </mat-slide-toggle>
     </div>
   </mat-card-header>
@@ -256,13 +265,17 @@
         </div>
         <div class="flexrow end">
           <div></div>
-          <div>
+          <div
+            matBadge="?"
+            matBadgePosition="above before"
+            matBadgeOverlap="true"
+            [matBadgeColor]="'accent'">
             <mat-radio-group formControlName="tableSet" value="Original">
               <mat-label
                 matTooltip="{{ tablesMessage }}"
                 [matTooltipPosition]="'left'"
                 [matTooltipShowDelay]="tooltipDelay">
-                <i>Table set:</i>
+                Table set:
               </mat-label>
               <mat-radio-button value="Original" selected>
                 Original
@@ -272,9 +285,9 @@
           </div>
         </div>
       </div>
-      <div class="acenter">
+      <div class="flexrow">
         <div>
-          <h4>Tick the tables you want included in the calculations</h4>
+          <h4>Tick the tables you want included in the calculations:</h4>
         </div>
         <div>
           <mat-checkbox
@@ -299,18 +312,21 @@
             E on Right
           </mat-checkbox>
         </div>
-      </div>
-      <div class="flexrow end">
-        <button
-          mat-raised-button
-          color="primary"
-          type="button"
-          [matTooltipShowDelay]="tooltipDelay"
-          [matTooltipPosition]="'left'"
-          matTooltip="{{ patienceMessage }}"
-          (click)="submitForm()">
-          <i>FIND CASCADES</i>
-        </button>
+        <div>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            matBadge="?"
+            matBadgePosition="above before"
+            [matBadgeColor]="'accent'"
+            [matTooltipShowDelay]="tooltipDelay"
+            [matTooltipPosition]="'left'"
+            matTooltip="{{ patienceMessage }}"
+            (click)="submitForm()">
+            FIND CASCADES
+          </button>
+        </div>
       </div>
     </form>
   </mat-card-content>

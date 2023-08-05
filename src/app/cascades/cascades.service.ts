@@ -48,6 +48,13 @@ export class CascadesService {
     }
 
     const pElements = Array.from(document.body.getElementsByTagName('p'));
+    const targetLink: HTMLAnchorElement = document.body.querySelector(
+      'a[href*="/results"]'
+    ) as HTMLAnchorElement;
+    const url: URL = new URL(targetLink.href);
+
+    result.resultsLink = url.pathname;
+
     const paragraphs: string[] = [];
     for (let par of pElements) {
       if (par.textContent) paragraphs.push(par.textContent);

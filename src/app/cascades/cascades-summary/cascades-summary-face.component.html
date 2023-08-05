@@ -1,91 +1,129 @@
-<ng-container
-  *ngIf="loading; then isLoading; else isRunning"></ng-container>
-<mat-card>
-  <mat-card-content>
-    <ng-template #isLoading>
+<ng-container *ngIf="loading; then isLoading; else isRunning"></ng-container>
+
+<ng-template #isLoading>
+  <mat-card>
+    <mat-card-content>
       <div id="isLoading">
         <mfmp-progress-spinner></mfmp-progress-spinner>
       </div>
-    </ng-template>
-    <ng-template #isRunning>
-      <div class="grid three-up">
-        <div>Full Starting Query on the Fusion table:</div>
-        <div>{{ form?.fusionQuery }}</div>
-        <div>{{ form?.fusionResults }}</div>
-        <div>Full Starting Query on the TwoToTwo table:</div>
-        <div>{{ form?.twoUpQuery }}</div>
-        <div>{{ form?.twoUpResults }}</div>
-      </div>
-      <div class="grid two-up">
-        <div>Core Fuel List</div>
-        <div>{{ form?.startingFuel }}</div>
-        <div>Fusion Table used =</div>
-        <div>{{ form?.fusionTable }}</div>
-        <div>2-2 Table used =</div>
-        <div>{{ form?.twoUpTable }}</div>
-        <div>
-          Maximmum number of nuclei allowed in all pairings as inputs to both
-          the Fusion and the TwoToTwo (2-2) reaction tables =
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+<ng-template #isRunning>
+  <mat-card>
+    <mat-card-content>
+      <mat-expansion-panel expanded="false">
+        <mat-expansion-panel-header>
+          <div class="hint">
+            <div>Hint: hover over&nbsp;</div>
+            <div><button mat-mini-fab size="small">?</button></div>
+            <div>&nbsp;highlighted text to reveal more infomation.</div>
+          </div>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+
+      <div class="flexrow">
+        <div class="grid two-up mat-elevation-z4">
+          <div class="column-a">Core Fuel List</div>
+          <div class="column-b">{{ form?.startingFuel }}</div>
+          <div class="column-a">Fusion Table used =</div>
+          <div class="column-b">{{ form?.fusionTable }}</div>
+          <div class="column-a">2-2 Table used =</div>
+          <div class="column-b">{{ form?.twoUpTable }}</div>
+          <div class="column-a">
+            Maximmum number of nuclei allowed in all pairings as inputs to both
+            the Fusion and the TwoToTwo (2-2) reaction tables =
+          </div>
+          <div class="column-b">{{ form?.maxNuclei }}</div>
+          <div class="column-a">
+            Maximum number of loops allowed for the recursion process =
+          </div>
+          <div class="column-b">{{ form?.maxLoops }}</div>
+          <div class="column-a">Maximum Reactor Temperature (Kelvin) =</div>
+          <div class="column-b">{{ form?.maxReactorTemp }}</div>
+          <div class="column-a">
+            Elements that will NOT have MELTED at Maximum Reactor Temperature:
+          </div>
+          <div class="column-b">{{ form?.meltingSwitch }}</div>
+          <div class="column-a">
+            Elements that WILL have BOILED before Maximum Reactor Temperature:
+          </div>
+          <div class="column-b">{{ form?.boilingSwitch }}</div>
+          <div class="column-a">
+            Minimum energy (MeV) for any Fusion reaction that was counted =
+          </div>
+          <div class="column-b">{{ form?.fusionMinEnergy }}</div>
+          <div class="column-a">
+            Minimum energy (MeV) for any 2-2 reaction that was counted =
+          </div>
+          <div class="column-b">{{ form?.twoUpMinEnergy }}</div>
+          <div class="column-a">Radioactive Isotopes:</div>
+          <div class="column-b">{{ form?.isotopeSwitch }}</div>
+          <div class="column-a">
+            LHL threshold below which nuclides were counted as Radioactive
+            Isotopes =
+          </div>
+          <div class="column-b">{{ form?.halfLifeThreshold }}</div>
+          <div class="column-a">Nuclear Fermions:</div>
+          <div class="column-b">{{ form?.nuclearFermionSwitch }}</div>
+          <div class="column-a">Atomic Fermions:</div>
+          <div class="column-b">{{ form?.atomicFermionSwitch }}</div>
+          <div class="column-a">
+            Elements H, D, N, O, F, Cl, Br, I, Li, Na, Rb and Cr, being able to
+            form Dimers (always Bosonic):
+          </div>
+          <div class="column-b">{{ form?.dimersSwitch }}</div>
+          <div class="column-a">
+            SQL compatible string for the order by which the Nuclei Table is
+            presented =
+          </div>
+          <div class="column-b">{{ form?.nuclidesSort }}</div>
+          <div class="column-a">
+            SQL compatible string for the order by which the Reactions Table is
+            presented =
+          </div>
+          <div class="column-b">{{ form?.reactionSort }}</div>
         </div>
-        <div>{{ form?.maxNuclei }}</div>
-        <div>Maximum number of loops allowed for the recursion process =</div>
-        <div>{{ form?.maxLoops }}</div>
-        <div>Maximum Reactor Temperature (Kelvin) =</div>
-        <div>{{ form?.maxReactorTemp }}</div>
-        <div>
-          Elements that will NOT have MELTED at Maximum Reactor Temperature:
+        <div class="flexcolumn mat-elevation-z4">
+          <div class="grid two-up">
+            <div>
+              <div>Full Starting Query on the Fusion Table:</div>
+              <div>{{ form?.fusionQuery }}</div>
+            </div>
+            <div>{{ form?.fusionResults }}</div>
+            <div>
+              <div>Full Starting Query on the TwoToTwo table:</div>
+              <div>{{ form?.twoUpQuery }}</div>
+            </div>
+            <div>{{ form?.twoUpResults }}</div>
+          </div>
+          <div>
+            <ul>
+              <li>
+                <div>{{ form?.progressMessageOne }}</div>
+              </li>
+              <li>
+                <div>{{ form?.progressMessageTwo }}</div>
+              </li>
+              <li>
+                <div>Duration = {{ form?.duration }}</div>
+              </li>
+              <li>
+                <div>
+                  In the Reactions Table listing, the number 'id' reflects the
+                  original order in which the reactions were looked for on this
+                  particular run, while 'Tid' is the row number of the reaction
+                  as listed in either the FusionAllPlus or the TwoToTwoAllPlus
+                  table (as indicated by the 'Type' field)
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div>{{ form?.meltingSwitch }}</div>
-        <div>
-          Elements that WILL have BOILED before Maximum Reactor Temperature:
-        </div>
-        <div>{{ form?.boilingSwitch }}</div>
-        <div>
-          Minimum energy (MeV) for any Fusion reaction that was counted =
-        </div>
-        <div>{{ form?.fusionMinEnergy }}</div>
-        <div>Minimum energy (MeV) for any 2-2 reaction that was counted =</div>
-        <div>{{ form?.twoUpMinEnergy }}</div>
-        <div>Radioactive Isotopes:</div>
-        <div>{{ form?.isotopeSwitch }}</div>
-        <div>
-          LHL threshold below which nuclides were counted as Radioactive
-          Isotopes =
-        </div>
-        <div>{{ form?.halfLifeThreshold }}</div>
-        <div>Nuclear Fermions:</div>
-        <div>{{ form?.nuclearFermionSwitch }}</div>
-        <div>Atomic Fermions:</div>
-        <div>{{ form?.atomicFermionSwitch }}</div>
-        <div>
-          Elements H, D, N, O, F, Cl, Br, I, Li, Na, Rb and Cr, being able to
-          form Dimers (always Bosonic):
-        </div>
-        <div>{{ form?.dimersSwitch }}</div>
-        <div>
-          SQL compatible string for the order by which the Nuclei Table is
-          presented =
-        </div>
-        <div>{{ form?.nuclidesSort }}</div>
-        <div>
-          SQL compatible string for the order by which the Reactions Table is
-          presented =
-        </div>
-        <div>{{ form?.reactionSort }}</div>
       </div>
       <div class="grid one-up">
-        <div>{{ form?.progressMessageOne }}</div>
-        <div>{{ form?.progressMessageTwo }}</div>
-        <div>Duration = {{form?.duration}}</div>
-        <div>
-          In the Reactions Table listing, the number 'id' reflects the original
-          order in which the reactions were looked for on this particular run,
-          while 'Tid' is the row number of the reaction as listed in either the
-          FusionAllPlus or the TwoToTwoAllPlus table (as indicated by the 'Type'
-          field)
-        </div>
-        <div>Duration = 124 seconds</div>
+        <div>Link: {{ form?.resultsLink }}</div>
       </div>
-    </ng-template>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
