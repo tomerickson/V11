@@ -1,18 +1,19 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { ICascadesAllForm } from '../core/models/cascades-all-form.model';
 import { CrudService } from '../core/services/crud.service';
 import {
-  getFormDataString,
   getMatchingString,
   getMatchingStrings,
   stringifyFormData
 } from '../core/services/helpers';
+import { AppConfigService } from '../core/config/app-config.service';
 
 @Injectable()
 export class CascadesService {
+  config: AppConfigService = inject(AppConfigService);
   crud: CrudService = inject(CrudService);
-  cascadesAllPage = 'CascadesAll.php';
+  page = 'CascadesAll.php';
   equalScan = '=\\s*(.+)';
   colonScan = ':\\s*(.+)';
   quoteScan = '"(.+)"\\.\\s+?(.+)\\.';
@@ -22,7 +23,19 @@ export class CascadesService {
   getCascadesAllResponse = (form: ICascadesAllForm): Observable<string> => {
     const request: FormData = this.asCascadesAllFormData(form);
     const formString = stringifyFormData(request);
-    return this.crud.postPage(this.cascadesAllPage, formString);
+
+    if (!this.config.production) {
+      const text = localStorage.getItem(this.page);
+      if (text) {
+        return of(text);
+      } else {
+        return this.crud
+          .postPage(this.page, formString)
+          .pipe(tap((rsp) => localStorage.setItem(this.page, rsp)));
+      }
+    } else {
+      return this.crud.postPage(this.page, formString);
+    }
   };
 
   parseCascadesAllResponse = (html: string): ICascadesAllForm => {
@@ -204,10 +217,6 @@ SQL compatible string for the order by which the Nuclei Table is presented = ord
 
 SQL compatible string for the order by which the Reactions Table is presented = order by MeV desc
 */
-
-  asFormDataString = (input: any): string => {
-    return getFormDataString(input);
-  };
 
   asCascadesAllFormData = (input: ICascadesAllForm): FormData => {
     const form = new FormData();

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { Observable, of } from 'rxjs';
+import { AppConfigService } from '../config/app-config.service';
 import { IElementDataModel } from '../models/element-data.model';
 import { ILookupDataModel } from '../models/lookup-data.model';
 
@@ -19,14 +19,13 @@ export interface GlobalCollections {
 
 @Injectable({ providedIn: 'root' })
 export class CrudService {
-
+  private config = inject(AppConfigService);
   private http = inject(HttpClient);
   private headers: HttpHeaders = new HttpHeaders()
-  .set('Accept', 'text/html')
-  .set('Content-Type','application/x-www-form-urlencoded');
+    .set('Accept', 'text/html')
+    .set('Content-Type', 'application/x-www-form-urlencoded');
 
-  private _endPoint: string = environment.proxy + environment.apiUrl;
-  // private user: User;
+  private _endPoint: string = (this.config.proxy ?? '') + this.config.apiUrl;
 
   public get endPoint(): string {
     return this._endPoint;
@@ -38,28 +37,38 @@ export class CrudService {
     return this.http.get(url, { responseType: 'text', observe: 'body' });
   };
 
-  postPage = (page: string, payload: any, headers: HttpHeaders = this.headers): Observable<string> => {
+  postPage = (
+    page: string,
+    payload: any,
+    headers: HttpHeaders = this.headers,
+    useFacade = false
+  ): Observable<string> => {
     const url = `${this.endPoint}${page}`;
     console.log('postPage url', url);
-    return this.http.post(url, payload, {headers: headers,
+    if (useFacade) return this.getDummyResults(page, headers);
+    return this.http.post(url, payload, {
+      headers: headers,
       responseType: 'text',
       observe: 'body'
     });
   };
 
-  getDummyResults(): Observable<any> {
+  getDummyResults(
+    page: string,
+    headers: HttpHeaders = this.headers
+  ): Observable<any> {
     console.log('getting dummy data');
-    let page = 'http://localhost:4200/assets/demo.txt';
-    return this.http.get<any>(page, { observe: 'body' });
+    let result: Observable<string>;
+    try {
+       result = this.http.get(`../../../../server/${page}`, {
+        headers: headers,
+        responseType: 'text',
+        observe: 'body'
+      });
+      return result;
+    } catch (err) {
+      console.error(err);
+      return of('?');
+    }
   }
-
-
-
-
-
-
-
-
-
-
 }

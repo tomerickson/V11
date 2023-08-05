@@ -19,11 +19,10 @@ export class CascadesSummaryFaceComponent {
   @Input({required: true}) feedbackOptions!: ILookupDataModel[] | null;
   
   feedbackDescription = (code: string | undefined): string | null => {
-    if (typeof this.feedbackOptions === 'undefined') {
-      return null;
+    if (code) {
+     return code;
     } else {
-      const obj = this.feedbackOptions?.find((item) => item.code === code);
-      return obj ? obj.description : null;
+      return null;
     }
-  };
+  }
 }

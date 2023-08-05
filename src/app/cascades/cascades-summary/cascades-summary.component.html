@@ -35,11 +35,11 @@
         <div>
           Elements that will NOT have MELTED at Maximum Reactor Temperature:
         </div>
-        <div>{{ feedbackDescription(form?.meltingSwitch) }}</div>
+        <div>{{ form?.meltingSwitch }}</div>
         <div>
           Elements that WILL have BOILED before Maximum Reactor Temperature:
         </div>
-        <div>{{ feedbackDescription(form?.boilingSwitch) }}</div>
+        <div>{{ form?.boilingSwitch }}</div>
         <div>
           Minimum energy (MeV) for any Fusion reaction that was counted =
         </div>
@@ -47,21 +47,21 @@
         <div>Minimum energy (MeV) for any 2-2 reaction that was counted =</div>
         <div>{{ form?.twoUpMinEnergy }}</div>
         <div>Radioactive Isotopes:</div>
-        <div>{{ feedbackDescription(form?.isotopeSwitch) }}</div>
+        <div>{{ form?.isotopeSwitch }}</div>
         <div>
           LHL threshold below which nuclides were counted as Radioactive
           Isotopes =
         </div>
         <div>{{ form?.halfLifeThreshold }}</div>
         <div>Nuclear Fermions:</div>
-        <div>{{ feedbackDescription(form?.nuclearFermionSwitch) }}</div>
+        <div>{{ form?.nuclearFermionSwitch }}</div>
         <div>Atomic Fermions:</div>
-        <div>{{ feedbackDescription(form?.atomicFermionSwitch) }}</div>
+        <div>{{ form?.atomicFermionSwitch }}</div>
         <div>
           Elements H, D, N, O, F, Cl, Br, I, Li, Na, Rb and Cr, being able to
           form Dimers (always Bosonic):
         </div>
-        <div>{{ feedbackDescription(form?.dimersSwitch) }}</div>
+        <div>{{ form?.dimersSwitch }}</div>
         <div>
           SQL compatible string for the order by which the Nuclei Table is
           presented =

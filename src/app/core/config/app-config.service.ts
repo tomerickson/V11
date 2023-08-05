@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import configs from '../../../assets/config/app-config.json';
+import configs from '../../../assets/config/config.json';
 import { IAppConfig } from './iapp-config.model';
 
 @Injectable({
@@ -41,10 +41,18 @@ export class AppConfigService {
   get apiUrl(): string {
     return this._appConfig.apiUrl;
   }
+
+  get  proxy(): string | null {
+    return this._appConfig.proxy;
+  }
+
   get retryDelay(): number {
     return this._appConfig.httpRetryDelay;
   }
   get maxRetries(): number {
     return this._appConfig.httpMaxRetries;
+  }
+  get production(): boolean {
+    return this._appConfig.production;
   }
 }
