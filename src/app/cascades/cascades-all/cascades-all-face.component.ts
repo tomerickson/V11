@@ -131,7 +131,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   patienceMessage = `NB: This program may take up to 20 minutes to run - be patient.
    BUT, even if it eventually shows an error message, still check out the All Results page:
     the answer file (check dates and times) may yet be there and complete.`;
-  tooltipDelay = 1000;
+  tooltipDelay = 750;
 
   ngOnInit(): void {
     this.subscriptions = new Subscription();

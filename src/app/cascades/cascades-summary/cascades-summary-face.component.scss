@@ -24,16 +24,15 @@ div.grid {
     display: grid;
     column-gap: 1em;
     row-gap: 1em;
+    padding-top: 1em;
 }
 
 div.four-up {
     grid-template-columns: 3fr 1fr 3fr 1fr;
-
 }
 
 div.three-up {
     grid-template-columns: 2fr 4fr 2fr;
-
 }
 
 div.two-up {
@@ -51,15 +50,44 @@ div.two-up {
 div.one-up {
     grid-template-columns: 1fr;
 }
+
 div.flexcolumn {
     padding: 1em;
     display: flex;
     flex-direction: column;
+    justify-content: stretch;
+
+    >div {
+        margin-top: 2em;
+    }
 }
+
 div.flexrow {
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
-    margin-top: 1em;
+    flex: 1 1;
+    // align-items: stretch;
+
+    >:last-child {
+        margin-left: 1em;
+    }
+}
+
+div.query {
+    :first-child {
+        font-weight: 500;
+    }
+
+    :last-child {
+        text-align: right;
+        font-weight: 500;
+    }
+}
+
+div.button {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: end;
 }
