@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
-import { ReportPagesHeadComponent } from '../shared/report-pages/report-pages.head.component';
 import { DownloadService } from '../shared/download/download.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
-import { CascadesAllHeadComponent } from './cascades-all/cascades-all-head.component';
 import * as cascadeState from '../state/cascades-all';
-import { CascadesService } from './cascades.service';
-import { CascadesSummaryFaceComponent } from './cascades-summary/cascades-summary-face.component';
+import { CascadesAllHeadComponent } from './cascades-all/cascades-all-head.component';
 import { CascadesSummaryHeadComponent } from './cascades-summary/cascades-summary-head.component';
+import { CascadesService } from './cascades.service';
+import { ReportPagesHeadComponent } from '../shared/report-pages/report-pages.head.component';
+
 export const CASCADE_ROUTES: Routes = [
   {
     path: '',
@@ -33,7 +33,7 @@ export const CASCADE_ROUTES: Routes = [
     component: ReportPagesHeadComponent,
     providers: [
       provideState(cascadeState.cascadesAllFeature),
-      // provideEffects([cascadeState.effects]),
+      provideEffects([cascadeState.effects]),
       { provide: DownloadService, useClass: DownloadService }
     ]
   }

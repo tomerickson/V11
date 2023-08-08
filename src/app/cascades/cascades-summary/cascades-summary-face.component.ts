@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -21,5 +21,8 @@ export class CascadesSummaryFaceComponent {
   @Input({required: true}) form!: ICascadesAllForm | null;
   @Input({required: true}) loading!: boolean | null;
   @Input({required: true}) feedbackOptions!: ILookupDataModel[] | null;
-  
-}
+  @Output() submitter = new EventEmitter<string>();
+
+  loadResults = () => {
+    this.submitter.emit(this.form?.resultsLink);
+  }}

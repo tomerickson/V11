@@ -43,11 +43,7 @@ export const cascadesAllReducer = createReducer(
       formData: action.payload,
       loading: true,
       ready: false,
-      error: null,
-      link: null,
-      reactionRows: 0,
-      nuclideRows: 0,
-      elementRows: 0
+      error: null
     };
   }),
   on(CascadesAllActions.requestAllResultsSuccess, (state, action) => {
@@ -56,18 +52,33 @@ export const cascadesAllReducer = createReducer(
   on(CascadesAllActions.requestAllResultsFailure, (state, error) => {
     return { ...state, loading: false, ready: false, error: error };
   }),
+  on(CascadesAllActions.loadAllResults, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+      ready: false,
+      error: null,
+      link: action.url,
+      reactionRows: 0,
+      nuclideRows: 0,
+      elementRows: 0
+    };
+  }),
   on(CascadesAllActions.loadAllResultsSuccess, (state, action) => {
     return {
       ...state,
       ready: true,
       loading: false,
-      reactionResults: action.results[0],
-      nuclideResults: action.results[1],
-      elementResults: action.results[2],
-      reactionRows: action.results[0].length,
-      nuclideRows: action.results[1].length,
-      elementRows: action.results[2].length
+      reactionResults: action.payload.reactionResults,
+      nuclideResults: action.payload.nuclideResults,
+      elementResults: action.payload.elementResults,
+      reactionRows: action.payload.reactionResults.length,
+      nuclideRows: action.payload.nuclideResults.length,
+      elementRows: action.payload.elementResults.length
     };
+  }),
+  on(CascadesAllActions.loadAllResultsFailure, (state, action) => {
+    return { ...state, loading: false, error: action.error };
   })
 );
 export const cascadesAllFeature = createFeature({
@@ -76,15 +87,15 @@ export const cascadesAllFeature = createFeature({
 });
 
 export const {
-selectFormData,
-selectLoading,
-selectReady,
-selectError,
-selectLink,
-selectReactionResults,
-selectNuclideResults,
-selectElementResults,
-selectReactionRows,
-selectNuclideRows,
-selectElementRows,
+  selectFormData,
+  selectLoading,
+  selectReady,
+  selectError,
+  selectLink,
+  selectReactionResults,
+  selectNuclideResults,
+  selectElementResults,
+  selectReactionRows,
+  selectNuclideRows,
+  selectElementRows
 } = cascadesAllFeature;

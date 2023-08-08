@@ -8,6 +8,7 @@ import {
   stringifyFormData
 } from '../core/services/helpers';
 import { AppConfigService } from '../core/config/app-config.service';
+import { CascadesAllResultsModel } from '../core/models/cascades-all-results.model';
 
 @Injectable()
 export class CascadesService {
@@ -20,6 +21,24 @@ export class CascadesService {
 
   constructor() {}
 
+  loadCascadesAllResponse = (url: string): Observable<string> => {
+    if (!this.config.production) {
+      const text = localStorage.getItem(url);
+      if (text) {
+        return of(text);
+      } else {
+        return this.crud
+          .getPage(url)
+          .pipe(tap((rsp) => localStorage.setItem(url, rsp)));
+      }
+    } else {
+      return this.crud.getPage(url);
+    }
+  };
+
+  parseCascadesAllTables = (html: string): CascadesAllResultsModel => {
+    return new CascadesAllResultsModel(html, ['id', 'Type', 'Tid']);
+  };
   getCascadesAllResponse = (form: ICascadesAllForm): Observable<string> => {
     const request: FormData = this.asCascadesAllFormData(form);
     const formString = stringifyFormData(request);

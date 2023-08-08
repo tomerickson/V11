@@ -1,5 +1,6 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { ICascadesAllForm } from "src/app/core/models/cascades-all-form.model";
+import { CascadesAllResultsModel } from "src/app/core/models/cascades-all-results.model";
 
 export const CascadesAllActions = createActionGroup({
     source: 'CascadesAll API',
@@ -11,8 +12,8 @@ export const CascadesAllActions = createActionGroup({
         'Fetch All Results': props<{payload: ICascadesAllForm}>(),
         'Fetch All Results Success': props<{link: string}>(),
         'Fetch All Results Failure': (error: any) => ({error}),
-        'Load All Results': emptyProps(),
-        'Load All Results Success': props<{results: any[][]}>(),
+        'Load All Results': props<{url: string}>(),
+        'Load All Results Success': props<{payload: CascadesAllResultsModel}>(),
         'Load All Results Failure': (error: any) => ({error}),
         'Load ElementResults': emptyProps(),
         'Load FusionResults': emptyProps(),

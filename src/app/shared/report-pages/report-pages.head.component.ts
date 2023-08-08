@@ -1,16 +1,18 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ReactionType } from 'src/app/core/models/reaction-type';
-import { ReportPagesFaceComponent } from './report-pages.face.component';
-import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { fusionFeature } from 'src/app/state/fusion';
-import { fissionFeature } from 'src/app/state/fission';
-import { twoupFeature } from 'src/app/state/two-up';
-import { AsyncPipe } from '@angular/common';
-import { globalFeature } from 'src/app/state';
-import { ReportParameters } from 'src/app/core/models/report-parameters.model';
+import { Observable, Subscription } from 'rxjs';
+import { ReactionType } from 'src/app/core/models/reaction-type';
 import { ReactionTypeEnum } from 'src/app/core/models/reaction-type-enum.model';
+import { ReportParameters } from 'src/app/core/models/report-parameters.model';
+import { globalFeature } from 'src/app/state';
+import { cascadesAllFeature } from 'src/app/state/cascades-all';
+import { fissionFeature } from 'src/app/state/fission';
+import { fusionFeature } from 'src/app/state/fusion';
+import { twoupFeature } from 'src/app/state/two-up';
+import { ReportPagesFaceComponent } from './report-pages.face.component';
+import { selectNuclideResults } from 'src/app/state/fusion/fusion.state';
 
 @Component({
   standalone: true,
@@ -98,7 +100,26 @@ export class ReportPagesHeadComponent implements OnInit, OnDestroy {
         this.elementRows = this.store.select(twoupFeature.selectElementRows);
         this.loading = this.store.select(twoupFeature.selectLoading);
         this.ready = this.store.select(twoupFeature.selectReady);
-
+        break;
+      case ReactionTypeEnum.CascadesAll:
+        this.reactions = this.store.select(
+          cascadesAllFeature.selectReactionResults
+        );
+        this.nuclides = this.store.select(
+          cascadesAllFeature.selectNuclideResults
+        );
+        this.elements = this.store.select(
+          cascadesAllFeature.selectElementResults
+        );
+        this.reactionRows = this.store.select(
+          cascadesAllFeature.selectReactionRows
+        );
+        this.nuclideRows = this.store.select(
+          cascadesAllFeature.selectNuclideRows
+        );
+        this.elementRows = this.store.select(
+          cascadesAllFeature.selectElementRows
+        );
         break;
       default:
         console.log(`ReactionType '${type}' is undefined.`);
