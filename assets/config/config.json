@@ -1,10 +1,10 @@
 {
-    "production": false,
+    "production": true,
     "name": "Uninitiialized",
     "version": "5.0",
     "proxy": null,
     "apiUrl": "https://nanosoft.co.nz/",
-    "httpMaxRetries": -1,
-    "httpRetryDelay": -1,
+    "httpMaxRetries": 1,
+    "httpRetryDelay": 500,
     "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project"
 }
