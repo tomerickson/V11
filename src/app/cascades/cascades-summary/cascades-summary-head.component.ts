@@ -51,16 +51,15 @@ export class CascadesSummaryHeadComponent implements OnInit {
    * @param url
    */
   loadReports = (href: string) => {
-    const url = new URL(href).pathname;
     const extras: ReportParameters = {
       url: 'cascades-all',
       reactionType: ReactionTypeEnum.CascadesAll,
-      query: url
+      query: href
     };
 
     this.store.dispatch(PageActions.setReportParameters({ payload: extras }));
     this.store.dispatch(
-      featureStore.CascadesAllActions.loadAllResults({ url: url })
+      featureStore.CascadesAllActions.loadAllResults({ url: href })
     );
     this.router.navigate(['reports'], {
       relativeTo: this.activatedRoute.parent

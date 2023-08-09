@@ -9,6 +9,7 @@ import {
 } from '../core/services/helpers';
 import { AppConfigService } from '../core/config/app-config.service';
 import { CascadesAllResultsModel } from '../core/models/cascades-all-results.model';
+import { APP_BASE_HREF } from '@angular/common';
 
 @Injectable()
 export class CascadesService {
@@ -71,8 +72,8 @@ export class CascadesService {
       'a[href*="/results"]'
     ) as HTMLAnchorElement;
     const url: URL = new URL(targetLink.href);
-
-    result.resultsLink = targetLink.href;
+    const href = targetLink.href.replace(`${url.protocol}//${url.host}/`, '');
+    result.resultsLink = href;
 
     const paragraphs: string[] = [];
     for (let par of pElements) {
