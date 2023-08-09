@@ -72,9 +72,9 @@ export const cascadesAllReducer = createReducer(
       reactionResults: action.payload.reactionResults,
       nuclideResults: action.payload.nuclideResults,
       elementResults: action.payload.elementResults,
-      reactionRows: action.payload.reactionResults.length,
-      nuclideRows: action.payload.nuclideResults.length,
-      elementRows: action.payload.elementResults.length
+      reactionRows: action.payload.reactionRows,
+      nuclideRows: action.payload.nuclideRows,
+      elementRows: action.payload.elementRows
     };
   }),
   on(CascadesAllActions.loadAllResultsFailure, (state, action) => {

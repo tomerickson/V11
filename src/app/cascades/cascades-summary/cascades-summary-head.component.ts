@@ -44,7 +44,14 @@ export class CascadesSummaryHeadComponent implements OnInit {
     );
   }
 
-  loadReports = (url: string) => {
+  /**
+   * Configure the reports page for the cascades module,
+   * dispatch the loadAllResults action, and redirect
+   * to the reports page.
+   * @param url
+   */
+  loadReports = (href: string) => {
+    const url = new URL(href).pathname;
     const extras: ReportParameters = {
       url: 'cascades-all',
       reactionType: ReactionTypeEnum.CascadesAll,

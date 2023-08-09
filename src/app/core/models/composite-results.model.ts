@@ -10,6 +10,9 @@ export abstract class CompositeResultsModel {
   reactionResults!: any[];
   nuclideResults!: INuclideResultsModel[];
   elementResults!: IElementResultsModel[];
+  get reactionRows() {return this.reactionResults.length-1}
+  get nuclideRows() {return this.nuclideResults.length-1}
+  get elementRows() {return this.elementResults.length-1}
   ok!: boolean;
   errors!: string[];
 

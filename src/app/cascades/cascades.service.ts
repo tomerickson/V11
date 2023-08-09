@@ -72,7 +72,7 @@ export class CascadesService {
     ) as HTMLAnchorElement;
     const url: URL = new URL(targetLink.href);
 
-    result.resultsLink = url.pathname;
+    result.resultsLink = targetLink.href;
 
     const paragraphs: string[] = [];
     for (let par of pElements) {
