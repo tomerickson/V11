@@ -75,10 +75,11 @@
               "namedChunks": true
             },
             "production": {
-              "fileReplacements": [
+              "assets": [
                 {
-                  "replace": "src/assets/config/config.json",
-                  "with": "src/assets/config/app-config.json"
+                  "glob": "**/*",
+                  "input": "src/assets/config/production",
+                  "output": "/assets/config/"
                 }
               ],
               "baseHref": "./",
