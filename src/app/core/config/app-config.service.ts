@@ -16,6 +16,7 @@ export class AppConfigService {
     version: '?',
     proxy: null,
     apiUrl: '?',
+    virtualDirectory: null,
     httpMaxRetries: -1,
     httpRetryDelay: -1
   };
@@ -42,6 +43,9 @@ export class AppConfigService {
     return this._appConfig.apiUrl;
   }
 
+  get virtualDirectory(): string | null {
+    return this._appConfig.virtualDirectory;
+  }
   get  proxy(): string | null {
     return this._appConfig.proxy;
   }

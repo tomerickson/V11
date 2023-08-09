@@ -71,10 +71,16 @@ export class CascadesService {
     const targetLink: HTMLAnchorElement = document.body.querySelector(
       'a[href*="/results"]'
     ) as HTMLAnchorElement;
-    const url: URL = new URL(targetLink.href);
-    const href = targetLink.href.replace(`${url.protocol}//${url.host}/`, '');
-    result.resultsLink = href;
 
+    /** Keep the last two segments of the url
+     * 
+     */
+    let hrefArray = targetLink.href.split('/');
+    hrefArray = hrefArray.splice(hrefArray.length-2, 2);
+    const href = hrefArray.join('/');
+
+
+     result.resultsLink = href;
     const paragraphs: string[] = [];
     for (let par of pElements) {
       if (par.textContent) paragraphs.push(par.textContent);

@@ -4,6 +4,7 @@ export interface IAppConfig {
   readonly version: string;
   readonly proxy: string | null;
   readonly apiUrl: string;
+  readonly virtualDirectory: string | null;
   /**
    * Number of time to retry an http request
    */
