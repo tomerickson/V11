@@ -43,8 +43,9 @@ div.two-up {
         padding-left: 1em;
     }
 
-    div.column-b {
+    div.column-b > span{
         font-weight: 500;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     }
 }
 
@@ -53,16 +54,18 @@ div.one-up {
 }
 
 div.twocolumngrid {
-    display:grid;
+    display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 3fr 2fr;
     column-gap: 1em;
 }
+
 div.flexcolumn {
     padding: 1em;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     >div {
         margin-top: 2em;
     }
@@ -72,6 +75,7 @@ div.flexrow {
     width: 100%;
     display: flex;
     flex-direction: row;
+
     >:last-child {
         margin-left: 1em;
     }
@@ -85,6 +89,7 @@ div.query {
     :last-child {
         text-align: right;
         font-weight: 500;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     }
 }
 

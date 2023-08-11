@@ -34,5 +34,11 @@
         "pageTitle": "CascadeAll Reactions",
         "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
         "pageDescription": "Lists all energetically favourable reactions that cascade from both the input and the output nuclei from one or more reactions defined by the Core (starting) Query."
+    },
+    {
+        "pageName": "all-tables",
+        "pageTitle": "All Tables",
+        "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
+        "pageDescription": "In this, any and all of the tables made available by Dr Parkhomov may be invoked by a single SQL command and the results listed."
     }
 ]

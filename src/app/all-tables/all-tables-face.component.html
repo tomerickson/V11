@@ -1,0 +1,75 @@
+<mat-card>
+  <mat-card-content>
+    <h3>
+      AllTables: In this, any and all of the tables made available by Dr
+      Parkhomov may be invoked by a single SQL command and the results listed.
+    </h3>
+    <p>
+      To make full use of this program's capabilities, a sound grasp of SQL is
+      essential. Note that a "null" appearing anywhere in the source or results
+      tables indicates either that the value is not known or is not applicable
+      in the context
+    </p>
+    <p>
+      This "universal" program can accept full SQL commands that query any of
+      the 12 "Parkhomov" tables, together with the "ElementProperties",
+      "Nuclides", "RadioNuclides" and "Atomic Radii" tables as well.
+    </p>
+    <p>
+      New Feature: In all the above tables except the Periodic, each atom, in
+      either the input or the output, as well as its 'A' and 'Z' numbers now
+      also has a 'nBorF' ('nuclear Boson or Fermion') and a 'aBorF' ('atomic
+      Boson or Fermion') parameter associated with it. An atom's nucleus is
+      considered a Boson if its A number is even; if odd a Fermion (thus nBorF =
+      'b' or 'f'). The atom itself is considered a Boson if its number of
+      neutrons (A - Z) is even; if odd a Fermion (thus aBorF = 'b' or 'f').
+    </p>
+
+    <p>
+      The above extra parameters can be used either passively by observing the
+      distributions of 'b' and 'f' in inputs and/or outputs, and/or actively by
+      including some or all of them in the SQL commands themselves.
+    </p>
+    <p>
+      To protect the tables, any query that includes any of the words below
+      (whether in upper, lower or mixed case) will be disabled: 'alter',
+      'create', 'delete', 'drop', 'grant', 'insert', 'modify', 'open',
+      'password', 'privileges', 'protected', 'rename', 'revoke', 'root', 'set',
+      'show', 'trigger', 'truncate', 'update', 'use', and 'users'.
+    </p>
+    <p>
+      The left and right columns include details of some of the tables from
+      which you may compose your (complete) SQL queries (but only one table need
+      necessarily be used for any query)
+    </p>
+    <p>
+      Thus, at the top of the left column are details of the 'FusionAll',
+      'FissionAll', 'TwoToTwoAll' and 'AtomicRadii' tables while, at the top of
+      the right column, are details of the 'ElementProperties' and the
+      'Nuclides' tables
+    </p>
+    <p>
+      Below are the results of any non-destructive query (but note that SQL
+      syntax mistakes are easy to make, especially in the more complicated
+      queries). Enter your full SQL Query below: (but clear any initial,
+      place-holding or old one first)
+    </p>
+    <h3>
+      Enter your full SQL Query below: (but clear any initial, place-holding or
+      old one first)
+    </h3>
+    <div class="text">
+      <div>
+        <textarea
+          rows="10"
+          cols="100"
+          placeholder="Enter your query here:"></textarea>
+      </div>
+      <div>
+        <button type="button" mat-raised-button (click)="runQuery()">
+          EXECUTE QUERY
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

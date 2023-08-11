@@ -43,6 +43,11 @@ export const APP_ROUTES: Routes = [
     loadChildren: () =>
       import('./cascades/cascades.routes').then((m) => m.CASCADE_ROUTES)
   },
+  {
+    path: 'all-tables',
+    loadChildren: () =>
+      import('./all-tables/all-tables.routes').then((m) => m.ALL_TABLES_ROUTES)
+  },
   { path: 'testpage', pathMatch: 'full', component: TestpageHeadComponent },
   { path: '**', component: NotFoundComponent }
 ];
