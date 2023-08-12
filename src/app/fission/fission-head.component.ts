@@ -182,7 +182,8 @@ export class FissionHeadComponent implements OnInit {
     const extras: ReportParameters = {
       url: 'fission',
       reactionType: ReactionTypeEnum.Fission,
-      query: this.coreQuery
+      query: this.coreQuery,
+      tables: 3
     };
     this.store.dispatch(PageActions.setReportParameters({ payload: extras }));
     this.store.dispatch(FissionActions.fetchAllResults({ payload: kvp }));

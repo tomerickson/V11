@@ -1,7 +1,8 @@
 export enum ReactionTypeEnum {
-    Fission = 'fission',
-    Fusion = 'fusion',
-    TwoUp = 'two-up',
-    CascadesAll = 'cascades-all',
-    TBD = 'undefined'
+  AllTables = 'all-tables',
+  CascadesAll = 'cascades-all',
+  Fission = 'fission',
+  Fusion = 'fusion',
+  TwoUp = 'two-up',
+  TBD = 'undefined'
 }

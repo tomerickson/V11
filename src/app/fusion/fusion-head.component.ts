@@ -189,7 +189,8 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     const extras: ReportParameters = {
       url: 'fusion',
       reactionType: ReactionTypeEnum.Fusion,
-      query: this.coreQuery
+      query: this.coreQuery,
+      tables: 3
     };
     this.store.dispatch(PageActions.setReportParameters({ payload: extras }));
     this.store.dispatch(FusionActions.fetchAllResults({ payload: kvp }));

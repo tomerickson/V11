@@ -193,7 +193,8 @@ export class TwoUpHeadComponent {
     const extras: ReportParameters = {
       url: 'two-up',
       reactionType: ReactionTypeEnum.TwoUp,
-      query: this.coreQuery
+      query: this.coreQuery,
+      tables: 3
     };
     this.store.dispatch(PageActions.setReportParameters({ payload: extras }));
     this.store.dispatch(TwoUpActions.fetchAllResults({ payload: form }));

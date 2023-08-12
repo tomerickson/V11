@@ -36,7 +36,7 @@ import { CodeCopyCompoonent } from '../code-copy/code-copy.component';
   ]
 })
 export class ReportPagesFaceComponent implements OnInit, AfterContentInit {
-  @Input({ required: true }) parameters!: ReportParameters | null;
+  @Input({ required: true }) parameters!: ReportParameters;
   @Input({ required: true }) reactionResults!: Observable<any[]>;
   @Input({ required: true }) nuclideResults!: Observable<any[]>;
   @Input({ required: true }) elementResults!: Observable<any[]>;

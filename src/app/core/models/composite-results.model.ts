@@ -4,15 +4,21 @@ import { INuclideResultsModel } from './nuclide-results.model';
 /**
  * Base class for reaction results incoming from the various
  * reaction pages: CascadesAll, Fission, Fusion, TwoUp, etc.
- *  
+ *
  */
 export abstract class CompositeResultsModel {
   reactionResults!: any[];
-  nuclideResults!: INuclideResultsModel[];
-  elementResults!: IElementResultsModel[];
-  get reactionRows() {return this.reactionResults.length-1}
-  get nuclideRows() {return this.nuclideResults.length-1}
-  get elementRows() {return this.elementResults.length-1}
+  nuclideResults: INuclideResultsModel[] = [];
+  elementResults: IElementResultsModel[] = [];
+  get reactionRows() {
+    return this.reactionResults.length - 1;
+  }
+  get nuclideRows() {
+    return this.nuclideResults.length - 1;
+  }
+  get elementRows() {
+    return this.elementResults.length - 1;
+  }
   ok!: boolean;
   errors!: string[];
 
@@ -22,17 +28,19 @@ export abstract class CompositeResultsModel {
   /**
    * Automatically parse the incoming page (assumed to contain
    * three sets of results) and convert them to CompositeResultModel
-   * 
+   *
    * @param html // Incoming html
    * @param reactionTemplate
-   * 
+   * @param numberOfTablesExpected - optional
+   *
    *   array of strings that identify the first columns of the reaction table.
    *   The format of the elements results and nuclides results are fixed, but
    *   the reaction table structure varies by reaction type
    */
   constructor(
     private html: string,
-    private reactionTemplate: string[]
+    private reactionTemplate: string[],
+    private numberOfTablesExpected: number = 3
   ) {
     this.parseReactionResults();
   }
@@ -70,7 +78,9 @@ export abstract class CompositeResultsModel {
     } else if (this.modelMatches(thead, this.elementsTemplate)) {
       this.elementResults = tbody;
     } else {
-      const msg = `table with this thead: "${thead.join(',')}" couldn't be matched to any template.`;
+      const msg = `table with this thead: "${thead.join(
+        ','
+      )}" couldn't be matched to any template.`;
       this.errors.push(msg);
     }
   };
@@ -85,24 +95,29 @@ export abstract class CompositeResultsModel {
    */
   parseReactionResults = () => {
     const data = this.extractTablesFromPage();
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.numberOfTablesExpected; i++) {
       const table: any[] = data[i];
       const thead: any[] = table[0];
       const tbody: any[] = table;
       this.parseTableContent(thead, tbody);
     }
 
-      this.ok =
-        this.reactionResults.length > 0 &&
-        this.nuclideResults.length > 0 &&
-        this.elementResults.length > 0;
-      
-      if (!this.ok) {
-        if (this.reactionResults.length == 0) {this.errors.push("Reaction table is missing")}
-        if (this.nuclideResults.length == 0) {this.errors.push("Nuclides table is missing")}
-        if (this.elementResults.length == 0) {this.errors.push("Elements table is missing")}
-      }
+    this.ok =
+      this.reactionResults.length > 0 &&
+      (this.nuclideResults.length > 0 || this.numberOfTablesExpected < 2) &&
+      (this.elementResults.length > 0 || this.numberOfTablesExpected < 3);
 
+    if (!this.ok) {
+      if (this.reactionResults.length == 0) {
+        this.errors.push('Reaction table is missing');
+      }
+      if (this.nuclideResults.length == 0) {
+        this.errors.push('Nuclides table is missing');
+      }
+      if (this.elementResults.length == 0) {
+        this.errors.push('Elements table is missing');
+      }
+    }
   };
 
   /**
@@ -137,7 +152,7 @@ export abstract class CompositeResultsModel {
     const document: Document = parser.parseFromString(this.html, 'text/html');
     const tables: NodeListOf<HTMLTableElement> =
       document.querySelectorAll('table.results');
-    if (this.validateTables(3, tables)) {
+    if (this.validateTables(tables)) {
       result = this.convertTablesToResultSet(tables);
     }
     return result; // const xPathResult = document.evaluate(xPath, document, null, XPathResult.ANY_TYPE, null);
@@ -151,11 +166,8 @@ export abstract class CompositeResultsModel {
    * @param tables
    * @returns
    */
-  validateTables = (
-    numberOfTablesExpected: number,
-    tables: NodeListOf<HTMLTableElement>
-  ): boolean => {
-    let valid: boolean = tables.length === numberOfTablesExpected;
+  validateTables = (tables: NodeListOf<HTMLTableElement>): boolean => {
+    let valid: boolean = tables.length === this.numberOfTablesExpected;
     if (valid) {
       tables.forEach((table) => {
         valid =

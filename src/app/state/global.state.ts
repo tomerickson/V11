@@ -56,7 +56,7 @@ export const globalInitialState: GlobalState = {
   fuelFeedbackModes: fuelFeedbackJson.map(row => {
     return {category: 'FEEDBACK', code: row.code, description: row.description};
   }),
-  reportParameters: { url: '', reactionType: ReactionTypeEnum.TBD, query: '' }
+  reportParameters: {} as ReportParameters
 };
 
 export const globalFeature = createFeature({

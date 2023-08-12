@@ -58,18 +58,26 @@
       Enter your full SQL Query below: (but clear any initial, place-holding or
       old one first)
     </h3>
-    <div class="text">
-      <div>
-        <textarea
-          rows="10"
-          cols="100"
-          placeholder="Enter your query here:"></textarea>
+      <div class="text">
+        <div [formGroup]="form">
+          <textarea
+            class="mat-elevation-z2"
+            rows="10"
+            cols="100"
+            placeholder="Enter your query here:"
+            formControlName="query"
+            >{{ query }}</textarea
+          >
+        </div>
       </div>
-      <div>
-        <button type="button" mat-raised-button (click)="runQuery()">
-          EXECUTE QUERY
-        </button>
-      </div>
-    </div>
   </mat-card-content>
+  <mat-card-actions align="end">
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="runQuery()">
+      EXECUTE QUERY
+    </button>
+  </mat-card-actions>
 </mat-card>

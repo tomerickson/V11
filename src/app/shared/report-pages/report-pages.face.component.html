@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-header>
-    <code-copy [text]="parameters?.query"></code-copy>
+    <code-copy [text]="parameters.query"></code-copy>
   </mat-card-header>
   <mat-card-content>
     <ng-container *ngIf="(loading | async); then waiting else working">
@@ -29,7 +29,7 @@
           [inputResults]="reactionResults"></mfmp-query-head>
       </ng-template>
     </mat-tab>
-    <mat-tab label="Nuclides ({{ nuclideRows | async }})">
+    <mat-tab *ngIf="parameters.tables > 1" label="Nuclides ({{ nuclideRows | async }})">
       <ng-container
         *ngIf="
           nuclideResults;
@@ -45,7 +45,7 @@
           [inputResults]="nuclideResults"></mfmp-query-head>
       </ng-template>
     </mat-tab>
-    <mat-tab label="ELements ({{ elementRows | async }})">
+    <mat-tab *ngIf="parameters.tables > 2" label="ELements ({{ elementRows | async }})">
       <ng-container
         *ngIf="
           elementResults;

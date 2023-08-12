@@ -7,14 +7,18 @@ import {
   Output,
   inject
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule, Validators
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'mfmp-all-tables-face',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatCardModule],
   templateUrl: './all-tables-face.component.html',
   styleUrls: ['./all-tables-face.component.scss']
 })
@@ -34,13 +38,16 @@ export class AllTablesFaceComponent implements OnInit {
     return this.form.get('query')?.value;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.buildForm();
+  }
 
   buildForm = () => {
     this.form = this.fb.group({
       query: ['', [Validators.required]]
     });
   };
+
   runQuery() {
     this.sql.emit(this.query);
   }
