@@ -1,4 +1,4 @@
 import * as effects from './effects';
 import {actions} from './actions';
-import {feature, allTablesReducer} from './state';
-export {feature, allTablesReducer, effects, actions}
+import {feature } from './state';
+export {feature, effects, actions}

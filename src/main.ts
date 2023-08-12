@@ -18,7 +18,7 @@ import { AppComponent } from './app/app.component';
 import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalErrorHandler } from './app/core/global-error-handler';
 import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
-import { globalFeature } from './app/state/global.state';
+import { feature } from './app/state/global.state';
 import { NotificationComponent } from './app/core/notification.component';
 import { CrudService } from './app/core/services/crud.service';
 
@@ -53,7 +53,7 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(),
     provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideStore(),
-    provideState(globalFeature),
+    provideState(feature),
     provideEffects(),
     provideStoreDevtools(),
     provideRouterStore(),

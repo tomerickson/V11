@@ -9,8 +9,8 @@ import { Observable, Subscription } from 'rxjs';
 import { IElementDataModel } from '../core/models/element-data.model';
 import { ILookupDataModel } from '../core/models/lookup-data.model';
 import { FormGroup } from '@angular/forms';
-import { PageActions, globalFeature } from '../state';
-import { FissionActions } from '../state/fission';
+import * as appState from '../state';
+import * as fissionState from '../state/fission';
 import { HttpClientModule } from '@angular/common/http';
 import { ReportParameters } from '../core/models/report-parameters.model';
 import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
@@ -185,8 +185,8 @@ export class FissionHeadComponent implements OnInit {
       query: this.coreQuery,
       tables: 3
     };
-    this.store.dispatch(PageActions.setReportParameters({ payload: extras }));
-    this.store.dispatch(FissionActions.fetchAllResults({ payload: kvp }));
+    this.store.dispatch(appState.actions.setReportParameters({ payload: extras }));
+    this.store.dispatch(fissionState.actions.fetchAllResults({ payload: kvp }));
     this.router.navigate(['/fission/reports']);
   };
 
@@ -196,7 +196,7 @@ export class FissionHeadComponent implements OnInit {
         'reset'
       );
     if (reset) {
-      this.store.dispatch(FissionActions.reset());
+      this.store.dispatch(fissionState.actions.reset());
       this.router.navigate(['/fission']);
     }
   };
@@ -206,8 +206,8 @@ export class FissionHeadComponent implements OnInit {
 
   ngOnInit(): void {
     this.forceReset();
-    this.elements = this.store.select(globalFeature.selectElements);
-    this.sortFields = this.store.select(globalFeature.selectReactionSortFields);
+    this.elements = this.store.select(appState.feature.selectElements);
+    this.sortFields = this.store.select(appState.feature.selectReactionSortFields);
     this.headerService.buildPageHeader('fission');
     this.ready.set(true);
   }

@@ -46,7 +46,7 @@ export class AllTablesHeadComponent implements OnInit {
         query: sql,
         tables: 1
       };
-      this.store.dispatch(globalState.PageActions.setReportParameters({ payload: extras }));
+      this.store.dispatch(globalState.actions.setReportParameters({ payload: extras }));
       this.store.dispatch(tableState.actions.loadResults({ query: sql }));
       this.router.navigate(['reports'], { relativeTo: this.activatedRoute });
     }

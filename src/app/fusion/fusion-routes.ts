@@ -11,7 +11,7 @@ export const FUSION_ROUTES: Routes = [
     path: '',
     component: FusionHeadComponent,
     providers: [
-      provideState(fusionState.fusionFeature),
+      provideState(fusionState.feature),
       provideEffects([fusionState.effects]),
       {provide: FusionService, useClass: FusionService}
     ]
@@ -20,7 +20,7 @@ export const FUSION_ROUTES: Routes = [
     path: 'reports',
     component: ReportPagesHeadComponent,
     providers: [
-      provideState(fusionState.fusionFeature),
+      provideState(fusionState.feature),
       provideEffects([fusionState.effects]),
       {provide: DownloadService, useClass: DownloadService}
     ]

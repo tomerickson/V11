@@ -1,10 +1,10 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { ILenrEventDetail } from "src/app/core/models/lenr-event-detail.model";
-import { ILenrEventsRequest, LenrEventsRequest } from "src/app/core/models/lenr-events-request.model";
+import { LenrEventsRequest } from "src/app/core/models/lenr-events-request.model";
 import { LenrEventsPrefetchModel } from '../../core/models/lenr-events-prefetch.model.';
 import { ILenrEventsLookup } from "src/app/core/models/lenr-events-lookup.model";
 
-export const LenrEventActions = createActionGroup({
+export const actions = createActionGroup({
     source: 'LenrEvents API',
     events: {
       'Reset': emptyProps(),

@@ -6,7 +6,7 @@ import radTypesJson from '../../assets/tables/radiation-types.json';
 import { IElementDataModel } from '../core/models/element-data.model';
 import { ILookupDataModel } from '../core/models/lookup-data.model';
 import sortFieldsJson from '../../assets/tables/reaction-result-sort-fields.json';
-import { ElementActions, LookupActions, PageActions } from './global.actions';
+import { actions } from './global.actions';
 import { ReportParameters } from '../core/models/report-parameters.model';
 import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
 import fuelFeedbackJson from '../../assets/tables/reaction-feedback-modes.json';
@@ -59,11 +59,11 @@ export const globalInitialState: GlobalState = {
   reportParameters: {} as ReportParameters
 };
 
-export const globalFeature = createFeature({
+export const feature = createFeature({
   name: 'global',
   reducer: createReducer(
     globalInitialState,
-    on(ElementActions.loadElements, (state) => {
+    on(actions.loadElements, (state) => {
       return {
         ...state,
         elementsReady: false,
@@ -71,7 +71,7 @@ export const globalFeature = createFeature({
         elements: []
       };
     }),
-    on(ElementActions.loadElementsFailure, (state) => {
+    on(actions.loadElementsFailure, (state) => {
       return {
         ...state,
         elementsReady: false,
@@ -79,7 +79,7 @@ export const globalFeature = createFeature({
         elements: []
       };
     }),
-    on(ElementActions.loadElementsSuccess, (state, action) => {
+    on(actions.loadElementsSuccess, (state, action) => {
       return {
         ...state,
         elementsReady: true,
@@ -87,7 +87,7 @@ export const globalFeature = createFeature({
         elements: action.elements
       };
     }),
-    on(LookupActions.loadLookups, (state) => {
+    on(actions.loadLookups, (state) => {
       return {
         ...state,
         lookupsReady: false,
@@ -95,7 +95,7 @@ export const globalFeature = createFeature({
         lookups: []
       };
     }),
-    on(LookupActions.loadLookupsFailure, (state) => {
+    on(actions.loadLookupsFailure, (state) => {
       return {
         ...state,
         lookupsReady: false,
@@ -103,7 +103,7 @@ export const globalFeature = createFeature({
         lookups: []
       };
     }),
-    on(LookupActions.loadLookupsSuccess, (state, action) => {
+    on(actions.loadLookupsSuccess, (state, action) => {
       return {
         ...state,
         lookupsReady: true,
@@ -111,10 +111,10 @@ export const globalFeature = createFeature({
         lookups: action.lookups
       };
     }),
-    on(PageActions.enter, (state, action) => {
+    on(actions.enter, (state, action) => {
       return { ...state };
     }),
-    on(PageActions.loadGlobals, (state) => {
+    on(actions.loadGlobals, (state) => {
       return {
         ...state,
         elements: elementsJson.map((row) => {
@@ -125,29 +125,29 @@ export const globalFeature = createFeature({
         lookupsReady: false
       };
     }),
-    on(PageActions.setPageTitle, (state, action) => {
+    on(actions.setPageTitle, (state, action) => {
       return {
         ...state,
         pageTitle: action.title
       };
     }),
-    on(PageActions.setPageCredits, (state, action) => {
+    on(actions.setPageCredits, (state, action) => {
       return {
         ...state,
         pageCredits: action.credits
       };
     }),
-    on(PageActions.setPageDescription, (state, action) => {
+    on(actions.setPageDescription, (state, action) => {
       return { ...state, pageDescription: action.description };
     }),
-    on(PageActions.toggleMenu, (state) => {
+    on(actions.toggleMenu, (state) => {
       return {
         ...state,
         showMenuText: state.showMenu ? 'Show menu' : 'Hide menu',
         showMenu: !state.showMenu
       };
     }),
-    on(PageActions.setReportParameters, (state, action) => {
+    on(actions.setReportParameters, (state, action) => {
       return { ...state, reportParameters: action.payload };
     })
   )
@@ -168,7 +168,7 @@ export const {
   selectReportParameters,
   selectShowMenu,
   selectShowMenuText
-} = globalFeature;
+} = feature;
 
 /**
  * Effects

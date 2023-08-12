@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { ILenrEventsLookup } from '../core/models/lenr-events-lookup.model';
 import { LenrEventsRequest } from '../core/models/lenr-events-request.model';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
-import { globalFeature } from '../state';
+import * as appState from '../state';
 import * as eventStore from '../state/lenr-events';
 import { LenrEventsFaceComponent } from './lenr-events-face/lenr-events-face.component';
 import { NotificationComponent } from '../core/notification.component';
@@ -64,42 +64,42 @@ export class LenrEventsHeadComponent implements OnInit {
     this.payload.r_id_copy = '';
     this.payload.doit = 'refresh';
     this.store.dispatch(
-      eventStore.LenrEventActions.prefetch({ payload: this.payload })
+      eventStore.actions.prefetch({ payload: this.payload })
     );
 
     this.categories = this.store.select(
-      eventStore.lenrEventsFeature.selectCategories
+      eventStore.feature.selectCategories
     );
     this.eventCount = this.store.select(
-      eventStore.lenrEventsFeature.selectEventCount
+      eventStore.feature.selectEventCount
     );
     this.maxId = this.store.select(
-      eventStore.lenrEventsFeature.selectMaxEventId
+      eventStore.feature.selectMaxEventId
     );
     this.eventList = this.store.select(
-      eventStore.lenrEventsFeature.selectLenrEvents
+      eventStore.feature.selectLenrEvents
     );
     this.loading = this.store.select(
-      eventStore.lenrEventsFeature.selectLoading
+      eventStore.feature.selectLoading
     );
-    this.ready = this.store.select(eventStore.lenrEventsFeature.selectReady);
+    this.ready = this.store.select(eventStore.feature.selectReady);
     this.event = this.store.select(
-      eventStore.lenrEventsFeature.selectCurrentEvent
+      eventStore.feature.selectCurrentEvent
     );
     this.pageDescription = this.store.select(
-      globalFeature.selectPageDescription
+      appState.feature.selectPageDescription
     );
   }
 
   search(request: LenrEventsRequest): void {
     this.store.dispatch(
-      eventStore.LenrEventActions.fetchSearchResults({ payload: request })
+      eventStore.actions.fetchSearchResults({ payload: request })
     );
   }
 
   fetch(request: LenrEventsRequest): void {
     this.store.dispatch(
-      eventStore.LenrEventActions.loadEventDetail({ payload: request })
+      eventStore.actions.loadEventDetail({ payload: request })
     );
   }
 }

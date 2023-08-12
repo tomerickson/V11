@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { globalFeature } from 'src/app/state';
+import * as appState from 'src/app/state';
 import { ReportParameters } from 'src/app/core/models/report-parameters.model';
 
 
@@ -32,7 +32,7 @@ export class RestartFeatureComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(
       this.store
-        .select(globalFeature.selectReportParameters)
+        .select(appState.feature.selectReportParameters)
         .subscribe((parms) => {
           this.parameters = parms;
           this.returnUrl = parms.url;

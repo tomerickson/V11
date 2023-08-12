@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { IKeyValuePair } from 'src/app/core/models/key-value-pair.model';
-import { FissionActions } from './fission.actions';
+import { actions } from './fission.actions';
 import { IFissionResultsModel } from 'src/app/core/models/fission-results.model';
 
 export interface FissionState {
@@ -31,12 +31,12 @@ export const fissionInitialState: FissionState = {
 
 export const fissionReducer = createReducer(
   fissionInitialState,
-  on(FissionActions.reset, () => {
+  on(actions.reset, () => {
     return {
       ...fissionInitialState
     };
   }),
-  on(FissionActions.fetchAllResults, (state, action) => {
+  on(actions.fetchAllResults, (state, action) => {
     return {
       ...state,
       formData: action.payload,
@@ -48,10 +48,10 @@ export const fissionReducer = createReducer(
       elementResults: []
     };
   }),
-  on(FissionActions.loadAllResultsFailure, (state, action) => {
+  on(actions.loadAllResultsFailure, (state, action) => {
     return { ...state, loading: false, error: action.error, ready: false };
   }),
-  on(FissionActions.loadAllResultsSuccess, (state, action) => {
+  on(actions.loadAllResultsSuccess, (state, action) => {
     return {
       ...state,
       elementResults: action.results.elementResults,
@@ -66,7 +66,7 @@ export const fissionReducer = createReducer(
   })
 );
 
-export const fissionFeature = createFeature({
+export const feature = createFeature({
   name: 'fission',
   reducer: fissionReducer
 });
@@ -82,4 +82,4 @@ export const {
   selectReactionRows,
   selectNuclideRows,
   selectElementRows,
-} = fissionFeature;
+} = feature;

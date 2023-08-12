@@ -3,21 +3,21 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { NotificationComponent } from 'src/app/core/notification.component';
 import { FusionService } from 'src/app/fusion/fusion.service';
-import { FusionActions } from './fusion.actions';
+import { actions } from './fusion.actions';
 
 export const fetchAllResultsEffect = createEffect(
   (actions$ = inject(Actions)) => {
     const svc = inject(FusionService);
     return actions$.pipe(
-      ofType(FusionActions.fetchAllResults),
+      ofType(actions.fetchAllResults),
       switchMap((action) =>
         svc.getFusionResults(action.payload).pipe(
           map((html) => svc.parseFusionResults(html)),
           map((tables) =>
-            FusionActions.loadAllResultsSuccess({ results: tables })
+            actions.loadAllResultsSuccess({ results: tables })
           ),
           catchError((error) =>
-            of(FusionActions.loadAllResultsFailure({ error: error }))
+            of(actions.loadAllResultsFailure({ error: error }))
           )
         )
       )
@@ -30,7 +30,7 @@ export const loadAllResultsErrorAlert = createEffect(
   () => {
     const notifier = inject(NotificationComponent);
     return inject(Actions).pipe(
-      ofType(FusionActions.loadAllResultsFailure),
+      ofType(actions.loadAllResultsFailure),
       tap(() => notifier.showClientError('No results found.'))
     );
   },

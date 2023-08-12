@@ -2,7 +2,7 @@ import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ITwoUpCompositeResults } from 'src/app/core/models/two-up-composite-results.model';
 
-export const TwoUpActions = createActionGroup({
+export const actions = createActionGroup({
   source: 'TwoUp API',
   events: {
     'Reset': emptyProps(),

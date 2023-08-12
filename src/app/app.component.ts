@@ -7,7 +7,7 @@ import { MenuComponent } from './menu/menu.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { globalFeature } from './state/global.state';
+import { feature } from './state/global.state';
 
 @Component({
   standalone: true,
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   showMenu?: Observable<boolean>;
 
   ngOnInit(): void {
-    this.showMenu = this.store.select(globalFeature.selectShowMenu)
+    this.showMenu = this.store.select(feature.selectShowMenu)
   }
 
 }

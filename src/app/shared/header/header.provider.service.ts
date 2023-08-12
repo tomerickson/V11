@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IPageHeader } from 'src/app/core/ipage-header';
-import { PageActions } from 'src/app/state/global.actions';
+import { actions } from 'src/app/state/global.actions';
 import pageInfoJson from '../../../assets/config/page-info.json';
 
 @Injectable()
@@ -32,8 +32,8 @@ export class HeaderProviderService {
 
   private setPageHeader = (header: IPageHeader) => {
 
-    this.store.dispatch(PageActions.setPageTitle({title: header.pageTitle}));
-    this.store.dispatch(PageActions.setPageCredits({credits: header.pageCredits}));
-    this.store.dispatch(PageActions.setPageDescription({description: header.pageDescription}));
+    this.store.dispatch(actions.setPageTitle({title: header.pageTitle}));
+    this.store.dispatch(actions.setPageCredits({credits: header.pageCredits}));
+    this.store.dispatch(actions.setPageDescription({description: header.pageDescription}));
   }
 }

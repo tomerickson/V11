@@ -2,7 +2,7 @@ import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { IFissionCompositeResults } from 'src/app/core/models/fission-composite-results.model';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 
-export const FissionActions = createActionGroup({
+export const actions = createActionGroup({
   source: 'Fission API',
   events: {
     'Reset': emptyProps(),

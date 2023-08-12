@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
-import { LenrEventActions } from './lenr-events.actions';
+import { actions } from './lenr-events.actions';
 import { ILenrEventsRequest, LenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 
@@ -34,12 +34,12 @@ export const initialState: LenrEventsState = {
 
 export const lenrEventsReducer = createReducer(
   initialState,
-  on(LenrEventActions.reset, () => {
+  on(actions.reset, () => {
     return {
       ...initialState
     };
   }),
-  on(LenrEventActions.prefetch, (state) => {
+  on(actions.prefetch, (state) => {
     return {
       ...state,
       eventCount: 0,
@@ -49,7 +49,7 @@ export const lenrEventsReducer = createReducer(
       error: null
     };
   }),
-  on(LenrEventActions.prefetchSuccess, (state, action) => {
+  on(actions.prefetchSuccess, (state, action) => {
     return {
       ...state,
       eventCount: action.payload.eventCount,
@@ -57,17 +57,17 @@ export const lenrEventsReducer = createReducer(
       categories: action.payload.categories
     };
   }),
-  on(LenrEventActions.prefetchFailure, (state, action) => {
+  on(actions.prefetchFailure, (state, action) => {
     return { ...state, loading: false, ready: false, error: action.error };
   }),
 
-  on(LenrEventActions.fetchSearchResults, (state) => {
+  on(actions.fetchSearchResults, (state) => {
     return { ...state, loading: true, ready: false, error: null };
   }),
-  on(LenrEventActions.fetchSearchResultsFailure, (state, action) => {
+  on(actions.fetchSearchResultsFailure, (state, action) => {
     return { ...state, loading: false, error: action.error, ready: false };
   }),
-  on(LenrEventActions.fetchSearchResultsSuccess, (state, action) => {
+  on(actions.fetchSearchResultsSuccess, (state, action) => {
     return {
       ...state,
       lenrEvents: action.payload,
@@ -75,13 +75,13 @@ export const lenrEventsReducer = createReducer(
       ready: true
     };
   }),
-  on(LenrEventActions.findEventId, (state, action) => {
+  on(actions.findEventId, (state, action) => {
     return {
       ...state,
       currentEventId: action.payload
     };
   }),
-  on(LenrEventActions.loadEventDetail, (state, action) => {
+  on(actions.loadEventDetail, (state, action) => {
     return {
       ...state,
       loading: true,
@@ -90,10 +90,10 @@ export const lenrEventsReducer = createReducer(
       currentEventId: action.payload.r_id as number
     };
   }),
-  on(LenrEventActions.loadEventDetailFailure, (state, action) => {
+  on(actions.loadEventDetailFailure, (state, action) => {
     return { ...state, loading: false, ready: false, error: action.error };
   }),
-  on(LenrEventActions.loadEventDetailSuccess, (state, action) => {
+  on(actions.loadEventDetailSuccess, (state, action) => {
     return {
       ...state,
       loading: false,
@@ -104,7 +104,7 @@ export const lenrEventsReducer = createReducer(
   })
 );
 
-export const lenrEventsFeature = createFeature({
+export const feature = createFeature({
   name: 'lenrevents',
   reducer: lenrEventsReducer
 });
@@ -120,4 +120,4 @@ export const {
   selectLenrEvents,
   selectCurrentEvent,
   selectCurrentEventId
-} = lenrEventsFeature;
+} = feature;

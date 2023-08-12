@@ -6,12 +6,12 @@ import { Observable, Subscription, of } from 'rxjs';
 import { ReactionType } from 'src/app/core/models/reaction-type';
 import { ReactionTypeEnum } from 'src/app/core/models/reaction-type-enum.model';
 import { ReportParameters } from 'src/app/core/models/report-parameters.model';
-import { globalFeature } from 'src/app/state';
+import * as appState from 'src/app/state';
 import * as allTablesState from '../../state/all-tables';
-import { cascadesAllFeature } from 'src/app/state/cascades-all';
-import { fissionFeature } from 'src/app/state/fission';
-import { fusionFeature } from 'src/app/state/fusion';
-import { twoupFeature } from 'src/app/state/two-up';
+import * as cascadesState from 'src/app/state/cascades-all';
+import * as fissionState from 'src/app/state/fission';
+import * as fusionState from 'src/app/state/fusion';
+import { feature } from 'src/app/state/two-up';
 import { ReportPagesFaceComponent } from './report-pages.face.component';
 
 @Component({
@@ -52,7 +52,7 @@ export class ReportPagesHeadComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(
       this.store
-        .select(globalFeature.selectReportParameters)
+        .select(appState.feature.selectReportParameters)
         .subscribe((parms) => {
           this.parameters = parms;
           this.returnUrl = parms.url;
@@ -83,57 +83,57 @@ export class ReportPagesHeadComponent implements OnInit, OnDestroy {
 
         break;
       case ReactionTypeEnum.Fusion:
-        this.reactions = this.store.select(fusionFeature.selectReactionResults);
-        this.nuclides = this.store.select(fusionFeature.selectNuclideResults);
-        this.elements = this.store.select(fusionFeature.selectElementResults);
-        this.reactionRows = this.store.select(fusionFeature.selectReactionRows);
-        this.nuclideRows = this.store.select(fusionFeature.selectNuclideRows);
-        this.elementRows = this.store.select(fusionFeature.selectElementRows);
-        this.loading = this.store.select(fusionFeature.selectLoading);
-        this.ready = this.store.select(fusionFeature.selectReady);
+        this.reactions = this.store.select(fusionState.feature.selectReactionResults);
+        this.nuclides = this.store.select(fusionState.feature.selectNuclideResults);
+        this.elements = this.store.select(fusionState.feature.selectElementResults);
+        this.reactionRows = this.store.select(fusionState.feature.selectReactionRows);
+        this.nuclideRows = this.store.select(fusionState.feature.selectNuclideRows);
+        this.elementRows = this.store.select(fusionState.feature.selectElementRows);
+        this.loading = this.store.select(fusionState.feature.selectLoading);
+        this.ready = this.store.select(fusionState.feature.selectReady);
         break;
       case ReactionTypeEnum.Fission:
         this.reactions = this.store.select(
-          fissionFeature.selectReactionResults
+          fissionState.feature.selectReactionResults
         );
-        this.nuclides = this.store.select(fissionFeature.selectNuclideResults);
-        this.elements = this.store.select(fissionFeature.selectElementResults);
+        this.nuclides = this.store.select(fissionState.feature.selectNuclideResults);
+        this.elements = this.store.select(fissionState.feature.selectElementResults);
         this.reactionRows = this.store.select(
-          fissionFeature.selectReactionRows
+          fissionState.feature.selectReactionRows
         );
-        this.nuclideRows = this.store.select(fissionFeature.selectNuclideRows);
-        this.elementRows = this.store.select(fissionFeature.selectElementRows);
-        this.loading = this.store.select(fissionFeature.selectLoading);
-        this.ready = this.store.select(fissionFeature.selectReady);
+        this.nuclideRows = this.store.select(fissionState.feature.selectNuclideRows);
+        this.elementRows = this.store.select(fissionState.feature.selectElementRows);
+        this.loading = this.store.select(fissionState.feature.selectLoading);
+        this.ready = this.store.select(fissionState.feature.selectReady);
         break;
       case ReactionTypeEnum.TwoUp:
-        this.reactions = this.store.select(twoupFeature.selectReactionResults);
-        this.nuclides = this.store.select(twoupFeature.selectNuclideResults);
-        this.elements = this.store.select(twoupFeature.selectElementResults);
-        this.reactionRows = this.store.select(twoupFeature.selectReactionRows);
-        this.nuclideRows = this.store.select(twoupFeature.selectNuclideRows);
-        this.elementRows = this.store.select(twoupFeature.selectElementRows);
-        this.loading = this.store.select(twoupFeature.selectLoading);
-        this.ready = this.store.select(twoupFeature.selectReady);
+        this.reactions = this.store.select(feature.selectReactionResults);
+        this.nuclides = this.store.select(feature.selectNuclideResults);
+        this.elements = this.store.select(feature.selectElementResults);
+        this.reactionRows = this.store.select(feature.selectReactionRows);
+        this.nuclideRows = this.store.select(feature.selectNuclideRows);
+        this.elementRows = this.store.select(feature.selectElementRows);
+        this.loading = this.store.select(feature.selectLoading);
+        this.ready = this.store.select(feature.selectReady);
         break;
       case ReactionTypeEnum.CascadesAll:
         this.reactions = this.store.select(
-          cascadesAllFeature.selectReactionResults
+          cascadesState.feature.selectReactionResults
         );
         this.nuclides = this.store.select(
-          cascadesAllFeature.selectNuclideResults
+          cascadesState.feature.selectNuclideResults
         );
         this.elements = this.store.select(
-          cascadesAllFeature.selectElementResults
+          cascadesState.feature.selectElementResults
         );
         this.reactionRows = this.store.select(
-          cascadesAllFeature.selectReactionRows
+          cascadesState.feature.selectReactionRows
         );
         this.nuclideRows = this.store.select(
-          cascadesAllFeature.selectNuclideRows
+          cascadesState.feature.selectNuclideRows
         );
         this.elementRows = this.store.select(
-          cascadesAllFeature.selectElementRows
+          cascadesState.feature.selectElementRows
         );
         break;
       default:

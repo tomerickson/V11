@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
-import { CascadesAllActions } from './actions';
+import { actions } from './actions';
 
 export interface CascadesAllState {
   formData: ICascadesAllForm | null;
@@ -32,12 +32,12 @@ export const cascadesAllInitialState: CascadesAllState = {
 
 export const cascadesAllReducer = createReducer(
   cascadesAllInitialState,
-  on(CascadesAllActions.reset, () => {
+  on(actions.reset, () => {
     return {
       ...cascadesAllInitialState
     };
   }),
-  on(CascadesAllActions.requestAllResults, (state, action) => {
+  on(actions.requestAllResults, (state, action) => {
     return {
       ...state,
       formData: action.payload,
@@ -46,13 +46,13 @@ export const cascadesAllReducer = createReducer(
       error: null
     };
   }),
-  on(CascadesAllActions.requestAllResultsSuccess, (state, action) => {
+  on(actions.requestAllResultsSuccess, (state, action) => {
     return { ...state, loading: false, ready: true, formData: action.payload };
   }),
-  on(CascadesAllActions.requestAllResultsFailure, (state, error) => {
+  on(actions.requestAllResultsFailure, (state, error) => {
     return { ...state, loading: false, ready: false, error: error };
   }),
-  on(CascadesAllActions.loadAllResults, (state, action) => {
+  on(actions.loadAllResults, (state, action) => {
     return {
       ...state,
       loading: true,
@@ -64,7 +64,7 @@ export const cascadesAllReducer = createReducer(
       elementRows: 0
     };
   }),
-  on(CascadesAllActions.loadAllResultsSuccess, (state, action) => {
+  on(actions.loadAllResultsSuccess, (state, action) => {
     return {
       ...state,
       ready: true,
@@ -77,11 +77,11 @@ export const cascadesAllReducer = createReducer(
       elementRows: action.payload.elementRows
     };
   }),
-  on(CascadesAllActions.loadAllResultsFailure, (state, action) => {
+  on(actions.loadAllResultsFailure, (state, action) => {
     return { ...state, loading: false, error: action.error };
   })
 );
-export const cascadesAllFeature = createFeature({
+export const feature = createFeature({
   name: 'cascades-all',
   reducer: cascadesAllReducer
 });
@@ -98,4 +98,4 @@ export const {
   selectReactionRows,
   selectNuclideRows,
   selectElementRows
-} = cascadesAllFeature;
+} = feature;

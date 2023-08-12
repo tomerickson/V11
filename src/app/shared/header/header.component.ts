@@ -8,8 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { globalFeature } from 'src/app/state/global.state';
-import { PageActions } from 'src/app/state/global.actions';
+import { feature } from 'src/app/state/global.state';
+import { actions } from 'src/app/state/global.actions';
 import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'mfmp-header',
@@ -45,16 +45,16 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showMenu = this.store.select(globalFeature.selectShowMenu);
-    this.menuTip = this.store.select(globalFeature.selectShowMenuText);
-    this.pageTitle = this.store.select(globalFeature.selectPageTitle)
-    this.pageCredits = this.store.select(globalFeature.selectPageCredits);
-    this.pageDescription = this.store.select(globalFeature.selectPageDescription);
+    this.showMenu = this.store.select(feature.selectShowMenu);
+    this.menuTip = this.store.select(feature.selectShowMenuText);
+    this.pageTitle = this.store.select(feature.selectPageTitle)
+    this.pageCredits = this.store.select(feature.selectPageCredits);
+    this.pageDescription = this.store.select(feature.selectPageDescription);
     this.ready.next(true);
 
   }
 
   toggleMenu = () => {
-    this.store.dispatch(PageActions.toggleMenu());
+    this.store.dispatch(actions.toggleMenu());
   };
 }
