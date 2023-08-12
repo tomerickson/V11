@@ -2,7 +2,7 @@ import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { ICascadesAllForm } from "src/app/core/models/cascades-all-form.model";
 import { CascadesAllResultsModel } from "src/app/core/models/cascades-all-results.model";
 
-export const CascadesAllActions = createActionGroup({
+export const actions = createActionGroup({
     source: 'CascadesAll API',
     events: {
         'Reset': emptyProps(),

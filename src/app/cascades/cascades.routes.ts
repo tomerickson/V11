@@ -14,7 +14,7 @@ export const CASCADE_ROUTES: Routes = [
     path: '',
     component: CascadesAllHeadComponent,
     providers: [
-      provideState(cascadeState.cascadesAllFeature),
+      provideState(cascadeState.feature),
       provideEffects([cascadeState.effects]),
       { provide: CascadesService, useClass: CascadesService },
       { provide: HeaderProviderService, useClass: HeaderProviderService }
@@ -24,7 +24,7 @@ export const CASCADE_ROUTES: Routes = [
     path: 'summary',
     component: CascadesSummaryHeadComponent,
     providers: [
-      provideState(cascadeState.cascadesAllFeature),
+      provideState(cascadeState.feature),
       provideEffects(cascadeState.effects)
     ]
   },
@@ -32,7 +32,7 @@ export const CASCADE_ROUTES: Routes = [
     path: 'reports',
     component: ReportPagesHeadComponent,
     providers: [
-      provideState(cascadeState.cascadesAllFeature),
+      provideState(cascadeState.feature),
       provideEffects([cascadeState.effects]),
       { provide: DownloadService, useClass: DownloadService }
     ]

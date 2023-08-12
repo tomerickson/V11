@@ -12,7 +12,7 @@ export const TWO_UP_ROUTES: Routes = [
     path: '',
     component: TwoUpHeadComponent,
     providers: [
-      provideState(twoUpState.twoupFeature),
+      provideState(twoUpState.feature),
       provideEffects([twoUpState.effects]),
       {provide: TwoUpService, useClass: TwoUpService},
       {provide: HeaderProviderService, useClass: HeaderProviderService}
@@ -22,7 +22,7 @@ export const TWO_UP_ROUTES: Routes = [
     path: 'reports',
     component: ReportPagesHeadComponent,
     providers: [
-      provideState(twoUpState.twoupFeature),
+      provideState(twoUpState.feature),
       provideEffects([twoUpState.effects]),
       {provide: DownloadService, useClass: DownloadService}
     ]

@@ -12,8 +12,8 @@ import { SqlForm } from '../core/models/sql-form.model';
 import { TwoUpForm } from '../core/models/two-up-form.model';
 import { CrudService } from '../core/services/crud.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
-import { PageActions, globalFeature } from '../state';
-import { TwoUpActions } from '../state/two-up';
+import * as appState from '../state';
+import { actions } from '../state/two-up';
 import { TwoUpFaceComponent } from './two-up-face/two-up-face.component';
 import { KeyValuePair } from '../core/models/key-value-pair.model';
 
@@ -196,8 +196,8 @@ export class TwoUpHeadComponent {
       query: this.coreQuery,
       tables: 3
     };
-    this.store.dispatch(PageActions.setReportParameters({ payload: extras }));
-    this.store.dispatch(TwoUpActions.fetchAllResults({ payload: form }));
+    this.store.dispatch(appState.actions.setReportParameters({ payload: extras }));
+    this.store.dispatch(actions.fetchAllResults({ payload: form }));
     this.router.navigate(['/two-up/reports']);
   };
 
@@ -211,10 +211,10 @@ export class TwoUpHeadComponent {
         'reset'
       );
     if (reset) {
-      this.store.dispatch(TwoUpActions.reset());
+      this.store.dispatch(actions.reset());
     }
-    this.elements = this.store.select(globalFeature.selectElements);
-    this.sortFields = this.store.select(globalFeature.selectReactionSortFields);
+    this.elements = this.store.select(appState.feature.selectElements);
+    this.sortFields = this.store.select(appState.feature.selectReactionSortFields);
     this.headerService.buildPageHeader('two-up');
     this.ready.next(true);
   }

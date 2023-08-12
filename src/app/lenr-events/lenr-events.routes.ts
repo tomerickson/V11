@@ -13,7 +13,7 @@ export const LENR_EVENTS_ROUTES: Routes = [
     path: '',
     component: LenrEventsHeadComponent,
     providers: [
-      provideState(eventState.lenrEventsFeature),
+      provideState(eventState.feature),
       provideEffects([eventState.effects]),
       {provide: EventServices, useClass: EventServices},
       {provide: HeaderProviderService, useClass: HeaderProviderService}
@@ -23,7 +23,7 @@ export const LENR_EVENTS_ROUTES: Routes = [
     path: 'details',
     component: LenrEventsDetailComponent,
     providers: [
-      provideState(eventState.lenrEventsFeature),
+      provideState(eventState.feature),
       provideEffects([eventState.effects]),
       {provide: DownloadService, useClass: DownloadService},
 

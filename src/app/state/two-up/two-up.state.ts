@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { TwoUpActions } from './two-up.actions';
+import { actions } from './two-up.actions';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 
 export interface TwoUpState {
@@ -30,12 +30,12 @@ export const twoupInitialState: TwoUpState = {
 
 export const twoupReducer = createReducer(
   twoupInitialState,
-  on(TwoUpActions.reset, () => {
+  on(actions.reset, () => {
     return {
       ...twoupInitialState
     };
   }),
-  on(TwoUpActions.fetchAllResults, (state, action) => {
+  on(actions.fetchAllResults, (state, action) => {
     return {
       ...state,
       formData: action.payload,
@@ -47,10 +47,10 @@ export const twoupReducer = createReducer(
       elementResults: []
     };
   }),
-  on(TwoUpActions.loadAllResultsFailure, (state, action) => {
+  on(actions.loadAllResultsFailure, (state, action) => {
     return { ...state, loading: false, error: action.error, ready: false };
   }),
-  on(TwoUpActions.loadAllResultsSuccess, (state, action) => {
+  on(actions.loadAllResultsSuccess, (state, action) => {
     return {
       ...state,
       elementResults: action.results.elementResults,
@@ -65,7 +65,7 @@ export const twoupReducer = createReducer(
   })
 );
 
-export const twoupFeature = createFeature({
+export const feature = createFeature({
   name: 'twoup',
   reducer: twoupReducer
 });
@@ -81,4 +81,4 @@ export const {
   selectReactionRows,
   selectNuclideRows,
   selectElementRows,
-} = twoupFeature;
+} = feature;

@@ -14,8 +14,8 @@ import { ReportParameters } from '../core/models/report-parameters.model';
 import { SqlForm } from '../core/models/sql-form.model';
 import { CrudService } from '../core/services/crud.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
-import { PageActions, globalFeature } from '../state';
-import { FusionActions } from '../state/fusion';
+import * as appState from '../state';
+import * as fusionState from '../state/fusion';
 import { FusionFaceComponent } from './fusion-face/fusion-face.component';
 
 @Component({
@@ -192,8 +192,8 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
       query: this.coreQuery,
       tables: 3
     };
-    this.store.dispatch(PageActions.setReportParameters({ payload: extras }));
-    this.store.dispatch(FusionActions.fetchAllResults({ payload: kvp }));
+    this.store.dispatch(appState.actions.setReportParameters({ payload: extras }));
+    this.store.dispatch(fusionState.actions.fetchAllResults({ payload: kvp }));
     this.router.navigate(['/fusion/reports']);
   };
 
@@ -203,7 +203,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
         'reset'
       );
     if (reset) {
-      this.store.dispatch(FusionActions.reset());
+      this.store.dispatch(fusionState.actions.reset());
       this.router.navigate(['/fusion']);
     }
   };
@@ -213,8 +213,8 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.forceReset();
-    this.elements = this.store.select(globalFeature.selectElements);
-    this.sortFields = this.store.select(globalFeature.selectReactionSortFields);
+    this.elements = this.store.select(appState.feature.selectElements);
+    this.sortFields = this.store.select(appState.feature.selectReactionSortFields);
     this.headerService.buildPageHeader('fusion');
     this.ready.next(true);
   }

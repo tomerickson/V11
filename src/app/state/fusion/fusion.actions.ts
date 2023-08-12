@@ -2,7 +2,7 @@ import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { IFusionCompositeResults } from 'src/app/core/models/fusion-composite-results.model';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 
-export const FusionActions = createActionGroup({
+export const actions = createActionGroup({
   source: 'Fusion API',
   events: {
     'Reset': emptyProps(),

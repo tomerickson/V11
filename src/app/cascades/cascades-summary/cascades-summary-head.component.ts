@@ -8,8 +8,7 @@ import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { ReactionTypeEnum } from 'src/app/core/models/reaction-type-enum.model';
 import { ReportParameters } from 'src/app/core/models/report-parameters.model';
 import * as featureStore from 'src/app/state/cascades-all';
-import { globalFeature } from 'src/app/state/index';
-import { PageActions } from '../../state/';
+import * as appState from 'src/app/state/index';
 import { CascadesSummaryFaceComponent } from './cascades-summary-face.component';
 
 @Component({
@@ -34,13 +33,13 @@ export class CascadesSummaryHeadComponent implements OnInit {
 
   ngOnInit(): void {
     this.feedbackOptions = this.store.select(
-      globalFeature.selectFuelFeedbackModes
+      appState.feature.selectFuelFeedbackModes
     );
     this.loading = this.store.select(
-      featureStore.cascadesAllFeature.selectLoading
+      featureStore.feature.selectLoading
     );
     this.form = this.store.select(
-      featureStore.cascadesAllFeature.selectFormData
+      featureStore.feature.selectFormData
     );
   }
 
@@ -58,9 +57,9 @@ export class CascadesSummaryHeadComponent implements OnInit {
       tables: 3
     };
 
-    this.store.dispatch(PageActions.setReportParameters({ payload: extras }));
+    this.store.dispatch(appState.actions.setReportParameters({ payload: extras }));
     this.store.dispatch(
-      featureStore.CascadesAllActions.loadAllResults({ url: href })
+      featureStore.actions.loadAllResults({ url: href })
     );
     this.router.navigate(['reports'], {
       relativeTo: this.activatedRoute.parent

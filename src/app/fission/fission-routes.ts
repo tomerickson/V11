@@ -12,7 +12,7 @@ export const FISSION_ROUTES: Routes = [
     path: '',
     component: FissionHeadComponent,
     providers: [
-      provideState(fissionState.fissionFeature),
+      provideState(fissionState.feature),
       provideEffects([fissionState.effects]),
       {provide: FissionService, useClass: FissionService}
     ]
@@ -21,7 +21,7 @@ export const FISSION_ROUTES: Routes = [
     path: 'reports',
     component: ReportPagesHeadComponent,
     providers: [
-      provideState(fissionState.fissionFeature),
+      provideState(fissionState.feature),
       provideEffects([fissionState.effects]),
       {provide: DownloadService, useClass: DownloadComponent}
     ]

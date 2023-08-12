@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { TestPageFaceComponent } from './testpage.face.component';
 import { Store } from '@ngrx/store';
-import { globalFeature } from '../state/global.state';
+import { feature } from '../state/global.state';
 import { IElementDataModel } from '../core/models/element-data.model';
 import { Observable, Subscription } from 'rxjs';
 import { CrudService } from '../core/services/crud.service';
@@ -46,7 +46,7 @@ export class TestpageHeadComponent implements OnInit,AfterViewInit, OnDestroy {
 
   constructor() {
     this.subsciptions = new Subscription();
-    this.elements = this.store.select(globalFeature.selectElements);
+    this.elements = this.store.select(feature.selectElements);
   }
 
   ngOnInit(): void {

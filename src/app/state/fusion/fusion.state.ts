@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { IKeyValuePair } from 'src/app/core/models/key-value-pair.model';
-import { FusionActions } from './fusion.actions';
+import { actions } from './fusion.actions';
 
 export interface FusionState {
   formData: IKeyValuePair[];
@@ -30,12 +30,12 @@ export const fusionInitialState: FusionState = {
 
 export const fusionReducer = createReducer(
   fusionInitialState,
-  on(FusionActions.reset, () => {
+  on(actions.reset, () => {
     return {
       ...fusionInitialState
     };
   }),
-  on(FusionActions.fetchAllResults, (state, action) => {
+  on(actions.fetchAllResults, (state, action) => {
     return {
       ...state,
       formData: action.payload,
@@ -50,10 +50,10 @@ export const fusionReducer = createReducer(
       elementRows: 0
     };
   }),
-  on(FusionActions.loadAllResultsFailure, (state, action) => {
+  on(actions.loadAllResultsFailure, (state, action) => {
     return { ...state, loading: false, error: action.error, ready: false };
   }),
-  on(FusionActions.loadAllResultsSuccess, (state, action) => {
+  on(actions.loadAllResultsSuccess, (state, action) => {
     return {
       ...state,
       elementResults: action.results.elementResults,
@@ -68,7 +68,7 @@ export const fusionReducer = createReducer(
   })
 );
 
-export const fusionFeature = createFeature({
+export const feature = createFeature({
   name: 'fusion',
   reducer: fusionReducer
 });
@@ -84,4 +84,4 @@ export const {
   selectReactionRows,
   selectNuclideRows,
   selectElementRows,
-} = fusionFeature;
+} = feature;

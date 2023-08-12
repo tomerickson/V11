@@ -1,4 +1,4 @@
-import { cascadesAllFeature, cascadesAllReducer } from './state';
-import { CascadesAllActions } from './actions';
+import { feature } from './state';
+import { actions } from './actions';
 import * as effects from './effects';
-export { cascadesAllFeature, cascadesAllReducer, CascadesAllActions, effects };
+export { feature, actions, effects };
