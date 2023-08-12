@@ -4,16 +4,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 import * as tableState from '../state/all-tables';
+import * as globalState from '../state/index';
 import { AllTablesFaceComponent } from './all-tables-face.component';
+import { ReportParameters } from '../core/models/report-parameters.model';
+import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
 
 @Component({
   selector: 'mfmp-all-tables',
   standalone: true,
   imports: [CommonModule, AllTablesFaceComponent],
   template: `
-    <mfmp-all-tables-face [query]="query()"></mfmp-all-tables-face>`
+    <mfmp-all-tables-face
+      [query]="query()"
+      (sql)="submitForm($event)"></mfmp-all-tables-face>
+  `
 })
-
 export class AllTablesHeadComponent implements OnInit {
   store = inject(Store);
   router = inject(Router);
@@ -31,10 +36,19 @@ export class AllTablesHeadComponent implements OnInit {
   /**
    * Submit the query and redirect to the reports page
    *
-   * @param form
+   * @param sql
    */
-  submitForm(form: string) {
-    this.store.dispatch(tableState.actions.loadResults({ query: form }));
-    this.router.navigate(['reports'], { relativeTo: this.activatedRoute });
+  submitForm(sql: string | null) {
+    if (sql) {
+      const extras: ReportParameters = {
+        url: 'all-tables',
+        reactionType: ReactionTypeEnum.AllTables,
+        query: sql,
+        tables: 1
+      };
+      this.store.dispatch(globalState.PageActions.setReportParameters({ payload: extras }));
+      this.store.dispatch(tableState.actions.loadResults({ query: sql }));
+      this.router.navigate(['reports'], { relativeTo: this.activatedRoute });
+    }
   }
 }

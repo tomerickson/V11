@@ -2,17 +2,17 @@ import { AsyncPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { ReactionType } from 'src/app/core/models/reaction-type';
 import { ReactionTypeEnum } from 'src/app/core/models/reaction-type-enum.model';
 import { ReportParameters } from 'src/app/core/models/report-parameters.model';
 import { globalFeature } from 'src/app/state';
+import * as allTablesState from '../../state/all-tables';
 import { cascadesAllFeature } from 'src/app/state/cascades-all';
 import { fissionFeature } from 'src/app/state/fission';
 import { fusionFeature } from 'src/app/state/fusion';
 import { twoupFeature } from 'src/app/state/two-up';
 import { ReportPagesFaceComponent } from './report-pages.face.component';
-import { selectNuclideResults } from 'src/app/state/fusion/fusion.state';
 
 @Component({
   standalone: true,
@@ -67,6 +67,21 @@ export class ReportPagesHeadComponent implements OnInit, OnDestroy {
 
   provideReports = (type: ReactionType): void => {
     switch (type) {
+      case ReactionTypeEnum.AllTables:
+        this.reactions = this.store.select(
+          allTablesState.feature.selectResults
+        );
+        this.reactionRows = this.store.select(
+          allTablesState.feature.selectRows
+        );
+        this.nuclides = of([]);
+        this.elements = of([]);
+        this.nuclideRows = of(0);
+        this.elementRows = of(0);
+        this.loading = this.store.select(allTablesState.feature.selectLoading);
+        this.ready = this.store.select(allTablesState.feature.selectReady);
+
+        break;
       case ReactionTypeEnum.Fusion:
         this.reactions = this.store.select(fusionFeature.selectReactionResults);
         this.nuclides = this.store.select(fusionFeature.selectNuclideResults);

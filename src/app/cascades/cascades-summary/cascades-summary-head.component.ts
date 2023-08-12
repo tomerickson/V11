@@ -54,7 +54,8 @@ export class CascadesSummaryHeadComponent implements OnInit {
     const extras: ReportParameters = {
       url: 'cascades-all',
       reactionType: ReactionTypeEnum.CascadesAll,
-      query: href
+      query: href,
+      tables: 3
     };
 
     this.store.dispatch(PageActions.setReportParameters({ payload: extras }));
