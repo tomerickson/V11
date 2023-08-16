@@ -48,6 +48,11 @@ export const APP_ROUTES: Routes = [
     loadChildren: () =>
       import('./all-tables/all-tables.routes').then((m) => m.ALL_TABLES_ROUTES)
   },
+  {
+    path: 'notes',
+    loadChildren: () =>
+      import('./notes/notes.routes').then((m) => m.NOTES_ROUTES)
+  },
   { path: 'testpage', pathMatch: 'full', component: TestpageHeadComponent },
   { path: '**', component: NotFoundComponent }
 ];

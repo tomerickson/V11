@@ -1,13 +1,22 @@
 import { Routes } from '@angular/router';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
-import { NotesComponent } from './notes.component';
+import { NotesHeadComponent } from './notes.component';
+import * as localState from '../state/notes';
+import { provideState } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { NotesService } from './notes.service';
+import { HtmlDirective } from '../shared/html.directive';
 
 export const NOTES_ROUTES: Routes = [
   {
     path: '',
-    component: NotesComponent,
+    component: NotesHeadComponent,
     providers: [
-      {provide: HeaderProviderService, useClass: HeaderProviderService}
+      provideState(localState.feature),
+      provideEffects([localState.effects]),
+      {provide: HeaderProviderService, useClass: HeaderProviderService},
+      {provide: NotesService, useClass: NotesService},
+      // {provide: HtmlDirective, useClass: HtmlDirective}
     ]
   }
 ];
