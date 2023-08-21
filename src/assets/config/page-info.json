@@ -46,5 +46,11 @@
     "pageTitle": "Notes",
     "pageCredits": "Facilitated by the Martin Fleischmann Memorial Project",
     "pageDescription": ""
+  },
+  {
+    "pageName": "element-data",
+    "pageTitle": "Show Element Data",
+    "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
+    "pageDescription": ""
   }
 ]

@@ -27,25 +27,25 @@ import { Observable, Subscription } from 'rxjs';
 import { ResultType } from 'src/app/core/models/result-type';
 import { DownloadComponent } from '../download/download.component';
 import { ColumnType } from 'src/app/core/models/column-type.type';
-import { RestartFeatureComponent } from "../restart-feature/restart-feature.component";
+import { RestartFeatureComponent } from '../restart-feature/restart-feature.component';
 
 @Component({
-    selector: 'mfmp-query-face',
-    standalone: true,
-    templateUrl: './query-results.face.component.html',
-    styleUrls: ['./query-results.face.component.scss'],
-    imports: [
-        NgIf,
-        NgTemplateOutlet,
-        AsyncPipe,
-        CommonModule,
-        MatCardModule,
-        MatSortModule,
-        MatTableModule,
-        MatPaginatorModule,
-        DownloadComponent,
-        RestartFeatureComponent
-    ]
+  selector: 'mfmp-query-face',
+  standalone: true,
+  templateUrl: './query-results.face.component.html',
+  styleUrls: ['./query-results.face.component.scss'],
+  imports: [
+    NgIf,
+    NgTemplateOutlet,
+    AsyncPipe,
+    CommonModule,
+    MatCardModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
+    DownloadComponent,
+    RestartFeatureComponent
+  ]
 })
 export class QueryResultsFaceComponent
   implements OnInit, AfterViewInit, OnDestroy
@@ -58,6 +58,7 @@ export class QueryResultsFaceComponent
   @Input({ required: true }) sortableColumns!: boolean[];
   @Input({ required: true }) inputResults!: Observable<any[]>;
   @Input({ required: true }) length!: number;
+  @Input({ required: true }) paginate!: boolean;
 
   @ViewChild('paginator', { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -87,9 +88,11 @@ export class QueryResultsFaceComponent
   }
 
   ngAfterViewInit(): void {
-    this.setupPaginator();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.paginator?.firstPage();
+    if (this.paginate) {
+      this.setupPaginator();
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator?.firstPage();
+    }
   }
 
   ngOnDestroy(): void {

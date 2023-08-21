@@ -51,7 +51,8 @@ import { ColumnType } from 'src/app/core/models/column-type.type';
       [columnTypes]="columnTypes"
       [columnStyles]="columnStyles"
       [inputResults]="inputResults"
-      [length]="length()"></mfmp-query-face>
+      [length]="length()"
+      [paginate]="paginate"></mfmp-query-face>
   `,
   styles: []
 })
@@ -60,6 +61,7 @@ export class QueryResultsHeadComponent
 {
   @Input({ required: true }) resultType!: ResultType;
   @Input() inputResults!: Observable<any[]>;
+  @Input() paginate: boolean = true;
 
   obj = new MatTableDataSource<any>();
   dataSource: Observable<MatTableDataSource<any>> = of(this.obj);

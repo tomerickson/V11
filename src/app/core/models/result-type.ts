@@ -1,1 +1,1 @@
-export type ResultType = 'results' | 'nuclides' | 'elements';
+export type ResultType = 'results' | 'nuclides' | 'elements' | 'radionuclides';

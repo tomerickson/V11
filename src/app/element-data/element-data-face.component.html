@@ -13,52 +13,45 @@
         </mat-select>
       </mat-form-field>
     </form>
+    <ng-container
+      *ngIf="ready === true; then readyTemplate; else notReady"></ng-container>
+    <ng-template #readyTemplate>
+      <ng-container
+        *ngIf="elements; then elementsTemplate; else noelements"></ng-container>
+      <ng-template #elementsTemplate>
+        <mfmp-query-head
+          [resultType]="'elements'"
+          [inputResults]="elements"
+          [paginate]="false"></mfmp-query-head>
+      </ng-template>
+      <ng-template #noelements></ng-template>
 
-    <h4>From ElementPropertiesPlus Table:</h4>
-    <table mat-table [dataSource]="elementData" class="mat-elevation-z2">
-      <ng-container *ngFor="let columnName of elementColumns">
-        <ng-container matColumnDef="{{columnName}}">
-          <th mat-header-cell *matHeaderCellDef>{{columnName}}</th>
-          <td mat-cell *matCellDef="let row;">{{ row[columnName] }}</td>
-        </ng-container>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="elementColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: elementColumns"></tr>
-    </table>
-<ng-container *ngIf="nuclideData?.data; then nuclides; else nonuclides;"></ng-container>
-<ng-template #nuclides>
-    <h4>From NuclidesPlus Table ({{nuclideData.data.length}})</h4>
-    <table mat-table [dataSource]="nuclideData" class="mat-elevation-z2">
-      <ng-container *ngFor="let columnName of nuclideColumns">
-        <ng-container matColumnDef="{{columnName}}">
-          <th mat-header-cell *matHeaderCellDef>{{columnName}}</th>
-          <td mat-cell *matCellDef="let row;">{{ row[columnName] }}</td>
-        </ng-container>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="nuclideColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: nuclideColumns"></tr>
-    </table>
-  </ng-template>
-  <ng-template #nonuclides>
-    <h4>No NuclidesPlus rows</h4>
-  </ng-template>
+      <ng-container
+        *ngIf="nuclides; then nuclidesTemplate; else nonuclides"></ng-container>
+      <ng-template #nuclidesTemplate>
+        <h4>From NuclidesPlus Table ({{rows(nuclides)}}):</h4>
+        <mfmp-query-head
+          [resultType]="'nuclides'"
+          [inputResults]="nuclides"
+          [paginate]="false"></mfmp-query-head>
+      </ng-template>
+      <ng-template #nonuclides></ng-template>
 
-  <ng-container *ngIf="radioNuclideData?.data; then radioNuclides; else noRadioNuclides;"></ng-container>
-  <ng-template #radioNuclides>
-    <h4>From RadioNuclides Table ({{radioNuclideData.data.length}})</h4>
-    <table mat-table [dataSource]="radioNuclideData" class="mat-elevation-z2">
-      <ng-container *ngFor="let columnName of radioNuclideColumns">
-        <ng-container matColumnDef="{{columnName}}">
-          <th mat-header-cell *matHeaderCellDef>{{columnName}}</th>
-          <td mat-cell *matCellDef="let row;">{{ row[columnName] }}</td>
-        </ng-container>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="radioNuclideColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: radioNuclideColumns"></tr>
-    </table>
-  </ng-template>
-  <ng-template #noRadioNuclides>
-    <h4>No RadioNuclides rows</h4>
-  </ng-template>
+      <ng-container
+        *ngIf="
+          radioNuclides;
+          then radioNuclidesTemplate;
+          else noRadioNuclides
+        "></ng-container>
+      <ng-template #radioNuclidesTemplate>
+        <h4>From RadioNuclidesPlus Table ({{rows(radioNuclides)}}):</h4>
+        <mfmp-query-head
+          [resultType]="'radionuclides'"
+          [inputResults]="radioNuclides"
+          [paginate]="false"></mfmp-query-head>
+      </ng-template>
+      <ng-template #noRadioNuclides></ng-template>
+    </ng-template>
+    <ng-template #notReady></ng-template>
   </mat-card-content>
 </mat-card>
