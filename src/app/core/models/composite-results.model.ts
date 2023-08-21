@@ -7,9 +7,10 @@ import { INuclideResultsModel } from './nuclide-results.model';
  *
  */
 export abstract class CompositeResultsModel {
-  reactionResults!: any[];
-  nuclideResults: INuclideResultsModel[] = [];
-  elementResults: IElementResultsModel[] = [];
+  reactionResults: any[] = [];
+  nuclideResults: any[] = [];
+  elementResults: any[] = [];
+  radioNuclideResults: any[] = [];
   get reactionRows() {
     return this.reactionResults.length - 1;
   }
@@ -19,24 +20,29 @@ export abstract class CompositeResultsModel {
   get elementRows() {
     return this.elementResults.length - 1;
   }
+  get radioNuclideRows() {
+    return this.radioNuclideResults.length - 1;
+  }
+
   ok!: boolean;
-  errors!: string[];
+  errors: string[] = [];
 
   elementsTemplate = ['Z', 'E', 'EName'];
   nuclidesTemplate = ['id', 'A', 'Z'];
-
+  radioNuclidesTemplate = ['id', 'A', 'E', 'Z'];
   /**
    * Automatically parse the incoming page (assumed to contain
-   * three sets of results) and convert them to CompositeResultModel
+   * multiple sets of results) and convert them to CompositeResultModel
    *
    * @param html // Incoming html
    * @param reactionTemplate
-   * @param numberOfTablesExpected - optional
    *
    *   array of strings that identify the first columns of the reaction table.
    *   The format of the elements results and nuclides results are fixed, but
    *   the reaction table structure varies by reaction type
-   */
+   *
+   * @param numberOfTablesExpected - optional
+   * */
   constructor(
     private html: string,
     private reactionTemplate: string[],
@@ -77,6 +83,8 @@ export abstract class CompositeResultsModel {
       this.nuclideResults = tbody;
     } else if (this.modelMatches(thead, this.elementsTemplate)) {
       this.elementResults = tbody;
+    } else if (this.modelMatches(thead, this.radioNuclidesTemplate)) {
+      this.radioNuclideResults = tbody;
     } else {
       const msg = `table with this thead: "${thead.join(
         ','
@@ -95,17 +103,25 @@ export abstract class CompositeResultsModel {
    */
   parseReactionResults = () => {
     const data = this.extractTablesFromPage();
-    for (let i = 0; i < this.numberOfTablesExpected; i++) {
-      const table: any[] = data[i];
-      const thead: any[] = table[0];
-      const tbody: any[] = table;
-      this.parseTableContent(thead, tbody);
+    console.log('reactionTemplate', this.reactionTemplate);
+    console.log('nuclidesTemplate', this.nuclidesTemplate);
+    console.log('elementsTemplate', this.elementsTemplate);
+    console.log('radioNuclidesTemplate', this.radioNuclidesTemplate);
+    for (let i = 0; i < data.length; i++) {
+      if (data.length > 0) {
+        const table: any[] = data[i];
+        const thead: any[] = table[0];
+        const tbody: any[] = table;
+        this.parseTableContent(thead, tbody);
+      }
     }
 
-    this.ok =
-      this.reactionResults.length > 0 &&
-      (this.nuclideResults.length > 0 || this.numberOfTablesExpected < 2) &&
-      (this.elementResults.length > 0 || this.numberOfTablesExpected < 3);
+    let tablesFound = 0;
+    tablesFound += this.reactionResults.length > 0 ? 1 : 0;
+    tablesFound += this.nuclideResults.length > 0 ? 1 : 0;
+    tablesFound += this.elementResults.length > 0 ? 1 : 0;
+    tablesFound += this.radioNuclideResults.length > 0 ? 1 : 0;
+    this.ok = tablesFound >= this.numberOfTablesExpected;
 
     if (!this.ok) {
       if (this.reactionResults.length == 0) {
@@ -167,7 +183,7 @@ export abstract class CompositeResultsModel {
    * @returns
    */
   validateTables = (tables: NodeListOf<HTMLTableElement>): boolean => {
-    let valid: boolean = tables.length === this.numberOfTablesExpected;
+    let valid: boolean = tables.length >= this.numberOfTablesExpected;
     if (valid) {
       tables.forEach((table) => {
         valid =

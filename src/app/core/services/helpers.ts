@@ -1,6 +1,19 @@
 import { KeyValuePair } from '../models/key-value-pair.model';
 
 /**
+ * Separate the first row of an array from the rest of the array
+ * @param table
+ * @returns
+ */
+export const tableSplitter = (table: any[]): { head: any[]; body: any[] } => {
+  const result: { head: any[]; body: any[] } = { head: [], body: [] };
+  const tmp = [...table];
+  tmp.splice(0, 1);
+  result.head = table[0];
+  result.body = tmp;
+  return result;
+};
+/**
  * Compare array contents to expected model
  * @param head the first row of a data stream representing the column names
  * @param model an array of expected column names
@@ -24,7 +37,7 @@ export const modelMatches = (head: string[], model: string[]): boolean => {
  */
 export const getMatchingString = (input: string, regex: string): string => {
   return getMatchingStrings(input, regex)[0];
-}
+};
 
 /**
  * Return two or more captured groups from a regex match

@@ -3,65 +3,68 @@
     <code-copy [text]="parameters.query"></code-copy>
   </mat-card-header>
   <mat-card-content>
-    <ng-container *ngIf="(loading | async); then waiting else working">
-
-    </ng-container>
+    <ng-container
+      *ngIf="loading | async; then waiting; else working"></ng-container>
     <ng-template #waiting>
       <mat-progress-spinner
-      class="progress-spinner"
-      mode="indeterminate"></mat-progress-spinner>
+        class="progress-spinner"
+        mode="indeterminate"></mat-progress-spinner>
     </ng-template>
     <ng-template #working>
-  <mat-tab-group mat-stretch-tabs="false" animationDuration="250ms">
-    <mat-tab label="Results ({{ reactionRows | async }})">
-      <ng-container
-        *ngIf="
-          reactionResults;
-          then reactionYes;
-          else reactionNo
-        "></ng-container>
-      <ng-template #reactionNo>
-        <h3>No results found</h3>
-      </ng-template>
-      <ng-template #reactionYes>
-        <mfmp-query-head
-          [resultType]="'results'"
-          [inputResults]="reactionResults"></mfmp-query-head>
-      </ng-template>
-    </mat-tab>
-    <mat-tab *ngIf="parameters.tables > 1" label="Nuclides ({{ nuclideRows | async }})">
-      <ng-container
-        *ngIf="
-          nuclideResults;
-          then nuclidesYes;
-          else nuclidesNo
-        "></ng-container>
-      <ng-template #nuclidesNo>
-        <h3>No results found</h3>
-      </ng-template>
-      <ng-template #nuclidesYes>
-        <mfmp-query-head
-          [resultType]="'nuclides'"
-          [inputResults]="nuclideResults"></mfmp-query-head>
-      </ng-template>
-    </mat-tab>
-    <mat-tab *ngIf="parameters.tables > 2" label="ELements ({{ elementRows | async }})">
-      <ng-container
-        *ngIf="
-          elementResults;
-          then elementsYes;
-          else elementsNo
-        "></ng-container>
-      <ng-template #elementsNo>
-        <h3>No results found</h3>
-      </ng-template>
-      <ng-template #elementsYes>
-        <mfmp-query-head
-          [resultType]="'elements'"
-          [inputResults]="elementResults"></mfmp-query-head>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
-</ng-template>
-</mat-card-content>
+      <mat-tab-group mat-stretch-tabs="false" animationDuration="250ms">
+        <mat-tab label="Results ({{ reactionRows | async }})">
+          <ng-container
+            *ngIf="
+              reactionResults;
+              then reactionYes;
+              else reactionNo
+            "></ng-container>
+          <ng-template #reactionNo>
+            <h3>No results found</h3>
+          </ng-template>
+          <ng-template #reactionYes>
+            <mfmp-query-head
+              [resultType]="'results'"
+              [inputResults]="reactionResults"></mfmp-query-head>
+          </ng-template>
+        </mat-tab>
+        <mat-tab
+          *ngIf="parameters.tables > 1"
+          label="Nuclides ({{ nuclideRows | async }})">
+          <ng-container
+            *ngIf="
+              nuclideResults;
+              then nuclidesYes;
+              else nuclidesNo
+            "></ng-container>
+          <ng-template #nuclidesNo>
+            <h3>No results found</h3>
+          </ng-template>
+          <ng-template #nuclidesYes>
+            <mfmp-query-head
+              [resultType]="'nuclides'"
+              [inputResults]="nuclideResults"></mfmp-query-head>
+          </ng-template>
+        </mat-tab>
+        <mat-tab
+          *ngIf="parameters.tables > 2"
+          label="ELements ({{ elementRows | async }})">
+          <ng-container
+            *ngIf="
+              elementResults;
+              then elementsYes;
+              else elementsNo
+            "></ng-container>
+          <ng-template #elementsNo>
+            <h3>No results found</h3>
+          </ng-template>
+          <ng-template #elementsYes>
+            <mfmp-query-head
+              [resultType]="'elements'"
+              [inputResults]="elementResults"></mfmp-query-head>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </ng-template>
+  </mat-card-content>
 </mat-card>

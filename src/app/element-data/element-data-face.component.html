@@ -1,0 +1,64 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="f">
+      <mat-form-field>
+        <label>Select Element:</label>
+        <mat-select title="Elements" formControlName="ZKEY">
+          <mat-option
+            *ngFor="let element of elementList; index as i; first as isfirst"
+            [value]="element.Z"
+            (onSelectionChange)="postChange($event)">
+            {{ element.Z }} {{ element.E }} {{ element.EName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <h4>From ElementPropertiesPlus Table:</h4>
+    <table mat-table [dataSource]="elementData" class="mat-elevation-z2">
+      <ng-container *ngFor="let columnName of elementColumns">
+        <ng-container matColumnDef="{{columnName}}">
+          <th mat-header-cell *matHeaderCellDef>{{columnName}}</th>
+          <td mat-cell *matCellDef="let row;">{{ row[columnName] }}</td>
+        </ng-container>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="elementColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: elementColumns"></tr>
+    </table>
+<ng-container *ngIf="nuclideData?.data; then nuclides; else nonuclides;"></ng-container>
+<ng-template #nuclides>
+    <h4>From NuclidesPlus Table ({{nuclideData.data.length}})</h4>
+    <table mat-table [dataSource]="nuclideData" class="mat-elevation-z2">
+      <ng-container *ngFor="let columnName of nuclideColumns">
+        <ng-container matColumnDef="{{columnName}}">
+          <th mat-header-cell *matHeaderCellDef>{{columnName}}</th>
+          <td mat-cell *matCellDef="let row;">{{ row[columnName] }}</td>
+        </ng-container>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="nuclideColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: nuclideColumns"></tr>
+    </table>
+  </ng-template>
+  <ng-template #nonuclides>
+    <h4>No NuclidesPlus rows</h4>
+  </ng-template>
+
+  <ng-container *ngIf="radioNuclideData?.data; then radioNuclides; else noRadioNuclides;"></ng-container>
+  <ng-template #radioNuclides>
+    <h4>From RadioNuclides Table ({{radioNuclideData.data.length}})</h4>
+    <table mat-table [dataSource]="radioNuclideData" class="mat-elevation-z2">
+      <ng-container *ngFor="let columnName of radioNuclideColumns">
+        <ng-container matColumnDef="{{columnName}}">
+          <th mat-header-cell *matHeaderCellDef>{{columnName}}</th>
+          <td mat-cell *matCellDef="let row;">{{ row[columnName] }}</td>
+        </ng-container>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="radioNuclideColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: radioNuclideColumns"></tr>
+    </table>
+  </ng-template>
+  <ng-template #noRadioNuclides>
+    <h4>No RadioNuclides rows</h4>
+  </ng-template>
+  </mat-card-content>
+</mat-card>
