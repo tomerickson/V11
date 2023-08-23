@@ -16,7 +16,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -58,7 +58,7 @@ import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-inpu
     MatSlideToggleModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    NumericInputComponent,
+    NumericInputComponent
   ],
   templateUrl: './cascades-all-face.component.html',
   styleUrls: ['./cascades-all-face.component.scss'],
@@ -74,7 +74,6 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   fb = inject(FormBuilder);
   cascadesForm!: FormGroup;
   subscriptions!: Subscription;
-  
 
   errorMessages = [
     { control: '*', error: 'required', message: 'Required entry.' },
@@ -116,7 +115,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   }
   mouseEntry = signal(false);
 
-  @Input({required: true}) feedbackOptions!: ILookupDataModel[] | null;
+  @Input({ required: true }) feedbackOptions!: ILookupDataModel[] | null;
   @Output() submitter: EventEmitter<ICascadesAllForm> = new EventEmitter();
 
   /** Tooltip support
@@ -132,6 +131,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
    BUT, even if it eventually shows an error message, still check out the All Results page:
     the answer file (check dates and times) may yet be there and complete.`;
   tooltipDelay = 750;
+  spanElevatorClass = 'mat-elevation-z2';
 
   ngOnInit(): void {
     this.subscriptions = new Subscription();
@@ -195,6 +195,14 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
     return this.cascadesForm.controls[controlName].hasError(errorName);
   };
 
+  elevate(event: MouseEvent) {
+    const element = event.target as HTMLSpanElement;
+    if (event.type === 'mouseenter') {
+      element.classList.add(this.spanElevatorClass);
+    } else {
+      element.classList.remove(this.spanElevatorClass);
+    }
+  }
   /**
    * Look for a matching error message:
    *

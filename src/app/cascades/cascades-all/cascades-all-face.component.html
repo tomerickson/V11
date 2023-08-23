@@ -17,17 +17,14 @@
         file but only DISPLAY a summary
       </h4>
       <div class="hint">
-        <div>Hint: hover over&nbsp;</div>
-        <div><button mat-mini-fab size="small">?</button></div>
-        <div>&nbsp;highlighted text to reveal more infomation.</div>
+        <span>Hint: hover over&nbsp;</span>
+        <span (mouseenter)="elevate($event)" (mouseleave)="elevate($event)">
+          text highlighted with an '*' asterisk&nbsp;
+        </span>
+        <span>to reveal more infomation.</span>
       </div>
     </mat-expansion-panel>
-    <div
-      class="slidetoggle"
-      matBadge="?"
-      matBadgePosition="above before"
-      matBadgeOverlap="true"
-      [matBadgeColor]="'accent'">
+    <div class="slidetoggle">
       <mat-slide-toggle
         color="primary"
         labelPosition="before"
@@ -35,7 +32,10 @@
         matTooltip="{{ touchMessage }}"
         [matTooltipShowDelay]="tooltipDelay"
         (toggleChange)="sliderChange()">
-        Mouse/Touch entry
+        <span (mouseenter)="elevate($event)" (mouseleave)="elevate($event)">
+          Mouse/Touch entry
+          <sup>*</sup>
+        </span>
       </mat-slide-toggle>
     </div>
   </mat-card-header>
@@ -126,14 +126,11 @@
         </div>
         <div class="flexrow end">
           <div>
-            <label>
-              Elements that will NOT have MELTED before reaching the Maximum
-              Reactor Temperature:
-            </label>
+            <label>Elements that will NOT have MELTED before reaching the Maximum Reactor Temperature:</label>
           </div>
           <mat-form-field appearance="fill">
-            <!-- <mat-label>Choose an option.</mat-label> -->
             <mat-select
+              value="meltingSwitch"
               formControlName="meltingSwitch"
               placeholder="Choose an option.">
               <mat-option
@@ -164,8 +161,8 @@
         <div class="flexrow end">
           <div>Radioactive Isotopes:</div>
           <mat-form-field appearance="fill">
-            <mat-label>Choose an option.</mat-label>
-            <mat-select formControlName="isotopeSwitch">
+                        <mat-select formControlName="isotopeSwitch"
+                        placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
                 [value]="option.code">
@@ -178,8 +175,8 @@
         <div class="flexrow end">
           <div>Nuclear Fermions</div>
           <mat-form-field appearance="fill">
-            <mat-label>Choose an option.</mat-label>
-            <mat-select formControlName="nuclearFermionSwitch">
+            <mat-select formControlName="nuclearFermionSwitch"
+            placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
                 [value]="option.code">
@@ -191,8 +188,8 @@
         <div class="flexrow end">
           <div>Atomic Fermions</div>
           <mat-form-field appearance="fill">
-            <mat-label>Choose an option.</mat-label>
-            <mat-select formControlName="atomicFermionSwitch">
+            <mat-select formControlName="atomicFermionSwitch"
+            placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
                 [value]="option.code">
@@ -207,8 +204,8 @@
             form Dimers:
           </div>
           <mat-form-field appearance="fill">
-            <mat-label>Choose an option.</mat-label>
-            <mat-select formControlName="dimersSwitch">
+            <mat-select formControlName="dimersSwitch"
+            placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
                 [value]="option.code">
@@ -265,17 +262,18 @@
         </div>
         <div class="flexrow end">
           <div></div>
-          <div
-            matBadge="?"
-            matBadgePosition="before"
-            matBadgeOverlap="true"
-            [matBadgeColor]="'accent'">
+          <div>
             <mat-radio-group formControlName="tableSet" value="Original">
               <mat-label
                 matTooltip="{{ tablesMessage }}"
                 [matTooltipPosition]="'left'"
                 [matTooltipShowDelay]="tooltipDelay">
-                Table set:
+                <span
+                  (mouseenter)="elevate($event)"
+                  (mouseleave)="elevate($event)">
+                  Table set:
+                  <sup>*</sup>
+                </span>
               </mat-label>
               <mat-radio-button value="Original" selected>
                 Original
@@ -317,14 +315,14 @@
             mat-raised-button
             color="primary"
             type="button"
-            matBadge="?"
-            matBadgePosition="above before"
-            [matBadgeColor]="'accent'"
             [matTooltipShowDelay]="tooltipDelay"
             [matTooltipPosition]="'left'"
             matTooltip="{{ patienceMessage }}"
             (click)="submitForm()">
-            FIND CASCADES
+            <span (mouseenter)="elevate($event)" (mouseleave)="elevate($event)">
+              FIND CASCADES
+              <sup>*</sup>
+            </span>
           </button>
         </div>
       </div>
