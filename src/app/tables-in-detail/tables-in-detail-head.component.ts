@@ -3,7 +3,7 @@ import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
-import * as localState from '../state/notes';
+import * as localState from '../state/tables-in-detail';
 import { TablesInDetailFaceComponent } from './tables-in-detail-face.component';
 
 @Component({
@@ -24,7 +24,7 @@ export class TablesInDetailHeadComponent {
   @ViewChild('mfmpContent') container!: ElementRef<HTMLDivElement>;
 
   ngOnInit(): void {
-    this.headerService.buildPageHeader('notes');
+    this.headerService.buildPageHeader('tables-in-detail');
     this.html = this.store.select(localState.feature.selectHtml);
     this.store.dispatch(localState.actions.fetchPage());
   }

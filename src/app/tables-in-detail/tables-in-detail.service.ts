@@ -22,7 +22,7 @@ export class TablesInDetailService {
   }
 
   /**
-   * Strip out elements between the <body> tag and the first <H5> tag
+   * Strip out elements between the <body> tag and the third <p> tag
    */
   parseTablesPage(html: string): string {
     const parser = new DOMParser();
@@ -30,15 +30,19 @@ export class TablesInDetailService {
       .parseFromString(html, 'text/html')
       .querySelector('body') as HTMLBodyElement;
 
+    let paragraphs = 0;
     while (true) {
       const element = body.children[0];
-      if (element.tagName === 'BR') break;
+      if (element.tagName === 'P') paragraphs++;
+      if (paragraphs === 3) break;
       body.removeChild(element);
     }
+
     let result = '';
     for (let i = 0; i < body.children.length; i++) {
       result += body.children[i].outerHTML;
     }
+
     return result;
   }
 }

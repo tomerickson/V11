@@ -2,7 +2,6 @@ import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { NotificationComponent } from 'src/app/core/notification.component';
-import { NotesService } from 'src/app/notes/notes.service';
 import { actions } from './actions';
 import { TablesInDetailService } from 'src/app/tables-in-detail/tables-in-detail.service';
 

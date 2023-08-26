@@ -56,8 +56,16 @@ export const APP_ROUTES: Routes = [
   {
     path: 'element-data',
     loadChildren: () =>
-      import(
-        './element-data/element-data.routes').then((m) => m.ELEMENT_DATA_ROUTES)
+      import('./element-data/element-data.routes').then(
+        (m) => m.ELEMENT_DATA_ROUTES
+      )
+  },
+  {
+    path: 'tables-in-detail',
+    loadChildren: () =>
+      import('./tables-in-detail/table-in-detail.routes').then(
+        (m) => m.TABLES_IN_DETAIL_ROUTES
+      )
   },
   { path: 'testpage', pathMatch: 'full', component: TestpageHeadComponent },
   { path: '**', component: NotFoundComponent }

@@ -41,7 +41,7 @@ export const reducer = createReducer(
 );
 
 export const feature = createFeature({
-  name: 'notes',
+  name: 'tables-in-detail',
   reducer: reducer
 });
 
