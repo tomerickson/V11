@@ -49,6 +49,13 @@ export const APP_ROUTES: Routes = [
       import('./all-tables/all-tables.routes').then((m) => m.ALL_TABLES_ROUTES)
   },
   {
+    path: 'all-results',
+    loadChildren: () =>
+      import('./all-results/all-results.routes').then(
+        (m) => m.ALL_RESULTS_ROUTES
+      )
+  },
+  {
     path: 'notes',
     loadChildren: () =>
       import('./notes/notes.routes').then((m) => m.NOTES_ROUTES)
