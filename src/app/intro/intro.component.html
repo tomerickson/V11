@@ -189,7 +189,7 @@
     </p>
     <p>
       Specifically, in
-      <a href="CascadesAll.php">CascadesAll</a>
+      <a href="{{apiUrl}}cascades-all">CascadesAll</a>
       (the original), the user must specify the common input SQL core of the
       Fusion and the TwoToTwo programs. That core command is executed for each
       of the two programs and all resulting output nuclides then comprise the
@@ -393,14 +393,14 @@
           examples are:
         </p>
         <a
-          href="https://nanosoft.co.nz/results/Cascades5Lite_2390101_H1Li7Al27N14Ni58Ni60Ni62B10B11_2400K.html"
+          href="{{apiUrl}}results/Cascades5Lite_2390101_H1Li7Al27N14Ni58Ni60Ni62B10B11_2400K.html"
           target="_blank">
-          https://co.nanosoft.nz/results/Cascades5Lite_2390101_H1Li7Al27N14Ni58Ni60Ni62B10B11_2400K.html
+          {{apiUrl}}results/Cascades5Lite_2390101_H1Li7Al27N14Ni58Ni60Ni62B10B11_2400K.html
         </a>
         <a
-          href="https://nanosoft.co.nz/results/Cascades4_2384642_HLiAlNNiB_2400K.html"
+          href="{{apiUrl}}results/Cascades4_2384642_HLiAlNNiB_2400K.html"
           target="_blank">
-          https://nanosoft.co.nz/results/Cascades4_2384642_HLiAlNNiB_2400K.html
+          {{apiUrl}}results/Cascades4_2384642_HLiAlNNiB_2400K.html
         </a>
         <p>
           In the above, we using two versions of the Cascades suite to explore
@@ -422,9 +422,9 @@
         <p>
           For Example:
           <a
-            href="http://www.nanosoft.co.nz/results/select_*_from_ElementPropertiesPlusByZ.html"
+            href="{{apiUrl}}results/select_*_from_ElementPropertiesPlusByZ.html"
             target="_blank">
-            http://www.nanosoft.co.nz/results/select_*_from_ElementPropertiesPlusByZ.html
+            {{apiUrl}}results/select_*_from_ElementPropertiesPlusByZ.html
           </a>
           - In this, the user is employing AllTables in its simplest mode - to
           explore the whole of the ElementsPropertiesPlus table.
@@ -432,18 +432,18 @@
         <p>
           Similarly, we could use it to explore the entire NuclidesPlus table:
           <a
-            href="http://www.nanosoft.co.nz/results/select_*_from_NuclidesPlusByZ-A.html"
+            href="{{apiUrl}}results/select_*_from_NuclidesPlusByZ-A.html"
             target="_blank">
-            http://www.nanosoft.co.nz/results/select_*_from_NuclidesPlusByZ-A.html
+            {{apiUrl}}results/select_*_from_NuclidesPlusByZ-A.html
           </a>
         </p>
         <p>
           However, we can also make use of a nested command:
           <a
-            href="http://www.nanosoft.co.nz/results/select_*_from_FusionAllPlus_where_E1eqOandZ2inlbselect_Z_
+            href="{{apiUrl}}results/select_*_from_FusionAllPlus_where_E1eqOandZ2inlbselect_Z_
           from_ElementPropertiesPlus_where_MagTypeeqFerromagneticrbByMeVDescLimit100.html"
             target="_blank">
-            http://www.nanosoft.co.nz/results/select_*_from_FusionAllPlus_where_E1eqOandZ2inlbselect_Z_
+            {{apiUrl}}results/select_*_from_FusionAllPlus_where_E1eqOandZ2inlbselect_Z_
             from_ElementPropertiesPlus_where_MagTypeeqFerromagneticrbByMeVDescLimit100.html
           </a>
         </p>
@@ -547,12 +547,12 @@
     Ongoing Documentation
     <p>
       Descriptions of various aspects of the package are available on the
-      <a href="http://www.nanosoft.co.nz/notes.php">Notes</a>
+      <a routerLink="/notes">Notes</a>
       link. By studying these notes starting with the earliest, the user can
       clarify any issues as well as note how the package evolved historically.
       Copies of the latest version of this paper are currently located
       <a
-        href="https://www.nanosoft.co.nz/downloads/Documentation/TheNanosoftPackage.pdf">
+        href="/downloads">
         here
       </a>
       .

@@ -2,9 +2,7 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
     "analytics": false,
-    "schematicCollections": [
-      "@ngrx/schematics"
-    ]
+    "schematicCollections": ["@ngrx/schematics"]
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -51,10 +49,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.scss",
               "@angular/material/prebuilt-themes/deeppurple-amber.css"
@@ -102,6 +97,35 @@
                   "maximumError": "4kb"
                 }
               ]
+            },
+            "staging": {
+              "assets": [
+                {
+                  "glob": "**/*",
+                  "input": "src/assets/config/staging",
+                  "output": "/assets/config/"
+                }
+              ],
+              "baseHref": "./",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1500kb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -118,6 +142,9 @@
             "development": {
               "browserTarget": "v11:build:development",
               "proxyConfig": "src/proxy.conf.json"
+            },
+            "staging": {
+              "browserTarget": "v11:build:staging"
             }
           }
         },
@@ -130,10 +157,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
         "e2e": {
