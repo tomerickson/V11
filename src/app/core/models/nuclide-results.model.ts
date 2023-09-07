@@ -1,4 +1,6 @@
-export interface INuclideResultsModel {
+import { IDataTransferModel } from "./data-transfer.model";
+
+export interface INuclideResultsModel extends IDataTransferModel{
   id: number;
   A: number;
   Z: number;

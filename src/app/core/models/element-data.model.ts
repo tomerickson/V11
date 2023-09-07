@@ -1,4 +1,6 @@
-export interface IElementDataModel {
+import { IDataTransferModel } from "./data-transfer.model";
+
+export interface IElementDataModel extends IDataTransferModel{
   Z: number;
   E: string;
   EName: string;

@@ -1,6 +1,9 @@
-import { IElementResultsModel } from './element-results.model';
-import { INuclideResultsModel } from './nuclide-results.model';
+export enum ExpectedTablesEnum {'reactions' , 'nuclides' , 'elements', 'radioNuclides', 'queries' , 'events'}
 
+export interface ITableExpectations {
+  tables: ExpectedTablesEnum[];
+  templates: [][];
+}
 /**
  * Base class for reaction results incoming from the various
  * reaction pages: CascadesAll, Fission, Fusion, TwoUp, etc.
@@ -11,6 +14,8 @@ export abstract class CompositeResultsModel {
   nuclideResults: any[] = [];
   elementResults: any[] = [];
   radioNuclideResults: any[] = [];
+  queries: any[] = [];
+
   get reactionRows() {
     return this.reactionResults.length - 1;
   }

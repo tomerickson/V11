@@ -1,13 +1,13 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { actions } from './actions';
+import { IAllResultsDataModel } from 'src/app/core/models/all-results-data.model';
 
 export interface AllResultsState {
   query: string;
   loading: boolean;
   ready: boolean;
   error: any;
-  results: any[];
-  rows: number;
+  results: IAllResultsDataModel[];
 }
 
 export const allResultsInitialState: AllResultsState = {
@@ -15,8 +15,7 @@ export const allResultsInitialState: AllResultsState = {
   loading: false,
   ready: false,
   error: null,
-  results: [],
-  rows: 0
+  results: []
 };
 
 export const allResultsReducer = createReducer(
@@ -33,8 +32,7 @@ export const allResultsReducer = createReducer(
       loading: true,
       ready: false,
       error: null,
-     results: [],
-     rows: 0
+     results: []
     };
   }),
   on(actions.loadResultsSuccess, (state, action) => {
@@ -42,17 +40,20 @@ export const allResultsReducer = createReducer(
       ...state,
       ready: true,
       loading: false,
-      results: action.payload.reactionResults,
-      rows: action.payload.reactionRows
+      results: action.payload.reactionResults
     };
   }),
   on(actions.loadResultsFailure, (state, action) => {
     return { ...state, loading: false, error: action.error };
   })
 );
+
 export const feature = createFeature({
   name: 'all-results',
-  reducer: allResultsReducer
+  reducer: allResultsReducer,
+  extraSelectors: ({selectResults}) => ({
+    selectRows: createSelector(selectResults, (r) => r.length)
+  })
 });
 
 export const {
@@ -62,4 +63,4 @@ export const {
     selectQuery,
     selectResults,
     selectRows
-} = feature;
+} = feature
