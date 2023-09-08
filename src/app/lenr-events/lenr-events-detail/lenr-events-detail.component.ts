@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
+import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 
 @Component({
   selector: 'mfmp-lenr-events-detail',
@@ -24,18 +25,56 @@ import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
   styleUrls: ['./lenr-events-detail.component.scss']
 })
 export class LenrEventsDetailComponent {
-  @Input({ required: true }) event!: ILenrEventDetail | null;
-  @Output() next: EventEmitter<any> = new EventEmitter();
-  @Output() prior: EventEmitter<any> = new EventEmitter();
+  private _event!: ILenrEventDetail;
+  private _eventList!: ILenrEventsLookup[] | null;
+
+  @Input({ required: true }) set event(value: ILenrEventDetail) {
+    this._event = value;
+    this.setNextAndPriorIds();
+  }
+  get event(): ILenrEventDetail {
+    return this._event;
+  }
+  @Input({ required: true }) set eventList(value: ILenrEventsLookup[] | null) {
+    this._eventList = value;
+    this.setNextAndPriorIds();
+  }
+  get eventList(): ILenrEventsLookup[] | null {
+    return this._eventList;
+  }
+  nextId!: number;
+  priorId!: number;
+
   @Output() back: EventEmitter<any> = new EventEmitter();
+  @Output() navigator: EventEmitter<number> = new EventEmitter();
+
 
   goBack = () => {
     this.back.emit();
+  };
+
+  nextRow() {
+    this.navigator.emit(this.nextId);
   }
-  goPrior = () => {
-    this.prior.emit();
+
+  priorRow() {
+    this.navigator.emit(this.priorId);
   }
-  goNext = () => {
-    this.next.emit();
-  }
+  
+  setNextAndPriorIds = (): void => {
+    let next = 0;
+    let prior = 0;
+    if (this.event && this.eventList && this.eventList.length > 0) {
+      const index = this.eventList.findIndex(
+        (event) => event.id === this.event.id
+      );
+      if (index >= 0) {
+        if (index < this.eventList.length - 1)
+          next = this.eventList[index + 1].id;
+        if (index > 0) prior = this.eventList[index - 1].id;
+      }
+    }
+    this.nextId = next;
+    this.priorId = prior;
+  };
 }

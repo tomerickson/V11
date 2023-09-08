@@ -14,6 +14,7 @@ export const actions = createActionGroup({
       'Fetch Search Results': props<{payload: LenrEventsRequest}>(),
       'Fetch Search Results Success': props<{payload: ILenrEventsLookup[]}>(),
       'Fetch Search Results Failure': (error: any) => ({error}),
+      'sortSearchResults': props<{payload: ILenrEventsLookup[]}>(),
       'Find Event Id': props<{payload: number}>(),
       'Load Event Detail': props<{payload: LenrEventsRequest}>(),
       'Load Event Detail Success': props<{payload: ILenrEventDetail}>(),

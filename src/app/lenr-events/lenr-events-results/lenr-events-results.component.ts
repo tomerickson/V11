@@ -5,7 +5,8 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
+  inject
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +20,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
+import { EventServices } from '../lenr-events.service';
 
 @Component({
   selector: 'mfmp-lenr-events-results',
@@ -37,17 +39,18 @@ import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model'
   styleUrls: ['./lenr-events-results.component.scss']
 })
 export class LenrEventsResultsComponent implements OnInit {
-
+  service = inject(EventServices);
   private paginator!: MatPaginator;
   private tableSort!: MatSort;
+
   @Input({ required: true }) loading!: boolean | null;
   @Input({ required: true }) eventList!: ILenrEventsLookup[];
   @Output() eventClicked: EventEmitter<number> = new EventEmitter();
-
-  @ViewChild('paginator', {static: true}) set matPaginator(mp: MatPaginator) {
+  @Output() eventSorted: EventEmitter<ILenrEventsLookup[]> = new EventEmitter();
+  @ViewChild('paginator', { static: true }) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
-  };
-  @ViewChild('tableSort', {static: true}) set matSort(ms: MatSort) {
+  }
+  @ViewChild('tableSort', { static: true }) set matSort(ms: MatSort) {
     this.tableSort = ms;
   }
   dataSource!: MatTableDataSource<ILenrEventsLookup>;
@@ -62,26 +65,19 @@ export class LenrEventsResultsComponent implements OnInit {
   showPageSizeOptions = true;
   showFirstLastButtons = true;
 
-   constructor() {
- 
-   }
+  constructor() {}
   ngOnInit(): void {
     this.buildDataSource();
   }
 
   buildDataSource = () => {
-
-      this.dataSource = new MatTableDataSource<ILenrEventsLookup>(
-        this.eventList
-      );
-      this.dataSource.sort = this.tableSort;
-      this.setupPaginator();
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.tableSort;
-      this.length = this.eventList.length;
- 
-  }
-    setupPaginator = () => {
+    this.dataSource = new MatTableDataSource<ILenrEventsLookup>(this.eventList);
+    this.dataSource.sort = this.tableSort;
+    this.setupPaginator();
+    this.dataSource.paginator = this.paginator;
+    this.length = this.eventList.length;
+  };
+  setupPaginator = () => {
     this.paginator.pageSize = this.pageSize;
     this.paginator.pageSizeOptions = this.pageSizeOptions;
     this.paginator.hidePageSize = false;
@@ -95,7 +91,22 @@ export class LenrEventsResultsComponent implements OnInit {
     this.pageIndex = e.pageIndex;
   }
 
-  getEvent(e: any, row: ILenrEventsLookup, index: number) {  
+  /**
+   * Trigger the request for a specific event
+   * @param e
+   * @param row
+   * @param index
+   * @remarks
+   * The EventServices service will track
+   */
+  getEvent(e: any, row: ILenrEventsLookup) {
     this.eventClicked.emit(row.id);
-  }  
+  }
+
+  /**
+   * Invoke the action to update the event list state
+   */
+  onSortChange() {
+    this.eventSorted.emit(this.dataSource.data)
+  }
 }

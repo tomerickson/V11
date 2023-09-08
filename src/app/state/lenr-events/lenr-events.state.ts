@@ -1,7 +1,10 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
 import { actions } from './lenr-events.actions';
-import { ILenrEventsRequest, LenrEventsRequest } from 'src/app/core/models/lenr-events-request.model';
+import {
+  ILenrEventsRequest,
+  LenrEventsRequest
+} from 'src/app/core/models/lenr-events-request.model';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 
 export interface LenrEventsState {
@@ -101,12 +104,35 @@ export const lenrEventsReducer = createReducer(
       error: false,
       currentEvent: action.payload
     };
+  }),
+  on(actions.sortSearchResults, (state, action) => {
+    return {...state, lenrEvents: action.payload}
   })
 );
 
 export const feature = createFeature({
   name: 'lenrevents',
-  reducer: lenrEventsReducer
+  reducer: lenrEventsReducer,
+  extraSelectors: ({ selectCurrentEvent, selectLenrEvents }) => ({
+    selectNextId: createSelector(
+      selectCurrentEvent,
+      selectLenrEvents,
+      (e, l) => {
+        const index = l.findIndex((i) => i.id === e.id);
+        const next = index >= 0 && index < l.length - 1 ? l[index + 1].id : -1;
+        return next;
+      }
+    ),
+    selectPriorId: createSelector(
+      selectCurrentEvent,
+      selectLenrEvents,
+      (e, l) => {
+        const index = l.findIndex((i) => i.id === e.id);
+        const prior = index > 0 ? l[index - 1].id : -1;
+        return prior;
+      }
+    )
+  })
 });
 
 export const {
@@ -119,5 +145,7 @@ export const {
   selectCategories,
   selectLenrEvents,
   selectCurrentEvent,
-  selectCurrentEventId
+  selectCurrentEventId,
+  selectNextId,
+  selectPriorId,
 } = feature;

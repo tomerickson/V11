@@ -71,6 +71,7 @@
                       type="number"
                       min="1"
                       max="{{ min(maxIndex, maxId) }}"
+                      placeholder="{{ minIndex }}"
                       formControlName="s_Index_from"
                       required="true"
                       value="1"
@@ -161,7 +162,11 @@
                   (click)="tabGroup.selectedIndex = 1">
                   Search
                 </button>
-                <button type="button" mat-raised-button color="primary" (click)="resetForm()">
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="primary"
+                  (click)="resetForm()">
                   Clear
                 </button>
               </div>
@@ -174,15 +179,17 @@
             *ngIf="ready"
             [loading]="loading"
             [eventList]="eventList ?? []"
-            (eventClicked)="selectEvent($event)"></mfmp-lenr-events-results>
+            (eventClicked)="selectEvent($event)"
+            (eventSorted)="sortEvent($event)"></mfmp-lenr-events-results>
         </mat-tab>
         <mat-tab label="Detail">
-          <mfmp-lenr-events-detail *ngIf="event"
+          <mfmp-lenr-events-detail
+            *ngIf="event"
             [event]="event"
-            (next)="nextRow()"
-            (prior)="priorRow()"
-            (back)="back()"></mfmp-lenr-events-detail>
-        </mat-tab>
+            [eventList]="eventList"
+            (back)="back()"
+            (navigator)="navigate($event)"></mfmp-lenr-events-detail>
+         </mat-tab>
       </mat-tab-group>
     </form>
   </mat-card-content>

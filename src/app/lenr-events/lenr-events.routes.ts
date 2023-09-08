@@ -7,6 +7,7 @@ import { LenrEventsDetailComponent } from './lenr-events-detail/lenr-events-deta
 import { LenrEventsHeadComponent } from './lenr-events-head.component';
 import { EventServices } from './lenr-events.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
+import { LenrEventsPageScraperService } from './lenr-events-page-scraper.service';
 
 export const LENR_EVENTS_ROUTES: Routes = [
   {
@@ -16,7 +17,8 @@ export const LENR_EVENTS_ROUTES: Routes = [
       provideState(eventState.feature),
       provideEffects([eventState.effects]),
       {provide: EventServices, useClass: EventServices},
-      {provide: HeaderProviderService, useClass: HeaderProviderService}
+      {provide: HeaderProviderService, useClass: HeaderProviderService},
+      {provide: LenrEventsPageScraperService, useClass: LenrEventsPageScraperService}
     ]
   },
   {

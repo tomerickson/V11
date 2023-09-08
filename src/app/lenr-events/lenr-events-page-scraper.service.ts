@@ -1,16 +1,26 @@
+import { Injectable } from '@angular/core';
 import { ILenrEventDetail } from '../core/models/lenr-event-detail.model';
 import { ILenrEventsLookup } from '../core/models/lenr-events-lookup.model';
 /**
  * Logic for scraping the LENR_Events page
  * */
-
+@Injectable()
 export class LenrEventsPageScraperService {
-  dom!: Document;
 
+  ready = false;
+  dom!: Document;
   stub: ILenrEventDetail = {} as ILenrEventDetail;
 
-  constructor(private html: string) {
+  /**
+   * TODO: Use an injection token instead of the
+   * hackish initialize method to provide the html
+   * 
+   * @param html
+   */
+  initialize(html: string) {
+
     this.dom = new DOMParser().parseFromString(html, 'text/html');
+    this.ready = true;
   }
 
   private parseCitations(citations: string): string[] | null {
@@ -29,7 +39,11 @@ export class LenrEventsPageScraperService {
     }
   };
 
+  private fail() {
+    throw 'page scraper service is not initialized.'
+  }
   get categories(): string[] {
+    if (!this.ready) this.fail();
     let categories: string[] = [];
     let selector: HTMLSelectElement | undefined = Array.from(
       this.dom.documentElement.getElementsByTagName('select')
@@ -44,6 +58,7 @@ export class LenrEventsPageScraperService {
   }
 
   get eventCount(): number {
+    if (!this.ready) this.fail();
     let result = 0;
     let paragraph = Array.from(
       this.dom.documentElement.getElementsByTagName('p')
@@ -59,6 +74,7 @@ export class LenrEventsPageScraperService {
   }
 
   get maxId(): number {
+    if (!this.ready) this.fail();
     let result = 0;
     let element: HTMLInputElement | undefined = Array.from(
       this.dom.documentElement.getElementsByTagName('input')
@@ -71,6 +87,7 @@ export class LenrEventsPageScraperService {
    * Extract an EventDetail from the page
    */
   get detail(): ILenrEventDetail {
+    if (!this.ready) this.fail();
     const inputs = Array.from(this.dom.getElementsByTagName('input'));
     let result = {} as ILenrEventDetail;
 
@@ -115,6 +132,7 @@ export class LenrEventsPageScraperService {
   }
 
   get events(): ILenrEventsLookup[] {
+    if (!this.ready) this.fail();
     let result = new Array<ILenrEventsLookup>();
     let selector: HTMLSelectElement | undefined = this.dom.getElementById(
       'r_id'

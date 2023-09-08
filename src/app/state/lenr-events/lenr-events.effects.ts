@@ -6,7 +6,6 @@ import { actions } from './lenr-events.actions';
 import { EventServices } from '../../lenr-events/lenr-events.service';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 import { LenrEventsPrefetchModel } from '../../core/models/lenr-events-prefetch.model.';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
 
 export const prefetchEffect = createEffect(

@@ -10,6 +10,8 @@ import * as eventStore from '../state/lenr-events';
 import { LenrEventsFaceComponent } from './lenr-events-face/lenr-events-face.component';
 import { NotificationComponent } from '../core/notification.component';
 import { ILenrEventDetail } from '../core/models/lenr-event-detail.model';
+import { EventServices } from './lenr-events.service';
+import { LenrEventsSignals } from './lenr-events.signals';
 
 @Component({
   selector: 'mfmp-lenr-events-head',
@@ -26,7 +28,8 @@ import { ILenrEventDetail } from '../core/models/lenr-event-detail.model';
       [ready]="ready | async"
       [event]="event ? (event | async) : null"
       (searcher)="search($event)"
-      (fetcher)="fetch($event)"></mfmp-lenr-events-face>
+      (fetcher)="fetch($event)"
+      (sorter)="sort($event)"></mfmp-lenr-events-face>
   `,
   styles: []
 })
@@ -34,10 +37,13 @@ export class LenrEventsHeadComponent implements OnInit {
   store = inject(Store);
   notifier = inject(NotificationComponent);
   headerService = inject(HeaderProviderService);
+  eventService = inject(EventServices);
   categories: Observable<string[]> = of(['']);
   eventCount!: Observable<number>;
   eventList: Observable<ILenrEventsLookup[]> | null = null;
   event: Observable<ILenrEventDetail> | null = null;
+  nextEventId!: Observable<number>;
+  priorEventId!: Observable<number>;
   maxId!: Observable<number>;
   loading!: Observable<boolean> | null;
   ready!: Observable<boolean> | null;
@@ -79,16 +85,23 @@ export class LenrEventsHeadComponent implements OnInit {
     this.eventList = this.store.select(
       eventStore.feature.selectLenrEvents
     );
+ 
     this.loading = this.store.select(
       eventStore.feature.selectLoading
     );
+
     this.ready = this.store.select(eventStore.feature.selectReady);
+
     this.event = this.store.select(
       eventStore.feature.selectCurrentEvent
     );
+
     this.pageDescription = this.store.select(
       appState.feature.selectPageDescription
     );
+
+    this.nextEventId = this.store.select(eventStore.feature.selectNextId);
+    this.priorEventId = this.store.select(eventStore.feature.selectPriorId);
   }
 
   search(request: LenrEventsRequest): void {
@@ -98,8 +111,13 @@ export class LenrEventsHeadComponent implements OnInit {
   }
 
   fetch(request: LenrEventsRequest): void {
+
     this.store.dispatch(
       eventStore.actions.loadEventDetail({ payload: request })
     );
+  }
+
+  sort(events: ILenrEventsLookup[]): void {
+    this.store.dispatch(eventStore.actions.sortSearchResults({payload: events}));
   }
 }

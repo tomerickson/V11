@@ -38,6 +38,7 @@ import {
   indexRangeValidator,
   yearRangeValidator
 } from '../lenr-events-form.validators';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'mfmp-lenr-events-face',
@@ -50,6 +51,7 @@ import {
     MatCardModule,
     MatExpansionModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatSelectModule,
     MatTabsModule,
@@ -71,6 +73,9 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
     new EventEmitter<LenrEventsRequest>();
   @Output() fetcher: EventEmitter<LenrEventsRequest> =
     new EventEmitter<LenrEventsRequest>();
+  @Output() sorter: EventEmitter<ILenrEventsLookup[]> = new EventEmitter<
+    ILenrEventsLookup[]
+  >();
 
   @Input({ required: true }) eventCount!: number | null;
   @Input({ required: true }) description!: string | null;
@@ -91,7 +96,7 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) set maxId(value: number | null) {
     this._maxId = value;
     this.eventForm?.get('s_Index_to')?.setValue(value);
-    this.formValueBackup = this.eventForm.value;
+    this.formValueBackup = this.eventForm?.value;
   }
 
   fb = inject(FormBuilder);
@@ -137,7 +142,7 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
     this.buildForm();
   }
 
-  ngAfterViewInit(): void {    
+  ngAfterViewInit(): void {
     this.formValueBackup = this.eventForm.value;
   }
 
@@ -156,12 +161,12 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
       { validators: [indexRangeValidator, yearRangeValidator] }
     );
     this.eventForm.get('s_Category')?.setValue('All');
-
   };
 
   resetForm = () => {
     this.eventForm.setValue(this.formValueBackup);
-  }
+  };
+
   minValue = (fieldName: string): number | null => {
     const min = this.eventForm.get(fieldName)?.value;
     return min ? min : null;
@@ -188,6 +193,10 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
     this.tabGroup.selectedIndex = 2;
   };
 
+  sortEvent = (events: ILenrEventsLookup[]) => {
+    this.sorter.emit(events);
+  };
+
   search = () => {
     const request = { ...this.eventForm.value } as LenrEventsRequest;
     request.doit = 'refresh';
@@ -201,10 +210,16 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
     this.fetcher.emit(request);
   };
 
+  navigate(eventId: number) {
+    const request = {...this.eventForm.value} as LenrEventsRequest;
+    request.r_id = eventId;
+    request.doit = 'refresh';
+    this.fetcher.emit(request);
+  }
   back() {
     this.tabGroup.selectedIndex = 1;
   }
-
+  
   clear() {
     this.tabGroup.selectedIndex = 0;
   }
@@ -223,7 +238,4 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
-  nextRow = () => {};
-  priorRow = () => {};
 }
