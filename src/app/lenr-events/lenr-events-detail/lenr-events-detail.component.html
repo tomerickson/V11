@@ -107,15 +107,16 @@
       </mat-card>
     </div>
   </mat-card-content>
-  <mat-card-actions align="end">
+  <mat-card-footer align="end">
+    <div></div>
     <div *ngIf="event" class="actions">
-      <button type="button" mat-icon-button title="back" [disabled]="!priorId" (click)="priorRow()">
-        <mat-icon>chevron_left</mat-icon>
+      <button type="button" mat-flat-button [disabled]="!priorId" (click)="priorRow()">
+        <span>Prior</span><mat-icon>chevron_left</mat-icon>
       </button>
-      <button type="button" mat-icon-button title="next" [disabled]="!nextId" (click)="nextRow()">
-        <mat-icon>chevron_right</mat-icon>
+      <button type="button" mat-flat-button [disabled]="!nextId" (click)="nextRow()">
+        <span>Next</span><mat-icon hover="next">chevron_right</mat-icon>
       </button>
     </div>
     <button type="button" mat-raised-button color="primary" (click)="goBack()">Back</button>
-  </mat-card-actions>
+  </mat-card-footer>
 </mat-card>

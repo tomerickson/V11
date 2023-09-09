@@ -4,11 +4,25 @@
     position: relative;
     background-color: transparent;
 }
+.mat-mdc-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 0;
+    box-sizing: border-box;
+}
 
 .mat-mdc-card-content {
     max-height: 100%;
+    flex-grow: 1;
     overflow: auto;
     margin-bottom: 1ex;
+}
+.mat-mdc-card-footer {
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 div.flexrow {
@@ -74,5 +88,5 @@ mat-label.abstract {
 div.actions {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
 }
