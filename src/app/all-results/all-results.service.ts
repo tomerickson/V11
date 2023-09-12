@@ -3,15 +3,18 @@ import { Observable } from 'rxjs';
 import { AllResultsResponseModel } from '../core/models/all-results-response.model';
 import { AppConfigService } from '../core/config/app-config.service';
 import { CrudService } from '../core/services/crud.service';
-import { stringifyFormData } from '../core/services/helpers';
+import { extractHref, stringifyFormData } from '../core/services/helpers';
+import { IAllResultsDataModel } from '../core/models/all-results-data.model';
+import { parseDate } from '../core/services/date-helpers';
+import { RouterLinkWithHref } from '@angular/router';
 
 @Injectable()
 export class AllResultsService {
   config: AppConfigService = inject(AppConfigService);
   crud: CrudService = inject(CrudService);
-  page = 'list-results.php';
+  page = 'list_results.php';
 
-  getAllResultsPage = (): Observable<string> => {
+  getAllResultsPage = (query: string): Observable<string> => {
     return this.crud.getPage(this.page);
   };
 
@@ -47,6 +50,17 @@ export class AllResultsService {
     const result: AllResultsResponseModel = new AllResultsResponseModel(html, [
       cell
     ]);
+    result.reactionResults.splice(0,1);
+    result.reactionResults = result.reactionResults.map(row => this.rowHandler(row))
     return result;
-  };
+  }
+
+  rowHandler = (row: any[]): IAllResultsDataModel => {
+    const item = {} as IAllResultsDataModel;
+    item.query = row[0];
+    item.size = row[1];
+    item.date = parseDate(row[2]);
+    item.link = extractHref(row[3])
+    return item;
+  }
 }

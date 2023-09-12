@@ -16,4 +16,6 @@ export interface IAppConfig {
    *
    */
   readonly httpRetryDelay: number;
+  readonly pageCredits: string;
+  readonly allTablesPageSize: number;
 }

@@ -8,5 +8,7 @@ export const actions = createActionGroup({
         'loadResults': props<{query: string}>(),
         'loadResultsSuccess': props<{payload: AllResultsResponseModel}>(),
         'loadResultsFailure': (error: any) => ({error}),
-        'refreshResults': props<{sort: string}>(),    }
+        'refreshResults': props<{sort: string}>(),
+        'loadPage': props<{pageSize: number , pageNumber: number}>()
+        }
 })

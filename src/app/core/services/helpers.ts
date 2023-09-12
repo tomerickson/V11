@@ -158,3 +158,13 @@ const buildFormData = (kvp: KeyValuePair[]): FormData => {
 export const KvpsToFormData = (kvp: KeyValuePair[]): string => {
   return stringifyFormData(buildFormData(kvp));
 };
+
+export const extractHref = (anchor: string): string => {
+  const regex = /^.*href.*?"(.*?)".*/;
+  const matches: RegExpMatchArray | null = anchor.match(regex);
+  if (matches && matches.length > 0) {
+    return matches[1];
+  } else {
+    return 'No link.'
+  }
+}

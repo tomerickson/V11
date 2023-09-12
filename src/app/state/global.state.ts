@@ -1,17 +1,16 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { config } from '../../assets/config';
+import globalConfigs from '../../assets/config/global-config.json';
 import elementsJson from '../../assets/tables/elements.json';
 import radDecayModesJson from '../../assets/tables/radiation-decay-modes.json';
 import radTypesJson from '../../assets/tables/radiation-types.json';
+import fuelFeedbackJson from '../../assets/tables/reaction-feedback-modes.json';
+import sortFieldsJson from '../../assets/tables/reaction-result-sort-fields.json';
 import { IElementDataModel } from '../core/models/element-data.model';
 import { ILookupDataModel } from '../core/models/lookup-data.model';
-import sortFieldsJson from '../../assets/tables/reaction-result-sort-fields.json';
-import { actions } from './global.actions';
 import { ReportParameters } from '../core/models/report-parameters.model';
-import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
-import fuelFeedbackJson from '../../assets/tables/reaction-feedback-modes.json';
-
+import { actions } from './global.actions';
 export interface GlobalState {
+  version: string,
   pageTitle: string;
   pageCredits: string;
   pageDescription: string;
@@ -31,8 +30,9 @@ export interface GlobalState {
 }
 
 export const globalInitialState: GlobalState = {
+  version: globalConfigs.version,
   pageTitle: '',
-  pageCredits: config.pageCredits,
+  pageCredits: '',
   pageDescription: '',
   showMenu: true,
   showMenuText: 'Hide menu',
@@ -63,6 +63,18 @@ export const feature = createFeature({
   name: 'global',
   reducer: createReducer(
     globalInitialState,
+    on(actions.initializeSuccess, (state, actions) => {
+      return {...state,
+        production: actions.payload.production,
+        proxy: actions.payload.proxy,
+        apiUrl: actions.payload.apiUrl,
+        virtualDirectory: actions.payload.virtualDirectory,
+        httpMaxRetries: actions.payload.httpMaxRetries,
+        httpRetryDelay: actions.payload.httpRetryDelay,
+        pageCredits: actions.payload.pageCredits,
+        allTablesPageSize: actions.payload.allTablesPageSize
+      }
+    }),
     on(actions.loadElements, (state) => {
       return {
         ...state,
@@ -160,7 +172,7 @@ export const {
   selectLookups,
   selectLookupsLoading,
   selectLookupsReady,
-  selectPageCredits,
+  // selectPageCredits,
   selectPageTitle,
   selectRadiationDecayModes,
   selectRadiationTypes,

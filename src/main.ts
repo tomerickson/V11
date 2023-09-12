@@ -1,7 +1,7 @@
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import {
-  APP_INITIALIZER,
   ErrorHandler,
+  enableProdMode,
   importProvidersFrom
 } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -15,51 +15,52 @@ import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { APP_ROUTES } from './app/app-routes';
 import { AppComponent } from './app/app.component';
-import { AppConfigService } from './app/core/config/app-config.service';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { APP_CONFIG } from './app.config';
 import { GlobalErrorHandler } from './app/core/global-error-handler';
-import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
-import { feature } from './app/state/global.state';
 import { NotificationComponent } from './app/core/notification.component';
+import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
 import { CrudService } from './app/core/services/crud.service';
+import { feature } from './app/state/global.state';
 
-const initAppFn = (configService: AppConfigService) => {
-  return () => configService.validateConfiguration();
-};
+fetch('/assets/config/config.json')
+  .then((response) => response.json())
+  .then((config) => {
+    if (config.production) {
+      enableProdMode();
+    }
 
-bootstrapApplication(AppComponent, {
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initAppFn,
-      multi: true,
-      deps: [AppConfigService]
-    },
-    {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ServerErrorInterceptor,
-      multi: true
-    },
-    {
-      provide: CrudService,
-      useClass: CrudService
-    },
-    {
-      provide: NotificationComponent, useClass: NotificationComponent
-    },
-    provideHttpClient(),
-    provideRouter(APP_ROUTES, withComponentInputBinding()),
-    provideStore(),
-    provideState(feature),
-    provideEffects(),
-    provideStoreDevtools(),
-    provideRouterStore(),
-    importProvidersFrom(MatDialogModule),
-    importProvidersFrom(MatSnackBarModule),
-    importProvidersFrom(BrowserAnimationsModule)
-  ]
-}).catch((err) => console.log(err));
+    platformBrowserDynamic([{ provide: APP_CONFIG, useValue: config }]);
 
+    bootstrapApplication(AppComponent, {
+      providers: [
+        {
+          provide: ErrorHandler,
+          useClass: GlobalErrorHandler
+        },
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: ServerErrorInterceptor,
+          multi: true
+        },
+        {
+          provide: CrudService,
+          useClass: CrudService
+        },
+        {
+          provide: NotificationComponent,
+          useClass: NotificationComponent
+        },
+        provideHttpClient(),
+        provideRouter(APP_ROUTES, withComponentInputBinding()),
+        provideStore(),
+        provideState(feature),
+        provideEffects(),
+        provideStoreDevtools(),
+        provideRouterStore(),
+        importProvidersFrom(MatDialogModule),
+        importProvidersFrom(MatSnackBarModule),
+        importProvidersFrom(BrowserAnimationsModule)
+      ]
+    }).catch((err) => console.log(err));
+  });

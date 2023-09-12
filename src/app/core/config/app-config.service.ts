@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import configs from '../../../assets/config/config.json';
+import localConfigs from '../../../assets/config/config.json';
+import globalConfigs from '../../../assets/config/global-config.json';
 import { IAppConfig } from './iapp-config.model';
 
 @Injectable({
@@ -8,27 +9,30 @@ import { IAppConfig } from './iapp-config.model';
 export class AppConfigService {
 
   /**
-   * Initialize a set of invalid config properties
+   * Initialize a default set of config properties
    */
   private _appConfig: IAppConfig = {
     production: false,
     name: 'Uninitiialized',
-    version: '?',
+    version: '',
     proxy: null,
     apiUrl: '?',
     virtualDirectory: null,
     httpMaxRetries: -1,
-    httpRetryDelay: -1
+    httpRetryDelay: -1,
+    pageCredits: '',
+    allTablesPageSize: 1
   };
 
   constructor() {
-
-    this._appConfig = configs; // load the valid config entries
+    Object.assign(this._appConfig, localConfigs, globalConfigs);
+    console.log('config', this._appConfig)
   }
 
   validateConfiguration() {
 
-    let ok = (this.apiUrl !== '?')
+    let ok = (this.apiUrl !== '?'
+    && this.pageCredits !== '');
     if (!ok) {
       console.error('No configuration file found');
     }
@@ -58,5 +62,11 @@ export class AppConfigService {
   }
   get production(): boolean {
     return this._appConfig.production;
+  }
+  get pageCredits(): string {
+    return this._appConfig.pageCredits;
+  }
+  get allTablesPageSize(): number {
+    return this._appConfig.allTablesPageSize;
   }
 }

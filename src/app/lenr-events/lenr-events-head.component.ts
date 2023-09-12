@@ -11,7 +11,6 @@ import { LenrEventsFaceComponent } from './lenr-events-face/lenr-events-face.com
 import { NotificationComponent } from '../core/notification.component';
 import { ILenrEventDetail } from '../core/models/lenr-event-detail.model';
 import { EventServices } from './lenr-events.service';
-import { LenrEventsSignals } from './lenr-events.signals';
 
 @Component({
   selector: 'mfmp-lenr-events-head',

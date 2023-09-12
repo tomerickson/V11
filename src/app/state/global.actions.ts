@@ -6,17 +6,21 @@ import {
 import { ILookupDataModel } from '../core/models/lookup-data.model';
 import { IElementDataModel } from '../core/models/element-data.model';
 import { ReportParameters } from '../core/models/report-parameters.model';
+import { IAppConfig } from '../core/config/iapp-config.model';
 
 export const actions = createActionGroup({
   source: 'Global API',
   events: {
     enter: emptyProps(),
+    'initialize': emptyProps(),
+    'initializeSuccess': props<{payload: IAppConfig}>(),
+    'initializeFailure': (error: any) => ({error}),
     'Load Globals': emptyProps(),
     'Set Page Title': props<{ title: string }>(),
     'Set Page Credits': props<{ credits: string }>(),
     'Set Page Description': props<{description: string}>(),
     'Set Report Parameters': props<{payload: ReportParameters}>(),
-    'Toggle Menu': emptyProps,
+    'Toggle Menu': emptyProps(),
     'Load Lookups': emptyProps(),
     'Load Lookups Success': props<{lookups: ILookupDataModel[]}>(),
     'Load Lookups Failure': (error: any) => ({error}),
