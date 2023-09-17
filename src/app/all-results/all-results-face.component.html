@@ -1,40 +1,65 @@
-<table
-  *ngIf="resultList"
-  mat-table
-  [dataSource]="resultList"
-  [trackBy]="tracker"
-  displayedColumns="displayColumns">
-  <ng-container matColumnDef="query">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>Query</th>
-    <td mat-cell *matCellDef="let item">{{ item.query }}</td>
+<ng-container [ngSwitch]="flowSwitch">
+  <ng-container *ngSwitchCase="1">
+    <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
   </ng-container>
-  <ng-container matColumnDef="size">
-    <th mat-header-cell *matHeaderCellDef>Size</th>
-    <td mat-cell *matCellDef="let item">{{ item.size }}</td>
+  <ng-container *ngSwitchCase="0">
+    <ng-container *ngTemplateOutlet="waitingTemplate"></ng-container>
   </ng-container>
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef>Date</th>
-    <td mat-cell *matCellDef="let item">
-      {{ item.date | date: 'dd-MMM-yyyy HH:mm:ss' }}
-    </td>
+  <ng-container *ngSwitchDefault>
+    <ng-container *ngTemplateOutlet="readyTemplate"></ng-container>
   </ng-container>
-  <ng-container matColumnDef="link">
-    <th mat-header-cell *matHeaderCellDef>Link</th>
-    <td
-      class="hover"
-      mat-cell
-      *matCellDef="let item"
-      (click)="openLink(item.link)">
-      Open
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
-</table>
-<mat-paginator
-  *ngIf="resultList"
-  #paginator
-  [length]="resultList.length"
-  [pageSizeOptions]="pageSizes"
-  (page)="pager.emit($event)"
-  showFirstLastButtons></mat-paginator>
+</ng-container>
+
+<!-- Error -->
+<ng-template #errorTemplate>
+  <div>An error occurred!</div>
+  <div>{{ error | json }}</div>
+</ng-template>
+
+<!-- Waiting -->
+<ng-template #waitingTemplate>
+  <mfmp-progress-spinner></mfmp-progress-spinner>
+</ng-template>
+
+<!-- Live -->
+<ng-template #readyTemplate>
+  <table
+    *ngIf="resultList"
+    mat-table
+    [dataSource]="resultList"
+    [trackBy]="tracker"
+    matSort
+    displayedColumns="displayColumns">
+    <ng-container matColumnDef="query">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Query</th>
+      <td mat-cell *matCellDef="let item">{{ item.query }}</td>
+    </ng-container>
+    <ng-container matColumnDef="size">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Size</th>
+      <td mat-cell *matCellDef="let item">{{ item.size }}</td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let item">
+        {{ item.date | date: 'dd-MMM-yyyy HH:mm:ss' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="link">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>Link</th>
+      <td
+        class="hover"
+        mat-cell
+        *matCellDef="let item"
+        (click)="openLink(item.link)">
+        Open
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+  </table>
+  <div>
+    <mfmp-custom-paginator
+      [rows]="(rows) ? rows : undefined"
+      (pager)="handlePageEvent($event)"></mfmp-custom-paginator>
+  </div>
+</ng-template>

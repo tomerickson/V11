@@ -17,7 +17,7 @@ import {
   ILenrEventsRequest,
   LenrEventsRequest
 } from '../core/models/lenr-events-request.model';
-import { TestpagePushComponent } from './testpage.push.component';
+
 
 @Component({
   selector: 'dummy',
@@ -28,13 +28,12 @@ import { TestpagePushComponent } from './testpage.push.component';
       [html]="html"
       [model]="request"
       (action)="handleit($event)"></mfmp-testpage>
-    <mfmp-testpage-push [model]="request"></mfmp-testpage-push>
+
   `,
-  imports: [CommonModule, TestPageFaceComponent, TestpagePushComponent]
+  imports: [CommonModule, TestPageFaceComponent]
 })
 export class TestpageHeadComponent implements OnInit,AfterViewInit, OnDestroy {
   
-  @ViewChild(TestpagePushComponent) pushComponent!: TestpagePushComponent;
   store = inject(Store);
   crud = inject(CrudService);
   html!: Observable<string>;
@@ -83,8 +82,7 @@ export class TestpageHeadComponent implements OnInit,AfterViewInit, OnDestroy {
     // const push = new TestpagePushComponent();
     // push.model = this.request;
     // push.submit();
-    const formData = new FormData(this.pushComponent.form);
-    console.table(formData);
+
     // this.html = this.crud.postPage(this.page, this.request.asFormData());
   }
 

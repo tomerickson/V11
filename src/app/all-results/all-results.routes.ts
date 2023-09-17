@@ -6,6 +6,7 @@ import { ReportPagesHeadComponent } from '../shared/report-pages/report-pages.he
 import * as state from '../state/all-results';
 import { AllResultsHeadComponent } from './all-results-head.component';
 import { AllResultsService } from './all-results.service';
+import { CustomPaginatorComponent } from '../shared/custom-paginator/custom-paginator.component';
 
 export const ALL_RESULTS_ROUTES: Routes = [
   {
@@ -14,8 +15,8 @@ export const ALL_RESULTS_ROUTES: Routes = [
     providers: [
       provideState(state.feature),
       provideEffects([state.effects]),
-      {provide: AllResultsService, useClass: AllResultsService},
-      {provide: HeaderProviderService, useClass: HeaderProviderService}
+      { provide: AllResultsService, useClass: AllResultsService },
+      { provide: HeaderProviderService, useClass: HeaderProviderService }
     ]
   },
   {
@@ -24,8 +25,12 @@ export const ALL_RESULTS_ROUTES: Routes = [
     providers: [
       provideState(state.feature),
       provideEffects([state.effects]),
-      {provide: AllResultsService, useClass: AllResultsService},
-      {provide: HeaderProviderService, useClass: HeaderProviderService}
+      { provide: AllResultsService, useClass: AllResultsService },
+      { provide: HeaderProviderService, useClass: HeaderProviderService }
     ]
+  },
+  {
+    path: 'paginator',
+    component: CustomPaginatorComponent
   }
 ];

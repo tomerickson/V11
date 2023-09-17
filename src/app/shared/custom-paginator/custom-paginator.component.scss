@@ -1,0 +1,25 @@
+div.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    div {
+        margin-left: 1ex;
+    }
+}
+
+.boxed {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1em;
+    color: rgba(0, 0, 0, .8)
+}
+
+select {
+    border: none;
+    background-color: transparent;
+    width: 5em;
+}

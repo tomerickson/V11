@@ -6,12 +6,17 @@ import { CrudService } from '../core/services/crud.service';
 import { extractHref, stringifyFormData } from '../core/services/helpers';
 import { IAllResultsDataModel } from '../core/models/all-results-data.model';
 import { parseDate } from '../core/services/date-helpers';
-import { RouterLinkWithHref } from '@angular/router';
+import * as state from '../state/all-results';
+import { PageNavigator } from '../shared/models/page-navigator';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AllResultsService {
+
+  store = inject(Store);
   config: AppConfigService = inject(AppConfigService);
   crud: CrudService = inject(CrudService);
+
   page = 'list_results.php';
 
   getAllResultsPage = (query: string): Observable<string> => {
@@ -62,5 +67,14 @@ export class AllResultsService {
     item.date = parseDate(row[2]);
     item.link = extractHref(row[3])
     return item;
+  }
+
+  navigate = (navigator: PageNavigator) => {
+    this.store.dispatch(state.actions.setPage({payload: navigator}))
+    console.log(`navigator: , ${navigator}`)
+  }
+
+  openLink = (link: string) => {
+    window.open(link, '_blank', 'noreferrerr, noopener');
   }
 }

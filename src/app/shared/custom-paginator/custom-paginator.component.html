@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <span>Items per page:</span>
+  <div class="boxed">
+    <span>
+      <div>
+        <select
+          #pageSize
+          matNativeControl
+          name="pageSize"
+          title="page size"
+          (change)="setPageSize($event)">
+          <option *ngFor="let size of pageSizes">
+            {{ size }}
+          </option>
+        </select>
+      </div>
+    </span>
+  </div>
+  <div>
+    <span>{{ firstRow }} - {{ lastRow }} of {{ rows }}</span>
+  </div>
+  <div>
+    <button
+      type="button"
+      title="First Page"
+      mat-icon-button
+      (click)="firstPage()">
+      <mat-icon>first_page</mat-icon>
+    </button>
+    <button
+      type="button"
+      title="Previous Page"
+      mat-icon-button
+      (click)="priorPage()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button
+      type="button"
+      title="Next Page"
+      mat-icon-button
+      (click)="nextPage()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <button
+      type="button"
+      title="Last Page"
+      mat-icon-button
+      (click)="lastPage()">
+      <mat-icon>last_page</mat-icon>
+    </button>
+  </div>
+</div>

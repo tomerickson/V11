@@ -27,7 +27,7 @@ import { IElementDataModel } from '../core/models/element-data.model';
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
 import { MatCardModule } from '@angular/material/card';
 import { ILenrEventsRequest } from '../core/models/lenr-events-request.model';
-import { TestpagePushComponent } from './testpage.push.component';
+import { CustomPaginatorComponent } from '../shared/custom-paginator/custom-paginator.component';
 
 @Component({
   selector: 'mfmp-testpage',
@@ -44,7 +44,7 @@ import { TestpagePushComponent } from './testpage.push.component';
     NgFor,
     ReactiveFormsModule,
     NuclidePickerComponent,
-    TestpagePushComponent
+    CustomPaginatorComponent
   ]
 })
 export class TestPageFaceComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -62,7 +62,7 @@ export class TestPageFaceComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
 
   ngAfterViewInit(): void {
-    this.form = this.formRef.nativeElement as HTMLFormElement;
+
   }
 
   postit = (action: string) => {

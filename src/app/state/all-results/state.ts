@@ -2,6 +2,12 @@ import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { actions } from './actions';
 import { IAllResultsDataModel } from 'src/app/core/models/all-results-data.model';
 
+const getPageEnd = (length: number, pageBegin: number, pageSize: number): number => {
+  let result = Math.min(pageBegin + pageSize -1, length-1);
+  console.log(`pageBegin: ${pageBegin}, pageEnd: ${result}`);
+  return result;
+}
+
 export interface AllResultsState {
   query: string;
   loading: boolean;
@@ -50,8 +56,8 @@ export const allResultsReducer = createReducer(
   on(actions.loadResultsFailure, (state, action) => {
     return { ...state, loading: false, error: action.error };
   }),
-  on(actions.loadPage, (state, action) => {
-    return {...state, pageNumber: action.pageNumber, pageSize: action.pageSize}
+  on(actions.setPage, (state, action) => {
+    return {...state, pageNumber: action.payload.currentPage, pageSize: action.payload.pageSize}
   })
 );
 
@@ -59,10 +65,10 @@ export const feature = createFeature({
   name: 'all-results',
   reducer: allResultsReducer,
   extraSelectors: ({selectResults, selectPageNumber, selectPageSize}) => ({
-    selectRows: createSelector(selectResults, (r) => r.length),
+    selectRows: createSelector(selectResults, (results) => results.length),
     selectPage: createSelector(selectResults, selectPageNumber, selectPageSize, (r, p, s) => {
       const pageBegin = (p-1) * s;
-      const pageEnd = Math.min(pageBegin + s - 1, r.length-1);
+      const pageEnd = getPageEnd(r.length, pageBegin, s)
       return r.slice(pageBegin, pageEnd);
     })
   })

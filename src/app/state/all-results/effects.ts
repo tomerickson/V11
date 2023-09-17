@@ -5,15 +5,19 @@ import { actions } from './actions';
 import { NotificationComponent } from 'src/app/core/notification.component';
 import { AllResultsService } from 'src/app/all-results/all-results.service';
 import { AllResultsResponseModel } from 'src/app/core/models/all-results-response.model';
+import { PageNavigator } from 'src/app/shared/models/page-navigator';
 
 /**
  * Load the first page after a refresh
  */
-export const loadSuccessEfect = createEffect(
+export const loadAllResultsSuccessEffect = createEffect(
   (actions$ = inject(Actions)) => {
     return actions$.pipe(
       ofType(actions.loadResultsSuccess),
-      switchMap(() => of(actions.loadPage({ pageSize: 10, pageNumber: 1 })))
+      switchMap(() => {
+        const navigator = new PageNavigator(1, 10);
+        return of(actions.setPage({ payload: navigator }));
+      })
     );
   },
   { functional: true }
