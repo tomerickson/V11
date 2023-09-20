@@ -24,9 +24,6 @@
       "dom.iterable",
       "ES2021.String"
     ],
-    "types": [
-      "jest"
-    ],
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {

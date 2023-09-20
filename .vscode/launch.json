@@ -12,7 +12,6 @@
       "name": "Launch index.html",
       "file": "${workspaceFolder}/index.html"
     },
-
   
     {
       "name": "Launch Edge",
@@ -33,7 +32,9 @@
       "request": "launch",
       "name": "Launch Chrome",
       "url": "http://localhost:4200",
-      "webRoot": "${workspaceFolder}"
+      "port": 4200,
+      "webRoot": "${workspaceFolder}",
+      "userDataDir":"${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
     },
     {
       "type": "firefox",
