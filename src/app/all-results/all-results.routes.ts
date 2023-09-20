@@ -1,4 +1,3 @@
-import { Routes } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
@@ -7,6 +6,7 @@ import * as state from '../state/all-results';
 import { AllResultsHeadComponent } from './all-results-head.component';
 import { AllResultsService } from './all-results.service';
 import { CustomPaginatorComponent } from '../shared/custom-paginator/custom-paginator.component';
+import { Routes } from '@angular/router';
 
 export const ALL_RESULTS_ROUTES: Routes = [
   {

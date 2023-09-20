@@ -28,6 +28,7 @@ import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.
 import { MatCardModule } from '@angular/material/card';
 import { ILenrEventsRequest } from '../core/models/lenr-events-request.model';
 import { CustomPaginatorComponent } from '../shared/custom-paginator/custom-paginator.component';
+import { PageNavigator } from '../shared/models/page-navigator';
 
 @Component({
   selector: 'mfmp-testpage',
@@ -47,29 +48,15 @@ import { CustomPaginatorComponent } from '../shared/custom-paginator/custom-pagi
     CustomPaginatorComponent
   ]
 })
-export class TestPageFaceComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TestPageFaceComponent {
 
-  ngOnDestroy(): void {}
-  ngOnInit(): void {}
   fb = inject(FormBuilder);
   testForm!: FormGroup;
   subscriptions: Subscription = new Subscription();
-  @ViewChild('f') formRef!: ElementRef
-  form!: HTMLFormElement;
-  @Input({ required: true }) model!: ILenrEventsRequest;
-  @Input({ required: true }) elements!: IElementDataModel[] | null;
-  @Input({ required: true }) html!: Observable<string>;
+  @Input({ required: true }) rows!: number | undefined;
   @Output() action: EventEmitter<string> = new EventEmitter<string>();
 
-  ngAfterViewInit(): void {
-
+  handlePageEvent(e: any) {
+    console.log('e', e as PageNavigator);
   }
-
-  postit = (action: string) => {
-    if (action === 'initialize') {
-    this.action.emit(action);}
-    else {
-      this.action.emit(action)
-    }
-  };
 }

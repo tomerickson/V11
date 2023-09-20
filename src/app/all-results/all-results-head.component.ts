@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { PageNavigator } from '../shared/models/page-navigator';
 import { AllResultsService } from './all-results.service';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'mfmp-all-results-head',
@@ -22,7 +23,8 @@ import { AllResultsService } from './all-results.service';
       [ready]="ready | async"
       [error]="error | async"
       [rows]="rows | async"
-      (opener)="openLink($event)"></mfmp-all-results-face>
+      (opener)="openLink($event)"
+      (sorter)="sortData($event)"></mfmp-all-results-face>
   `,
   styleUrls: []
 })
@@ -31,7 +33,7 @@ export class AllResultsHeadComponent implements OnInit {
   headerService = inject(HeaderProviderService);
   featureService = inject(AllResultsService);
   results: Observable<IAllResultsDataModel[]> = of([]);
-  page: Observable<IAllResultsDataModel[]> = of([]);
+  page!: Observable<IAllResultsDataModel[]>
   rows!: Observable<number>;
   ready!: Observable<boolean>;
   error!: Observable<any>;
@@ -42,6 +44,7 @@ export class AllResultsHeadComponent implements OnInit {
   pageManager: PageNavigator = new PageNavigator();
 
   ngOnInit(): void {
+    this.page = of([] as IAllResultsDataModel[]);
     this.pageManager.currentPage = 1;
     this.pageManager.pageSize = 10;
     this.pageManager.pageSizes = this.pageSizes;
@@ -66,4 +69,9 @@ export class AllResultsHeadComponent implements OnInit {
   openLink = (link: string) => {
     this.featureService.openLink(link);
   };
+
+  sortData = (sort: Sort) => {
+    this.store.dispatch(state.actions.sort({payload: sort}))
+
+  }
 }

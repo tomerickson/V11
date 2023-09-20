@@ -9,7 +9,7 @@
     <ng-container *ngTemplateOutlet="readyTemplate"></ng-container>
   </ng-container>
 </ng-container>
-
+<mat-card>
 <!-- Error -->
 <ng-template #errorTemplate>
   <div>An error occurred!</div>
@@ -28,7 +28,7 @@
     mat-table
     [dataSource]="resultList"
     [trackBy]="tracker"
-    matSort
+    matSort (matSortChange)="sortTable($event)"
     displayedColumns="displayColumns">
     <ng-container matColumnDef="query">
       <th mat-header-cell mat-sort-header *matHeaderCellDef>Query</th>
@@ -63,3 +63,4 @@
       (pager)="handlePageEvent($event)"></mfmp-custom-paginator>
   </div>
 </ng-template>
+</mat-card>

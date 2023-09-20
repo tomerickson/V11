@@ -1,3 +1,4 @@
+import { Sort } from "@angular/material/sort";
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { AllResultsResponseModel } from "src/app/core/models/all-results-response.model";
 import { PageNavigator } from "src/app/shared/models/page-navigator";
@@ -10,6 +11,7 @@ export const actions = createActionGroup({
         'loadResultsSuccess': props<{payload: AllResultsResponseModel}>(),
         'loadResultsFailure': (error: any) => ({error}),
         'refreshResults': props<{sort: string}>(),
-        'setPage': props<{payload: PageNavigator}>()
+        'setPage': props<{payload: PageNavigator}>(),
+        'sort': props<{payload: Sort}>()
         }
 })
