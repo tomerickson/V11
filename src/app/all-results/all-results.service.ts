@@ -71,7 +71,6 @@ export class AllResultsService {
 
   navigate = (navigator: PageNavigator) => {
     this.store.dispatch(state.actions.setPage({payload: navigator}))
-    console.log(`navigator: , ${navigator}`)
   }
 
   openLink = (link: string) => {

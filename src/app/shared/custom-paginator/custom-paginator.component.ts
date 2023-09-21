@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,50 +20,41 @@ import { PageNavigator } from '../models/page-navigator';
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
-    MatSelectModule,
+    MatSelectModule
   ],
   templateUrl: './custom-paginator.component.html',
   styleUrls: ['./custom-paginator.component.scss']
 })
 export class CustomPaginatorComponent {
-  private _rows!: number | undefined;
-
-  // page: number = 1;
   pageSize: number = 10;
-  firstRow: number = 1;
-  lastRow: number = 10;
-  endPage: number = 1;
   pageSizes: number[] = [5, 10, 15, 25];
-  navigator: PageNavigator = new PageNavigator(1, this.pageSize, this.pageSizes)
+  navigator: PageNavigator = {page: 1, size: this.pageSize, sizes: this.pageSizes}
 
-  @Input({ required: true }) set rows(value: number | undefined) {
-    this._rows = value;
-    if (value) {
-      this.endPage = Math.ceil(value / this.pageSize);
-    }
-  }
-  get rows(): number | undefined {
-    return this._rows;
-  }
+  @Input({ required: true }) rows: number | undefined;
+  @Output() pager: EventEmitter<PageNavigator> = new EventEmitter();
 
-  pager: EventEmitter<PageNavigator> = new EventEmitter();
+  get endPage() {
+    return Math.ceil(this.rows ? this.rows / this.pageSize : 1);
+  }
 
   setPageSize = (event: any): void => {
     this.pageSize = +event.srcElement.value;
-    this.rows = this._rows; // to reset lastpage
-    this.emitEvent(this.navigator.currentPage);
+    // this.rows = this._rows; // to reset lastpage
+    this.emitEvent(this.navigator.page);
   };
 
+  firstRow = () => {
+    return (this.navigator.page-1)* this.navigator.size + 1;
+  }
+  lastRow = () => {
+    return Math.min(this.navigator.page * this.navigator.size, (this.rows) ? this.rows : 0);
+  }
   nextPage = () => {
-    if (this.navigator.currentPage < this.endPage) {
-      this.emitEvent(this.navigator.currentPage+1);
-    } 
+    this.emitEvent(this.navigator.page + 1);
   };
 
   priorPage = () => {
-    if (this.navigator.currentPage > 1) {
-      this.emitEvent(this.navigator.currentPage-1);
-    }
+    this.emitEvent(this.navigator.page - 1);
   };
 
   firstPage = () => {
@@ -79,10 +66,8 @@ export class CustomPaginatorComponent {
   };
 
   emitEvent = (page: number) => {
-
-    this.navigator.currentPage = page;
-    this.navigator.pageSize = this.pageSize;
-    this.navigator.pageSizes = this.pageSizes;
-    this.pager.emit(this.navigator);
+    const navigator: PageNavigator = {page: page, size: this.pageSize, sizes: this.pageSizes};
+    this.navigator = navigator;
+    this.pager.emit(navigator);
   };
 }

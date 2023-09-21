@@ -21,6 +21,6 @@
         "editor.formatOnSave": false
       },
       "findUnusedExports.detectCircularImports": true,
-      "debug.javascript.autoAttachFilter": "always",
+      "debug.javascript.autoAttachFilter": "disabled",
       "html.format.wrapLineLength": 100
 }

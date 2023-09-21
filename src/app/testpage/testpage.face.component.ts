@@ -1,34 +1,25 @@
-import { CommonModule, NgFor, AsyncPipe } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
-  OnDestroy,
-  OnInit,
   Output,
-  ViewChild,
-  ViewChildDecorator,
   inject
 } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { Observable, Subscription } from 'rxjs';
-import { IElementDataModel } from '../core/models/element-data.model';
-import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
-import { MatCardModule } from '@angular/material/card';
-import { ILenrEventsRequest } from '../core/models/lenr-events-request.model';
+import { Subscription } from 'rxjs';
 import { CustomPaginatorComponent } from '../shared/custom-paginator/custom-paginator.component';
 import { PageNavigator } from '../shared/models/page-navigator';
+import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
 
 @Component({
   selector: 'mfmp-testpage',

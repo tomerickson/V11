@@ -4,12 +4,13 @@
     <span>
       <div>
         <select
-          #pageSize
           matNativeControl
           name="pageSize"
           title="page size"
           (change)="setPageSize($event)">
-          <option *ngFor="let size of pageSizes">
+          <option *ngFor="let size of pageSizes" 
+          [selected]="(size == pageSize)"
+          [value]="size">
             {{ size }}
           </option>
         </select>
@@ -17,7 +18,7 @@
     </span>
   </div>
   <div>
-    <span>{{ firstRow }} - {{ lastRow }} of {{ rows }}</span>
+    <span>{{ firstRow() }} - {{ lastRow() }} of {{ rows }}</span>
   </div>
   <div>
     <button
@@ -31,6 +32,7 @@
       type="button"
       title="Previous Page"
       mat-icon-button
+      [disabled]="navigator.page < 2"
       (click)="priorPage()">
       <mat-icon>chevron_left</mat-icon>
     </button>
@@ -38,6 +40,7 @@
       type="button"
       title="Next Page"
       mat-icon-button
+      [disabled]="navigator.page == endPage"
       (click)="nextPage()">
       <mat-icon>chevron_right</mat-icon>
     </button>

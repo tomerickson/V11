@@ -45,9 +45,9 @@ export class AllResultsHeadComponent implements OnInit {
 
   ngOnInit(): void {
     this.page = of([] as IAllResultsDataModel[]);
-    this.pageManager.currentPage = 1;
-    this.pageManager.pageSize = 10;
-    this.pageManager.pageSizes = this.pageSizes;
+    this.pageManager.page = 1;
+    this.pageManager.size = 10;
+    this.pageManager.sizes = this.pageSizes;
     this.headerService.buildPageHeader('all-results');
     this.results = this.store.select(state.feature.selectResults);
     this.page = this.store.select(state.feature.selectPage);
@@ -62,7 +62,7 @@ export class AllResultsHeadComponent implements OnInit {
   switchPage(e: any) {
     const navigator = e as PageNavigator;
     console.log(`head: navigator: ${navigator}`);
-    this.pageSize.next(navigator.pageSize);
+    this.pageSize.next(navigator.size);
     this.store.dispatch(state.actions.setPage({ payload: navigator }));
   }
 

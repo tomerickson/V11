@@ -19,7 +19,14 @@ function by<T extends keyof U, U>(
   direction: SortDirection
 ): (a: U, b: U) => number {
   return (a, b) => {
-    let result = a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+    let result: number;
+    let oType = typeof +a[property];
+    // console.log(`a[property]: ${a[property]}, property: ${String(property)}, type: ${oType}`)
+    if (oType === 'number') {
+      result = genericSort(+a[property], +b[property]);
+    } else {
+      result = genericSort(a[property], b[property]);
+    }
     if (direction === 'desc') {
       result = 0 - result;
     }
@@ -27,12 +34,17 @@ function by<T extends keyof U, U>(
   };
 }
 
+const genericSort = (a: any, b: any): number => {
+  return a < b ? -1 : a > b ? 1 : 0;
+};
+
 export interface AllResultsState {
   query: string;
   loading: boolean;
   ready: boolean;
   error: any;
   results: IAllResultsDataModel[];
+  page: IAllResultsDataModel[];
   navigator: PageNavigator;
   pageNumber: number;
   pageSize: number;
@@ -44,7 +56,12 @@ export const allResultsInitialState: AllResultsState = {
   ready: false,
   error: null,
   results: [],
-  navigator: {currentPage: 1, pageSize: 10, pageSizes: [5, 10, 15, 20]} as PageNavigator,
+  page: [],
+  navigator: {
+    page: 1,
+    size: 10,
+    sizes: [5, 10, 15, 20]
+  } as PageNavigator,
   pageNumber: 1,
   pageSize: 10
 };
@@ -78,10 +95,14 @@ export const allResultsReducer = createReducer(
     return { ...state, loading: false, error: action.error };
   }),
   on(actions.setPage, (state, action) => {
+    const length = state.results.length;
+    const bgn = (action.payload.page - 1) * action.payload.size;
+    const end = Math.min(bgn + action.payload.size, length);
     return {
       ...state,
-      pageNumber: action.payload.currentPage,
-      pageSize: action.payload.pageSize
+      pageNumber: action.payload.page,
+      pageSize: action.payload.size,
+      page: state.results.slice(bgn, end)
     };
   }),
   on(actions.sort, (state, action) => {
@@ -97,18 +118,8 @@ export const allResultsReducer = createReducer(
 export const feature = createFeature({
   name: 'all-results',
   reducer: allResultsReducer,
-  extraSelectors: ({ selectResults, selectPageNumber, selectPageSize }) => ({
-    selectRows: createSelector(selectResults, (results) => results.length),
-    selectPage: createSelector(
-      selectResults,
-      selectPageNumber,
-      selectPageSize,
-      (r, p, s) => {
-        const pageBegin = (p - 1) * s;
-        const pageEnd = getPageEnd(r.length, pageBegin, s);
-        return r.slice(pageBegin, pageEnd);
-      }
-    )
+  extraSelectors: ({ selectResults }) => ({
+    selectRows: createSelector(selectResults, (results) => results.length)
   })
 });
 

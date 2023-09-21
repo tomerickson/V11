@@ -61,37 +61,8 @@ export class AllResultsFaceComponent implements OnInit, AfterViewInit {
   sortedData: IAllResultsDataModel[] = [];
 
   sortTable(sort: Sort) {
-
     this.sorter.emit(sort);
-    // const data = this.resultList?.slice();
-/*     if (data) {
-
-      if (!sort.active || sort.direction === '') {
-        this.dataSource.data = data;
-        return;
-      }
-
-      this.dataSource.data = data.sort((a, b) => {
-        const isAsc = sort.direction === 'asc';
-        return this.comp(
-          sort.active as keyof IAllResultsDataModel,
-          a,
-          b,
-          isAsc
-        );
-      });
-    } */
   }
-
-/*   comp = (
-    prop: keyof IAllResultsDataModel,
-    a: IAllResultsDataModel,
-    b: IAllResultsDataModel,
-    isAsc: boolean
-  ): number => {
-    console.log('sorting...')
-    return a[prop] < b[prop] ? -1 : 1 * (isAsc ? 1 : -1);
-  }; */
 
   ngOnInit(): void {
     this.buildDataSource();
@@ -112,14 +83,15 @@ export class AllResultsFaceComponent implements OnInit, AfterViewInit {
     return item.link;
   }
 
-  handlePageEvent(e: any) {
-    const evt = new PageNavigator();
-    evt.currentPage = e.currentPage;
-    evt.pageSize = e.pageSize;
-    evt.pageSizes = e.pageSizes;
-    this.pageSize = evt.pageSize;
-    this.pageIndex = evt.currentPage;
-    this.pageSizes = evt.pageSizes;
+  handlePageEvent(e: PageNavigator) {
+    console.log('from custompaginator.nextPage')
+    const evt = e as PageNavigator;
+    evt.page = e.page;
+    evt.size = e.size;
+    evt.sizes = e.sizes;
+    this.pageSize = evt.size;
+    this.pageIndex = evt.page;
+    this.pageSizes = evt.sizes;
     this.featureService.navigate(evt);
   }
 
