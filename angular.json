@@ -75,6 +75,11 @@
                   "glob": "**/*",
                   "input": "src/assets/config/production",
                   "output": "/assets/config/"
+                },
+                {
+                  "glob": "global-config.json",
+                  "input": "src/assets/config",
+                  "output": "/assets/config/"
                 }
               ],
               "baseHref": "./",
