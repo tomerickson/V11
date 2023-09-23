@@ -26,7 +26,7 @@ export class AppConfigService {
 
   constructor() {
     Object.assign(this._appConfig, localConfigs, globalConfigs);
-    console.log('config', this._appConfig)
+    console.log('config', JSON.stringify(this._appConfig));
   }
 
   validateConfiguration() {

@@ -6,6 +6,5 @@
     "apiUrl": "https://nanosoft.co.nz/",
     "virtualDirectory": "V11",
     "httpMaxRetries": 1,
-    "httpRetryDelay": 500,
-    "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project"
+    "httpRetryDelay": 500
 }
