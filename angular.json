@@ -87,7 +87,7 @@
                   "output": "/"
                 }
               ],
-              "baseHref": "./",
+              "baseHref": "/V11/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
