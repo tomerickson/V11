@@ -54,20 +54,18 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
   constructor(private headerService: HeaderProviderService) {}
 
   sql_changes(form: SqlForm) {
-    console.log('form', form);
     if (form) {
       const query = form.coreQuery;
       const regex = new RegExp(
         /select\s+(.*?)\s+from\s+(.*?)\s+where\s+(.*?)\s+\order\sby\s+(.*?)\s+\limit\s+(.*?)/i
       );
       const clauses = regex.exec(query);
-      console.log('clauses', clauses);
     }
   }
 
+
   form_changes(form: FusionForm) {
-    console.log('fusionForm:', form);
-    this.buildCoreQuery(form);
+        this.buildCoreQuery(form);
   }
 
   /**
@@ -207,7 +205,6 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
       if (sortDescending === true) {
         orderByClause += ` desc`;
       }
-      console.log('descending', sortDescending);
     }
     /**
      * Limit
