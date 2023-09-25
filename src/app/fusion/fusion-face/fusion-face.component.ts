@@ -235,10 +235,10 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
    * and the resultNuclides.selectedElements field
    */
   handleFusionformChanges = (next: FusionForm) => {
-    this.buildResultElements(
+/*     this.buildResultElements(
       next.leftNuclides.selectedElements,
       next.rightNuclides.selectedElements
-    );
+     );*/
     this.formChanges.emit(next);
     this.setSubmittable();
   };

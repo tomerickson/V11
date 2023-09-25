@@ -70,33 +70,15 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     this.buildCoreQuery(form);
   }
 
-  buildCoreQuery = (form: FusionForm) => {
-    const resultLimit = form.resultLimit;
-    const orderBy = form.orderBy;
-    const elementJoin = form.elementJoin;
-    const sortDescending = form.sortDescending;
-    const inputNeutrinos = form.inputNeutrinos;
-    const noNeutrinos = form.noNeutrinos;
-    const outputNeutrinos = form.outputNeutrinos;
-    const columnsClause = 'select *';
-    const tablesClause = 'from ' + form.tableSet;
-    const neutrinoClause = this.buildNeutrinoClause(
-      inputNeutrinos,
-      noNeutrinos,
-      outputNeutrinos
-    );
-
-    const elementChoices: string[] = [];
+  /**
+   * Convert spin choices to a string
+   * @param form 
+   * @returns 
+   */
+  buildSpinClause = (form: FusionForm): string | null => {
     const spinChoices: string[] = [];
-    let elementsClause = '';
     let spinClause = '';
-    let filterClause = '';
-    let orderByClause = '';
-    let limitClause = '';
 
-    /**
-     * spin
-     */
     if (form.leftNuclides.nuclearSpin !== 'bf') {
       spinChoices.push(`nBorF1 = '${form.leftNuclides.nuclearSpin}'`);
     }
@@ -118,32 +100,88 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     if (spinChoices.length > 0) {
       spinClause = spinChoices.join(' and ');
     }
-    /**
-     * Elements
-     */
+    return spinClause;
+  };
+
+  /**
+   * Create a string representation of the elements selected
+   * in the three select lists
+   * @param leftElements
+   * @param rightElements
+   * @param elementJoin
+   * @param resultElements
+   * @returns
+   */
+  buildElementsClause = (form: FusionForm): string | null => {
     const leftElements = form.leftNuclides.selectedElements ?? [];
     const rightElements = form.rightNuclides.selectedElements ?? [];
-
+    const resultElements = form.resultNuclides.selectedElements ?? [];
+    const elementJoin = form.elementJoin;
+    let clause: {
+      startGroup: string | null;
+      left: string | null;
+      join: string | null;
+      right: string | null;
+      endGroup: string | null;
+      resultJoin: string | null;
+      result: string | null;
+    } = {
+      startGroup: '',
+      left: '',
+      join: '',
+      right: '',
+      resultJoin: '',
+      endGroup: '',
+      result: ''
+    };
     if (leftElements.length > 0) {
-      elementChoices.push(
-        `E1 in ${this.combineElements(leftElements, [], true)}`
-      );
+      clause.left = `E1 in ${this.combineElements(leftElements, [], true)}`;
     }
+
     if (rightElements.length > 0) {
-      elementChoices.push(
-        `E2 in ${this.combineElements(rightElements, [], true)}`
-      );
+      clause.right = `E2 in ${this.combineElements(rightElements, [], true)}`;
     }
-    if (elementChoices.length > 0) {
-      elementsClause = elementChoices[0];
-    }
-    if (elementChoices.length > 1) {
-      elementsClause = elementsClause + ` ${elementJoin} `
-      elementsClause += elementChoices[1];
+
+    if (clause.left && clause.right) {
+      clause.join = elementJoin;
       if (elementJoin === 'or') {
-        elementsClause = `(${elementsClause})`;
-      }
+        clause.startGroup = '(';
+        clause.endGroup = ')';
+      };
+      clause.join = ` ${clause.join} `
     }
+
+    if (resultElements.length > 0) {
+      if (leftElements || rightElements) {
+        clause.result = ' and';
+      }      
+      clause.result += ` E in ${this.combineElements(resultElements, [], true)}`;
+    }
+    const result = `${clause.startGroup}${clause.left}${clause.join}${clause.right}${clause.endGroup}${clause.result}`;
+    console.log(result);
+    return result;
+  };
+
+  buildCoreQuery = (form: FusionForm) => {
+    const resultLimit = form.resultLimit;
+    const orderBy = form.orderBy;
+    const sortDescending = form.sortDescending;
+    const inputNeutrinos = form.inputNeutrinos;
+    const noNeutrinos = form.noNeutrinos;
+    const outputNeutrinos = form.outputNeutrinos;
+    const columnsClause = 'select *';
+    const tablesClause = 'from ' + form.tableSet;
+    let filterClause = '';
+    let orderByClause = '';
+    let limitClause = '';
+
+    const neutrinoClause = this.buildNeutrinoClause(
+      inputNeutrinos,
+      noNeutrinos,
+      outputNeutrinos
+    );
+      const spinClause = this.buildSpinClause(form);
+    const elementsClause = this.buildElementsClause(form);
 
     /**
      * FilterChoices combines neutrinos, elements and spin
@@ -192,7 +230,9 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
       query: this.coreQuery,
       tables: 3
     };
-    this.store.dispatch(appState.actions.setReportParameters({ payload: extras }));
+    this.store.dispatch(
+      appState.actions.setReportParameters({ payload: extras })
+    );
     this.store.dispatch(fusionState.actions.fetchAllResults({ payload: kvp }));
     this.router.navigate(['/fusion/reports']);
   };
@@ -214,7 +254,9 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.forceReset();
     this.elements = this.store.select(appState.feature.selectElements);
-    this.sortFields = this.store.select(appState.feature.selectReactionSortFields);
+    this.sortFields = this.store.select(
+      appState.feature.selectReactionSortFields
+    );
     this.headerService.buildPageHeader('fusion');
     this.ready.next(true);
   }
@@ -303,7 +345,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
   };
 
   /**
-   * Merge the left-side and right-side element selections
+   * Merge two lists of element selections
    *
    * @param leftElements
    * @param rightElements
