@@ -77,11 +77,6 @@
                   "output": "/assets/config/"
                 },
                 {
-                  "glob": "global-config.json",
-                  "input": "src/assets/config",
-                  "output": "/assets/config/"
-                },
-                {
                   "glob": "web.config",
                   "input": "src/assets/config",
                   "output": "/"

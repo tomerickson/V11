@@ -1,13 +1,21 @@
-import { Injectable } from '@angular/core';
-import localConfigs from '../../../assets/config/config.json';
-import globalConfigs from '../../../assets/config/global-config.json';
+import { APP_BASE_HREF } from '@angular/common';
+import { Inject, Injectable, InjectionToken, StaticProvider } from '@angular/core';
 import { IAppConfig } from './iapp-config.model';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom, lastValueFrom, map } from 'rxjs';
+
+
+
+export const APP_CONFIG = new InjectionToken<IAppConfig>('app.config');
+
+export const provideConfigfile = (config: IAppConfig) :StaticProvider => {
+  return {provide: APP_CONFIG, useValue: config}
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppConfigService {
-
   /**
    * Initialize a default set of config properties
    */
@@ -24,19 +32,27 @@ export class AppConfigService {
     allTablesPageSize: 1
   };
 
-  constructor() {
-    Object.assign(this._appConfig, localConfigs, globalConfigs);
-    console.log('config', JSON.stringify(this._appConfig));
-  }
+  constructor(@Inject(APP_BASE_HREF) private baseUrl: string, private http: HttpClient) {
+    console.log('baseUrl', this.baseUrl);
+    this.loadConfigFile();
+    }
+
+ 
+
+   loadConfigFile = async (): Promise<void> => {
+    console.log('baseUrl', this.baseUrl);
+    this._appConfig = await firstValueFrom(
+      this.http.get<IAppConfig>('assets/config/config.json'))
+    }
+  
+
 
   validateConfiguration() {
-
-    let ok = (this.apiUrl !== '?'
-    && this.pageCredits !== '');
+    let ok = this.apiUrl !== '?' && this.pageCredits !== '';
     if (!ok) {
-      console.error('No configuration file found');
+      throw new Error('config.json file is missing or invalid');
     }
-    return () => new Promise((resolve, reject) => ok)
+    return ok;
   }
 
   get version(): string {
@@ -50,7 +66,7 @@ export class AppConfigService {
   get virtualDirectory(): string | null {
     return this._appConfig.virtualDirectory;
   }
-  get  proxy(): string | null {
+  get proxy(): string | null {
     return this._appConfig.proxy;
   }
 

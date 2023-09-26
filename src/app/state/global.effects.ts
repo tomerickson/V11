@@ -7,10 +7,11 @@ import {
     of,
     tap
 } from 'rxjs';
-import { APP_CONFIG } from 'src/app.config';
+
 import { actions } from '.';
 import { IAppConfig } from '../core/config/iapp-config.model';
 import { NotificationComponent } from '../core/notification.component';
+import { APP_CONFIG } from '../core/config/app-config.service';
 
 /**
  * Global effects

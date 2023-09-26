@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import globalConfigs from '../../assets/config/global-config.json';
+// import globalConfigs from '../../assets/config/global-config.json';
 import elementsJson from '../../assets/tables/elements.json';
 import radDecayModesJson from '../../assets/tables/radiation-decay-modes.json';
 import radTypesJson from '../../assets/tables/radiation-types.json';
@@ -30,7 +30,7 @@ export interface GlobalState {
 }
 
 export const globalInitialState: GlobalState = {
-  version: globalConfigs.version,
+  version: '',
   pageTitle: '',
   pageCredits: '',
   pageDescription: '',
@@ -65,6 +65,7 @@ export const feature = createFeature({
     globalInitialState,
     on(actions.initializeSuccess, (state, actions) => {
       return {...state,
+        version: actions.payload.version,
         production: actions.payload.production,
         proxy: actions.payload.proxy,
         apiUrl: actions.payload.apiUrl,
