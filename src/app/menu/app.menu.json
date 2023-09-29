@@ -1,0 +1,112 @@
+[
+  {
+    "route": "intro",
+    "text": "Introduction",
+    "link": "intro",
+    "icon": null
+  },
+  {
+    "route": "fusion",
+    "text": "Fusion Reactions",
+    "link": "fusion",
+    "icon": null
+  },
+  {
+    "route": "fission",
+    "text": "Fission Reactions",
+    "link": "fission",
+    "icon": null
+  },
+  {
+    "route": "two-up",
+    "text": "Two to Two Reactions",
+    "link": "two-up",
+    "icon": null
+  },
+  {
+    "route": "all-tables",
+    "text": "All Tables",
+    "link": "all-tables",
+    "icon": null
+  },
+  {
+    "route": "cascades",
+    "text": "More cascades",
+    "link": null,
+    "subMenu": [
+      {
+        "text": "Cascades4",
+        "route": "cascades4",
+        "link": "casecades4",
+        "icon": null
+      }
+    ],
+    "icon": null
+  },
+  {
+    "route": "cascades-all",
+    "text": "Cascades All",
+    "link": "cascades-all",
+    "icon": null
+  },
+  {
+    "route": "cascades4",
+    "text": "Cascades 4",
+    "link": "cascades4",
+    "icon": null
+  },
+  {
+    "route": "cascades5lite",
+    "text": "Cascades 5 Lite",
+    "link": "cascades5lite",
+    "icon": null
+  },
+  {
+    "route": "cascades5",
+    "text": "Cascades 5",
+    "link": "cascades5",
+    "icon": null
+  },
+  {
+    "route": "all-results",
+    "text": "All Results",
+    "link": "all-results",
+    "icon": null
+  },
+  {
+    "route": "element-data",
+    "link": "element-data",
+    "text": "Show Element Data",
+    "icon": null
+  },
+  {
+    "route": "tables-in-detail",
+    "link": "tables-in-detail",
+    "text": "Tables in Detai",
+    "icon": null
+  },
+  {
+    "route": "downloads",
+    "link": "downloads",
+    "text": "Downloads",
+    "icon": null
+  },
+  {
+    "route": "notes",
+    "text": "Notes",
+    "link": "allxtables",
+    "icon": null
+  },
+  {
+    "route": "overview",
+    "text": "Overview",
+    "link": "TheNanosoftPackage.pdf",
+    "icon": null
+  },
+  {
+    "route": "lenr-events",
+    "text": "Select LENR Events",
+    "link": "lenr-events",
+    "icon": null
+  }
+]

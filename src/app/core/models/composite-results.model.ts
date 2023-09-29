@@ -1,4 +1,11 @@
-export enum ExpectedTablesEnum {'reactions' , 'nuclides' , 'elements', 'radioNuclides', 'queries' , 'events'}
+export enum ExpectedTablesEnum {
+  'reactions',
+  'nuclides',
+  'elements',
+  'radioNuclides',
+  'queries',
+  'events'
+}
 
 export interface ITableExpectations {
   tables: ExpectedTablesEnum[];
@@ -159,7 +166,9 @@ export abstract class CompositeResultsModel {
             (td) => td.innerHTML
           )
       );
-      results.push(tableInfo);
+      if (tableInfo.length > 0) {
+        results.push(tableInfo);
+      }
     });
     return results;
   };
@@ -191,9 +200,9 @@ export abstract class CompositeResultsModel {
     let valid: boolean = tables.length >= this.numberOfTablesExpected;
     if (valid) {
       tables.forEach((table) => {
-        valid =
-          valid && table.childElementCount > 0 && table.childElementCount < 3;
-        valid = valid && table.lastElementChild?.tagName == 'TBODY';
+        if (table.childElementCount > 0 && table.childElementCount < 3) {
+          valid = valid && table.lastElementChild?.tagName == 'TBODY';
+        }
       });
     }
     return valid;

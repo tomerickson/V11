@@ -19,6 +19,7 @@
       <ng-container
         *ngIf="elements; then elementsTemplate; else noelements"></ng-container>
       <ng-template #elementsTemplate>
+        <h4>From ElementPropertiesPlus Table</h4>
         <mfmp-query-head
           [resultType]="'elements'"
           [inputResults]="elements"
@@ -27,15 +28,21 @@
       <ng-template #noelements></ng-template>
 
       <ng-container
-        *ngIf="nuclides; then nuclidesTemplate; else nonuclides"></ng-container>
+        *ngIf="
+          rows(nuclides) > 0;
+          then nuclidesTemplate;
+          else nonuclides
+        "></ng-container>
       <ng-template #nuclidesTemplate>
-        <h4>From NuclidesPlus Table ({{rows(nuclides)}}):</h4>
+        <h4>From NuclidesPlus Table ({{ rows(nuclides) }}):</h4>
         <mfmp-query-head
           [resultType]="'nuclides'"
           [inputResults]="nuclides"
           [paginate]="false"></mfmp-query-head>
       </ng-template>
-      <ng-template #nonuclides></ng-template>
+      <ng-template #nonuclides>
+        <h4>From NuclidesPlus Table (0)</h4>
+      </ng-template>
 
       <ng-container
         *ngIf="
@@ -44,7 +51,7 @@
           else noRadioNuclides
         "></ng-container>
       <ng-template #radioNuclidesTemplate>
-        <h4>From RadioNuclidesPlus Table ({{rows(radioNuclides)}}):</h4>
+        <h4>From RadioNuclidesPlus Table ({{ rows(radioNuclides) }}):</h4>
         <mfmp-query-head
           [resultType]="'radionuclides'"
           [inputResults]="radioNuclides"

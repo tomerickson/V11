@@ -76,9 +76,6 @@ export class ElementDataFaceComponent implements OnInit {
     subscription.unsubscribe();
     return result;
   }
-  stringify = (object: any) => {
-    return JSON.stringify(object);
-  };
 
   objectify = (block: any[]): any[] => {
     type tuple = {

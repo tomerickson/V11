@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -16,14 +15,11 @@
     "importHelpers": true,
     "removeComments": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": [
-      "es2019",
-      "dom",
-      "dom.iterable",
-      "ES2021.String"
-    ],
+    "lib": ["es2019", "dom", "dom.iterable", "ES2021.String"],
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
