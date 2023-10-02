@@ -17,11 +17,11 @@
         file but only DISPLAY a summary
       </h4>
       <div class="hint">
-        <span>Hint: hover over&nbsp;</span>
         <span (mouseenter)="elevate($event)" (mouseleave)="elevate($event)">
-          text highlighted with an '*' asterisk&nbsp;
+          Hint: hover over text highlighted with this icon
+          <mat-icon [inline]="true" color="primary">info</mat-icon>
+          to reveal more infomation.
         </span>
-        <span>to reveal more infomation.</span>
       </div>
     </mat-expansion-panel>
     <div class="slidetoggle">
@@ -34,7 +34,7 @@
         (toggleChange)="sliderChange()">
         <span (mouseenter)="elevate($event)" (mouseleave)="elevate($event)">
           Mouse/Touch entry
-          <sup>*</sup>
+          <mat-icon [inline]="true" color="primary">info</mat-icon>
         </span>
       </mat-slide-toggle>
     </div>
@@ -126,7 +126,10 @@
         </div>
         <div class="flexrow end">
           <div>
-            <label>Elements that will NOT have MELTED before reaching the Maximum Reactor Temperature:</label>
+            <label>
+              Elements that will NOT have MELTED before reaching the Maximum
+              Reactor Temperature:
+            </label>
           </div>
           <mat-form-field appearance="fill">
             <mat-select
@@ -161,8 +164,9 @@
         <div class="flexrow end">
           <div>Radioactive Isotopes:</div>
           <mat-form-field appearance="fill">
-                        <mat-select formControlName="isotopeSwitch"
-                        placeholder="Choose an option.">
+            <mat-select
+              formControlName="isotopeSwitch"
+              placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
                 [value]="option.code">
@@ -175,8 +179,9 @@
         <div class="flexrow end">
           <div>Nuclear Fermions</div>
           <mat-form-field appearance="fill">
-            <mat-select formControlName="nuclearFermionSwitch"
-            placeholder="Choose an option.">
+            <mat-select
+              formControlName="nuclearFermionSwitch"
+              placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
                 [value]="option.code">
@@ -188,8 +193,9 @@
         <div class="flexrow end">
           <div>Atomic Fermions</div>
           <mat-form-field appearance="fill">
-            <mat-select formControlName="atomicFermionSwitch"
-            placeholder="Choose an option.">
+            <mat-select
+              formControlName="atomicFermionSwitch"
+              placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
                 [value]="option.code">
@@ -204,8 +210,9 @@
             form Dimers:
           </div>
           <mat-form-field appearance="fill">
-            <mat-select formControlName="dimersSwitch"
-            placeholder="Choose an option.">
+            <mat-select
+              formControlName="dimersSwitch"
+              placeholder="Choose an option.">
               <mat-option
                 *ngFor="let option of feedbackOptions"
                 [value]="option.code">
@@ -270,9 +277,8 @@
                 [matTooltipShowDelay]="tooltipDelay">
                 <span
                   (mouseenter)="elevate($event)"
-                  (mouseleave)="elevate($event)">
-                  Table set:
-                  <sup>*</sup>
+                  (mouseleave)="elevate($event)">Table set:
+                  <mat-icon [inline]="true" color="primary">info</mat-icon>
                 </span>
               </mat-label>
               <mat-radio-button value="Original" selected>
@@ -321,7 +327,7 @@
             (click)="submitForm()">
             <span (mouseenter)="elevate($event)" (mouseleave)="elevate($event)">
               FIND CASCADES
-              <sup>*</sup>
+              <mat-icon [inline]="true" color="white">info</mat-icon>
             </span>
           </button>
         </div>
