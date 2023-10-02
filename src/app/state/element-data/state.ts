@@ -1,7 +1,6 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { IElementDataFormModel } from 'src/app/core/models/element-data-form.model';
 import { actions } from './actions';
-import { tableSplitter } from 'src/app/core/services/helpers';
 
 export interface ElementDataState {
   formData: IElementDataFormModel | null;

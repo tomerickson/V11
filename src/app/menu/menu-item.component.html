@@ -1,0 +1,17 @@
+<mat-list-item [class]="this.item.show ? null : 'hidden'">
+  <a *ngIf="item.route" routerLink="{{ item.route }}">{{ item.text }}</a>
+
+  <a
+    *ngIf="item.link"
+    href="{{ item.link }}"
+    target="_blank"
+    noopener
+    noreferrer>
+    {{ item.text }}
+  </a>
+
+  <div *ngIf="!item.link && !item.route" (click)="toggleMenu()">
+    <span>{{ item.text }}</span>
+    <mat-icon>{{ icon }}</mat-icon>
+  </div>
+</mat-list-item>

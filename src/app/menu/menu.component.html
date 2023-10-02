@@ -1,12 +1,19 @@
 <mat-nav-list>
+  <ng-container *ngFor="let item of menus">
+    <mfmp-menu-item
+      [item]="item"
+      [icon]="icon"
+      (menuClick)="clickHandler($event)"></mfmp-menu-item>
+  </ng-container>
+</mat-nav-list>
+<!-- <mat-nav-list>
   <a
     mat-list-item
     *ngFor="let item of menus"
     routerLink="{{ item.route }}">
     {{ item.text }}
   </a>
-</mat-nav-list>
-
+</mat-nav-list> -->
 
 <!--
 <mat-nav-list>

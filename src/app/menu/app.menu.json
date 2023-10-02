@@ -1,112 +1,125 @@
 [
   {
+    "id": 1,
     "route": "intro",
     "text": "Introduction",
-    "link": "intro",
+    "link": null,
     "icon": null
   },
   {
+    "id": 2,
     "route": "fusion",
     "text": "Fusion Reactions",
-    "link": "fusion",
+    "link": null,
     "icon": null
   },
   {
+    "id": 3,
     "route": "fission",
     "text": "Fission Reactions",
-    "link": "fission",
+    "link": null,
     "icon": null
   },
   {
+    "id": 4,
     "route": "two-up",
     "text": "Two to Two Reactions",
-    "link": "two-up",
+    "link": null,
     "icon": null
   },
   {
+    "id": 5,
     "route": "all-tables",
     "text": "All Tables",
-    "link": "all-tables",
-    "icon": null
-  },
-  {
-    "route": "cascades",
-    "text": "More cascades",
     "link": null,
-    "subMenu": [
-      {
-        "text": "Cascades4",
-        "route": "cascades4",
-        "link": "casecades4",
-        "icon": null
-      }
-    ],
     "icon": null
   },
   {
+    "id": 6,
+    "route": "",
+    "text": "Cascades",
+    "link": null,
+    "icon": "chevron_right"
+  },
+  {
+    "id": 7,
     "route": "cascades-all",
     "text": "Cascades All",
-    "link": "cascades-all",
-    "icon": null
+    "link": null,
+    "icon": null,
+    "parent": 6
   },
   {
+    "id": 9,
     "route": "cascades4",
     "text": "Cascades 4",
-    "link": "cascades4",
-    "icon": null
+    "link": null,
+    "icon": null,
+    "parent": 6
   },
   {
+    "id": 10,
     "route": "cascades5lite",
     "text": "Cascades 5 Lite",
-    "link": "cascades5lite",
-    "icon": null
+    "link": null,
+    "icon": null,
+    "parent": 6
   },
   {
+    "id": 11,
     "route": "cascades5",
     "text": "Cascades 5",
-    "link": "cascades5",
-    "icon": null
+    "link": null,
+    "icon": null,
+    "parent": 6
   },
   {
+    "id": 12,
     "route": "all-results",
     "text": "All Results",
-    "link": "all-results",
+    "link": null,
     "icon": null
   },
   {
+    "id": 13,
     "route": "element-data",
-    "link": "element-data",
+    "link": null,
     "text": "Show Element Data",
     "icon": null
   },
   {
+    "id": 14,
     "route": "tables-in-detail",
-    "link": "tables-in-detail",
+    "link": null,
     "text": "Tables in Detai",
     "icon": null
   },
   {
+    "id": 15,
     "route": "downloads",
-    "link": "downloads",
+    "link": null,
     "text": "Downloads",
     "icon": null
   },
   {
+    "id": 16,
     "route": "notes",
     "text": "Notes",
-    "link": "allxtables",
+    "link": null,
     "icon": null
   },
   {
-    "route": "overview",
+    "id": 17,
+    "route": "",
     "text": "Overview",
     "link": "TheNanosoftPackage.pdf",
     "icon": null
   },
   {
+    "id": 18,
     "route": "lenr-events",
     "text": "Select LENR Events",
-    "link": "lenr-events",
+    "link": null,
     "icon": null
   }
 ]
