@@ -1,12 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -26,15 +19,17 @@ import { IMenuItem } from '../core/models/menu-item';
   templateUrl: './menu-item.component.html',
   styleUrls: ['./menu-item.component.scss']
 })
-export class MenuItemComponent implements OnChanges {
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(JSON.stringify(changes));
-  }
-
+export class MenuItemComponent {
   @Input({ required: true }) icon!: string;
   @Input({ required: true }) item!: IMenuItem;
-
   @Output() menuClick: EventEmitter<IMenuItem> = new EventEmitter<IMenuItem>();
+
+  get menuType(): 'route' | 'link' | 'menu' {
+    const route: boolean = this.item.route.length > 0;
+    const link: boolean = (this.item.link ?? '').length > 0;
+    const menu: boolean = !route && !link;
+    return menu ? 'menu' : link ? 'link' : 'route';
+  }
 
   toggleMenu = (): void => {
     this.menuClick.emit(this.item);

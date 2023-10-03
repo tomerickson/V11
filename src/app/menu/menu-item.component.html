@@ -1,17 +1,34 @@
 <mat-list-item [class]="this.item.show ? null : 'hidden'">
-  <a *ngIf="item.route" routerLink="{{ item.route }}">{{ item.text }}</a>
+  <ng-container [ngSwitch]="menuType">
+    <div *ngSwitchCase="'route'">
+      <ng-container *ngTemplateOutlet="route"></ng-container>
+    </div>
+    <div *ngSwitchCase="'link'">
+      <ng-container *ngTemplateOutlet="link"></ng-container>
+    </div>
+    <div *ngSwitchCase="'menu'">
+      <ng-container *ngTemplateOutlet="menu"></ng-container>
+    </div>
+    <div *ngSwitchDefault>
 
-  <a
-    *ngIf="item.link"
-    href="{{ item.link }}"
-    target="_blank"
-    noopener
-    noreferrer>
-    {{ item.text }}
-  </a>
+    </div>
+  </ng-container>
 
-  <div *ngIf="!item.link && !item.route" (click)="toggleMenu()">
-    <span>{{ item.text }}</span>
-    <mat-icon>{{ icon }}</mat-icon>
-  </div>
+  <ng-template #route>
+    <div><a routerLink="{{ item.route }}">{{ item.text }}</a></div>
+  </ng-template>
+
+  <ng-template #link>
+    <div><a href="{{ item.link }}" target="_blank" noopener noreferrer>
+      {{ item.text }}
+    </a></div>
+  </ng-template>
+
+  <ng-template #menu>
+    <div class="menu" (click)="toggleMenu()">
+      <span>{{ item.text }}</span>
+      <mat-icon>{{ icon }}</mat-icon>
+    </div>
+  </ng-template>
+
 </mat-list-item>
