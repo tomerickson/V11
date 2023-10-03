@@ -97,7 +97,7 @@
   {
     "id": 15,
     "route": "downloads",
-    "link": null,
+    "link": "downloads",
     "text": "Downloads",
     "icon": null
   },

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { IMenuItem } from '../core/models/menu-item';
 import appMenuJson from './app.menu.json';
 import { MenuItemComponent } from './menu-item.component';
+import { AppConfigService } from '../core/config/app-config.service';
 
 @Component({
   standalone: true,
@@ -23,6 +24,8 @@ import { MenuItemComponent } from './menu-item.component';
 })
 
 export class MenuComponent implements OnInit {
+  config = inject(AppConfigService);
+
   menus: IMenuItem[] = [];
   icon = 'chevron_right';
   showMenu!: Observable<boolean>;
@@ -30,12 +33,16 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeMenus();
-    console.log(JSON.stringify(this.menus));
   }
 
   initializeMenus = () => {
     this.menus = appMenuJson as IMenuItem[];
-    this.menus.forEach(menu => {menu.show = (menu.parent) ? false: true})
+    this.menus.forEach(menu => {
+      menu.show = (menu.parent) ? false: true;
+      if (menu.link) {
+        menu.link = this.config.apiUrl + menu.link;
+      }
+    })
   };
 
   clickHandler(e: IMenuItem) {

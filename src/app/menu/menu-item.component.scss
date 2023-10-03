@@ -1,16 +1,19 @@
-a:link {
+a:link,
+a:visited {
   text-decoration: none;
+  color: initial;
 }
 
-.mdc-list-item {
+.mat-mdc-list-item {
   height: 2em !important;
+}
 
-  div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
+div.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: whitesmoke;
 }
 
 .hidden {
