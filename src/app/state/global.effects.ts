@@ -1,49 +1,44 @@
-import { Inject, inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-    catchError,
-    exhaustMap,
-    map,
-    of,
-    tap
-} from 'rxjs';
+import { APP_INITIALIZER, Inject, inject, Injectable } from '@angular/core';
+import { Actions, OnInitEffects, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, of, tap } from 'rxjs';
 
+import { Action } from '@ngrx/store';
 import { actions } from '.';
+import { AppConfigService } from '../core/config/app-config.service';
 import { IAppConfig } from '../core/config/iapp-config.model';
 import { NotificationComponent } from '../core/notification.component';
-import { APP_CONFIG } from '../core/config/app-config.service';
 
 /**
  * Global effects
  */
-export class GlobalEffects {
-  constructor(
-    @Inject(APP_CONFIG) private config: IAppConfig,
-    private actions$: Actions
-  ) {}
+@Injectable({ providedIn: 'root' })
+export class GlobalEffects implements OnInitEffects {
+  readonly appService: AppConfigService;
+  actions$: Actions;
+  config!: IAppConfig;
 
-  /**
-   * 
-   * @returns configuration file as an Observable
-   */
-  getConfigs() {
-    return of(this.config);
+  constructor() {
+    this.appService = inject(AppConfigService);
+    this.actions$ = inject(Actions);
+    this.config = this.appService.config;
+  }
+
+  ngrxOnInitEffects(): Action {
+    console.log('GlobalEffects.config', this.appService.version);
+    return { type: '[Global API] Initialize' }; // actions.initialize;
   }
 
   /**
    * Initialize the global state from the config file
    */
-  initializeEffect = createEffect(() =>
-    this.actions$.pipe(
+  initializeEffect = createEffect((actions$ = inject(Actions)) => {
+    const service = inject(AppConfigService);
+    return actions$.pipe(
       ofType(actions.initialize),
-      exhaustMap(() =>
-        this.getConfigs().pipe(
-          map((config) => actions.initializeSuccess({ payload: config })),
-          catchError(() => of(actions.initializeFailure))
-        )
-      )
-    )
-  );
+      map(() => actions.initializeSuccess({ payload: service.config })),
+      catchError(() => of(actions.initializeFailure))
+    );
+  });
 
   errorHandlerEffect = createEffect(() => {
     const notifier = inject(NotificationComponent);

@@ -12,9 +12,9 @@ export const actions = createActionGroup({
   source: 'Global API',
   events: {
     enter: emptyProps(),
-    'initialize': emptyProps(),
-    'initializeSuccess': props<{payload: IAppConfig}>(),
-    'initializeFailure': (error: any) => ({error}),
+    'Initialize': emptyProps(),
+    'InitializeSuccess': props<{payload: IAppConfig}>(),
+    'InitializeFailure': (error: any) => ({error}),
     'Load Globals': emptyProps(),
     'Set Page Title': props<{ title: string }>(),
     'Set Page Credits': props<{ credits: string }>(),

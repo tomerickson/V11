@@ -24,6 +24,7 @@ import { ServerErrorInterceptor } from './app/core/server-error.interceptor';
 import { CrudService } from './app/core/services/crud.service';
 import { feature } from './app/state/global.state';
 import { AppConfigService } from './app/core/config/app-config.service';
+import { GlobalEffects } from './app/state/global.effects';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -80,7 +81,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideStore(),
     provideState(feature),
-    provideEffects(),
+    provideEffects([GlobalEffects]),
     provideStoreDevtools(),
     provideRouterStore(),
     importProvidersFrom(MatDialogModule),

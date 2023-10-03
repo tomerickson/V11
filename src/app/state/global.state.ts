@@ -1,5 +1,4 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-// import globalConfigs from '../../assets/config/global-config.json';
 import elementsJson from '../../assets/tables/elements.json';
 import radDecayModesJson from '../../assets/tables/radiation-decay-modes.json';
 import radTypesJson from '../../assets/tables/radiation-types.json';
@@ -9,6 +8,8 @@ import { IElementDataModel } from '../core/models/element-data.model';
 import { ILookupDataModel } from '../core/models/lookup-data.model';
 import { ReportParameters } from '../core/models/report-parameters.model';
 import { actions } from './global.actions';
+
+
 export interface GlobalState {
   version: string,
   pageTitle: string;
@@ -28,8 +29,8 @@ export interface GlobalState {
   fuelFeedbackModes: ILookupDataModel[];
   reportParameters: ReportParameters;
 }
-
 export const globalInitialState: GlobalState = {
+
   version: '',
   pageTitle: '',
   pageCredits: '',
@@ -64,6 +65,7 @@ export const feature = createFeature({
   reducer: createReducer(
     globalInitialState,
     on(actions.initializeSuccess, (state, actions) => {
+      console.log("payload:", actions.payload)
       return {...state,
         version: actions.payload.version,
         production: actions.payload.production,
@@ -182,22 +184,3 @@ export const {
   selectShowMenu,
   selectShowMenuText
 } = feature;
-
-/**
- * Effects
- */
-/* export const fetchElements$ = createEffect(
-  (actions$ = inject(Actions)) => {
-    const http = inject(CrudService);
-    return actions$.pipe(
-      ofType(PageActions.enter),
-      exhaustMap(() => {
-        return http.getGlobalData().pipe(
-          map((results) => PageActions.loadGlobalsSuccess({ results })),
-          catchError((error) => of(PageActions.loadGlobalsFailure({ error })))
-        );
-      })
-    );
-  },
-  { functional: true }
-); */

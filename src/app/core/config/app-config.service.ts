@@ -3,6 +3,7 @@ import { Inject, Injectable, InjectionToken, StaticProvider } from '@angular/cor
 import { IAppConfig } from './iapp-config.model';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, lastValueFrom, map } from 'rxjs';
+import packageJson from '../../../../package.json';
 
 
 
@@ -22,7 +23,7 @@ export class AppConfigService {
   private _appConfig: IAppConfig = {
     production: false,
     name: 'Uninitiialized',
-    version: '',
+    version: packageJson.version,
     proxy: null,
     apiUrl: '?',
     virtualDirectory: null,
@@ -55,6 +56,10 @@ export class AppConfigService {
     return ok;
   }
 
+  get config(): IAppConfig {
+    return this._appConfig;
+  }
+  
   get version(): string {
     return this._appConfig.version;
   }
