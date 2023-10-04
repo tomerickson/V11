@@ -74,6 +74,6 @@ export class AllResultsService {
   }
 
   openLink = (link: string) => {
-    window.open(link, '_blank', 'noreferrerr, noopener');
+    window.open(`${this.config.apiUrl}${link}`, '_blank', 'noreferrer, noopener');
   }
 }
