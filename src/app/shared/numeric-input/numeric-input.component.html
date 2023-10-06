@@ -1,5 +1,9 @@
 <div class="numeric-input">
-  <div id="touch" #touch [class]="method === 'slider' ? 'active' : 'inactive'" [formGroup]="form">
+  <div
+    id="touch"
+    #touch
+    [class]="method === 'slider' ? 'active' : 'inactive'"
+    [formGroup]="form">
     <mat-slider
       [min]="min"
       [step]="step"
@@ -20,9 +24,14 @@
       <label>{{ this.value() }}</label>
     </div>
   </div>
-  <div id="key" #key [class]="method === 'text' ? 'active' : 'inactive'" [formGroup]="form">
+  <div
+    id="key"
+    #key
+    [class]="method === 'text' ? 'active' : 'inactive'"
+    [formGroup]="form">
     <mat-form-field>
-      <input #prompt
+      <input
+        #prompt
         id="numValue"
         matInput
         type="number"

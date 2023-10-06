@@ -7,6 +7,7 @@ import { DownloadComponent } from '../shared/download/download.component';
 import { DownloadService } from '../shared/download/download.service';
 import * as fissionState from '../state/fission';
 import { FissionService } from './fission.service';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 export const FISSION_ROUTES: Routes = [
   {
     path: '',
@@ -14,7 +15,8 @@ export const FISSION_ROUTES: Routes = [
     providers: [
       provideState(fissionState.feature),
       provideEffects([fissionState.effects]),
-      {provide: FissionService, useClass: FissionService}
+      {provide: FissionService, useClass: FissionService},      
+      { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
     ]
   },
   {
@@ -25,5 +27,5 @@ export const FISSION_ROUTES: Routes = [
       provideEffects([fissionState.effects]),
       {provide: DownloadService, useClass: DownloadComponent}
     ]
-  }
+  },
 ];

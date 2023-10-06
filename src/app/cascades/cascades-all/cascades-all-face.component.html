@@ -17,7 +17,7 @@
         file but only DISPLAY a summary
       </h4>
       <div class="hint">
-        <span (mouseenter)="elevate($event)" (mouseleave)="elevate($event)">
+        <span>
           Hint: hover over text highlighted with this icon
           <mat-icon [inline]="true" color="primary">info</mat-icon>
           to reveal more infomation.
@@ -32,7 +32,7 @@
         matTooltip="{{ touchMessage }}"
         [matTooltipShowDelay]="tooltipDelay"
         (toggleChange)="sliderChange()">
-        <span (mouseenter)="elevate($event)" (mouseleave)="elevate($event)">
+        <span>
           Mouse/Touch entry
           <mat-icon [inline]="true" color="primary">info</mat-icon>
         </span>
@@ -103,7 +103,7 @@
         </div>
         <div class="flexrow end">
           <div>Minimum energy (MeV) for any Fusion reaction to be counted:</div>
-          <mat-form-field appearance="fill" ngDefaultControl>
+          <mat-form-field ngDefaultControl>
             <input
               matInput
               type="number"
@@ -116,7 +116,7 @@
           <div>
             Minimum energy (MeV) for any TwoToTwo (2-2) reaction to be counted:
           </div>
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <input
               matInput
               type="number"
@@ -131,7 +131,7 @@
               Reactor Temperature:
             </label>
           </div>
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <mat-select
               value="meltingSwitch"
               formControlName="meltingSwitch"
@@ -149,7 +149,7 @@
             Elements that WILL have BOILED before reaching the Maximum Reactor
             Temperature:
           </div>
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <mat-select
               formControlName="boilingSwitch"
               placeholder="Choose an option.">
@@ -163,7 +163,7 @@
         </div>
         <div class="flexrow end">
           <div>Radioactive Isotopes:</div>
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <mat-select
               formControlName="isotopeSwitch"
               placeholder="Choose an option.">
@@ -178,7 +178,7 @@
 
         <div class="flexrow end">
           <div>Nuclear Fermions</div>
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <mat-select
               formControlName="nuclearFermionSwitch"
               placeholder="Choose an option.">
@@ -192,7 +192,7 @@
         </div>
         <div class="flexrow end">
           <div>Atomic Fermions</div>
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <mat-select
               formControlName="atomicFermionSwitch"
               placeholder="Choose an option.">
@@ -209,7 +209,7 @@
             For H, D, T*, Li, N, O, F, Na, Cl, K, Cr, Br, Rb and I which can
             form Dimers:
           </div>
-          <mat-form-field appearance="fill">
+          <mat-form-field>
             <mat-select
               formControlName="dimersSwitch"
               placeholder="Choose an option.">
@@ -224,7 +224,7 @@
 
         <div class="flexrow end">
           <div>Order by which the Nuclei table will be presented :</div>
-          <mat-form-field appearance="outline">
+          <mat-form-field>
             <input
               matInput
               type="text"
@@ -240,7 +240,7 @@
               (for order as tried, clear the box)
             </sub>
           </div>
-          <mat-form-field appearance="outline">
+          <mat-form-field>
             <input
               matInput
               type="text"
@@ -275,11 +275,10 @@
                 matTooltip="{{ tablesMessage }}"
                 [matTooltipPosition]="'left'"
                 [matTooltipShowDelay]="tooltipDelay">
-                <span
-                  (mouseenter)="elevate($event)"
-                  (mouseleave)="elevate($event)">Table set:
+                <span>
                   <mat-icon [inline]="true" color="primary">info</mat-icon>
-                </span>
+                   Table set:
+               </span>
               </mat-label>
               <mat-radio-button value="Original" selected>
                 Original
@@ -325,8 +324,8 @@
             [matTooltipPosition]="'left'"
             matTooltip="{{ patienceMessage }}"
             (click)="submitForm()">
-            <span (mouseenter)="elevate($event)" (mouseleave)="elevate($event)">
-              FIND CASCADES
+            <span>
+              FIND CASCADES&nbsp;
               <mat-icon [inline]="true" color="white">info</mat-icon>
             </span>
           </button>

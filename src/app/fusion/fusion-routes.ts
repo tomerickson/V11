@@ -6,6 +6,7 @@ import { FusionHeadComponent } from './fusion-head.component';
 import { ReportPagesHeadComponent } from '../shared/report-pages/report-pages.head.component';
 import { DownloadService } from '../shared/download/download.service';
 import { FusionService } from './fusion.service';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 export const FUSION_ROUTES: Routes = [
   {
     path: '',
@@ -22,7 +23,8 @@ export const FUSION_ROUTES: Routes = [
     providers: [
       provideState(fusionState.feature),
       provideEffects([fusionState.effects]),
-      {provide: DownloadService, useClass: DownloadService}
+      {provide: DownloadService, useClass: DownloadService},
+      { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
     ]
   }
 ];

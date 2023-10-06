@@ -30,8 +30,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { FusionForm } from 'src/app/core/models/fusion-form.model';
+import { SqlForm } from 'src/app/core/models/sql-form.model';
 import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable-box.component';
 import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
 import { IElementDataModel } from '../../core/models/element-data.model';
@@ -40,8 +43,6 @@ import { HeaderProviderService } from '../../shared/header/header.provider.servi
 import { NuclidePickerComponent } from '../../shared/nuclide-picker/nuclide-picker.component';
 import { ReportPagesFaceComponent } from '../../shared/report-pages/report-pages.face.component';
 import { fusionElementsValidator } from '../fusion-form.validator';
-import { FusionForm } from 'src/app/core/models/fusion-form.model';
-import { SqlForm } from 'src/app/core/models/sql-form.model';
 
 @Component({
   standalone: true,
@@ -62,6 +63,7 @@ import { SqlForm } from 'src/app/core/models/sql-form.model';
     MatRadioModule,
     MatSelectModule,
     MatSliderModule,
+    MatTooltipModule,
     MatFormFieldModule,
     NuclidePickerComponent,
     ReactiveFormsModule,
@@ -130,6 +132,7 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
   readonly initialCoreQuery = ' order by MeV desc limit 1000';
   readonly tablesText =
     "Select Fusion data table from 'FusionAll' (original: MeV > 0.0; 3,921 rows; based on the 'Nuclides' table, 293 nuclides), or FusionAllNewPlus (MeV = +/- any, 8026 rows; based on the 'NuclidesPlus' table, 324 nuclides)";
+  readonly tooltipDelay = 750;
 
   constructor() {
     this.route = this.router.routerState.snapshot.url;
@@ -235,7 +238,7 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
    * and the resultNuclides.selectedElements field
    */
   handleFusionformChanges = (next: FusionForm) => {
-/*     this.buildResultElements(
+    /*     this.buildResultElements(
       next.leftNuclides.selectedElements,
       next.rightNuclides.selectedElements
      );*/
@@ -245,10 +248,10 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
 
   toggleJoin = () => {
     let join = this.fusionForm.get('elementJoin')?.value;
-    join = (join === 'and') ? 'or' : 'and';
+    join = join === 'and' ? 'or' : 'and';
     this.fusionForm.get('elementJoin')?.patchValue(join);
-  }
-  
+  };
+
   handleSqlFormChanges = (changes: any) => {
     this.sqlChanges.emit(changes);
     // this.coreQuery = changes?.coreQuery;
@@ -268,44 +271,5 @@ export class FusionFaceComponent implements OnInit, OnDestroy {
   setSubmittable = () => {
     this.submittable =
       this.fusionForm.valid || !this.coreQuery.trimStart().startsWith('order');
-  };
-  /**
-   * concatenate the elements selected  in the
-   * left and right element pickers, convert
-   * them to a string, and stuff it into
-   * resultNuclides.selectedElements
-   * @param changes
-   */
-  buildResultElements = (
-    leftElements: string[] | [],
-    rightElements: string[] | []
-  ) => {
-    let resultElements = this.combineElements(leftElements, rightElements);
-    this.fusionForm
-      .get('resultNuclides.selectedElements')
-      ?.patchValue(resultElements, { onlySelf: true, emitEvents: false });
-  };
-
-  /**
-   * Merge the left-side and right-side element selections
-   *
-   * @param leftElements
-   * @param rightElements
-   * @param stringify
-   * @returns combined elements
-   * @description if stringify is true, combine
-   */
-  combineElements = (
-    a: string[],
-    b: string[],
-    stringify: boolean = false
-  ): string[] | string => {
-    const c = a.concat(b.filter((item) => a.indexOf(item) < 0));
-
-    if (stringify) {
-      return `('${c.join("','")}')`;
-    } else {
-      return c;
-    }
   };
 }

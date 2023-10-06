@@ -1,4 +1,5 @@
-<mat-expansion-panel expanded="false">
+<div class="wrapper">
+  <mat-expansion-panel expanded="false">
   <mat-expansion-panel-header>
     <p class="header">{{ description }}</p>
   </mat-expansion-panel-header>
@@ -8,7 +9,9 @@
   </p>
 
   <p>
-    But note that it, <a reuterLink="two-up">TwoToTwo</a> and
+    But note that it,
+    <a reuterLink="two-up">TwoToTwo</a>
+    and
     <a [routerLink]="['/fission']">Fission</a>
     is each dedicated to querying only one of two tables.
   </p>
@@ -91,7 +94,9 @@
           [caption]="'Left'"
           [elementsList]="elements"></mfmp-nuclide-picker>
         <div class="join">
-          <button type="button" class="mat-elevation-z2"
+          <button
+            type="button"
+            class="mat-elevation-z2"
             mat-flat-button
             (click)="toggleJoin()"
             formControlName="elementJoin"
@@ -140,11 +145,17 @@
 
   <mat-card class="coreQuery">
     <mat-card-content>
-      <mfmp-expandable-box
-        [caption]="'Tables:'"
-        [text]="tablesText"></mfmp-expandable-box>
       <div class="sql">
         <div>
+          <mat-label
+            matTooltip="{{ tablesText }}"
+            [matTooltipPosition]="'before'"
+            [matTooltipShowDelay]="tooltipDelay">
+            <span>
+              Table set:
+              <mat-icon [inline]="true" color="primary">info</mat-icon>
+            </span>
+          </mat-label>
           <mat-radio-group
             labelPosition="before"
             formControlName="tableSet"
@@ -159,11 +170,12 @@
           </mat-radio-group>
         </div>
         <div>
-          <div>
+          <div class="orderBy">
             <mat-form-field
               id="orderBy"
               formControlName="orderBy"
               value="orderBy"
+              appearance="outline"
               ngDefaultControl>
               <mat-label>Order By:</mat-label>
               <mat-select title="Order by" formControlName="orderBy">
@@ -172,18 +184,18 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-          <div>
-            <mat-checkbox
-              title="when checked."
-              formControlName="sortDescending"
-              value="sortDescending">
-              Descending
-            </mat-checkbox>
+            <div>
+              <mat-checkbox
+                title="when checked."
+                formControlName="sortDescending"
+                value="sortDescending">
+                Descending
+              </mat-checkbox>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="flexrow">
+        <!-- </div>
+      <div class="flexrow"> -->
         <div class="fullQuery" [formGroup]="sqlForm">
           <mat-label>Full Query</mat-label>
           <textarea
@@ -194,13 +206,14 @@
             rows="4"></textarea>
         </div>
         <div class="coreQuery" [formGroup]="sqlForm">
-          <mat-label>Core Query</mat-label>
+          <mat-label>Core Query:&nbsp;</mat-label>
           <textarea
             matInput
             formControlName="coreQuery"
-            title="'core query'"
+            title="core query"
             value="coreQuery"
-            rows="4"></textarea>
+            rows="4"
+            cols="50"></textarea>
         </div>
         <mfmp-resultsize-picker
           [defaultLimit]="1000"
@@ -227,3 +240,4 @@
     </mat-card-actions>
   </mat-card>
 </form>
+</div>

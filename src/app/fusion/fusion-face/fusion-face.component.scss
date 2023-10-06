@@ -1,3 +1,6 @@
+div.wrapper {
+  height: 100%;
+}
 .mat-expansion-panel-header.mat-expanded {
   background-color: rgba(250, 250, 250, .5);
 }
@@ -57,7 +60,12 @@ div.sql {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  align-items: center;
+
+  :nth-child(3) {
+    flex: 3;
+  }
 
   :last-child {
     display: flex;
@@ -81,24 +89,20 @@ div.coreQuery {
   padding: 1em;
   display: flex;
   flex-direction: row;
-  justify-content: stretch;
+  justify-content: flex-start;
+  align-items: center;
 
-  :first-child {
-    display: block;
-    flex: 1;
-  }
 
   :last-child {
-    display: block;
-    flex: 3;
     border-radius: 5px;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #999;
   }
 }
 
-mat-form-field#orderBy {
-  flex-direction: row !important;
+div.orderBy {
+  display: flex;
+  flex-direction: column;
 }
 
 span.resultLimitHeader {
@@ -116,10 +120,11 @@ div.flexrow {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: stretch;
+  justify-content: flex-end;
   align-items: baseline;
+
   :nth-child(2) {
-    flex: 3;
+    flex: 2;
   }
 }
 

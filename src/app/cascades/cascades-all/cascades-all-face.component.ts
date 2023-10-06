@@ -131,7 +131,6 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
    BUT, even if it eventually shows an error message, still check out the All Results page:
     the answer file (check dates and times) may yet be there and complete.`;
   tooltipDelay = 750;
-  spanElevatorClass = 'mat-elevation-z2';
 
   ngOnInit(): void {
     this.subscriptions = new Subscription();
@@ -195,14 +194,6 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
     return this.cascadesForm.controls[controlName].hasError(errorName);
   };
 
-  elevate(event: MouseEvent) {
-    const element = event.target as HTMLSpanElement;
-    if (event.type === 'mouseenter') {
-      element.classList.add(this.spanElevatorClass);
-    } else {
-      element.classList.remove(this.spanElevatorClass);
-    }
-  }
   /**
    * Look for a matching error message:
    *

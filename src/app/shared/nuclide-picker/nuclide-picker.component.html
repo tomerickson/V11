@@ -2,79 +2,78 @@
   <section class="margins" formGroupName="{{ formGroupName }}">
     <section [className]="'elements'">
       <ng-container [ngSwitch]="flavor()">
-          <mat-form-field *ngSwitchCase="0"
+        <mat-form-field
+          *ngSwitchCase="0"
+          formControlName="selectedElements"
+          subscriptSizing="dynamic"
+          ngDefaultControl>
+          <label>{{ title }}</label>
+          <mat-select
+            #matElements
             formControlName="selectedElements"
-            appearance="fill"
-            subscriptSizing="dynamic"
-            ngDefaultControl>
-            <label>{{ title }}</label>
-            <mat-select
-              #matElements
-              formControlName="selectedElements"
-              multiple
-              title="select elements"
-              [placeholder]="'click here to begin.'">
-              <div>
-                <mat-option
-                  *ngFor="let element of elementsList"
-                  [value]="element.E">
-                  {{ this.elementOptionValue(element) }}
-                </mat-option>
-              </div>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field *ngSwitchCase="1"
+            multiple
+            title="select elements"
+            [placeholder]="'click here to begin.'">
+            <div>
+              <mat-option
+                *ngFor="let element of elementsList"
+                [value]="element.E">
+                {{ this.elementOptionValue(element) }}
+              </mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          *ngSwitchCase="1"
+          formControlName="selectedElements"
+          subscriptSizing="dynamic"
+          ngDefaultControl>
+          <label>{{ title }}</label>
+          <mat-select
+            #matElements
             formControlName="selectedElements"
-            appearance="fill"
-            subscriptSizing="dynamic"
-            ngDefaultControl>
-            <label>{{ title }}</label>
+            multiple
+            title="select elements"
+            [placeholder]="'click here to begin.'">
+            <div>
+              <mat-option
+                [disabled]
+                *ngFor="let element of elementsList"
+                [value]="element.E">
+                {{ this.elementOptionValue(element) }}
+              </mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          *ngSwitchCase="2"
+          formControlName="selectedElements"
+          subscriptSizing="dynamic"
+          ngDefaultControl>
+          <label>{{ title }}</label>
 
-            <mat-select
-              #matElements
-              formControlName="selectedElements"
-              multiple
-              title="select elements"
-              [placeholder]="'selected elements.'">
-              <div>
-                <mat-option
-                  [disabled]
-                  *ngFor="let element of elementsList"
-                  [value]="element.E">
-                  {{ this.elementOptionValue(element) }}
-                </mat-option>
-              </div>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field *ngSwitchCase="2"
+          <mat-select
+            #matElements
             formControlName="selectedElements"
-            appearance="fill"
-            subscriptSizing="dynamic"
-            ngDefaultControl>
-            <label>{{ title }}</label>
-
-            <mat-select
-              #matElements
-              formControlName="selectedElements"
-              title="select elements"
-              [placeholder]="'click here to begin.'">
-              <div>
-                <mat-option
-                  *ngFor="let element of elementsList"
-                  [value]="element.E">
-                  {{ this.elementOptionValue(element) }}
-                </mat-option>
-              </div>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field *ngSwitchCase="3"
-            formControlName="selectedElements"
-            appearance="fill"
-            subscriptSizing="dynamic"
-            ngDefaultControl>
-            <label>{{ title }}</label>
-            <input type="text" matInput readonly style="visibility: hidden">
-          </mat-form-field>
+            title="select elements"
+            [placeholder]="'click here to begin.'">
+            <div>
+              <mat-option
+                *ngFor="let element of elementsList"
+                [value]="element.E">
+                {{ this.elementOptionValue(element) }}
+              </mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          *ngSwitchCase="3"
+          formControlName="selectedElements"
+          subscriptSizing="dynamic"
+          ngDefaultControl>
+          <label>{{ title }}</label>
+          <input type="text" title="results" class="hidden" matInput readonly/>
+        </mat-form-field>
         <div *ngSwitchDefault>No match found</div>
       </ng-container>
     </section>
