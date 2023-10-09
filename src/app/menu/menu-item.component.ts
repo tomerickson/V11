@@ -27,7 +27,7 @@ export class MenuItemComponent {
   get menuType(): 'route' | 'link' | 'menu' {
     const route: boolean = this.item.route.length > 0;
     const link: boolean = (this.item.link ?? '').length > 0;
-    const menu: boolean = !route && !link;
+    const menu: boolean = this.item.menu ?? false;
     return menu ? 'menu' : link ? 'link' : 'route';
   }
 

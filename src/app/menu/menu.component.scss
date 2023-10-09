@@ -1,4 +1,51 @@
+a:link,
+a:visited {
+  text-decoration: none;
+  color: initial;
+}
+
+.mat-mdc-list-item {
+  height: 2em !important;
+}
+
 ul {
   text-decoration: none;
-  list-style: none;
+  list-style-type:disc
+}
+mat-nav-list#cascades.collapse {
+  visibility: hidden;
+  height: 0;
+}
+
+.menuRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  :first-child {
+    font-size: 12pt;
+    margin-left: 1em;
+  }
+  :last-child {
+    font-size: 12pt;
+  }
+  :hover {
+    background-color: transparent;
+  }
+}
+
+.submenu.expanded {
+  height: auto;
+  transform: scaleY(1);
+}
+.submenu {
+  height: 0;
+  overflow-y: hidden;
+  transition: transform 300ms ease;
+  transform: scaleY(0);
+  transform-origin: top;
+  padding-left: 30px;
+}
+.submenu:hover {
+  background-color: transparent;
 }

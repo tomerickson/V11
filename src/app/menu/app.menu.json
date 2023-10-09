@@ -39,11 +39,12 @@
     "route": "",
     "text": "Cascades",
     "link": null,
-    "icon": "chevron_right"
+    "icon": "chevron_right",
+    "menu": true
   },
   {
     "id": 7,
-    "route": "cascades-all",
+    "route": "cascades/cascades-all",
     "text": "Cascades All",
     "link": null,
     "icon": null,

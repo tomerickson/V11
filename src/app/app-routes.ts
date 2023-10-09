@@ -39,7 +39,7 @@ export const APP_ROUTES: Routes = [
       import('./two-up/two-up.routes').then((m) => m.TWO_UP_ROUTES)
   },
   {
-    path: 'cascades-all',
+    path: 'cascades',
     loadChildren: () =>
       import('./cascades/cascades.routes').then((m) => m.CASCADE_ROUTES)
   },

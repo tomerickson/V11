@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './shared/header/header.component';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterLinkWithHref, RouterModule, RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MenuComponent } from './menu/menu.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -13,7 +13,8 @@ import { feature } from './state/global.state';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
+    RouterOutlet,
+    RouterLinkWithHref,
     RouterOutlet, MatSidenavModule, MatToolbarModule,HeaderComponent, MenuComponent],
   selector: 'mfmp-root',
   templateUrl: './app.component.html',

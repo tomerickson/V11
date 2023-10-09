@@ -1,0 +1,101 @@
+.mat-mdc-card {
+    height: 100%;
+}
+
+div#loading {
+    width: 100%;
+}
+
+div.hint {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+
+    .mdc-fab--mini {
+        font-size: 12pt;
+        font-weight: 600;
+        height: 24px;
+        width: 24px;
+    }
+}
+
+div.grid {
+    display: grid;
+    column-gap: 1em;
+    row-gap: 1em;
+    padding-top: 1em;
+}
+
+div.four-up {
+    grid-template-columns: 3fr 1fr 3fr 1fr;
+}
+
+div.three-up {
+    grid-template-columns: 2fr 4fr 2fr;
+}
+
+div.two-up {
+    grid-template-columns: 3fr 2fr;
+
+    div.column-a {
+        text-align: right;
+        padding-left: 1em;
+    }
+
+    div.column-b > span{
+        font-weight: 500;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+}
+
+div.one-up {
+    grid-template-columns: 1fr;
+}
+
+div.twocolumngrid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 3fr 2fr;
+    column-gap: 1em;
+}
+
+div.flexcolumn {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    >div {
+        margin-top: 2em;
+    }
+}
+
+div.flexrow {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    >:last-child {
+        margin-left: 1em;
+    }
+}
+
+div.query {
+    :first-child {
+        font-weight: 500;
+    }
+
+    :last-child {
+        text-align: right;
+        font-weight: 500;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    }
+}
+
+div.button {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: flex-end;
+}
