@@ -19,7 +19,7 @@ import * as appState from 'src/app/state/index';
   [form]="form | async"
       [loading]="loading | async"
       [feedbackOptions]="feedbackOptions | async"
-      (submitter)="loadReports($event)"></mfmp-cascades4-face>`,
+      (submitter)="submitForm($event)"></mfmp-cascades4-face>`,
   styles: []
 })
 export class Cascades4HeadComponent implements OnInit {
@@ -41,7 +41,10 @@ export class Cascades4HeadComponent implements OnInit {
       featureStore.feature.selectFormData
     );
   }
-
+  submitForm(form: ICascadesAllForm) {
+    this.store.dispatch(featureStore.actions.requestAllResults({payload: form}));
+    this.router.navigate(['summary'], {relativeTo: this.activatedRoute});
+}
   /**
    * Configure the reports page for the cascades module,
    * dispatch the loadAllResults action, and redirect

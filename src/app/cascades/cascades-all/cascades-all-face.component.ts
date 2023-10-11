@@ -61,13 +61,7 @@ import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-inpu
     NumericInputComponent
   ],
   templateUrl: './cascades-all-face.component.html',
-  styleUrls: ['./cascades-all-face.component.scss'],
-  providers: [
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { subscriptSizing: 'dynamic' }
-    }
-  ]
+  styleUrls: ['./cascades-all-face.component.scss']
 })
 export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   store = inject(Store);

@@ -25,6 +25,7 @@ import { CrudService } from './app/core/services/crud.service';
 import { feature } from './app/state/global.state';
 import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalEffects } from './app/state/global.effects';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -56,7 +57,8 @@ bootstrapApplication(AppComponent, {
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
-      deps: [AppConfigService], multi: true
+      deps: [AppConfigService],
+      multi: true
     },
     // {provide: APP_CONFIG, useClass: AppConfigService,
     // deps: [APP_BASE_HREF]},
@@ -76,6 +78,10 @@ bootstrapApplication(AppComponent, {
     {
       provide: NotificationComponent,
       useClass: NotificationComponent
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' }
     },
     provideHttpClient(),
     provideRouter(APP_ROUTES, withComponentInputBinding()),

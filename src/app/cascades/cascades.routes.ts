@@ -11,6 +11,7 @@ import { ReportPagesHeadComponent } from '../shared/report-pages/report-pages.he
 import { Cascades4HeadComponent } from './cascades4/cascades4-head.component';
 import { NotFoundComponent } from '../shared/not-found/not-found.component';
 import { UnderConstructionComponent } from '../under-construction/under-construction.component';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 export const CASCADE_ROUTES: Routes = [
   {
@@ -20,11 +21,15 @@ export const CASCADE_ROUTES: Routes = [
       provideEffects([cascadeState.effects]),
       { provide: CascadesService, useClass: CascadesService },
       { provide: HeaderProviderService, useClass: HeaderProviderService },
-      { provide: DownloadService, useClass: DownloadService }
+      { provide: DownloadService, useClass: DownloadService },
+      {
+        provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+        useValue: { appearance: 'outline' }
+      }
     ],
     children: [
       { path: 'cascades-all', component: CascadesAllHeadComponent },
-      { path: 'cascades4', redirectTo: '**'},
+      { path: 'cascades4', component: Cascades4HeadComponent },
       { path: 'summary', component: CascadesSummaryHeadComponent },
       { path: 'reports', component: ReportPagesHeadComponent }
     ]
