@@ -150,7 +150,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     }
 
     if (resultElements.length > 0) {
-      if (leftElements || rightElements) {
+      if (leftElements.length > 0 || rightElements.length > 0) {
         clause.result = ' and';
       }      
       clause.result += ` E in ${this.combineElements(resultElements, [], true)}`;

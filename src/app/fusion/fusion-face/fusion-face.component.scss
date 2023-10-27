@@ -1,6 +1,7 @@
 div.wrapper {
   height: 100%;
 }
+
 .mat-expansion-panel-header.mat-expanded {
   background-color: rgba(250, 250, 250, .5);
 }
@@ -9,8 +10,11 @@ div.wrapper {
   background-color: rgba(250, 250, 250, .5);
 }
 
-.mat-card-content {
-  width: 100%;
+.mat-mdc-card {
+  height: 100%;
+}
+.mat-mdc-card-content {
+  height: 100%;
 }
 
 mat-expansion-panel#blurb {
@@ -52,16 +56,15 @@ div.neutrinos {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: baseline;
+  align-items: stretch;
   margin-bottom: 1ex;
 }
 
 div.sql {
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  align-items: center;
+  align-items:flex-start;
 
   :nth-child(3) {
     flex: 3;
@@ -73,12 +76,9 @@ div.sql {
   }
 }
 
-mat-card.coreQuery {
-  background-color: transparent;
-
-  mat-form-field {
-    width: 100%;
-  }
+.buttoncolumn {
+  display: flex;
+  flex-direction: column;
 }
 
 div.fullQuery {
@@ -91,18 +91,26 @@ div.coreQuery {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+}
 
+div.tableSet {
+  display: flex;
+  flex-direction: column;
 
-  :last-child {
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-shadow: 1px 1px 1px #999;
+  .tableSetGroup {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input.hidden {
+    visibility: collapse;
   }
 }
 
 div.orderBy {
   display: flex;
   flex-direction: column;
+
 }
 
 span.resultLimitHeader {
