@@ -6,8 +6,12 @@
   background-color: rgba(250, 250, 250, .5);
 }
 
-.mat-card-content {
+.mat-mdc-card {
+  height: 100%;
   width: 100%;
+}
+.mat-mdc-card-content {
+  height: 100%;
 }
 
 mat-expansion-panel#blurb {
@@ -17,14 +21,13 @@ mat-expansion-panel#blurb {
 h3.start {
   margin-top: 2ex;
   margin-left: 2em;
-  width: 100%;
   font-weight: 500;
 }
 
 div.children {
   display: flex;
   flex-direction: column;
-  background-color: transparent;
+  padding-top: 1em;
 
   div.nuclides {
     display: flex;
@@ -38,8 +41,8 @@ div.children {
 div.neutrinos {
   display: flex;
   flex-direction: row;
-  justify-content:center;
-  align-items: baseline;
+  justify-content: center;
+  align-items: stretch;
   margin-bottom: 1ex;
 }
 
@@ -61,7 +64,6 @@ div.sql {
 }
 
 mat-card.coreQuery {
-  background-color: transparent;
   mat-form-field {
     width: 100%;
   }

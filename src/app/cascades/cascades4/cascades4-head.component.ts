@@ -11,6 +11,7 @@ import { ReactionTypeEnum } from 'src/app/core/models/reaction-type-enum.model';
 import { ReportParameters } from 'src/app/core/models/report-parameters.model';
 import * as featureStore from 'src/app/state/cascades-all';
 import * as appState from 'src/app/state/index';
+import { HeaderProviderService } from 'src/app/shared/header/header.provider.service';
 @Component({
   selector: 'mfmp-cascades4-head',
   standalone: true,
@@ -24,6 +25,7 @@ import * as appState from 'src/app/state/index';
 })
 export class Cascades4HeadComponent implements OnInit {
   store = inject(Store);
+  headerService = inject(HeaderProviderService);
   loading!: Observable<boolean>;
   form!: Observable<ICascadesAllForm | null>;
   feedbackOptions!: Observable<ILookupDataModel[] | null>;
@@ -40,6 +42,7 @@ export class Cascades4HeadComponent implements OnInit {
     this.form = this.store.select(
       featureStore.feature.selectFormData
     );
+    this.headerService.buildPageHeader('cascades4');
   }
   submitForm(form: ICascadesAllForm) {
     this.store.dispatch(featureStore.actions.requestAllResults({payload: form}));

@@ -36,6 +36,12 @@
     "pageDescription": "Lists all energetically favourable reactions that cascade from both the input and the output nuclei from one or more reactions defined by the Core (starting) Query."
   },
   {
+    "pageName": "cascades4",
+    "pageTitle": "Cascade4 Reactions",
+    "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
+    "pageDescription": "Lists all energetically favourable reactions that cascade from a starting list of the elements in the active core fuel.  In this version, you must directly enter the active core fuel list of elements, as explained below."
+  },
+  {
     "pageName": "all-tables",
     "pageTitle": "All Tables",
     "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project",
