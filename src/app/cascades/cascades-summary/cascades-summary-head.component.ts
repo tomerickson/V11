@@ -61,6 +61,7 @@ export class CascadesSummaryHeadComponent implements OnInit {
     this.store.dispatch(
       featureStore.actions.loadAllResults({ url: href })
     );
+    console.log('route:', this.activatedRoute.parent?.url ?? 'missing')
     this.router.navigate(['reports'], {
       relativeTo: this.activatedRoute.parent
     });

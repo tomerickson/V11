@@ -115,102 +115,93 @@
             </mat-checkbox>
           </div>
         </div>
+        <div class="sql">
+          <div class="tableSet">
+            <mat-radio-group
+              labelPosition="before"
+              formControlName="tableSet"
+              name="tableSet"
+              value="fissionAll">
+              <mat-radio-button value="FissionAll" selected>
+                FissionAll
+              </mat-radio-button>
+              <mat-radio-button value="FissionAllNewPlus">
+                FissionAllNewPlus
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="orderBy">
+            <mat-form-field
+              id="orderBy"
+              formControlName="orderBy"
+              value="orderBy"
+              ngDefaultControl>
+              <mat-label>Order By:</mat-label>
+              <mat-select title="Order by" formControlName="orderBy">
+                <mat-option *ngFor="let f of sortFields" [value]="f.code">
+                  {{ f.code }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div>
+              <mat-checkbox
+                title="when checked."
+                formControlName="sortDescending">
+                Descending
+              </mat-checkbox>
+            </div>
+          </div>
+          <div class="fullQuery" [formGroup]="sqlForm">
+            <mat-label>Full Query</mat-label>
+            <textarea
+              matInput
+              formControlName="fullQuery"
+              title="'full query'"
+              value="fullQuery"
+              rows="4"></textarea>
+          </div>
+          <div class="coreQuery" [formGroup]="sqlForm">
+            <mat-label>Core Query</mat-label>
+            <textarea
+              matInput
+              formControlName="coreQuery"
+              title="'core query'"
+              value="coreQuery"
+              rows="4"></textarea>
+          </div>
+          <mfmp-resultsize-picker
+            [defaultLimit]="1000"
+            [minimum]="0"
+            [maximum]="1000"
+            [step]="50"
+            [limitVerbiage]="'Limit results to ... rows.'"
+            (limitSize)="setResultLimit($event)"></mfmp-resultsize-picker>
+          <mfmp-mev-picker
+            [defaultLimit]="10"
+            [minimum]="0"
+            [maximum]="100"
+            [step]="0.1"
+            [limitVerbiage]="'Limit to MeV greater then ...'"
+            (mevLimit)="setMevLimit($event)"></mfmp-mev-picker>
+        </div>
       </div>
-      <mat-card class="coreQuery">
-        <mat-card-content>
-          <mfmp-expandable-box
-            [caption]="'Tables:'"
-            [text]="tablesText"></mfmp-expandable-box>
-          <div class="sql">
-            <div>
-              <mat-radio-group
-                labelPosition="before"
-                formControlName="tableSet"
-                name="tableSet"
-                value="fissionAll">
-                <mat-radio-button value="FissionAll" selected>
-                  FissionAll
-                </mat-radio-button>
-                <mat-radio-button value="FissionAllNewPlus">
-                  FissionAllNewPlus
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
-            <div>
-              <mat-form-field
-                id="orderBy"
-                formControlName="orderBy"
-                value="orderBy"
-                ngDefaultControl>
-                <mat-label>Order By:</mat-label>
-                <mat-select title="Order by" formControlName="orderBy">
-                  <mat-option *ngFor="let f of sortFields" [value]="f.code">
-                    {{ f.code }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <div>
-                <mat-checkbox
-                  title="when checked."
-                  formControlName="sortDescending">
-                  Descending
-                </mat-checkbox>
-              </div>
-            </div>
-          </div>
-          <div class="flexrow" [formGroup]="sqlForm">
-            <div class="fullQuery">
-              <mat-label>Full Query</mat-label>
-              <textarea
-                matInput
-                formControlName="fullQuery"
-                title="'full query'"
-                value="fullQuery"
-                rows="4"></textarea>
-            </div>
-            <div class="coreQuery">
-              <mat-label>Core Query</mat-label>
-              <textarea
-                matInput
-                formControlName="coreQuery"
-                title="'core query'"
-                value="coreQuery"
-                rows="4"></textarea>
-            </div>
-            <mfmp-resultsize-picker
-              [defaultLimit]="1000"
-              [minimum]="0"
-              [maximum]="1000"
-              [step]="50"
-              [limitVerbiage]="'Limit results to ... rows.'"
-              (limitSize)="setResultLimit($event)"></mfmp-resultsize-picker>
-            <mfmp-mev-picker
-              [defaultLimit]="10"
-              [minimum]="0"
-              [maximum]="100"
-              [step]="0.1"
-              [limitVerbiage]="'Limit to MeV greater then ...'"
-              (mevLimit)="setMevLimit($event)"></mfmp-mev-picker>
-          </div>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button
-            type="button"
-            mat-raised-button
-            (click)="resetForm(); resetResults()">
-            RESET
-          </button>
-          <button
-            type="button"
-            mat-raised-button
-            color="primary"
-            tooltip="(submittable)? '' : 'Select an element to continue.'"
-            [disabled]="!submittable"
-            (click)="buildRequestForm()">
-            SUBMIT
-          </button>
-        </mat-card-actions>
-      </mat-card>
     </form>
   </mat-card-content>
+  <mat-card-actions align="end">
+    <button
+      type="button"
+      mat-raised-button
+      (click)="resetForm(); resetResults()">
+      RESET
+    </button>
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      tooltip="(submittable)? '' : 'Select an element to continue.'"
+      [disabled]="!submittable"
+      (click)="buildRequestForm()">
+      SUBMIT
+    </button>
+  </mat-card-actions>
 </mat-card>

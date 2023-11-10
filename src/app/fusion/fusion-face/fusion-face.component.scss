@@ -1,5 +1,5 @@
-div.wrapper {
-  height: 100%;
+.wrapper, .mat-mdc-card, .mat-mdc-card-content {
+  min-height: 100%;
 }
 
 .mat-expansion-panel-header.mat-expanded {
@@ -8,13 +8,6 @@ div.wrapper {
 
 .mat-expansion-panel-header.mat-expanded:hover {
   background-color: rgba(250, 250, 250, .5);
-}
-
-.mat-mdc-card {
-  height: 100%;
-}
-.mat-mdc-card-content {
-  height: 100%;
 }
 
 mat-expansion-panel#blurb {

@@ -99,6 +99,9 @@ export class Cascades4FaceComponent implements OnInit {
   get coreQuery(): boolean {
     return this.cascadesForm.get('coreQuery')?.value;
   }
+  get leftElements(): boolean {
+    return this.cascadesForm.get('leftElements')?.value;
+  }
   mouseEntry = signal(false);
 
   /** Tooltip support
