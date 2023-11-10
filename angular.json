@@ -138,25 +138,25 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "v11:build"
+            "buildTarget": "v11:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "v11:build:production"
+              "buildTarget": "v11:build:production"
             },
             "development": {
-              "browserTarget": "v11:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "proxyConfig": "src/proxy.conf.json",
+              "buildTarget": "v11:build:development"
             },
             "staging": {
-              "browserTarget": "v11:build:staging"
+              "buildTarget": "v11:build:staging"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "v11:build"
+            "buildTarget": "v11:build"
           }
         },
         "lint": {
