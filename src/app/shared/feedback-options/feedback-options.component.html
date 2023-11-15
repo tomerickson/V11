@@ -1,0 +1,11 @@
+<mat-form-field>
+  <mat-select
+    formControlName="controlName"
+    name="controlName"
+    placeholder="Choose an option."
+    [value]="selected">
+    @for (option of feedbackOptions; track option) {
+      <mat-option [value]="option.code">{{option.description}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

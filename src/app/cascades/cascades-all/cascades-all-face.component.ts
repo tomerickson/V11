@@ -33,35 +33,37 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-input.component';
+import { FeedbackOptionsComponent } from 'src/app/shared/feedback-options/feedback-options.component';
 
 @Component({
-  selector: 'mfmp-cascades-all-face',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    NumericInputComponent
-  ],
-  templateUrl: './cascades-all-face.component.html',
-  styleUrls: ['./cascades-all-face.component.scss']
+    selector: 'mfmp-cascades-all-face',
+    standalone: true,
+    templateUrl: './cascades-all-face.component.html',
+    styleUrls: ['./cascades-all-face.component.scss'],
+    imports: [
+        CommonModule,
+        MatBadgeModule,
+        MatButtonModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        NumericInputComponent,
+        FeedbackOptionsComponent
+    ]
 })
 export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   store = inject(Store);
@@ -109,7 +111,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   }
   mouseEntry = signal(false);
 
-  @Input({ required: true }) feedbackOptions!: ILookupDataModel[] | null;
+  @Input({ required: true }) feedbackOptions!: Observable<ILookupDataModel[]>;
   @Output() submitter: EventEmitter<ICascadesAllForm> = new EventEmitter();
 
   /** Tooltip support

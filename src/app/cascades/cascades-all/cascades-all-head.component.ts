@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
   standalone: true,
   template: `
     <mfmp-cascades-all-face
-      [feedbackOptions]="feedbackOptions | async"
+      [feedbackOptions]="feedbackOptions"
       (submitter)="submitForm($event)"></mfmp-cascades-all-face>
   `,
   styles: [],

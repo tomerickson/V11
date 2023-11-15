@@ -137,7 +137,7 @@
               formControlName="meltingSwitch"
               placeholder="Choose an option.">
               <mat-option
-                *ngFor="let option of feedbackOptions"
+                *ngFor="let option of feedbackOptions | async"
                 [value]="option.code">
                 {{ option.description }}
               </mat-option>
@@ -154,7 +154,7 @@
               formControlName="boilingSwitch"
               placeholder="Choose an option.">
               <mat-option
-                *ngFor="let option of feedbackOptions"
+                *ngFor="let option of feedbackOptions | async"
                 [value]="option.code">
                 {{ option.description }}
               </mat-option>
@@ -163,17 +163,19 @@
         </div>
         <div class="flexrow end">
           <div>Radioactive Isotopes:</div>
-          <mat-form-field>
-            <mat-select
+          <mfmp-feedback-options
+            [feedbackOptions]="feedbackOptions | async"
+            [controlName]="'isotopeSwitch'"
+            [selected]="'Core'"></mfmp-feedback-options>
+<!--             <mat-select
               formControlName="isotopeSwitch"
               placeholder="Choose an option.">
               <mat-option
-                *ngFor="let option of feedbackOptions"
+                *ngFor="let option of feedbackOptions track option.code"
                 [value]="option.code">
                 {{ option.description }}
               </mat-option>
-            </mat-select>
-          </mat-form-field>
+            </mat-select> -->
         </div>
 
         <div class="flexrow end">
@@ -183,7 +185,7 @@
               formControlName="nuclearFermionSwitch"
               placeholder="Choose an option.">
               <mat-option
-                *ngFor="let option of feedbackOptions"
+                *ngFor="let option of feedbackOptions | async"
                 [value]="option.code">
                 {{ option.description }}
               </mat-option>
@@ -197,7 +199,7 @@
               formControlName="atomicFermionSwitch"
               placeholder="Choose an option.">
               <mat-option
-                *ngFor="let option of feedbackOptions"
+                *ngFor="let option of feedbackOptions | async"
                 [value]="option.code">
                 {{ option.description }}
               </mat-option>
@@ -214,7 +216,7 @@
               formControlName="dimersSwitch"
               placeholder="Choose an option.">
               <mat-option
-                *ngFor="let option of feedbackOptions"
+                *ngFor="let option of feedbackOptions | async"
                 [value]="option.code">
                 {{ option.description }}
               </mat-option>
