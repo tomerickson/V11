@@ -4,7 +4,7 @@
     name="controlName"
     placeholder="Choose an option."
     [value]="selected">
-    @for (option of feedbackOptions; track option) {
+    @for (option of feedbackOptions | async; track option) {
       <mat-option [value]="option.code">{{option.description}}</mat-option>
     }
   </mat-select>

@@ -131,97 +131,46 @@
               Reactor Temperature:
             </label>
           </div>
-          <mat-form-field>
-            <mat-select
-              value="meltingSwitch"
-              formControlName="meltingSwitch"
-              placeholder="Choose an option.">
-              <mat-option
-                *ngFor="let option of feedbackOptions | async"
-                [value]="option.code">
-                {{ option.description }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mfmp-feedback-options
+            [controlName]="'meltingSwitch'"
+            [selected]="meltingSwitch"></mfmp-feedback-options>
         </div>
         <div class="flexrow end">
           <div>
             Elements that WILL have BOILED before reaching the Maximum Reactor
             Temperature:
           </div>
-          <mat-form-field>
-            <mat-select
-              formControlName="boilingSwitch"
-              placeholder="Choose an option.">
-              <mat-option
-                *ngFor="let option of feedbackOptions | async"
-                [value]="option.code">
-                {{ option.description }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mfmp-feedback-options
+            [controlName]="'boilingSwitch'"
+            [selected]="boilingSwitch"></mfmp-feedback-options>
         </div>
         <div class="flexrow end">
           <div>Radioactive Isotopes:</div>
           <mfmp-feedback-options
-            [feedbackOptions]="feedbackOptions | async"
             [controlName]="'isotopeSwitch'"
-            [selected]="'Core'"></mfmp-feedback-options>
-<!--             <mat-select
-              formControlName="isotopeSwitch"
-              placeholder="Choose an option.">
-              <mat-option
-                *ngFor="let option of feedbackOptions track option.code"
-                [value]="option.code">
-                {{ option.description }}
-              </mat-option>
-            </mat-select> -->
+            [selected]="isotopeSwitch"></mfmp-feedback-options>
         </div>
 
         <div class="flexrow end">
           <div>Nuclear Fermions</div>
-          <mat-form-field>
-            <mat-select
-              formControlName="nuclearFermionSwitch"
-              placeholder="Choose an option.">
-              <mat-option
-                *ngFor="let option of feedbackOptions | async"
-                [value]="option.code">
-                {{ option.description }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mfmp-feedback-options
+            [controlName]="'nuclearFermionSwitch'"
+            [selected]="nuclearFermionSwitch"></mfmp-feedback-options>
         </div>
         <div class="flexrow end">
           <div>Atomic Fermions</div>
-          <mat-form-field>
-            <mat-select
-              formControlName="atomicFermionSwitch"
-              placeholder="Choose an option.">
-              <mat-option
-                *ngFor="let option of feedbackOptions | async"
-                [value]="option.code">
-                {{ option.description }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mfmp-feedback-options
+            [controlName]="'atomicFermionSwitch'"
+            [selected]="atomicFermionSwitch"></mfmp-feedback-options>
         </div>
         <div class="flexrow end">
           <div>
             For H, D, T*, Li, N, O, F, Na, Cl, K, Cr, Br, Rb and I which can
             form Dimers:
           </div>
-          <mat-form-field>
-            <mat-select
-              formControlName="dimersSwitch"
-              placeholder="Choose an option.">
-              <mat-option
-                *ngFor="let option of feedbackOptions | async"
-                [value]="option.code">
-                {{ option.description }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mfmp-feedback-options
+            [controlName]="'dimersSwitch'"
+            [selected]="dimersSwitch"></mfmp-feedback-options>
         </div>
 
         <div class="flexrow end">
@@ -279,8 +228,8 @@
                 [matTooltipShowDelay]="tooltipDelay">
                 <span>
                   <mat-icon [inline]="true" color="primary">info</mat-icon>
-                   Table set:
-               </span>
+                  Table set:
+                </span>
               </mat-label>
               <mat-radio-button value="Original" selected>
                 Original

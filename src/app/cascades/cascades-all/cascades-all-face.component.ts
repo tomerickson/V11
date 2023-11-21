@@ -88,6 +88,9 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   get meltingSwitch(): string {
     return this.cascadesForm.get('meltingSwitch')?.value;
   }
+  get boilingSwitch(): string {
+    return this.cascadesForm.get('boilingSwitch')?.value;
+  }
   get isotopeSwitch(): string {
     return this.cascadesForm.get('isotopeSwitch')?.value;
   }
