@@ -10,10 +10,14 @@ import {
   signal
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
+  FormControlStatus,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators
 } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -35,46 +39,51 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
-import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
+import { IKeyValuePair, KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-input.component';
 import { FeedbackOptionsComponent } from 'src/app/shared/feedback-options/feedback-options.component';
+import { IFormError } from 'src/app/core/models/form-error.model';
+import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.component';
 
 @Component({
-    selector: 'mfmp-cascades-all-face',
-    standalone: true,
-    templateUrl: './cascades-all-face.component.html',
-    styleUrls: ['./cascades-all-face.component.scss'],
-    imports: [
-        CommonModule,
-        MatBadgeModule,
-        MatButtonModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatTooltipModule,
-        ReactiveFormsModule,
-        NumericInputComponent,
-        FeedbackOptionsComponent
-    ]
+  selector: 'mfmp-cascades-all-face',
+  standalone: true,
+  templateUrl: './cascades-all-face.component.html',
+  styleUrls: ['./cascades-all-face.component.scss'],
+  imports: [
+    CommonModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    NumericInputComponent,
+    FeedbackOptionsComponent,
+    SliderInputComponent
+  ]
 })
 export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   store = inject(Store);
   fb = inject(FormBuilder);
+  ready = signal(false);
   cascadesForm!: FormGroup;
   subscriptions!: Subscription;
 
-  errorMessages = [
-    { control: '*', error: 'required', message: 'Required entry.' },
-    { control: '*', error: 'pattern', message: 'Digits [0-9] only.' }
-  ];
+  numericErrorMessages: Record<string,string> = {
+    required: 'This field is required.',
+    pattern: 'Digits [0-9] only.',
+    range: 'Out of range.'
+     };
 
   /**
    * Form getters
@@ -84,6 +93,12 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   }
   get maxLoops(): number {
     return this.cascadesForm.get('maxLoops')?.value;
+  }
+  get fusionMinEnergy(): number {
+    return this.cascadesForm.get('fusionMinEnergy')?.value;
+  }
+  get twoUpMinEnergy(): number {
+    return this.cascadesForm.get('twoUpMinEnergy')?.value;
   }
   get meltingSwitch(): string {
     return this.cascadesForm.get('meltingSwitch')?.value;
@@ -134,6 +149,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions = new Subscription();
     this.buildForm();
+    this.ready.set(true);
   }
 
   ngOnDestroy(): void {
@@ -141,28 +157,42 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   }
 
   buildForm = () => {
-    this.cascadesForm = this.fb.group({
-      tableSet: new FormControl<string>('Original'),
-      maxNuclei: [100, [Validators.required, Validators.pattern('^[0-9]+$')]],
-      maxLoops: [3, [Validators.pattern('^[0-9]+$')]],
-      maxReactorTemp: [2400, [Validators.pattern('^[0-9]+$')]],
-      meltingSwitch: ['Core'],
-      boilingSwitch: ['Include'],
-      fusionMinEnergy: [5, [Validators.pattern('^[0-9]+$')]],
-      twoUpMinEnergy: [5, Validators.pattern('^[0-9]+$')],
-      isotopeSwitch: ['Include'],
-      halfLifeThreshold: [18, [Validators.pattern('^[0-9]+$')]],
-      nuclearFermionSwitch: ['Core'],
-      atomicFermionSwitch: ['Core'],
-      dimersSwitch: ['Include'],
-      nuclidesSort: ['order by Z, A'],
-      reactionSort: ['order by MeV desc'],
-      coreQuery: ["E1 = 'H' and (E2 = 'Ni') "],
-      leftElements: ['left'],
-      originalElements: ['none'],
-      rightElements: ['right'],
-      mouseEntry: new FormControl(true)
-    });
+    this.cascadesForm = this.fb.group(
+      {
+        tableSet: new FormControl<string>('Original'),
+        maxNuclei: new FormControl([100, [Validators.required, Validators.pattern('^[0-9]+$')]]),
+        maxLoops: [3, [Validators.required, Validators.pattern('^[0-9]+$')]],
+        maxReactorTemp: [
+          2400,
+          [Validators.required, Validators.pattern('^[0-9]+$')]
+        ],
+        meltingSwitch: ['Core'],
+        boilingSwitch: ['Include'],
+        fusionMinEnergy: [
+          5,
+          [Validators.required, Validators.pattern('^[0-9]+$')]
+        ],
+        twoUpMinEnergy: [
+          5,
+          [Validators.required, Validators.pattern('^[0-9]+$')]
+        ],
+        isotopeSwitch: ['Include'],
+        halfLifeThreshold: [
+          18,
+          [Validators.required, Validators.pattern('^[0-9]+$')]
+        ],
+        nuclearFermionSwitch: ['Core'],
+        atomicFermionSwitch: ['Core'],
+        dimersSwitch: ['Include'],
+        nuclidesSort: ['order by Z, A'],
+        reactionSort: ['order by MeV desc'],
+        coreQuery: ["E1 = 'H' and (E2 = 'Ni') "],
+        leftElements: ['left'],
+        originalElements: ['none'],
+        rightElements: ['right']
+      },
+      { validators: this.formValidator }
+    );
 
     this.subscriptions.add(
       this.cascadesForm.valueChanges.subscribe((values) =>
@@ -177,37 +207,31 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
     this.submitter.emit(form);
   };
   handleFormChanges = (changes: any): void => {
-    //this.mouseEntry.set((vlu) => (changes.mouseEntry = vlu));
-    console.log('mouseEntry', this.mouseEntry());
+    // this.mouseEntry.set((vlu) => (changes.mouseEntry = vlu));
+    // console.log('status', this.cascadesForm.status);
   };
 
   handleNumericInputs(kvp: KeyValuePair) {
     this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
   }
 
+  handleFeedback(kvp: IKeyValuePair): void {
+    this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
+  }
+
   sliderChange() {
-    const value = this.mouseEntry();
-    this.mouseEntry.set(!value);
+    this.mouseEntry.set(!this.mouseEntry());
   }
   hasError = (controlName: string, errorName: string) => {
     return this.cascadesForm.controls[controlName].hasError(errorName);
   };
 
-  /**
-   * Look for a matching error message:
-   *
-   */
-  errorMessage = (controlName: string, errorName: string): string => {
-    const errs = this.errorMessages
-      .filter(
-        (msg) =>
-          (msg.control === controlName || msg.control === '*') &&
-          msg.error === errorName
-      )
-      .sort((a, b) =>
-        a.control < b.control ? 1 : a.control > b.control ? -1 : 0
-      );
-    console.log('errs', errs);
-    return errs[0].message;
+  formValidator: ValidatorFn = (
+    form: AbstractControl
+  ): ValidationErrors | null => {
+    const status: FormControlStatus = (form as FormGroup).status;
+    const result = (status === 'VALID') ? null : { error: true };
+    console.log('form.status', status);
+    return result;
   };
 }

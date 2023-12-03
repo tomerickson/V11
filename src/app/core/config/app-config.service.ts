@@ -1,16 +1,19 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { Inject, Injectable, InjectionToken, StaticProvider } from '@angular/core';
+import {
+  Inject,
+  Injectable,
+  InjectionToken,
+  StaticProvider
+} from '@angular/core';
 import { IAppConfig } from './iapp-config.model';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, lastValueFrom, map } from 'rxjs';
 import packageJson from '../../../../package.json';
 
-
-
 export const APP_CONFIG = new InjectionToken<IAppConfig>('app.config');
 
-export const provideConfigfile = (config: IAppConfig) :StaticProvider => {
-  return {provide: APP_CONFIG, useValue: config}
+export const provideConfigfile = (config: IAppConfig): StaticProvider => {
+  return { provide: APP_CONFIG, useValue: config };
 };
 
 @Injectable({
@@ -33,20 +36,18 @@ export class AppConfigService {
     allTablesPageSize: 1
   };
 
-  constructor(@Inject(APP_BASE_HREF) private baseUrl: string, private http: HttpClient) {
-    console.log('baseUrl', this.baseUrl);
+  constructor(
+    @Inject(APP_BASE_HREF) private baseUrl: string,
+    private http: HttpClient
+  ) {
     this.loadConfigFile();
-    }
+  }
 
- 
-
-   loadConfigFile = async (): Promise<void> => {
-    console.log('baseUrl', this.baseUrl);
+  loadConfigFile = async (): Promise<void> => {
     this._appConfig = await firstValueFrom(
-      this.http.get<IAppConfig>('assets/config/config.json'))
-    }
-  
-
+      this.http.get<IAppConfig>('assets/config/config.json')
+    );
+  };
 
   validateConfiguration() {
     let ok = this.apiUrl !== '?' && this.pageCredits !== '';
@@ -59,7 +60,7 @@ export class AppConfigService {
   get config(): IAppConfig {
     return this._appConfig;
   }
-  
+
   get version(): string {
     return this._appConfig.version;
   }

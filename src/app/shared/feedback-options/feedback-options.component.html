@@ -1,11 +1,16 @@
-<mat-form-field>
+@if(ready()) {
+  <div [formGroup]="form">
+  <mat-form-field formGroupName="form">
   <mat-select
-    formControlName="controlName"
+    formControlName="selector"
     name="controlName"
     placeholder="Choose an option."
-    [value]="selected">
+    [value]="selected"
+    (selectionChange)="selectFeedback($event)">
     @for (option of feedbackOptions | async; track option) {
       <mat-option [value]="option.code">{{option.description}}</mat-option>
     }
   </mat-select>
 </mat-form-field>
+</div>
+}

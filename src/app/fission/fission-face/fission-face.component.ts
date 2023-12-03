@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -61,7 +61,7 @@ import { SqlForm } from 'src/app/core/models/sql-form.model';
   styleUrls: ['./fission-face.component.scss'],
   viewProviders: [MatExpansionPanel]
 })
-export class FissionFaceComponent {
+export class FissionFaceComponent implements OnInit, OnDestroy  {
 
   private _coreQuery = '';
   private _fullQuery = '';

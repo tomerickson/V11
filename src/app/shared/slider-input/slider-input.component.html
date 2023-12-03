@@ -1,5 +1,10 @@
 <div id="touch">
   <label [for]="inputId">{{ label }}</label>
+  <mat-slider
+    [min]="min"
+    [step]="step"
+    [max]="max < 0 ? null : max"
+    [discrete]="true">
     <input
       type="text"
       [formControl]="control"
@@ -12,6 +17,7 @@
       title="label"
       [id]="inputId"
       [required]="true" />
+  </mat-slider>
   <div>
     <label>{{ -1 }}</label>
   </div>

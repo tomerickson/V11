@@ -8,7 +8,13 @@ import {
   inject,
   signal
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -57,6 +63,7 @@ export class Cascades4FaceComponent implements OnInit {
   @Input({ required: true }) feedbackOptions!: ILookupDataModel[] | null;
   @Output() submitter = new EventEmitter<ICascadesAllForm>();
 
+  ready = signal(false);
   store = inject(Store);
   fb = inject(FormBuilder);
   cascadesForm!: FormGroup;
@@ -118,10 +125,10 @@ export class Cascades4FaceComponent implements OnInit {
       the answer file (check dates and times) may yet be there and complete.`;
   tooltipDelay = 750;
 
-  
   ngOnInit(): void {
     this.subscriptions = new Subscription();
     this.buildForm();
+    this.ready.set(true);
   }
 
   buildForm = () => {

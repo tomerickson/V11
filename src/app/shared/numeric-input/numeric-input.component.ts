@@ -18,8 +18,10 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
+  FormBuilder,
   FormControl,
   FormGroup,
+  FormGroupDirective,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
@@ -41,121 +43,22 @@ import { Subscription } from 'rxjs';
   templateUrl: './numeric-input.component.html',
   styleUrls: ['./numeric-input.component.scss']
 })
-export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
-  cdr = inject(ChangeDetectorRef);
+export class NumericInputComponent implements OnInit  {
 
   private _method!: 'slider' | 'text';
 
-  @Input({ required: true }) set method(value: 'slider' | 'text') {
-    this._method = value;
-  }
-  get method() {
-    return this._method;
-  }
-  @Input() min: number = 0;
-  @Input({ required: true }) max!: number;
-  @Input() step: number = 0;
-  @Input({ required: true }) controlName!: string;
-  @Input({ required: true }) errorMessages!: IFormError[];
-  @Input({ required: true }) initialValue!: number;
-  @Input() label!: string;
-  @Output() changes: EventEmitter<KeyValuePair> = new EventEmitter();
-  @ViewChild('prompt') inputRef!: ElementRef<HTMLInputElement>;
-
-  subscriptions: Subscription = new Subscription();
-
-  /**
-   *  used for slider
-   */
-  value = signal(0);
-
-  /**
-   * used for text input
-   */
-  input!: HTMLInputElement;
- 
-  form!: FormGroup;
-
-  get numValue(): number {
-    return this.form.get('numValue')?.value;
-  }
-
-  get currentValue() {
-    return this.form.get('numValue')?.value;
-  }
+  @Input() min = 0;
+  @Input() max: number = -1;
+  @Input() step = 1;
+  @Input() label = '';
+  @Input() inputId = '';
+  @Input({required: true, transform: () => FormControl}) control!:  FormControl;
+  @Input({ required: true }) errorMessages!: Record<string, string>;
 
   ngOnInit(): void {
-    this.buildForm();
-    this.value.set(this.initialValue);
-    this.form.get('numValue')?.setValue(this.value);
   }
 
-  ngAfterViewInit(): void {
-    this.input = this.inputRef.nativeElement;
-    this.toggleControls();
-    this.cdr.detectChanges();
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
-  buildForm = () => {
-    this.form = new FormGroup({
-      numValue: new FormControl(this.initialValue, [
-        Validators.required,
-        Validators.pattern('[0-9]+')
-      ])
-    });
-  };
-
-  toggleControls() {
-    if (this.method === 'slider') {
-    } else {
-      this.form.get('numValue')?.setValue(this.value(), { emitEvent: true });
-    }
-  }
-
-  updateValueFromInput(event: Event): void {
-    const elm: HTMLInputElement = event.target as HTMLInputElement;
-    this.form.get('numValue')?.setValue(elm.value, { emitEvent: true });
-    if (this.form.get('numValue')?.valid) {
-      this.value.set(+elm.value);
-      this.changes.emit(
-        new KeyValuePair({ key: this.controlName, value: elm.value })
-      );
-    }
-    this.cdr.detectChanges();
-  }
-
-  updateValueFromSlider(value: number) {
-    this.value.set(value);
-    this.input.value = String(value);
-    this.form.get('numValue')?.setValue(value, { emitEvent: true });
-
-    this.changes.emit(
-      new KeyValuePair({ key: this.controlName, value: value })
-    );
-    this.cdr.detectChanges();
-  }
   hasError = (errorName: string) => {
-    return this.form.get('numValue')?.hasError(errorName);
-  };
-
-  /**
-   * Look for a matching error message:
-   *
-   */
-  getErrorMessage = (controlName: string, errorName: string): string => {
-    const errs = this.errorMessages
-      .filter(
-        (msg) =>
-          (msg.control === controlName || msg.control === '*') &&
-          msg.error === errorName
-      )
-      .sort((a, b) =>
-        a.control < b.control ? 1 : a.control > b.control ? -1 : 0
-      );
-    return errs[0].message;
+    return this.control.hasError(errorName);
   };
 }

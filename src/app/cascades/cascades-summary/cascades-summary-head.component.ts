@@ -16,7 +16,7 @@ import { CascadesSummaryFaceComponent } from './cascades-summary-face.component'
   standalone: true,
   template: `
     <mfmp-cascades-summary-face
-      [form]="form | async"
+      [summary]="summary | async"
       [loading]="loading | async"
       [feedbackOptions]="feedbackOptions | async"
       (submitter)="loadReports($event)"></mfmp-cascades-summary-face>
@@ -26,7 +26,7 @@ import { CascadesSummaryFaceComponent } from './cascades-summary-face.component'
 export class CascadesSummaryHeadComponent implements OnInit {
   store = inject(Store);
   loading!: Observable<boolean>;
-  form!: Observable<ICascadesAllForm | null>;
+  summary!: Observable<ICascadesAllForm | null>;
   feedbackOptions!: Observable<ILookupDataModel[] | null>;
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
@@ -38,7 +38,7 @@ export class CascadesSummaryHeadComponent implements OnInit {
     this.loading = this.store.select(
       featureStore.feature.selectLoading
     );
-    this.form = this.store.select(
+    this.summary = this.store.select(
       featureStore.feature.selectFormData
     );
   }

@@ -40,6 +40,7 @@
     </div>
   </mat-card-header>
   <mat-card-content>
+    @if(ready()) {
     <form [formGroup]="cascadesForm">
       <input type="hidden" name="doit" value="execute_query" readonly />
       <div class="grid">
@@ -49,14 +50,15 @@
             Maximum number of nuclei to be tried in all pairings as inputs to
             both the Fusion and the TwoToTwo reaction tables:
           </div>
-          <mfmp-numeric-input
+<!--           <mfmp-numeric-input
             [method]="mouseEntry() == true ? 'slider' : 'text'"
             [min]="0"
             [max]="1000"
             [controlName]="'maxNuclei'"
             [errorMessages]="errorMessages"
             [initialValue]="maxNuclei"
-            (changes)="handleNumericInputs($event)"></mfmp-numeric-input>
+            [formGroupName]="'cascadesForm'"
+            (changes)="handleNumericInputs($event)"></mfmp-numeric-input> -->
         </div>
 
         <!-- Max. loops-->
@@ -65,41 +67,44 @@
             Maximum number of loops to be used in the recursion process (too
             many will produce runaway):
           </div>
-          <mfmp-numeric-input
+<!--           <mfmp-numeric-input
             [method]="mouseEntry() == true ? 'slider' : 'text'"
             [min]="0"
             [max]="20"
             [controlName]="'maxLoops'"
             [errorMessages]="errorMessages"
             [initialValue]="maxLoops"
-            (changes)="handleNumericInputs($event)"></mfmp-numeric-input>
+            [formGroupName]="'cascadesForm'"
+            (changes)="handleNumericInputs($event)"></mfmp-numeric-input> -->
         </div>
 
         <!-- Max. reactor temperature -->
         <div class="flexrow end">
           <div>Maximum Reactor Temperature (Kelvin):</div>
-          <mfmp-numeric-input
+<!--           <mfmp-numeric-input
             [method]="mouseEntry() == true ? 'slider' : 'text'"
             [min]="0"
             [max]="10000"
             [controlName]="'maxReactorTemp'"
             [errorMessages]="errorMessages"
             [initialValue]="maxReactorTemp"
-            (changes)="handleNumericInputs($event)"></mfmp-numeric-input>
+            [formGroupName]="'cascadesForm'"
+            (changes)="handleNumericInputs($event)"></mfmp-numeric-input> -->
         </div>
         <div class="flexrow end">
           <div>
             LHL [Log10(Half Life in Years)] Threshold, below which nuclides will
             count as a Radioactive Isotopes:
           </div>
-          <mfmp-numeric-input
+<!--           <mfmp-numeric-input
             [method]="mouseEntry() == true ? 'slider' : 'text'"
             [min]="0"
             [max]="20"
             [controlName]="'halfLifeThreshold'"
             [errorMessages]="errorMessages"
             [initialValue]="+halfLifeThreshold"
-            (changes)="handleNumericInputs($event)"></mfmp-numeric-input>
+            [formGroupName]="'cascadesForm'"
+            (changes)="handleNumericInputs($event)"></mfmp-numeric-input> -->
         </div>
         <div class="flexrow end">
           <div>Minimum energy (MeV) for any Fusion reaction to be counted:</div>
@@ -124,6 +129,7 @@
               placeholder="Minimum 2-2 energy" />
           </mat-form-field>
         </div>
+
         <div class="flexrow end">
           <div>
             <label>
@@ -332,5 +338,6 @@
         </div>
       </div>
     </form>
+  }
   </mat-card-content>
 </mat-card>

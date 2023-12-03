@@ -30,15 +30,15 @@ export const CASCADE_ROUTES: Routes = [
       {
         path: 'cascades-all',
         component: CascadesAllHeadComponent,
-        children: [{ path: 'reports', redirectTo: 'reports' }]
+        // children: [{ path: 'reports', redirectTo: 'reports' }]
       },
-      {
+/*       {
         path: 'cascades4',
         component: Cascades4HeadComponent,
         children: [{ path: 'reports', redirectTo: 'reports' }]
-      },
-      { path: 'summary', component: CascadesSummaryHeadComponent },
-      { path: 'reports', component: ReportPagesHeadComponent }
+      }, */
+      //{ path: 'summary', component: CascadesSummaryHeadComponent },
+      // { path: 'reports', component: ReportPagesHeadComponent }
     ]
   },
   { path: '**', component: NotFoundComponent }

@@ -17,12 +17,12 @@ import { ProgressSpinnerComponent } from 'src/app/shared/progress-spinner/progre
   styleUrls: ['./cascades-summary-face.component.scss']
 })
 export class CascadesSummaryFaceComponent {
-  
-  @Input({required: true}) form!: ICascadesAllForm | null;
+
+  @Input({required: true}) summary!: ICascadesAllForm | null;
   @Input({required: true}) loading!: boolean | null;
   @Input({required: true}) feedbackOptions!: ILookupDataModel[] | null;
   @Output() submitter = new EventEmitter<string>();
 
   loadResults = () => {
-    this.submitter.emit(this.form?.resultsLink);
+    this.submitter.emit(this.summary?.resultsLink);
   }}

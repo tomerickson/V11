@@ -40,6 +40,6 @@ export class CascadesAllHeadComponent implements OnInit {
     this.store.dispatch(
       featureState.actions.requestAllResults({ payload: form })
     );
-    this.router.navigate(['summary'], { relativeTo: this.activatedRoute });
+    // this.router.navigate(['summary'], { relativeTo: this.activatedRoute });
   }
 }
