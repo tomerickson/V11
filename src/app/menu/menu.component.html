@@ -21,5 +21,7 @@
     Overview
   </a>
   <a mat-list-item routerLink="lenr-events">Select LENR Events</a>
-  <!-- <a mat-list-item routerLink="testpage">Test Page</a> -->
+  @if (!config.production) {
+    <a mat-list-item routerLink="testpage">Test Page</a>
+  }
 </mat-nav-list>

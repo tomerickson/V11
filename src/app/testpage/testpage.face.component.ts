@@ -1,53 +1,59 @@
 import { CommonModule, NgFor } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
-  Output,
-  inject
+  OnInit
 } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule
+  FormsModule
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { Subscription } from 'rxjs';
 import { CustomPaginatorComponent } from '../shared/custom-paginator/custom-paginator.component';
-import { PageNavigator } from '../shared/models/page-navigator';
 import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
+import { SliderInputComponent, sliderLayoutDirection } from '../shared/slider-input';
 
 @Component({
-  selector: 'mfmp-testpage',
-  standalone: true,
-  templateUrl: 'testpage.component.html',
-  styleUrls: ['testpage.component.scss'],
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatTableModule,
-    NgFor,
-    ReactiveFormsModule,
-    NuclidePickerComponent,
-    CustomPaginatorComponent
-  ]
+    selector: 'mfmp-testpage',
+    standalone: true,
+    templateUrl: 'testpage.component.html',
+    styleUrls: ['testpage.component.scss'],
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatRadioModule,
+        MatSortModule,
+        MatTableModule,
+        NgFor,
+        FormsModule,
+        NuclidePickerComponent,
+        CustomPaginatorComponent,
+        SliderInputComponent
+    ]
 })
-export class TestPageFaceComponent {
+export class TestPageFaceComponent implements OnInit{
 
-  fb = inject(FormBuilder);
-  testForm!: FormGroup;
-  subscriptions: Subscription = new Subscription();
-  @Input({ required: true }) rows!: number | undefined;
-  @Output() action: EventEmitter<string> = new EventEmitter<string>();
+  // model!: {key: string, value: number}[]
+  layout: sliderLayoutDirection = 'column'
+  myControl = 34;
+  constructor() {
+    // this.model.push({key: 'myControl', value: 34});
+    }
 
-  handlePageEvent(e: any) {
-    console.log('e', e as PageNavigator);
-  }
+
+  ngOnInit(): void {
+    }
+
+    handleSliderChange = (slider: {key: string, value: number}): void => {
+     this.myControl = slider.value;
+    }
 }

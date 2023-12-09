@@ -1,24 +1,30 @@
-<div id="touch">
-  <label [for]="inputId">{{ label }}</label>
-  <mat-slider
-    [min]="min"
-    [step]="step"
-    [max]="max < 0 ? null : max"
-    [discrete]="true">
-    <input
-      type="text"
-      [formControl]="control"
-      matSliderThumb
-      ngDefaultControl
-      formControlName="numValue"
-      min="min"
-      max="max"
-      step="step"
-      title="label"
-      [id]="inputId"
-      [required]="true" />
-  </mat-slider>
-  <div>
-    <label>{{ -1 }}</label>
-  </div>
+<div #slider [class]="setClass()">
+  @for(divType of elements; track divType) {
+    @switch(divType) {
+      @case('label') {
+        <div>
+          <mat-label>{{label}}</mat-label>
+        </div>
+      }
+      @case('slider') {
+        <mat-slider
+        [min]="minimum"
+        [max]="maximum"
+        [step]="step"
+        showTickMarks="true"
+        discrete>
+        <input
+          placeholder="thumb"
+          matSliderThumb
+          [(ngModel)]="value" />
+      </mat-slider>
+      }
+      @case('value') {
+        <div>{{value}}</div>
+      }
+      @default {
+        <h3>Unrecognized sliderElement: {{divType}}</h3>
+      }
+    }
+  }
 </div>

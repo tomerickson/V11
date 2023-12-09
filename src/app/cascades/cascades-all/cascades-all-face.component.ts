@@ -26,7 +26,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
-  MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldModule
 } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,16 +33,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { IKeyValuePair, KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
-import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-input.component';
 import { FeedbackOptionsComponent } from 'src/app/shared/feedback-options/feedback-options.component';
-import { IFormError } from 'src/app/core/models/form-error.model';
+import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-input.component';
 import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.component';
 
 @Component({
@@ -63,7 +60,6 @@ import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.c
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
-    MatSliderModule,
     MatSlideToggleModule,
     MatTooltipModule,
     ReactiveFormsModule,

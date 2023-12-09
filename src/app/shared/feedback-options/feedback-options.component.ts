@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
-import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
+import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
-import * as appState from '../../state/index';
 import { Observable } from 'rxjs';
-import { ReactiveFormsModule, FormGroup, FormGroupDirective, FormControl } from '@angular/forms';
 import { IKeyValuePair, KeyValuePair } from 'src/app/core/models/key-value-pair.model';
+import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
+import * as appState from '../../state/index';
 
 @Component({
   selector: 'mfmp-feedback-options',

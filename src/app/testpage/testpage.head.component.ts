@@ -20,15 +20,11 @@ import {
 
 @Component({
   standalone: true,
-  template: `
-    <mfmp-testpage
-    [rows]= "(elements | async)?.length"></mfmp-testpage>
-
-  `,
+  template: `<mfmp-testpage></mfmp-testpage>`,
   imports: [CommonModule, TestPageFaceComponent]
 })
 export class TestpageHeadComponent implements OnInit,AfterViewInit, OnDestroy {
-  
+
   store = inject(Store);
   crud = inject(CrudService);
   html!: Observable<string>;

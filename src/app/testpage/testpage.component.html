@@ -1,6 +1,27 @@
 <mat-card>
-  <mat-card-content>  <mfmp-custom-paginator
-    [rows]="22"(pager)="handlePageEvent($event)"></mfmp-custom-paginator>
+  <mat-card-content>
+    <div></div>
+    <form >
+      <div>
+        <mat-radio-group name="layout" [(ngModel)]="layout">
+          <mat-radio-button value="column" selected="layout == 'column'">Vertical</mat-radio-button>
+          <mat-radio-button value="row" selected="layout == 'row'">Horizontal</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div><pre>{{layout}}</pre></div>
+      <!-- <mat-form-field formGroupName="testForm" formControlName="myControl"> -->
+      <mfmp-slider-input
+        [minimum]="1"
+        [maximum]="100"
+        [step]="1"
+        [default]="34"
+        [label]="'myControl'"
+        [controlName]="'myControl'"
+        [layout]="layout"
+        [elements]="['label', 'slider', 'value']"
+        (sliderValue)="handleSliderChange($event)"></mfmp-slider-input>
+      <!-- </mat-form-field> -->
+      <div>{{ myControl }}</div>
+      </form>
   </mat-card-content>
-
 </mat-card>

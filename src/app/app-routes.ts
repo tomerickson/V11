@@ -74,6 +74,10 @@ export const APP_ROUTES: Routes = [
         (m) => m.TABLES_IN_DETAIL_ROUTES
       )
   },
-  { path: 'testpage', pathMatch: 'full', component: TestpageHeadComponent },
+  {
+    path: 'testpage',
+    loadChildren: () =>
+      import('./testpage/testpage.routes').then((m) => m.TESTPAGE_ROUTES)
+  },
   { path: '**', component: NotFoundComponent }
 ];

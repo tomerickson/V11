@@ -1,33 +1,17 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-  inject,
-  signal
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSliderModule } from '@angular/material/slider';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit
+} from '@angular/core';
+import {
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
-import { IFormError } from 'src/app/core/models/form-error.model';
-import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
-import { Subscription } from 'rxjs';
+import { MatSliderModule } from '@angular/material/slider';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,

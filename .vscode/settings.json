@@ -22,5 +22,10 @@
       },
       "findUnusedExports.detectCircularImports": true,
       "debug.javascript.autoAttachFilter": "disabled",
-      "html.format.wrapLineLength": 100
+      "html.format.wrapLineLength": 100,
+      "[javascript][json][typescript]": {
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        }
+      }
 }
