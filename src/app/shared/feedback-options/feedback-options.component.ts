@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IKeyValuePair, KeyValuePair } from 'src/app/core/models/key-value-pair.model';
+import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import * as appState from '../../state/index';
 
@@ -22,7 +22,7 @@ export class FeedbackOptionsComponent implements OnInit {
   feedbackOptions!: Observable<ILookupDataModel[]>;
   @Input({ required: true }) controlName!: string;
   @Input() selected!: string | null;
-  @Output() feedback: EventEmitter<IKeyValuePair> = new EventEmitter();
+  @Output() feedback: EventEmitter<KeyValuePair> = new EventEmitter();
 
   ngOnInit(): void {
     this.form = new FormGroup({selector: new FormControl(this.selected)})

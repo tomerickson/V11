@@ -8,6 +8,7 @@ import { NotFoundComponent } from '../shared/not-found/not-found.component';
 import * as cascadeState from '../state/cascades-all';
 import { CascadesAllHeadComponent } from './cascades-all/cascades-all-head.component';
 import { CascadesService } from './cascades.service';
+import { Cascades4HeadComponent } from './cascades4/cascades4-head.component';
 
 export const CASCADE_ROUTES: Routes = [
   {
@@ -29,11 +30,11 @@ export const CASCADE_ROUTES: Routes = [
         component: CascadesAllHeadComponent,
         // children: [{ path: 'reports', redirectTo: 'reports' }]
       },
-/*       {
+      {
         path: 'cascades4',
         component: Cascades4HeadComponent,
         children: [{ path: 'reports', redirectTo: 'reports' }]
-      }, */
+      },
       //{ path: 'summary', component: CascadesSummaryHeadComponent },
       // { path: 'reports', component: ReportPagesHeadComponent }
     ]

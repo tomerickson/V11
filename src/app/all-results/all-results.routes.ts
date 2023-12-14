@@ -17,20 +17,22 @@ export const ALL_RESULTS_ROUTES: Routes = [
       provideEffects([state.effects]),
       { provide: AllResultsService, useClass: AllResultsService },
       { provide: HeaderProviderService, useClass: HeaderProviderService }
+    ],
+    children: [
+      {
+        path: 'reports',
+        component: ReportPagesHeadComponent,
+/*         providers: [
+          provideState(state.feature),
+          provideEffects([state.effects]),
+          { provide: AllResultsService, useClass: AllResultsService },
+          { provide: HeaderProviderService, useClass: HeaderProviderService }
+        ] */
+      },
+      {
+        path: 'paginator',
+        component: CustomPaginatorComponent
+      }
     ]
-  },
-  {
-    path: 'reports',
-    component: ReportPagesHeadComponent,
-    providers: [
-      provideState(state.feature),
-      provideEffects([state.effects]),
-      { provide: AllResultsService, useClass: AllResultsService },
-      { provide: HeaderProviderService, useClass: HeaderProviderService }
-    ]
-  },
-  {
-    path: 'paginator',
-    component: CustomPaginatorComponent
   }
 ];

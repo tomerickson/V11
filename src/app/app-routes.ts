@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { IntroComponent } from './intro/intro.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
-import { TestpageHeadComponent } from './testpage/testpage.head.component';
 
 export const APP_ROUTES: Routes = [
   {

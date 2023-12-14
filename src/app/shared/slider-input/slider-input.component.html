@@ -1,30 +1,33 @@
-<div #slider [class]="setClass()">
-  @for(divType of elements; track divType) {
-    @switch(divType) {
-      @case('label') {
-        <div>
-          <mat-label>{{label}}</mat-label>
-        </div>
-      }
-      @case('slider') {
-        <mat-slider
-        [min]="minimum"
-        [max]="maximum"
-        [step]="step"
-        showTickMarks="true"
-        discrete>
-        <input
-          placeholder="thumb"
-          matSliderThumb
-          [(ngModel)]="value" />
-      </mat-slider>
-      }
-      @case('value') {
-        <div>{{value}}</div>
-      }
-      @default {
-        <h3>Unrecognized sliderElement: {{divType}}</h3>
+<form formGroup="form">
+  <div #slider [class]="setClass()">
+    @for (divType of fields; track divType) {
+      @switch (divType) {
+        @case ('label') {
+          <div>
+            <mat-label>{{ label }}</mat-label>
+          </div>
+        }
+        @case ('slider') {
+          <mat-slider
+            [min]="minimum"
+            [max]="maximum"
+            [step]="step"
+            showTickMarks="true"
+            discrete>
+            <input
+              placeholder="thumb"
+              matSliderThumb
+              [(ngModel)]="value"
+              #slider />
+          </mat-slider>
+        }
+        @case ('value') {
+         <input placeholder="{{label}}" matInput readonly [(ngModel)]="value">
+        }
+        @default {
+          <h3>Unrecognized slider element: {{ divType }}</h3>
+        }
       }
     }
-  }
-</div>
+  </div>
+</form>

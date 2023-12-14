@@ -1,3 +1,4 @@
+declare const MAT_SLIDER_THUMB_VALUE_ACCESSOR: any;
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -6,6 +7,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  importProvidersFrom,
   inject,
   signal
 } from '@angular/core';
@@ -33,11 +35,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
-import { IKeyValuePair, KeyValuePair } from 'src/app/core/models/key-value-pair.model';
+import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { FeedbackOptionsComponent } from 'src/app/shared/feedback-options/feedback-options.component';
 import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-input.component';
@@ -60,21 +63,22 @@ import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.c
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
+    MatSliderModule,
     MatSlideToggleModule,
     MatTooltipModule,
     ReactiveFormsModule,
     NumericInputComponent,
     FeedbackOptionsComponent,
     SliderInputComponent
-  ]
+  ],
+  providers: [{provide: MAT_SLIDER_THUMB_VALUE_ACCESSOR}]
 })
-export class CascadesAllFaceComponent implements OnInit, OnDestroy {
+export class CascadesAllFaceComponent implements OnInit {
   store = inject(Store);
   fb = inject(FormBuilder);
   ready = signal(false);
   cascadesForm!: FormGroup;
-  subscriptions!: Subscription;
-
+  slider!: SliderInputComponent;
   numericErrorMessages: Record<string,string> = {
     required: 'This field is required.',
     pattern: 'Digits [0-9] only.',
@@ -105,7 +109,7 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   get isotopeSwitch(): string {
     return this.cascadesForm.get('isotopeSwitch')?.value;
   }
-  get halfLifeThreshold(): string {
+  get halfLifeThreshold(): number {
     return this.cascadesForm.get('halfLifeThreshold')?.value;
   }
   get maxReactorTemp(): number {
@@ -143,13 +147,8 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
   tooltipDelay = 750;
 
   ngOnInit(): void {
-    this.subscriptions = new Subscription();
     this.buildForm();
     this.ready.set(true);
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
   }
 
   buildForm = () => {
@@ -189,12 +188,6 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
       },
       { validators: this.formValidator }
     );
-
-    this.subscriptions.add(
-      this.cascadesForm.valueChanges.subscribe((values) =>
-        this.handleFormChanges(values)
-      )
-    );
   };
 
   submitForm = () => {
@@ -202,22 +195,23 @@ export class CascadesAllFaceComponent implements OnInit, OnDestroy {
       .value as unknown as ICascadesAllForm;
     this.submitter.emit(form);
   };
-  handleFormChanges = (changes: any): void => {
-    // this.mouseEntry.set((vlu) => (changes.mouseEntry = vlu));
-    // console.log('status', this.cascadesForm.status);
-  };
 
   handleNumericInputs(kvp: KeyValuePair) {
     this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
   }
 
-  handleFeedback(kvp: IKeyValuePair): void {
+  handleSliderInputs(kvp: KeyValuePair) {
+    this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
+  }
+
+  handleFeedback(kvp: KeyValuePair): void {
     this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
   }
 
   sliderChange() {
     this.mouseEntry.set(!this.mouseEntry());
   }
+
   hasError = (controlName: string, errorName: string) => {
     return this.cascadesForm.controls[controlName].hasError(errorName);
   };

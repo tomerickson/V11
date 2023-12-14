@@ -9,6 +9,7 @@ import {
   ViewChild,
   inject
 } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { IAllResultsDataModel } from '../core/models/all-results-data.model';
@@ -16,7 +17,6 @@ import { CustomPaginatorComponent } from '../shared/custom-paginator/custom-pagi
 import { PageNavigator } from '../shared/models/page-navigator';
 import { ProgressSpinnerComponent } from '../shared/progress-spinner/progress-spinner.component';
 import { AllResultsService } from './all-results.service';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'mfmp-all-results-face',

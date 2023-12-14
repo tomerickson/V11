@@ -9,7 +9,7 @@ import {
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore } from '@ngrx/router-store';
@@ -44,11 +44,12 @@ fetch('/assets/config/config.json')
       enableProdMode();
     }
 
-    
+
 */
 // platformBrowserDynamic([{ provide: APP_CONFIG, useValue: AppConfig }]);
 bootstrapApplication(AppComponent, {
   providers: [
+    provideAnimations(),
     {
       provide: APP_BASE_HREF,
       useFactory: getBaseHref,

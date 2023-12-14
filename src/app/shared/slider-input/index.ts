@@ -1,2 +1,2 @@
-import {SliderInputComponent, sliderLayoutDirection, sliderElement} from './slider-input.component';
-export {SliderInputComponent, sliderLayoutDirection, sliderElement}
+import {SliderInputComponent, SliderLayout} from './slider-input.component';
+export {SliderInputComponent, SliderLayout}
