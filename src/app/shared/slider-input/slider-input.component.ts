@@ -1,25 +1,21 @@
 import { CommonModule } from '@angular/common';
-
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
-import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { Component, Input, OnInit, signal } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule, MatSliderThumb } from '@angular/material/slider';
-import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
+import { SliderInputFields } from '.';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'mfmp-slider-input',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatSliderModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSliderModule
+  ],
   templateUrl: './slider-input.component.html',
   styleUrl: './slider-input.component.scss',
   providers: [MatSliderThumb]
@@ -32,6 +28,7 @@ import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
  * elements can be displayed vertically or horizonally depending on the value
  * of the 'layout' parameter, and in any order, determined by the 'elements'
  * paramter.
+@param parentForm // formgroup provided by parent form
 @param minimum // minimum value accepted by the slider
 @param maximum // maximum value accepted by the slider;
 @param default // default value of the slider
@@ -40,64 +37,65 @@ import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 @param layout // 'column' or 'row'
 @param elements // string containg 's' and optionally 'l' and/or 'v' in the order to be presented
 @param label // lalbel
-@output
  */
 export class SliderInputComponent implements OnInit {
+
+  value!: number;
+  _elements!: string;
+  _controlName!: string;
+
+  fields!: SliderInputFields[];
+
+  @Input({ required: true }) parentForm!: FormGroup;
   @Input() minimum = 0;
   @Input({ required: true }) maximum!: number;
-  @Input() default = 1;
   @Input() step = 1;
-  @Input({ required: true }) controlName!: string;
   @Input() layout: SliderLayout = 'row'; // horizontal or vertical
-  // @Input({ required: true }) elements!: string; // label first or value first
-  @Input() label!: string; // Ex: Limit results to ... rows.
-  @Output() sliderValue: EventEmitter<KeyValuePair> = new EventEmitter();
+  @Input() label = ''; // Ex: Limit results to ... rows.
 
-  get elements(): string {
-    return this.form.elements;
+  @Input({required: true}) set controlName(name: string) {
+    this._controlName = name;
+    this.value = this.parentForm.controls[name].value;
   }
+  get controlName(): string {
+    return this._controlName;
+  }
+
   @Input({ required: true }) set elements(value: string) {
     if (this.checkElements(value)) {
+      this._elements = value;
+      this.fields = [];
       this.parseElements(value);
-      this.form.elements = value;
     }
   }
-
-  get value(): number {
-    return this.form.value;
+  get elements(): string {
+    return this._elements;
   }
 
-  set value(value: number) {
-    this.form.value = value;
-    this.sliderValue.emit(
-      new KeyValuePair({ key: this.controlName, value: value })
-    );
-  }
-
-  form: { value: number; elements: string };
-  fields: string[] = [];
+  ready = signal(false);
 
   constructor() {
-    this.form = {value: this.default, elements: ''};
-  }
+   }
 
   ngOnInit(): void {
-    // this.form = { value: this.default };
-    // this.parseElements();
+    this.ready.set(true);
+    console.log('slider-input is ready');
   }
 
   setClass = () => {
     return this.layout;
   };
 
+  handleSliderChange(event: Event): any {
+    // const elm: HTMLInputElement = event.target;
+    // console.log(elm);
+  }
+
   checkElements = (elements: string): boolean => {
     let err = '';
     let vlu = elements.slice();
-    let rex = vlu.match('[slv]');
     let ok = vlu.indexOf('s') >= 0;
 
-    console.log('elements:', elements);
-    console.log('rex:', rex);
     if (ok) {
       for (let i = 0; i < vlu.length; i++) {
         switch (vlu[i]) {

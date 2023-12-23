@@ -23,16 +23,15 @@
         <pre>{{ layout }}</pre>
       </div>
       <mfmp-slider-input
+      [parentForm]="form"
         [minimum]="1"
         [maximum]="100"
         [step]="1"
-        [default]="34"
         [label]="'myControl'"
         [controlName]="'myControl'"
         [layout]="layout"
-        [elements]="elements"
-        (sliderValue)="handleSliderChange($event)"></mfmp-slider-input>
-      <div>{{ myControl }}</div>
+        [elements]="elements"></mfmp-slider-input>
+      <div>{{ this.form.controls['myControl'] }}</div>
     </form>
   </mat-card-content>
 </mat-card>

@@ -21,8 +21,8 @@ export const ALL_RESULTS_ROUTES: Routes = [
     children: [
       {
         path: 'reports',
-        component: ReportPagesHeadComponent,
-/*         providers: [
+        component: ReportPagesHeadComponent
+        /*         providers: [
           provideState(state.feature),
           provideEffects([state.effects]),
           { provide: AllResultsService, useClass: AllResultsService },

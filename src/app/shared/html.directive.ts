@@ -16,7 +16,7 @@ export class HtmlDirective implements OnChanges, OnInit {
   }
   public ngOnInit(): void {
     console.log('htmldirective oninit');
-    
+
   }
 
   public ngOnChanges(): void {
@@ -28,9 +28,9 @@ export class HtmlDirective implements OnChanges, OnInit {
 
       this._elementRef.nativeElement.innerHTML = this.html;
 
-      const descandants = this._elementRef.nativeElement.querySelectorAll('*');
+      const descendants = this._elementRef.nativeElement.querySelectorAll('*');
 
-      for (const element of descandants) {
+      for (const element of descendants) {
         element.setAttribute(this._uniqueId, '');
 
         if (element.tagName === 'A') {

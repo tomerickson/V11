@@ -1,13 +1,10 @@
-declare const MAT_SLIDER_THUMB_VALUE_ACCESSOR: any;
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
-  importProvidersFrom,
   inject,
   signal
 } from '@angular/core';
@@ -27,18 +24,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {
-  MatFormFieldModule
-} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
@@ -67,23 +62,23 @@ import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.c
     MatSlideToggleModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    NumericInputComponent,
     FeedbackOptionsComponent,
-    SliderInputComponent
-  ],
-  providers: [{provide: MAT_SLIDER_THUMB_VALUE_ACCESSOR}]
+    NumericInputComponent,
+    SliderInputComponent,
+    NgTemplateOutlet
+  ]
 })
 export class CascadesAllFaceComponent implements OnInit {
   store = inject(Store);
   fb = inject(FormBuilder);
   ready = signal(false);
   cascadesForm!: FormGroup;
-  slider!: SliderInputComponent;
-  numericErrorMessages: Record<string,string> = {
+  // slider!: SliderInputComponent;
+  numericErrorMessages: Record<string, string> = {
     required: 'This field is required.',
     pattern: 'Digits [0-9] only.',
-    range: 'Out of range.'
-     };
+    range: 'Out of range. Enter values between ${minimum} and ${maximum}.'
+  };
 
   /**
    * Form getters
@@ -155,12 +150,18 @@ export class CascadesAllFaceComponent implements OnInit {
     this.cascadesForm = this.fb.group(
       {
         tableSet: new FormControl<string>('Original'),
-        maxNuclei: new FormControl([100, [Validators.required, Validators.pattern('^[0-9]+$')]]),
-        maxLoops: [3, [Validators.required, Validators.pattern('^[0-9]+$')]],
-        maxReactorTemp: [
-          2400,
-          [Validators.required, Validators.pattern('^[0-9]+$')]
-        ],
+        maxNuclei: new FormControl(100, [
+          Validators.required,
+          Validators.pattern('^[0-9]+$')
+        ]),
+        maxLoops: new FormControl(3, [
+          Validators.required,
+          Validators.pattern('^[0-9]+$')
+        ]),
+        maxReactorTemp: new FormControl(2400, [
+          Validators.required,
+          Validators.pattern('^[0-9]+$')
+        ]),
         meltingSwitch: ['Core'],
         boilingSwitch: ['Include'],
         fusionMinEnergy: [
@@ -196,16 +197,12 @@ export class CascadesAllFaceComponent implements OnInit {
     this.submitter.emit(form);
   };
 
-  handleNumericInputs(kvp: KeyValuePair) {
-    this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
-  }
-
   handleSliderInputs(kvp: KeyValuePair) {
     this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
   }
 
-  handleFeedback(kvp: KeyValuePair): void {
-    this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
+  handleFeedback(kvp: any): void {
+    // this.cascadesForm.get(kvp.key)?.setValue(kvp.value);
   }
 
   sliderChange() {
@@ -220,8 +217,20 @@ export class CascadesAllFaceComponent implements OnInit {
     form: AbstractControl
   ): ValidationErrors | null => {
     const status: FormControlStatus = (form as FormGroup).status;
-    const result = (status === 'VALID') ? null : { error: true };
-    console.log('form.status', status);
+    const result = status === 'VALID' ? null : { error: true };
     return result;
   };
+
+  /*   getFormControl = (controlName: string): FormControl => {
+    return this.parentForm.controls['cascadesForm']?.get(controlName) as FormControl;
+  }
+
+  getFormGroup = (): FormGroup => {
+    return this.parentForm.controls[0] as FormGroup;
+    let result: FormGroup | undefined;
+/*     console.log('getFormGroup:', this.parentForm.controls[formGroupName]);
+    if (this.parentForm.controls[formGroupName]) {
+      result = this.parentForm.controls[formGroupName] as FormGroup;
+    }
+    return result; */
 }

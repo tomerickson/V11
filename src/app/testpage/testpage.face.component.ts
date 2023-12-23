@@ -1,6 +1,6 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,25 +41,20 @@ export class TestPageFaceComponent implements OnInit {
   // model!: {key: string, value: number}[]
   layout: SliderLayout = 'row';
   elements =  'vsl';
-  myControl = 34;
-  constructor() {
-    // this.model.push({key: 'myControl', value: 34});
+  form!: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+
   }
 
   ngOnInit(): void {
+    this.form = this.fb.group({myControl: 34});
   }
 
   setElements(event: Event) {
 
-    const evt = event as KeyboardEvent;
     const ctl = event.target as HTMLInputElement;
     const vlu = ctl.value;
     this.elements = vlu;
   }
-
-  handleSliderChange = (slider: { key: string; value: number }): void => {
-    this.myControl = slider.value;
-  };
-
-
 }

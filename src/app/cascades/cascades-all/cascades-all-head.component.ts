@@ -6,7 +6,7 @@ import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { Store } from '@ngrx/store';
 import * as featureState from '../../state/cascades-all';
 import * as appState from '../../state/index';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { Observable } from 'rxjs';
 
@@ -24,15 +24,14 @@ import { Observable } from 'rxjs';
 })
 export class CascadesAllHeadComponent implements OnInit {
   store = inject(Store);
-  router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   headerService = inject(HeaderProviderService);
-  feedbackOptions!: Observable<ILookupDataModel[]>;
+  feedbackOptions: Observable<ILookupDataModel[]> = this.store.select(appState.feature.selectFuelFeedbackModes);
 
   ngOnInit(): void {
-    this.feedbackOptions = this.store.select(
+/*     this.feedbackOptions = this.store.select(
       appState.feature.selectFuelFeedbackModes
-    );
+    ); */
     this.headerService.buildPageHeader('cascades-all');
   }
 

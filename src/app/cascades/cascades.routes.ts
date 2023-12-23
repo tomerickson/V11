@@ -39,5 +39,5 @@ export const CASCADE_ROUTES: Routes = [
       // { path: 'reports', component: ReportPagesHeadComponent }
     ]
   },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', redirectTo: 'intro',  pathMatch: 'full'}
 ];

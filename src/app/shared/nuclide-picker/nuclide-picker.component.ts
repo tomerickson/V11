@@ -54,7 +54,7 @@ export class NuclidePickerComponent implements OnInit {
 
   /**
    * flavor - used to select the correct template
-   * 
+   *
    * 0 = multiselect query
    * 1 = single query
    * 2 = multiselect result
@@ -68,7 +68,6 @@ export class NuclidePickerComponent implements OnInit {
 
   ngOnInit(): void {
     this.nuclideForm = this.fgd.control; //.get(this.formGroupName) as FormGroup;
-    console.log(`title: ${this.title}, flavor: ${this.flavor()} `);
   }
 
   elementOptionValue = (element: IElementDataModel): string => {

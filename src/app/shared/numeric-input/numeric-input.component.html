@@ -1,18 +1,15 @@
-<div id="touch">
-  <label [for]="inputId">{{ label }}</label>
+@if (ready()) {
+  <mat-form-field [formGroup]="parentForm">
     <input
-      type="text"
-      [formControl]="control"
-      matSliderThumb
-      ngDefaultControl
-      formControlName="numValue"
-      min="min"
-      max="max"
-      step="step"
-      title="label"
+      matInput
+      type="number"
+      placeholder="{{label}}"
+      formControlName="{{ controlName }}"
+      min="minimum"
+      max="maximum"
+      step="{{step}}"
       [id]="inputId"
+      value="default"
       [required]="true" />
-  <div>
-    <label>{{ -1 }}</label>
-  </div>
-</div>
+  </mat-form-field>
+}

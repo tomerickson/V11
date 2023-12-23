@@ -1,2 +1,3 @@
 import {SliderInputComponent, SliderLayout} from './slider-input.component';
-export {SliderInputComponent, SliderLayout}
+declare type SliderInputFields = 'label'|'value'|'slider';
+export {SliderInputComponent, SliderLayout, SliderInputFields}

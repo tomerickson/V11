@@ -45,29 +45,30 @@
         <input type="hidden" name="doit" value="execute_query" readonly />
         <div class="grid">
           <!-- Max. nuclei-->
-          <div class="flexrow end" formGroupName="maxNuclei">
+          <div class="flexrow end">
             <div>
               Maximum number of nuclei to be tried in all pairings as inputs to
               both the Fusion and the TwoToTwo reaction tables:
             </div>
-
-            <mfmp-slider-input
-              [className]="mouseEntry() ? '' : 'hidden'"
-              [minimum]="0"
-              [maximum]="1000"
-              [step]="1"
-              [default]="maxNuclei"
-              [label]="'Max. Nuclei'"
-              [controlName]="'maxNuclei'"
-              [elements]="'lsv'"
-              (sliderValue)="handleSliderInputs($event)"></mfmp-slider-input>
-
-            <mfmp-numeric-input
-              [className]="mouseEntry() ? 'hidden' : ''"
-              [min]="0"
-              [max]="1000"
-              [control]="cascadesForm.controls['maxNuclei']"
-              [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
+            @if (mouseEntry()) {
+              <mfmp-slider-input
+                [parentForm]="cascadesForm"
+                [controlName]="'maxNuclei'"
+                [minimum]="0"
+                [maximum]="1000"
+                [step]="1"
+                [elements]="'sv'"></mfmp-slider-input>
+            } @else {
+              <mfmp-numeric-input
+                [parentForm]="cascadesForm"
+                [controlName]="'maxNuclei'"
+                [label]="'Max. Nuclei'"
+                [minimum]="0"
+                [maximum]="1000"
+                [step]="1"
+                [default]="1"
+                [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
+            }
           </div>
 
           <!-- Max. loops-->
@@ -78,18 +79,21 @@
             </div>
             @if (mouseEntry()) {
               <mfmp-slider-input
-                [minimum]="0"
-                [maximum]="1000"
-                [default]="maxLoops"
-                [label]="'Max. Loops'"
+                [parentForm]="cascadesForm"
                 [controlName]="'maxLoops'"
-                [elements]="'lsv'"
-                (sliderValue)="handleSliderInputs($event)"></mfmp-slider-input>
+                [minimum]="0"
+                [maximum]="10"
+                [step]="1"
+                [elements]="'sv'"></mfmp-slider-input>
             } @else {
               <mfmp-numeric-input
-                [min]="0"
-                [max]="1000"
-                [control]="cascadesForm.controls['maxLoops']"
+                [parentForm]="cascadesForm"
+                [controlName]="'maxLoops'"
+                [label]="'Max. Loops'"
+                [minimum]="0"
+                [maximum]="10"
+                [step]="1"
+                [default]="3"
                 [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
             }
           </div>
@@ -99,18 +103,21 @@
             <div>Maximum Reactor Temperature (Kelvin):</div>
             @if (mouseEntry()) {
               <mfmp-slider-input
+                [parentForm]="cascadesForm"
                 [minimum]="0"
                 [maximum]="5000"
-                [default]="maxReactorTemp"
                 [label]="'Max. Reactor Temp.'"
                 [controlName]="'maxReactorTemp'"
-                [elements]="'lsv'"
-                (sliderValue)="handleSliderInputs($event)"></mfmp-slider-input>
+                [elements]="'sv'"></mfmp-slider-input>
             } @else {
               <mfmp-numeric-input
-                [min]="0"
-                [max]="5000"
-                [control]="cascadesForm.controls['maxReactorTemp']"
+                [parentForm]="cascadesForm"
+                [controlName]="'maxReactorTemp'"
+                [label]="'Max. Reactor Temp.'"
+                [minimum]="100"
+                [maximum]="20000"
+                [step]="100"
+                [default]="maxReactorTemp"
                 [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
             }
           </div>
@@ -121,18 +128,21 @@
             </div>
             @if (mouseEntry()) {
               <mfmp-slider-input
+                [parentForm]="cascadesForm"
                 [minimum]="0"
-                [maximum]="1000"
-                [default]="halfLifeThreshold"
+                [maximum]="20"
                 [label]="'Half life'"
                 [controlName]="'halfLifeThreshold'"
-                [elements]="'lsv'"
-                (sliderValue)="handleSliderInputs($event)"></mfmp-slider-input>
+                [elements]="'sv'"></mfmp-slider-input>
             } @else {
               <mfmp-numeric-input
-                [min]="0"
-                [max]="20"
-                [control]="cascadesForm.controls['halfLifeThreshold']"
+                [parentForm]="cascadesForm"
+                [controlName]="'halfLifeThreshold'"
+                [label]="'Max. Reactor Temp.'"
+                [minimum]="0"
+                [maximum]="20"
+                [step]="0"
+                [default]="halfLifeThreshold"
                 [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
             }
           </div>
@@ -142,22 +152,24 @@
             </div>
             @if (mouseEntry()) {
               <mfmp-slider-input
+                [parentForm]="cascadesForm"
                 [minimum]="0"
                 [maximum]="5000"
-                [default]="fusionMinEnergy"
                 [label]="'Min. fusion energy'"
                 [controlName]="'fusionMinEnergy'"
-                [elements]="'lsv'"
-                (sliderValue)="handleSliderInputs($event)"></mfmp-slider-input>
+                [elements]="'sv'"></mfmp-slider-input>
             } @else {
               <mfmp-numeric-input
-                [min]="0"
-                [max]="5000"
-                [control]="cascadesForm.controls['fusionMinEnergy']"
+                [parentForm]="cascadesForm"
+                [controlName]="'fusionMinEnergy'"
+                [label]="'Min. fusion energy'"
+                [minimum]="0"
+                [maximum]="5000"
+                [step]="100"
+                [default]="fusionMinEnergy"
                 [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
             }
           </div>
-
           <div class="flexrow end" formGroupName="twoUpMinEnergy">
             <div>
               Minimum energy (MeV) for any TwoToTwo (2-2) reaction to be
@@ -165,18 +177,21 @@
             </div>
             @if (mouseEntry()) {
               <mfmp-slider-input
+                [parentForm]="cascadesForm"
                 [minimum]="0"
                 [maximum]="5000"
-                [default]="twoUpMinEnergy"
-                [elements]="'lsv'"
+                [elements]="'sv'"
                 [label]="'Min. TwoUp energy'"
-                [controlName]="'twoUpMinEnergy'"
-                (sliderValue)="handleSliderInputs($event)"></mfmp-slider-input>
+                [controlName]="'twoUpMinEnergy'"></mfmp-slider-input>
             } @else {
               <mfmp-numeric-input
-                [min]="0"
-                [max]="5000"
-                [control]="cascadesForm.controls['twoUpMinEnergy']"
+                [parentForm]="cascadesForm"
+                [controlName]="'twoUpMinEnergy'"
+                [label]="'Min. TwoUp energy'"
+                [minimum]="0"
+                [maximum]="5000"
+                [step]="1"
+                [default]="twoUpMinEnergy"
                 [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
             }
           </div>
@@ -188,6 +203,8 @@
               </label>
             </div>
             <mfmp-feedback-options
+              [parentForm]="cascadesForm"
+              [feedbackOptions]="feedbackOptions | async"
               [controlName]="'meltingSwitch'"
               [selected]="meltingSwitch"
               (feedback)="handleFeedback($event)"></mfmp-feedback-options>
@@ -198,6 +215,8 @@
               Temperature:
             </div>
             <mfmp-feedback-options
+              [parentForm]="cascadesForm"
+              [feedbackOptions]="feedbackOptions | async"
               [controlName]="'boilingSwitch'"
               [selected]="boilingSwitch"
               (feedback)="handleFeedback($event)"></mfmp-feedback-options>
@@ -205,6 +224,8 @@
           <div class="flexrow end">
             <div>Radioactive Isotopes:</div>
             <mfmp-feedback-options
+              [parentForm]="cascadesForm"
+              [feedbackOptions]="feedbackOptions | async"
               [controlName]="'isotopeSwitch'"
               [selected]="isotopeSwitch"
               (feedback)="handleFeedback($event)"></mfmp-feedback-options>
@@ -213,6 +234,8 @@
           <div class="flexrow end">
             <div>Nuclear Fermions</div>
             <mfmp-feedback-options
+              [parentForm]="cascadesForm"
+              [feedbackOptions]="feedbackOptions | async"
               [controlName]="'nuclearFermionSwitch'"
               [selected]="nuclearFermionSwitch"
               (feedback)="handleFeedback($event)"></mfmp-feedback-options>
@@ -220,6 +243,8 @@
           <div class="flexrow end">
             <div>Atomic Fermions</div>
             <mfmp-feedback-options
+              [parentForm]="cascadesForm"
+              [feedbackOptions]="feedbackOptions | async"
               [controlName]="'atomicFermionSwitch'"
               [selected]="atomicFermionSwitch"
               (feedback)="handleFeedback($event)"></mfmp-feedback-options>
@@ -230,6 +255,8 @@
               form Dimers:
             </div>
             <mfmp-feedback-options
+              [parentForm]="cascadesForm"
+              [feedbackOptions]="feedbackOptions | async"
               [controlName]="'dimersSwitch'"
               [selected]="dimersSwitch"
               (feedback)="handleFeedback($event)"></mfmp-feedback-options>
@@ -334,7 +361,7 @@
               mat-raised-button
               color="primary"
               type="button"
-              [disabled]="cascadesForm.invalid"
+              [disabled]="cascadesForm.invalid || cascadesForm.pristine"
               [matTooltipShowDelay]="tooltipDelay"
               [matTooltipPosition]="'left'"
               matTooltip="{{ patienceMessage }}"
@@ -345,8 +372,26 @@
               </span>
             </button>
           </div>
+          <pre>{{ cascadesForm.value | json }}</pre>
         </div>
       </form>
     }
   </mat-card-content>
 </mat-card>
+
+<ng-template #sliderTemplate let-context="context">
+  <mat-slider
+    [min]="context.min"
+    [max]="context.max"
+    [step]="context.step"
+    discrete>
+    <input
+      matInput
+      formControlName="context.control"
+      ngDefaultControl
+      name="value"
+      placeholder="thumb"
+      matSliderThumb
+      #slider />
+  </mat-slider>
+</ng-template>
