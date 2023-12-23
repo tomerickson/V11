@@ -7,7 +7,6 @@
     "virtualDirectory": "V11",
     "httpMaxRetries": 1,
     "httpRetryDelay": 500,    
-    "version": "5.0",
     "allTablesPageSize": 10,
     "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project"
 }
