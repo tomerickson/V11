@@ -6,8 +6,8 @@
         <input
           placeholder="elements"
           matInput
-          value="{{elements}}"
-          (change)="setElements($event)"/>
+          value="{{ elements }}"
+          (change)="setElements($event)" />
       </div>
       <div>
         <mat-radio-group name="layout" [(ngModel)]="layout">
@@ -22,16 +22,18 @@
       <div>
         <pre>{{ layout }}</pre>
       </div>
-      <mfmp-slider-input
-      [parentForm]="form"
-        [minimum]="1"
-        [maximum]="100"
-        [step]="1"
-        [label]="'myControl'"
-        [controlName]="'myControl'"
-        [layout]="layout"
-        [elements]="elements"></mfmp-slider-input>
-      <div>{{ this.form.controls['myControl'] }}</div>
     </form>
   </mat-card-content>
 </mat-card>
+<ng-template>
+  <input #input
+  matInput
+  type="number"
+  placeholder="{{label}}"
+  formControlName="{{ controlName }}"
+  min="minimum"
+  max="maximum"
+  step="{{step}}"
+  [id]="inputId"
+  [required]="true" />
+</ng-template>

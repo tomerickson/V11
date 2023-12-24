@@ -1,6 +1,6 @@
 @if (ready()) {
   <mat-form-field [formGroup]="parentForm">
-    <input
+    <input #input
       matInput
       type="number"
       placeholder="{{label}}"
@@ -9,7 +9,10 @@
       max="maximum"
       step="{{step}}"
       [id]="inputId"
-      value="default"
-      [required]="true" />
+      [required]="true"
+      (change)="handleChange($event)" />
+      @if(errors) {
+        <mat-error>{{errors}}</mat-error>
+      }
   </mat-form-field>
 }

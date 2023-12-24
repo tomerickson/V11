@@ -156,7 +156,9 @@ export class CascadesAllFaceComponent implements OnInit {
         ]),
         maxLoops: new FormControl(3, [
           Validators.required,
-          Validators.pattern('^[0-9]+$')
+          Validators.pattern('^[0-9]+$'),
+          Validators.max(10),
+          Validators.min(1)
         ]),
         maxReactorTemp: new FormControl(2400, [
           Validators.required,
