@@ -1,6 +1,8 @@
 <mat-card>
   <mat-card-content>
-    <div></div>
+    <div>
+      <ng-container *ngTemplateOutlet="formfieldtemplate"></ng-container>
+    </div>
     <form>
       <div>
         <input
@@ -25,15 +27,11 @@
     </form>
   </mat-card-content>
 </mat-card>
-<ng-template>
-  <input #input
-  matInput
-  type="number"
-  placeholder="{{label}}"
-  formControlName="{{ controlName }}"
-  min="minimum"
-  max="maximum"
-  step="{{step}}"
-  [id]="inputId"
-  [required]="true" />
+
+<ng-template #formfieldtemplate>
+  <h3>This is formfieldtemplate</h3>
+  <ng-container *ngTemplateOutlet="inputtemplate"></ng-container>
+</ng-template>
+<ng-template #inputtemplate>
+  <h3>This is inputtemplate</h3>
 </ng-template>
