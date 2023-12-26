@@ -1,13 +1,11 @@
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
-  ViewChild,
-  signal
+  ViewChild
 } from '@angular/core';
 import {
   FormBuilder,
@@ -15,19 +13,12 @@ import {
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { CustomPaginatorComponent } from '../shared/custom-paginator/custom-paginator.component';
-import { NuclidePickerComponent } from '../shared/nuclide-picker/nuclide-picker.component';
-import { SliderInputComponent, SliderLayout } from '../shared/slider-input';
 import { Subscription, take } from 'rxjs';
 import { NumericInputComponent } from '../shared/numeric-input/numeric-input.component';
+import { SliderLayout } from '../shared/slider-input';
 
 @Component({
   selector: 'mfmp-testpage',

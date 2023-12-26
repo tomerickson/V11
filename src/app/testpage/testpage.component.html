@@ -1,16 +1,16 @@
 <mat-card>
   <mat-card-content>
     <div>
-
       <div [formGroup]="form">
         <mat-form-field>
-          <input matInput placeholder='myControl' ormControlName="myControl">
+          <input matInput placeholder='myControl' formControlName="myControl">
         </mat-form-field>
         <mfmp-numeric-input #maxNuclei
           [controlKey]="'maxNuclei'"
-          [min]="2"
+          [min]="5"
           [max]="100"></mfmp-numeric-input>
       </div>
+      <pre>{{form.controls['maxNuclei'].valid}}</pre>
     </div>
   </mat-card-content>
 </mat-card>

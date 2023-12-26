@@ -1,20 +1,24 @@
 @if (ready()) {
-  <mat-form-field>
-    <input #input
-      matInput
-      type="number"
-      placeholder="{{label}}"
-      formControlName="{{ controlKey }}"
-      min="minimum"
-      max="maximum"
-      step="{{step}}"
-      [required]="true"/>
-      @if(errors) {
-        <pre>{{errors}}</pre>
-        @if(customControl.hasError('required'))
-        {
-        <mat-error>{{errors}}</mat-error>
-        }
-      }
-  </mat-form-field>
+<mat-form-field>
+  <input
+    #input
+    matInput
+    type="number"
+    placeholder="{{ label }}"
+    formControlName="{{ controlKey }}"
+    min="min"
+    max="max"
+    step="{{ step }}"
+    [required]="true" />
+  @if(customControl.errors) { @if(customControl.hasError('required') &&
+  customControl.touched) {
+  <mat-error>{{ numericErrorMessages['required'] }}</mat-error>
+  } @if (customControl.hasError('pattern')) {
+  <mat-error>{{ numericErrorMessages['pattern'] }}</mat-error>
+  } @if(customControl.hasError('min')) {
+  <mat-error>{{ numericErrorMessages['min'] }}</mat-error>
+  } @if(customControl.hasError('max')) {
+  <mat-error>{{ numericErrorMessages['max'] }}</mat-error>
+  } }
+</mat-form-field>
 }

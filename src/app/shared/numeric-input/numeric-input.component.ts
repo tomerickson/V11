@@ -64,11 +64,7 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
   integerPattern!: RegExp;
   customControl!: FormControl;
   errorMessages: Record<string, string>[] = [];
-  numericErrorMessages: Record<string, string> = {
-    required: 'This field is required.',
-    pattern: 'Digits [0-9] only.',
-    range: `Out of range. Please enter values within the range ${this.min} through ${this.max}.`
-  };
+  numericErrorMessages!: Record<string, string>;
 
   get parentFormGroup() {
     return this.parentContainer.control as FormGroup;
@@ -87,7 +83,7 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
         this.type === 'integer' ? this.integerPattern : this.decimalPattern
       ),
       Validators.min(this.min),
-      Validators.max(this.max)
+      Validators.max(this.max),
     ]);
     this.buildErrorMessaages();
     this.parentFormGroup.addControl(this.controlKey, this.customControl);
@@ -104,8 +100,15 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log('numeric-input form is ready');
   }
 
+
   buildErrorMessaages() {
-    if (this.type === 'integer')
+    this.numericErrorMessages = {
+      required: 'This field is required.',
+      pattern: 'Digits [0-9] only.',
+      min: `Out of range. Please enter values within the range ${this.min} through ${this.max}.`,
+      max: `Out of range. Please enter values within the range ${this.min} through ${this.max}.`
+    };
+/*     if (this.type === 'integer')
       this.errorMessages.push({ key: 'pattern', value: 'Digits [0-9] only.' });
     if (this.type === 'decimal')
       this.errorMessages.push({
@@ -124,6 +127,6 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
     this.errorMessages.push({
       key: 'max',
       value: `Maximum value is ${this.max}`
-    });
+    }); */
   }
 }

@@ -59,15 +59,7 @@
                 [step]="1"
                 [elements]="'sv'"></mfmp-slider-input>
             } @else {
-              <mfmp-numeric-input
-                [parentForm]="cascadesForm"
-                [controlName]="'maxNuclei'"
-                [label]="'Max. Nuclei'"
-                [minimum]="0"
-                [maximum]="1000"
-                [step]="1"
-                [default]="1"
-                [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
+              <mfmp-numeric-input [controlKey]="'maxNuclei'" [min]=2 [max]=100></mfmp-numeric-input>
             }
           </div>
 
@@ -86,15 +78,7 @@
                 [step]="1"
                 [elements]="'sv'"></mfmp-slider-input>
             } @else {
-              <mfmp-numeric-input
-                [parentForm]="cascadesForm"
-                [controlName]="'maxLoops'"
-                [label]="'Max. Loops'"
-                [minimum]="0"
-                [maximum]="10"
-                [step]="1"
-                [default]="3"
-                [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
+              <!--<mfmp-numeric-input-->
             }
           </div>
 
@@ -110,15 +94,7 @@
                 [controlName]="'maxReactorTemp'"
                 [elements]="'sv'"></mfmp-slider-input>
             } @else {
-              <mfmp-numeric-input
-                [parentForm]="cascadesForm"
-                [controlName]="'maxReactorTemp'"
-                [label]="'Max. Reactor Temp.'"
-                [minimum]="100"
-                [maximum]="20000"
-                [step]="100"
-                [default]="maxReactorTemp"
-                [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
+              <!--<mfmp-numeric-input-->
             }
           </div>
           <div class="flexrow end" formGroupName="halfLifeThreshold">
@@ -135,15 +111,7 @@
                 [controlName]="'halfLifeThreshold'"
                 [elements]="'sv'"></mfmp-slider-input>
             } @else {
-              <mfmp-numeric-input
-                [parentForm]="cascadesForm"
-                [controlName]="'halfLifeThreshold'"
-                [label]="'Max. Reactor Temp.'"
-                [minimum]="0"
-                [maximum]="20"
-                [step]="0"
-                [default]="halfLifeThreshold"
-                [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
+              <!--<mfmp-numeric-input-->
             }
           </div>
           <div class="flexrow end" formGroupName="fusionMinEnergy">
@@ -159,15 +127,7 @@
                 [controlName]="'fusionMinEnergy'"
                 [elements]="'sv'"></mfmp-slider-input>
             } @else {
-              <mfmp-numeric-input
-                [parentForm]="cascadesForm"
-                [controlName]="'fusionMinEnergy'"
-                [label]="'Min. fusion energy'"
-                [minimum]="0"
-                [maximum]="5000"
-                [step]="100"
-                [default]="fusionMinEnergy"
-                [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
+              <!--<mfmp-numeric-input-->
             }
           </div>
           <div class="flexrow end" formGroupName="twoUpMinEnergy">
@@ -184,15 +144,7 @@
                 [label]="'Min. TwoUp energy'"
                 [controlName]="'twoUpMinEnergy'"></mfmp-slider-input>
             } @else {
-              <mfmp-numeric-input
-                [parentForm]="cascadesForm"
-                [controlName]="'twoUpMinEnergy'"
-                [label]="'Min. TwoUp energy'"
-                [minimum]="0"
-                [maximum]="5000"
-                [step]="1"
-                [default]="twoUpMinEnergy"
-                [errorMessages]="numericErrorMessages"></mfmp-numeric-input>
+              <!--<mfmp-numeric-input-->
             }
           </div>
           <div class="flexrow end">
