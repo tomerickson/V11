@@ -1,37 +1,16 @@
 <mat-card>
   <mat-card-content>
     <div>
-      <ng-container *ngTemplateOutlet="formfieldtemplate"></ng-container>
+
+      <div [formGroup]="form">
+        <mat-form-field>
+          <input matInput placeholder='myControl' ormControlName="myControl">
+        </mat-form-field>
+        <mfmp-numeric-input #maxNuclei
+          [controlKey]="'maxNuclei'"
+          [min]="2"
+          [max]="100"></mfmp-numeric-input>
+      </div>
     </div>
-    <form>
-      <div>
-        <input
-          placeholder="elements"
-          matInput
-          value="{{ elements }}"
-          (change)="setElements($event)" />
-      </div>
-      <div>
-        <mat-radio-group name="layout" [(ngModel)]="layout">
-          <mat-radio-button value="column" selected="layout == 'column'">
-            Vertical
-          </mat-radio-button>
-          <mat-radio-button value="row" selected="layout == 'row'">
-            Horizontal
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
-      <div>
-        <pre>{{ layout }}</pre>
-      </div>
-    </form>
   </mat-card-content>
 </mat-card>
-
-<ng-template #formfieldtemplate>
-  <h3>This is formfieldtemplate</h3>
-  <ng-container *ngTemplateOutlet="inputtemplate"></ng-container>
-</ng-template>
-<ng-template #inputtemplate>
-  <h3>This is inputtemplate</h3>
-</ng-template>

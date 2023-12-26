@@ -1,18 +1,20 @@
 @if (ready()) {
-  <mat-form-field [formGroup]="parentForm">
+  <mat-form-field>
     <input #input
       matInput
       type="number"
       placeholder="{{label}}"
-      formControlName="{{ controlName }}"
+      formControlName="{{ controlKey }}"
       min="minimum"
       max="maximum"
       step="{{step}}"
-      [id]="inputId"
-      [required]="true"
-      (change)="handleChange($event)" />
+      [required]="true"/>
       @if(errors) {
+        <pre>{{errors}}</pre>
+        @if(customControl.hasError('required'))
+        {
         <mat-error>{{errors}}</mat-error>
+        }
       }
   </mat-form-field>
 }
