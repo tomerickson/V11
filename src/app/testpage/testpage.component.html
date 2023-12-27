@@ -8,9 +8,14 @@
         <mfmp-numeric-input #maxNuclei
           [controlKey]="'maxNuclei'"
           [min]="5"
-          [max]="100"></mfmp-numeric-input>
+          [max]="100"
+          [type]="'decimal'"
+          [label]="'Max. Nuclei'"></mfmp-numeric-input>
       </div>
       <pre>{{form.controls['maxNuclei'].valid}}</pre>
+    </div>
+    <div>
+      <input matInput placeholder="Native" type="number" min="5" max="100" id="x1" name="x1">
     </div>
   </mat-card-content>
 </mat-card>
