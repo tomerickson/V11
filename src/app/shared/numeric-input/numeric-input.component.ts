@@ -34,8 +34,7 @@ import { MatInputModule } from '@angular/material/input';
   viewProviders: [
     {
       provide: ControlContainer,
-      useExisting: FormGroupDirective,
-      // useFactory: () => inject(ControlContainer, { skipSelf: true })
+      useExisting: FormGroupDirective
     },
     {
       provide: NG_VALIDATORS,
@@ -60,8 +59,9 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
 
   errors = false;
   ready = signal(false);
-  decimalPattern!: RegExp;
-  integerPattern!: RegExp;
+  readonly decimalPattern = '\\d+(?:\\.\\d+){0,1}';
+  readonly integerPattern = '\\d+';
+  chosenPattern!: string;
   customControl!: FormControl;
   errorMessages: Record<string, string>[] = [];
   numericErrorMessages!: Record<string, string>;
@@ -69,21 +69,15 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
   get parentFormGroup() {
     return this.parentContainer.control as FormGroup;
   }
-  // subscriptions: Subscription;
-
-  constructor() {
-    this.decimalPattern = /^\d+?(?:\.\d+?)$/;
-    this.integerPattern = /^\d+$/;
-  }
 
   ngOnInit(): void {
+    this.chosenPattern =
+      this.type === 'integer' ? this.integerPattern : this.decimalPattern;
     this.customControl = new FormControl(this.value, [
       Validators.required,
-      Validators.pattern(
-        this.type === 'integer' ? this.integerPattern : this.decimalPattern
-      ),
+      Validators.pattern(this.chosenPattern),
       Validators.min(this.min),
-      Validators.max(this.max),
+      Validators.max(this.max)
     ]);
     this.buildErrorMessaages();
     this.parentFormGroup.addControl(this.controlKey, this.customControl);
@@ -96,37 +90,33 @@ export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-
     console.log('numeric-input form is ready');
   }
 
-
   buildErrorMessaages() {
+    const rangeMessage = `Out of range. Please enter values within the range ${this.min} through ${this.max}.`;
     this.numericErrorMessages = {
       required: 'This field is required.',
       pattern: 'Digits [0-9] only.',
-      min: `Out of range. Please enter values within the range ${this.min} through ${this.max}.`,
-      max: `Out of range. Please enter values within the range ${this.min} through ${this.max}.`
+      min: rangeMessage,
+      max: rangeMessage
     };
-/*     if (this.type === 'integer')
-      this.errorMessages.push({ key: 'pattern', value: 'Digits [0-9] only.' });
-    if (this.type === 'decimal')
-      this.errorMessages.push({
-        key: 'pattern',
-        value: 'Digits and decimal point only'
-      });
-    if (this.required)
-      this.errorMessages.push({
-        key: 'required',
-        value: 'This field is required.'
-      });
-    this.errorMessages.push({
-      key: 'min',
-      value: `Minimum value is ${this.min}.`
-    });
-    this.errorMessages.push({
-      key: 'max',
-      value: `Maximum value is ${this.max}`
-    }); */
+  }
+
+  getErrorMessages = (): string | undefined => {
+    const ctl = this.customControl;
+    if (ctl.hasError('required')) {
+      return this.numericErrorMessages['required'];
+    }
+    if (ctl.hasError('pattern'))  {
+      return this.numericErrorMessages['pattern'];
+    }
+    if (ctl.hasError('min')) {
+      return this.numericErrorMessages['min'];
+    }
+    if (ctl.hasError('max')) {
+      return this.numericErrorMessages['max'];
+    }
+    return;
   }
 }
