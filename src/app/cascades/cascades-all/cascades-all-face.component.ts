@@ -1,5 +1,6 @@
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -14,6 +15,7 @@ import {
   FormControl,
   FormControlStatus,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
@@ -48,6 +50,7 @@ import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.c
   styleUrls: ['./cascades-all-face.component.scss'],
   imports: [
     CommonModule,
+    FormsModule,
     MatBadgeModule,
     MatButtonModule,
     MatCardModule,
@@ -68,32 +71,33 @@ import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.c
     NgTemplateOutlet
   ]
 })
-export class CascadesAllFaceComponent implements OnInit {
+export class CascadesAllFaceComponent implements OnInit, AfterViewInit {
   store = inject(Store);
   fb = inject(FormBuilder);
   ready = signal(false);
   cascadesForm!: FormGroup;
-  // slider!: SliderInputComponent;
-  numericErrorMessages: Record<string, string> = {
-    required: 'This field is required.',
-    pattern: 'Digits [0-9] only.',
-    range: 'Out of range. Enter values between ${minimum} and ${maximum}.'
-  };
 
   /**
    * Form getters
    */
-  get maxNuclei(): number {
-    return this.cascadesForm.get('maxNuclei')?.value;
+
+  get maxNuclei(): AbstractControl | null {
+    return this.cascadesForm.get('maxNuclei');
   }
-  get maxLoops(): number {
-    return this.cascadesForm.get('maxLoops')?.value;
+  get maxLoops(): AbstractControl | null {
+    return this.cascadesForm.get('maxLoops');
   }
-  get fusionMinEnergy(): number {
-    return this.cascadesForm.get('fusionMinEnergy')?.value;
+  get fusionMinEnergy(): AbstractControl | null {
+    return this.cascadesForm.get('fusionMinEnergy');
   }
-  get twoUpMinEnergy(): number {
-    return this.cascadesForm.get('twoUpMinEnergy')?.value;
+  get twoUpMinEnergy(): AbstractControl | null {
+    return this.cascadesForm.get('twoUpMinEnergy');
+  }
+  get maxReactorTemp(): AbstractControl | null {
+    return this.cascadesForm.get('maxReactorTemp');
+  }
+  get halfLifeThreshold(): AbstractControl | null {
+    return this.cascadesForm.get('halfLifeThreshold');
   }
   get meltingSwitch(): string {
     return this.cascadesForm.get('meltingSwitch')?.value;
@@ -104,12 +108,6 @@ export class CascadesAllFaceComponent implements OnInit {
   get isotopeSwitch(): string {
     return this.cascadesForm.get('isotopeSwitch')?.value;
   }
-  get halfLifeThreshold(): number {
-    return this.cascadesForm.get('halfLifeThreshold')?.value;
-  }
-  get maxReactorTemp(): number {
-    return this.cascadesForm.get('maxReactorTemp')?.value;
-  }
   get nuclearFermionSwitch(): string {
     return this.cascadesForm.get('nuclearFermionSwitch')?.value;
   }
@@ -119,9 +117,11 @@ export class CascadesAllFaceComponent implements OnInit {
   get dimersSwitch(): string {
     return this.cascadesForm.get('dimersSwitch')?.value;
   }
+
   get coreQuery(): boolean {
     return this.cascadesForm.get('coreQuery')?.value;
   }
+
   mouseEntry = signal(false);
 
   @Input({ required: true }) feedbackOptions!: Observable<ILookupDataModel[]>;
@@ -140,9 +140,14 @@ export class CascadesAllFaceComponent implements OnInit {
    BUT, even if it eventually shows an error message, still check out the All Results page:
     the answer file (check dates and times) may yet be there and complete.`;
   tooltipDelay = 750;
+  integerPattern: RegExp = /^\d+?$/;
+  decimalPattern: RegExp = /^\d+(?:\.\d*)?$/;
 
   ngOnInit(): void {
     this.buildForm();
+  }
+
+  ngAfterViewInit(): void {
     this.ready.set(true);
   }
 
@@ -150,44 +155,24 @@ export class CascadesAllFaceComponent implements OnInit {
     this.cascadesForm = this.fb.group(
       {
         tableSet: new FormControl<string>('Original'),
-        maxNuclei: new FormControl(100, [
-          Validators.required,
-          Validators.pattern('^[0-9]+$')
-        ]),
-        maxLoops: new FormControl(3, [
-          Validators.required,
-          Validators.pattern('^[0-9]+$'),
-          Validators.max(10),
-          Validators.min(1)
-        ]),
-        maxReactorTemp: new FormControl(2400, [
-          Validators.required,
-          Validators.pattern('^[0-9]+$')
-        ]),
-        meltingSwitch: ['Core'],
-        boilingSwitch: ['Include'],
-        fusionMinEnergy: [
-          5,
-          [Validators.required, Validators.pattern('^[0-9]+$')]
-        ],
-        twoUpMinEnergy: [
-          5,
-          [Validators.required, Validators.pattern('^[0-9]+$')]
-        ],
-        isotopeSwitch: ['Include'],
-        halfLifeThreshold: [
-          18,
-          [Validators.required, Validators.pattern('^[0-9]+$')]
-        ],
-        nuclearFermionSwitch: ['Core'],
-        atomicFermionSwitch: ['Core'],
-        dimersSwitch: ['Include'],
-        nuclidesSort: ['order by Z, A'],
-        reactionSort: ['order by MeV desc'],
-        coreQuery: ["E1 = 'H' and (E2 = 'Ni') "],
-        leftElements: ['left'],
-        originalElements: ['none'],
-        rightElements: ['right']
+        maxNuclei: new FormControl(100),
+        maxLoops: new FormControl(3),
+        maxReactorTemp: new FormControl(2400),
+        fusionMinEnergy: new FormControl(5),
+        twoUpMinEnergy: new FormControl(5),
+        meltingSwitch: new FormControl('Core'),
+        boilingSwitch: new FormControl('Include'),
+        isotopeSwitch: new FormControl('Include'),
+        halfLifeThreshold: new FormControl(18),
+        nuclearFermionSwitch: new FormControl('Core'),
+        atomicFermionSwitch: new FormControl('Core'),
+        dimersSwitch: new FormControl('Include'),
+        nuclidesSort: new FormControl('order by Z, A'),
+        reactionSort: new FormControl('order by MeV desc'),
+        coreQuery: new FormControl("E1 = 'H' and (E2 = 'Ni') "),
+        leftElements: new FormControl('left'),
+        originalElements: new FormControl('none'),
+        rightElements: new FormControl('right')
       },
       { validators: this.formValidator }
     );

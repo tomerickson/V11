@@ -13,10 +13,10 @@ export const ALL_RESULTS_ROUTES: Routes = [
     path: '',
     component: AllResultsHeadComponent,
     providers: [
+      { provide: AllResultsService, useClass: AllResultsService },
+      { provide: HeaderProviderService, useClass: HeaderProviderService },
       provideState(state.feature),
       provideEffects([state.effects]),
-      { provide: AllResultsService, useClass: AllResultsService },
-      { provide: HeaderProviderService, useClass: HeaderProviderService }
     ],
     children: [
       {

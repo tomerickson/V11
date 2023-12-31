@@ -1,25 +1,26 @@
-@if (ready()) {
-<div>
-  <mat-form-field>
+@if(ready()) {
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>{{ label }}</mat-label>
     <input
       #input
-      matNativeControl
+      matInput
       type="number"
-      placeholder="{{ label }}"
       formControlName="{{ controlKey }}"
       min="min"
       max="max"
-      step="step" />
+      step="step"
+      value="value"
+      placeholder="{{ placeholder }}" />
+
+    @if(customControl.errors && customControl.touched) {
+    @if(customControl.hasError('required')) {
+    <mat-error>{{ errorMessages['required'] }}</mat-error>
+    } @if (customControl.hasError('pattern')) {
+    <mat-error>{{ errorMessages['pattern'] }}</mat-error>
+    } @if(customControl.hasError('min')) {
+    <mat-error>{{ errorMessages['min'] }}</mat-error>
+    } @if(customControl.hasError('max')) {
+    <mat-error>{{ errorMessages['max'] }}</mat-error>
+    } }
   </mat-form-field>
-  @if(customControl.errors && customControl.touched) {
-  @if(customControl.hasError('required')) {
-  <mat-error>{{ numericErrorMessages['required'] }}</mat-error>
-  } @if (customControl.hasError('pattern')) {
-  <mat-error>{{ numericErrorMessages['pattern'] }}</mat-error>
-  } @if(customControl.hasError('min')) {
-  <mat-error>{{ numericErrorMessages['min'] }}</mat-error>
-  } @if(customControl.hasError('max')) {
-  <mat-error>{{ numericErrorMessages['max'] }}</mat-error>
-  } }
-</div>
 }

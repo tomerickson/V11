@@ -4,11 +4,11 @@ import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 import { DownloadService } from '../shared/download/download.service';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
-import { NotFoundComponent } from '../shared/not-found/not-found.component';
 import * as cascadeState from '../state/cascades-all';
 import { CascadesAllHeadComponent } from './cascades-all/cascades-all-head.component';
 import { CascadesService } from './cascades.service';
 import { Cascades4HeadComponent } from './cascades4/cascades4-head.component';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 export const CASCADE_ROUTES: Routes = [
   {
@@ -16,6 +16,7 @@ export const CASCADE_ROUTES: Routes = [
     providers: [
       provideState(cascadeState.feature),
       provideEffects([cascadeState.effects]),
+      { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
       { provide: CascadesService, useClass: CascadesService },
       { provide: HeaderProviderService, useClass: HeaderProviderService },
       { provide: DownloadService, useClass: DownloadService },
@@ -39,5 +40,5 @@ export const CASCADE_ROUTES: Routes = [
       // { path: 'reports', component: ReportPagesHeadComponent }
     ]
   },
-  { path: '**', redirectTo: 'intro',  pathMatch: 'full'}
+  { path: '**', redirectTo: 'notfound',  pathMatch: 'full'}
 ];

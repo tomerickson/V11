@@ -1,21 +1,102 @@
-<mat-card>
+@if(ready()) {
+  <mat-card>
   <mat-card-content>
     <div>
       <div [formGroup]="form">
         <mat-form-field>
-          <input matInput placeholder='myControl' formControlName="myControl">
+          <mat-label>Max. Nuclei</mat-label>
+          <input
+            matInput
+            formControlName="maxNuclei"
+            placeholder="Max. Nuclei"
+            type="number"
+            min="1"
+            max="100"
+            step="1"/>
+            @if( maxNuclei?.errors) {
+            <ng-container *ngTemplateOutlet="
+            controlErrors; context: {$implicit:maxNuclei?.errors}">
+            </ng-container>
+          }
         </mat-form-field>
-        <mfmp-numeric-input #maxNuclei
-          [controlKey]="'maxNuclei'"
-          [min]="5"
-          [max]="100"
-          [type]="'decimal'"
-          [label]="'Max. Nuclei'"></mfmp-numeric-input>
+        <button matButton type="submit" [disabled]="form.invalid || form.pristine">SUBMIT</button>
       </div>
-      <pre>{{form.controls['maxNuclei'].valid}}</pre>
     </div>
     <div>
-      <input matInput placeholder="Native" type="number" min="5" max="100" id="x1" name="x1">
+      <input
+        matInput
+        placeholder="Native"
+        type="number"
+        min="5"
+        max="100"
+        id="x1"
+        name="x1" />
     </div>
   </mat-card-content>
 </mat-card>
+
+<!-- Numeric control template -->
+
+<ng-template #controlErrors let-context>
+  @if (context.max) {
+    <mat-error>Maximum: {{context.max.max}}</mat-error>
+  }
+  @if (context.required) {
+    <mat-error>Required entry.</mat-error>
+  }
+  @if (context.min) {
+    <mat-error>Minimum of {{context.min.min}}</mat-error>
+  }
+  @if (context.pattern) {
+    <mat-error>Value must match {{context.pattern.requiredPattern}}</mat-error>
+  }
+</ng-template>
+
+
+<ng-template #numericInput let-context>
+  <mat-form-field [formGroup]="form">
+    <input
+      matInput
+      formControlName="{{ context.controlKey }}"
+      placeholder="{{ context.label }}"
+      type="number"
+      min="{{context.min}}"
+      max="{{context.max}}"
+      step="{{context.step}}"/>
+      @if (getControl(context.controlKey).errors) {
+        @for(each of getErrors(context.controlKey); track each) {
+          @switch (each) {
+            @case (each == 'required') {
+              <mat-error>Required entry.</mat-error>
+            }
+            @case (each == 'min') {
+              <mat-error>Minimum of {{context.min}}.</mat-error>
+            }
+            @case (each == 'max') {
+              <mat-error>Maximum of  {{context.max}}</mat-error>
+            }
+            @case (each == 'pattern') {
+              <mat-error>Not a match to {{context.pattern}}</mat-error>
+            }
+          }
+        }
+      }
+  </mat-form-field>
+</ng-template>
+}
+<!-- <ng-template #testInput let-args>
+  <h3>Test Input</h3>
+  <p>{{ args }}</p>
+</ng-template>
+<ng-template #numericInput let-args>
+  <pre>{{ args | json }}</pre>
+  <pre>{{ args.controlKey }}</pre>
+  <mfmp-numeric-input
+    [controlKey]="args.controlKey"
+    [min]="args.min"
+    [max]="args.max"
+    [type]="args.type"
+    [value]="args.value"
+    [label]="args.label"></mfmp-numeric-input>
+</ng-template>
+ -->

@@ -24,314 +24,353 @@
         </span>
       </div>
     </mat-expansion-panel>
-    <div class="slidetoggle">
-      <mat-slide-toggle
-        color="primary"
-        labelPosition="before"
-        [checked]="mouseEntry()"
-        matTooltip="{{ touchMessage }}"
-        [matTooltipShowDelay]="tooltipDelay"
-        (toggleChange)="sliderChange()">
-        <span>
-          Mouse/Touch entry
-          <mat-icon [inline]="true" color="primary">info</mat-icon>
-        </span>
-      </mat-slide-toggle>
-    </div>
   </mat-card-header>
   <mat-card-content>
     @if (ready()) {
-      <form [formGroup]="cascadesForm">
-        <input type="hidden" name="doit" value="execute_query" readonly />
-        <div class="grid">
-          <!-- Max. nuclei-->
-          <div class="flexrow end">
-            <div>
-              Maximum number of nuclei to be tried in all pairings as inputs to
-              both the Fusion and the TwoToTwo reaction tables:
-            </div>
-            @if (mouseEntry()) {
-              <mfmp-slider-input
-                [parentForm]="cascadesForm"
-                [controlName]="'maxNuclei'"
-                [minimum]="0"
-                [maximum]="1000"
-                [step]="1"
-                [elements]="'sv'"></mfmp-slider-input>
-            } @else {
-              <mfmp-numeric-input [controlKey]="'maxNuclei'" [min]=2 [max]=100></mfmp-numeric-input>
+    <form [formGroup]="cascadesForm">
+      <input type="hidden" name="doit" value="execute_query" readonly />
+      <div class="grid">
+        <!-- Max. nuclei-->
+        <div class="flexrow end">
+          <div>
+            Maximum number of nuclei to be tried in all pairings as inputs to
+            both the Fusion and the TwoToTwo reaction tables:
+          </div>
+          <mat-form-field>
+            <mat-label>Max. Nuclei</mat-label>
+            <input
+              matInput
+              formControlName="maxNuclei"
+              placeholder="99..."
+              required
+              type="number"
+              min="1"
+              step="1"
+              [pattern]="integerPattern" />
+            @if( maxNuclei?.errors) {
+            <ng-container
+              *ngTemplateOutlet="
+                controlErrors;
+                context: { $implicit: maxNuclei?.errors }
+              "></ng-container>
             }
-          </div>
-
-          <!-- Max. loops-->
-          <div class="flexrow end" formGroupName="maxLoops">
-            <div>
-              Maximum number of loops to be used in the recursion process (too
-              many will produce runaway):
-            </div>
-            @if (mouseEntry()) {
-              <mfmp-slider-input
-                [parentForm]="cascadesForm"
-                [controlName]="'maxLoops'"
-                [minimum]="0"
-                [maximum]="10"
-                [step]="1"
-                [elements]="'sv'"></mfmp-slider-input>
-            } @else {
-              <!--<mfmp-numeric-input-->
-            }
-          </div>
-
-          <!-- Max. reactor temperature -->
-          <div class="flexrow end" formGroupName="maxReactorTemp">
-            <div>Maximum Reactor Temperature (Kelvin):</div>
-            @if (mouseEntry()) {
-              <mfmp-slider-input
-                [parentForm]="cascadesForm"
-                [minimum]="0"
-                [maximum]="5000"
-                [label]="'Max. Reactor Temp.'"
-                [controlName]="'maxReactorTemp'"
-                [elements]="'sv'"></mfmp-slider-input>
-            } @else {
-              <!--<mfmp-numeric-input-->
-            }
-          </div>
-          <div class="flexrow end" formGroupName="halfLifeThreshold">
-            <div>
-              LHL [Log10(Half Life in Years)] Threshold, below which nuclides
-              will count as a Radioactive Isotopes:
-            </div>
-            @if (mouseEntry()) {
-              <mfmp-slider-input
-                [parentForm]="cascadesForm"
-                [minimum]="0"
-                [maximum]="20"
-                [label]="'Half life'"
-                [controlName]="'halfLifeThreshold'"
-                [elements]="'sv'"></mfmp-slider-input>
-            } @else {
-              <!--<mfmp-numeric-input-->
-            }
-          </div>
-          <div class="flexrow end" formGroupName="fusionMinEnergy">
-            <div>
-              Minimum energy (MeV) for any Fusion reaction to be counted:
-            </div>
-            @if (mouseEntry()) {
-              <mfmp-slider-input
-                [parentForm]="cascadesForm"
-                [minimum]="0"
-                [maximum]="5000"
-                [label]="'Min. fusion energy'"
-                [controlName]="'fusionMinEnergy'"
-                [elements]="'sv'"></mfmp-slider-input>
-            } @else {
-              <!--<mfmp-numeric-input-->
-            }
-          </div>
-          <div class="flexrow end" formGroupName="twoUpMinEnergy">
-            <div>
-              Minimum energy (MeV) for any TwoToTwo (2-2) reaction to be
-              counted:
-            </div>
-            @if (mouseEntry()) {
-              <mfmp-slider-input
-                [parentForm]="cascadesForm"
-                [minimum]="0"
-                [maximum]="5000"
-                [elements]="'sv'"
-                [label]="'Min. TwoUp energy'"
-                [controlName]="'twoUpMinEnergy'"></mfmp-slider-input>
-            } @else {
-              <!--<mfmp-numeric-input-->
-            }
-          </div>
-          <div class="flexrow end">
-            <div>
-              <label>
-                Elements that will NOT have MELTED before reaching the Maximum
-                Reactor Temperature:
-              </label>
-            </div>
-            <mfmp-feedback-options
-              [parentForm]="cascadesForm"
-              [feedbackOptions]="feedbackOptions | async"
-              [controlName]="'meltingSwitch'"
-              [selected]="meltingSwitch"
-              (feedback)="handleFeedback($event)"></mfmp-feedback-options>
-          </div>
-          <div class="flexrow end">
-            <div>
-              Elements that WILL have BOILED before reaching the Maximum Reactor
-              Temperature:
-            </div>
-            <mfmp-feedback-options
-              [parentForm]="cascadesForm"
-              [feedbackOptions]="feedbackOptions | async"
-              [controlName]="'boilingSwitch'"
-              [selected]="boilingSwitch"
-              (feedback)="handleFeedback($event)"></mfmp-feedback-options>
-          </div>
-          <div class="flexrow end">
-            <div>Radioactive Isotopes:</div>
-            <mfmp-feedback-options
-              [parentForm]="cascadesForm"
-              [feedbackOptions]="feedbackOptions | async"
-              [controlName]="'isotopeSwitch'"
-              [selected]="isotopeSwitch"
-              (feedback)="handleFeedback($event)"></mfmp-feedback-options>
-          </div>
-
-          <div class="flexrow end">
-            <div>Nuclear Fermions</div>
-            <mfmp-feedback-options
-              [parentForm]="cascadesForm"
-              [feedbackOptions]="feedbackOptions | async"
-              [controlName]="'nuclearFermionSwitch'"
-              [selected]="nuclearFermionSwitch"
-              (feedback)="handleFeedback($event)"></mfmp-feedback-options>
-          </div>
-          <div class="flexrow end">
-            <div>Atomic Fermions</div>
-            <mfmp-feedback-options
-              [parentForm]="cascadesForm"
-              [feedbackOptions]="feedbackOptions | async"
-              [controlName]="'atomicFermionSwitch'"
-              [selected]="atomicFermionSwitch"
-              (feedback)="handleFeedback($event)"></mfmp-feedback-options>
-          </div>
-          <div class="flexrow end">
-            <div>
-              For H, D, T*, Li, N, O, F, Na, Cl, K, Cr, Br, Rb and I which can
-              form Dimers:
-            </div>
-            <mfmp-feedback-options
-              [parentForm]="cascadesForm"
-              [feedbackOptions]="feedbackOptions | async"
-              [controlName]="'dimersSwitch'"
-              [selected]="dimersSwitch"
-              (feedback)="handleFeedback($event)"></mfmp-feedback-options>
-          </div>
-
-          <div class="flexrow end">
-            <div>Order by which the Nuclei table will be presented :</div>
-            <mat-form-field>
-              <input
-                matInput
-                type="text"
-                formControlName="nuclidesSort"
-                placeholder="Nuclei Sort" />
-            </mat-form-field>
-          </div>
-          <div class="flexrow end">
-            <div>
-              Order by which the Reactions table will be presented :
-              <sub>
-                <br />
-                (for order as tried, clear the box)
-              </sub>
-            </div>
-            <mat-form-field>
-              <input
-                matInput
-                type="text"
-                formControlName="reactionSort"
-                placeholder="Reaction Sort" />
-            </mat-form-field>
-          </div>
-
-          <div class="flexrow">
-            <div>
-              <h3
-                matTooltip="(as in Fusion or TwoToTwo programs'
-            core queries)">
-                Enter your Core Query here:
-              </h3>
-            </div>
-            <div>
-              <textarea
-                name="coreQuery"
-                placeholder="core query"
-                formControlName="coreQuery"
-                [rows]="4"
-                [cols]="30"
-                >{{ coreQuery }}</textarea
-              >
-            </div>
-          </div>
-          <div class="flexrow end">
-            <div></div>
-            <div>
-              <mat-radio-group formControlName="tableSet" value="Original">
-                <mat-label
-                  matTooltip="{{ tablesMessage }}"
-                  [matTooltipPosition]="'left'"
-                  [matTooltipShowDelay]="tooltipDelay">
-                  <span>
-                    <mat-icon [inline]="true" color="primary">info</mat-icon>
-                    Table set:
-                  </span>
-                </mat-label>
-                <mat-radio-button value="Original" selected>
-                  Original
-                </mat-radio-button>
-                <mat-radio-button value="Extended">Extended</mat-radio-button>
-              </mat-radio-group>
-            </div>
-          </div>
+          </mat-form-field>
         </div>
+        <!-- Max. loops-->
+        <div class="flexrow end">
+          <div>
+            Maximum number of loops to be used in the recursion process (too
+            many will produce runaway):
+          </div>
+
+          <mat-form-field>
+            <mat-label>Max. loops</mat-label>
+            <input
+              matInput
+              formControlName="maxLoops"
+              placeholder="99..."
+              required
+              type="number"
+              min="1"
+              max="100"
+              step="1"
+              value="3"
+              [pattern]="integerPattern" />
+            @if( maxLoops?.errors) {
+            <ng-container
+              *ngTemplateOutlet="
+                controlErrors;
+                context: { $implicit: maxLoops?.errors }
+              "></ng-container>
+            }
+          </mat-form-field>
+        </div>
+        <!-- Max. reactor temperature -->
+        <div class="flexrow end">
+          <div>Maximum Reactor Temperature (Kelvin):</div>
+          <mat-form-field>
+            <mat-label>Max. Reactor Temp.</mat-label>
+            <input
+              matInput
+              formControlName="maxReactorTemp"
+              placeholder="99..."
+              required
+              type="number"
+              min="1"
+              step="1"
+              [pattern]="integerPattern" />
+            @if( maxReactorTemp?.errors) {
+            <ng-container
+              *ngTemplateOutlet="
+                controlErrors;
+                context: { $implicit: maxReactorTemp?.errors }
+              "></ng-container>
+            }
+          </mat-form-field>
+        </div>
+        <!-- Half life threshold-->
+        <div class="flexrow end">
+          <div>
+            LHL [Log10(Half Life in Years)] Threshold, below which nuclides will
+            count as a Radioactive Isotopes:
+          </div>
+          <mat-form-field>
+            <mat-label>Half-life Threshold</mat-label>
+            <input
+              matInput
+              formControlName="halfLifeThreshold"
+              placeholder="99..."
+              required
+              type="number"
+              min="1"
+              step="1"
+              max="18"
+              [pattern]="decimalPattern" />
+            @if( halfLifeThreshold?.errors) {
+            <ng-container
+              *ngTemplateOutlet="
+                controlErrors;
+                context: { $implicit: halfLifeThreshold?.errors }
+              "></ng-container>
+            }
+          </mat-form-field>
+        </div>
+        <!-- Min. fusion energy -->
+
+        <div class="flexrow end">
+          <div>Minimum energy (MeV) for any Fusion reaction to be counted:</div>
+          <mat-form-field>
+            <mat-label>Min. Fusion enery</mat-label>
+            <input
+              matInput
+              formControlName="fusionMinEnergy"
+              placeholder="99..."
+              required
+              type="number"
+              [pattern]="decimalPattern" />
+            @if( fusionMinEnergy?.errors) {
+            <ng-container
+              *ngTemplateOutlet="
+                controlErrors;
+                context: { $implicit: fusionMinEnergy?.errors }
+              "></ng-container>
+            }
+          </mat-form-field>
+        </div>
+        <div class="flexrow end">
+          <div>
+            Minimum energy (MeV) for any TwoToTwo (2-2) reaction to be counted:
+          </div>
+          <mat-form-field>
+            <mat-label>Min. (2-2) enery</mat-label>
+            <input
+              matInput
+              formControlName="twoUpMinEnergy"
+              placeholder="99..."
+              required
+              type="number"
+              [pattern]="decimalPattern" />
+            @if( twoUpMinEnergy?.errors) {
+            <ng-container
+              *ngTemplateOutlet="
+                controlErrors;
+                context: { $implicit: twoUpMinEnergy?.errors }
+              "></ng-container>
+            }
+          </mat-form-field>
+        </div>
+        <div class="flexrow end">
+          <div>
+            <label>
+              Elements that will NOT have MELTED before reaching the Maximum
+              Reactor Temperature:
+            </label>
+          </div>
+          <mfmp-feedback-options
+            [parentForm]="cascadesForm"
+            [feedbackOptions]="feedbackOptions | async"
+            [controlName]="'meltingSwitch'"
+            [selected]="meltingSwitch"
+            (feedback)="handleFeedback($event)"></mfmp-feedback-options>
+        </div>
+        <div class="flexrow end">
+          <div>
+            Elements that WILL have BOILED before reaching the Maximum Reactor
+            Temperature:
+          </div>
+          <mfmp-feedback-options
+            [parentForm]="cascadesForm"
+            [feedbackOptions]="feedbackOptions | async"
+            [controlName]="'boilingSwitch'"
+            [selected]="boilingSwitch"
+            (feedback)="handleFeedback($event)"></mfmp-feedback-options>
+        </div>
+        <div class="flexrow end">
+          <div>Radioactive Isotopes:</div>
+          <mfmp-feedback-options
+            [parentForm]="cascadesForm"
+            [feedbackOptions]="feedbackOptions | async"
+            [controlName]="'isotopeSwitch'"
+            [selected]="isotopeSwitch"
+            (feedback)="handleFeedback($event)"></mfmp-feedback-options>
+        </div>
+
+        <div class="flexrow end">
+          <div>Nuclear Fermions</div>
+          <mfmp-feedback-options
+            [parentForm]="cascadesForm"
+            [feedbackOptions]="feedbackOptions | async"
+            [controlName]="'nuclearFermionSwitch'"
+            [selected]="nuclearFermionSwitch"
+            (feedback)="handleFeedback($event)"></mfmp-feedback-options>
+        </div>
+        <div class="flexrow end">
+          <div>Atomic Fermions</div>
+          <mfmp-feedback-options
+            [parentForm]="cascadesForm"
+            [feedbackOptions]="feedbackOptions | async"
+            [controlName]="'atomicFermionSwitch'"
+            [selected]="atomicFermionSwitch"
+            (feedback)="handleFeedback($event)"></mfmp-feedback-options>
+        </div>
+        <div class="flexrow end">
+          <div>
+            For H, D, T*, Li, N, O, F, Na, Cl, K, Cr, Br, Rb and I which can
+            form Dimers:
+          </div>
+          <mfmp-feedback-options
+            [parentForm]="cascadesForm"
+            [feedbackOptions]="feedbackOptions | async"
+            [controlName]="'dimersSwitch'"
+            [selected]="dimersSwitch"
+            (feedback)="handleFeedback($event)"></mfmp-feedback-options>
+        </div>
+
+        <div class="flexrow end">
+          <div>Order by which the Nuclei table will be presented :</div>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="nuclidesSort"
+              placeholder="Nuclei Sort" />
+          </mat-form-field>
+        </div>
+        <div class="flexrow end">
+          <div>
+            Order by which the Reactions table will be presented :
+            <sub>
+              <br />
+              (for order as tried, clear the box)
+            </sub>
+          </div>
+          <mat-form-field>
+            <input
+              matInput
+              type="text"
+              formControlName="reactionSort"
+              placeholder="Reaction Sort" />
+          </mat-form-field>
+        </div>
+
         <div class="flexrow">
           <div>
-            <h4>Tick the tables you want included in the calculations:</h4>
+            <h3
+              matTooltip="(as in Fusion or TwoToTwo programs'
+            core queries)">
+              Enter your Core Query here:
+            </h3>
           </div>
           <div>
-            <mat-checkbox
-              type="checkbox"
-              formControlName="leftElements"
-              value="left"
-              checked="checked">
-              E on Left
-            </mat-checkbox>
-            <mat-checkbox
-              type="checkbox"
-              formControlName="originalElements"
-              value="none"
-              checked="checked">
-              Original
-            </mat-checkbox>
-            <mat-checkbox
-              type="checkbox"
-              formControlName="rightElements"
-              value="right"
-              checked="checked">
-              E on Right
-            </mat-checkbox>
+            <textarea
+              name="coreQuery"
+              placeholder="core query"
+              formControlName="coreQuery"
+              [rows]="4"
+              [cols]="30"
+              >{{ coreQuery }}</textarea
+            >
           </div>
-          <div>
-            <button
-              mat-raised-button
-              color="primary"
-              type="button"
-              [disabled]="cascadesForm.invalid || cascadesForm.pristine"
-              [matTooltipShowDelay]="tooltipDelay"
-              [matTooltipPosition]="'left'"
-              matTooltip="{{ patienceMessage }}"
-              (click)="submitForm()">
-              <span>
-                FIND CASCADES&nbsp;
-                <mat-icon [inline]="true" color="white">info</mat-icon>
-              </span>
-            </button>
-          </div>
-          <pre>{{ cascadesForm.value | json }}</pre>
         </div>
-      </form>
+        <div class="flexrow end">
+          <div></div>
+          <div>
+            <mat-radio-group formControlName="tableSet" value="Original">
+              <mat-label
+                matTooltip="{{ tablesMessage }}"
+                [matTooltipPosition]="'left'"
+                [matTooltipShowDelay]="tooltipDelay">
+                <span>
+                  <mat-icon [inline]="true" color="primary">info</mat-icon>
+                  Table set:
+                </span>
+              </mat-label>
+              <mat-radio-button value="Original" selected>
+                Original
+              </mat-radio-button>
+              <mat-radio-button value="Extended">Extended</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="flexrow">
+        <div class="flexrow">
+          <h4>Tick the tables you want included in the calculations:</h4>
+          <mat-checkbox
+            type="checkbox"
+            formControlName="leftElements"
+            value="left"
+            checked="checked">
+            E on Left
+          </mat-checkbox>
+          <mat-checkbox
+            type="checkbox"
+            formControlName="originalElements"
+            value="none"
+            checked="checked">
+            Original
+          </mat-checkbox>
+          <mat-checkbox
+            type="checkbox"
+            formControlName="rightElements"
+            value="right"
+            checked="checked">
+            E on Right
+          </mat-checkbox>
+        </div>
+        <div>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            [disabled]="cascadesForm.invalid"
+            [matTooltipShowDelay]="tooltipDelay"
+            [matTooltipPosition]="'left'"
+            matTooltip="{{ patienceMessage }}"
+            (click)="submitForm()">
+            <span>FIND CASCADES&nbsp;</span>
+            <mat-icon [inline]="true" color="white">info</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
     }
   </mat-card-content>
 </mat-card>
 
-<ng-template #sliderTemplate let-context="context">
+<ng-template #controlErrors let-context>
+  @if (context.required) {
+  <mat-error>Required entry.</mat-error>
+  } @else { @if (context.max) {
+  <mat-error>Maximum: {{ context.max.max }}</mat-error>
+  } @if (context.min) {
+  <mat-error>Minimum of {{ context.min.min }}</mat-error>
+  } @if (context.pattern) {
+  <mat-error>Value must match {{ context.pattern.requiredPattern }}</mat-error>
+  } }
+</ng-template>
+
+<!-- <ng-template #sliderTemplate let-context="context">
   <mat-slider
     [min]="context.min"
     [max]="context.max"
@@ -346,4 +385,4 @@
       matSliderThumb
       #slider />
   </mat-slider>
-</ng-template>
+</ng-template> -->

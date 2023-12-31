@@ -9,6 +9,7 @@ import * as appState from '../../state/index';
 import { ActivatedRoute } from '@angular/router';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { Observable } from 'rxjs';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'mfmp-cascades-all-head',
@@ -20,7 +21,8 @@ import { Observable } from 'rxjs';
   `,
   styles: [],
   imports: [CommonModule, CascadesAllFaceComponent],
-  providers: [{ provide: HeaderProviderService }]
+  providers: [{ provide: HeaderProviderService },
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }]
 })
 export class CascadesAllHeadComponent implements OnInit {
   store = inject(Store);
