@@ -1,16 +1,18 @@
-<mat-nav-list>
+<mat-nav-list (click)="toggleMenu(false)">
   <a mat-list-item routerLink="intro">Introduction</a>
   <a mat-list-item routerLink="fusion">Fusion Reactions</a>
   <a mat-list-item routerLink="fission">Fission Reactions</a>
   <a mat-list-item routerLink="two-up">Two to Two Reactions</a>
   <a mat-list-item routerLink="all-tables">All Tables</a>
-  <a mat-list-item routerLink="cascades">Cascades</a>
-  <mat-nav-list>
+  <a mat-list-item (click)="toggleMenu($event)">Cascades...</a>
+
+  <div #cascades class="indent collapse">
     <a mat-list-item routerLink="cascades/cascades-all">Cascades All</a>
     <a mat-list-item routerLink="cascades/cascades4">Cascades 4</a>
     <a mat-list-item routerLink="cascades/cascades5lite">Cascades 5 Lite</a>
     <a mat-list-item routerLink="cascades/cascades5">Cascades 5</a>
-  </mat-nav-list>
+  </div>
+
   <a mat-list-item routerLink="all-results">All Results</a>
   <a mat-list-item routerLink="element-data">Show Element Data</a>
   <a mat-list-item routerLink="tables-in-detail">Tables in Detail</a>

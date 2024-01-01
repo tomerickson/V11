@@ -10,6 +10,7 @@
     "sourceType": "module" // Allows for the use of imports
   },
   "rules": {
+    "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }]
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
   }
 }

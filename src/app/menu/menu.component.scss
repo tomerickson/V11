@@ -12,11 +12,13 @@ ul {
   text-decoration: none;
   list-style-type:disc
 }
-mat-nav-list#cascades.collapse {
+div.collapse {
   visibility: hidden;
   height: 0;
 }
-
+div.indent {
+  margin-left: 1em;
+}
 .menuRow {
   display: flex;
   flex-direction: row;
