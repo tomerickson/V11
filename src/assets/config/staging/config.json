@@ -3,11 +3,10 @@
     "name": "Uninitiialized",
     "version": "5.0",
     "proxy": null,
-    "apiUrl": "https://aptables.com/",
+    "apiUrl": "https://nanosoft.co.nz/",
     "virtualDirectory": "V11",
     "httpMaxRetries": 1,
     "httpRetryDelay": 500,    
-    "version": "5.0",
     "allTablesPageSize": 10,
     "pageCredits": "Conceived by R. W. Greenyer and coded by P. W. Power for the Martin Fleischmann Memorial Project"
 }

@@ -111,7 +111,7 @@
                   "output": "/assets/config/"
                 }
               ],
-              "baseHref": "./",
+              "baseHref": "/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
