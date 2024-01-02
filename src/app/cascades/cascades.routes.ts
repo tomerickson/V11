@@ -8,7 +8,12 @@ import * as cascadeState from '../state/cascades-all';
 import { CascadesAllHeadComponent } from './cascades-all/cascades-all-head.component';
 import { CascadesService } from './cascades.service';
 import { Cascades4HeadComponent } from './cascades4/cascades4-head.component';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import {
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher
+} from '@angular/material/core';
+import { UnderConstructionComponent } from '../under-construction/under-construction.component';
+import { CascadesSummaryHeadComponent } from './cascades-summary/cascades-summary-head.component';
 
 export const CASCADE_ROUTES: Routes = [
   {
@@ -28,17 +33,17 @@ export const CASCADE_ROUTES: Routes = [
     children: [
       {
         path: 'cascades-all',
-        component: CascadesAllHeadComponent,
-        // children: [{ path: 'reports', redirectTo: 'reports' }]
+        component: CascadesAllHeadComponent
       },
       {
         path: 'cascades4',
-        component: Cascades4HeadComponent,
-        children: [{ path: 'reports', redirectTo: 'reports' }]
+        component: UnderConstructionComponent
       },
-      //{ path: 'summary', component: CascadesSummaryHeadComponent },
+      { path: 'cascades5lite', component: UnderConstructionComponent },
+      { path: 'cascades5', component: UnderConstructionComponent },
+      { path: 'cascades-all/summary', component: CascadesSummaryHeadComponent },
       // { path: 'reports', component: ReportPagesHeadComponent }
     ]
   },
-  { path: '**', redirectTo: 'notfound',  pathMatch: 'full'}
+  { path: '**', redirectTo: 'notfound', pathMatch: 'full' }
 ];

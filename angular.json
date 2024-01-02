@@ -77,6 +77,11 @@
                   "output": "/assets/config/"
                 },
                 {
+                  "glob": "**/*",
+                  "input": "src/assets/images",
+                  "output": "/assets/images/"
+                },
+                {
                   "glob": "web.config",
                   "input": "src/assets/config",
                   "output": "/"
@@ -109,6 +114,16 @@
                   "glob": "**/*",
                   "input": "src/assets/config/staging",
                   "output": "/assets/config/"
+                },
+                {
+                  "glob": "**/*",
+                  "input": "src/assets/images",
+                  "output": "/assets/images/"
+                },
+                {
+                  "glob": "_redirects",
+                  "input": "src",
+                  "output": "/"
                 }
               ],
               "baseHref": "./",
@@ -133,7 +148,7 @@
               ]
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "staging"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

@@ -15,6 +15,7 @@ export const requestAllResultsEffect = createEffect(
       switchMap((action) =>
         service.getCascadesAllResponse(action.payload).pipe(
           map((html) => service.parseCascadesAllResponse(html)),
+          tap((html) => console.log('html', html)),
           tap((dto) => console.log('dto', dto)),
           map((dto: ICascadesAllForm) =>
             actions.requestAllResultsSuccess({ payload: dto })

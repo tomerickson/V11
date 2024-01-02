@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   inject,
@@ -18,8 +19,8 @@ import {
   FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
-  ValidatorFn,
-  Validators
+  ValidatorFn
+
 } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +36,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
@@ -71,7 +72,7 @@ import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.c
     NgTemplateOutlet
   ]
 })
-export class CascadesAllFaceComponent implements OnInit, AfterViewInit {
+export class CascadesAllFaceComponent implements OnInit, AfterViewInit, OnDestroy {
   store = inject(Store);
   fb = inject(FormBuilder);
   ready = signal(false);
@@ -142,7 +143,11 @@ export class CascadesAllFaceComponent implements OnInit, AfterViewInit {
   tooltipDelay = 750;
   integerPattern: RegExp = /^\d+?$/;
   decimalPattern: RegExp = /^\d+(?:\.\d*)?$/;
+  subscriptions: Subscription;
 
+  constructor() {
+    this.subscriptions = new Subscription();
+  }
   ngOnInit(): void {
     this.buildForm();
   }
@@ -151,6 +156,9 @@ export class CascadesAllFaceComponent implements OnInit, AfterViewInit {
     this.ready.set(true);
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
   buildForm = () => {
     this.cascadesForm = this.fb.group(
       {
@@ -176,6 +184,8 @@ export class CascadesAllFaceComponent implements OnInit, AfterViewInit {
       },
       { validators: this.formValidator }
     );
+    this.subscriptions.add(
+      this.cascadesForm.valueChanges.subscribe(changes => this.handleFormChange(changes)));
   };
 
   submitForm = () => {
@@ -183,6 +193,9 @@ export class CascadesAllFaceComponent implements OnInit, AfterViewInit {
       .value as unknown as ICascadesAllForm;
     this.submitter.emit(form);
   };
+
+  handleFormChange = (changes: any):void  => {
+  }
 
   handleSliderInputs(kvp: KeyValuePair) {
     this.cascadesForm.get(kvp.key)?.setValue(kvp.value);

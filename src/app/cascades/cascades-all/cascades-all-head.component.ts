@@ -6,7 +6,7 @@ import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { Store } from '@ngrx/store';
 import * as featureState from '../../state/cascades-all';
 import * as appState from '../../state/index';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { Observable } from 'rxjs';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
@@ -26,14 +26,12 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
 })
 export class CascadesAllHeadComponent implements OnInit {
   store = inject(Store);
+  router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   headerService = inject(HeaderProviderService);
   feedbackOptions: Observable<ILookupDataModel[]> = this.store.select(appState.feature.selectFuelFeedbackModes);
 
   ngOnInit(): void {
-/*     this.feedbackOptions = this.store.select(
-      appState.feature.selectFuelFeedbackModes
-    ); */
     this.headerService.buildPageHeader('cascades-all');
   }
 
@@ -41,6 +39,6 @@ export class CascadesAllHeadComponent implements OnInit {
     this.store.dispatch(
       featureState.actions.requestAllResults({ payload: form })
     );
-    // this.router.navigate(['summary'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['summary'], { relativeTo: this.activatedRoute });
   }
 }
