@@ -14,6 +14,7 @@ import {
 } from '@angular/material/core';
 import { UnderConstructionComponent } from '../under-construction/under-construction.component';
 import { CascadesSummaryHeadComponent } from './cascades-summary/cascades-summary-head.component';
+import { ReportPagesHeadComponent } from '../shared/report-pages/report-pages.head.component';
 
 export const CASCADE_ROUTES: Routes = [
   {
@@ -42,7 +43,7 @@ export const CASCADE_ROUTES: Routes = [
       { path: 'cascades5lite', component: UnderConstructionComponent },
       { path: 'cascades5', component: UnderConstructionComponent },
       { path: 'cascades-all/summary', component: CascadesSummaryHeadComponent },
-      // { path: 'reports', component: ReportPagesHeadComponent }
+      { path: 'reports', component: ReportPagesHeadComponent }
     ]
   },
   { path: '**', redirectTo: 'notfound', pathMatch: 'full' }
