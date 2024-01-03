@@ -16,6 +16,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IElementDataModel } from '../../core/models/element-data.model';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'mfmp-nuclide-picker',
@@ -30,6 +31,7 @@ import { IElementDataModel } from '../../core/models/element-data.model';
     MatExpansionModule,
     MatFormFieldModule,
     MatGridListModule,
+    MatIconModule,
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
@@ -51,6 +53,8 @@ export class NuclidePickerComponent implements OnInit {
 
   fgd = inject(FormGroupDirective);
   nuclideForm!: FormGroup;
+  hoverMessage = 'Click below to select a spin state, or select Either for both.';
+  tooltipDelay = 750;
 
   /**
    * flavor - used to select the correct template
