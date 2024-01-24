@@ -1,9 +1,8 @@
 <mat-card class="wrapper">
   <mat-card-content>
     <form [formGroup]="f">
-      <mat-form-field>
-        <label>Select Element:</label>
-        <mat-select title="Elements" formControlName="ZKEY">
+      <mat-form-field floatLabel="always">
+        <mat-select title="Elements" formControlName="ZKEY" placeholder="Select an Element...">
           <mat-option
             *ngFor="let element of elementList; index as i; first as isfirst"
             [value]="element.Z"

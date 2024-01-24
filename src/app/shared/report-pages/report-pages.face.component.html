@@ -1,7 +1,9 @@
 <mat-card class="wrapper">
+  @if(parameters.query) {
   <mat-card-header>
     <code-copy [text]="parameters.query"></code-copy>
   </mat-card-header>
+  }
   <mat-card-content>
     <ng-container
       *ngIf="loading | async; then waiting; else working"></ng-container>
