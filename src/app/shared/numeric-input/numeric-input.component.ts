@@ -1,4 +1,6 @@
+import { FocusMonitor } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
+import { isIdentifier } from '@angular/compiler';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -6,22 +8,30 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Optional,
+  Self,
   inject,
   signal
 } from '@angular/core';
 import {
   ControlContainer,
+  ControlValueAccessor,
+  DefaultValueAccessor,
   FormControl,
   FormGroup,
   FormGroupDirective,
   FormsModule,
   NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  NgControl,
   ReactiveFormsModule,
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Subject } from 'rxjs';
 import { NumericInputTypes } from 'src/app/core/models/numeric-formcontrol-context';
 
 export interface INumericInputParameters {
@@ -44,39 +54,65 @@ export interface INumericInputParameters {
     FormsModule,
     ReactiveFormsModule
   ],
-  viewProviders: [
-    {
-      provide: ControlContainer,
-      useExisting: FormGroupDirective
+  providers: [
+    {provide: MatFormFieldControl,
+      useExisting: NumericInputComponent
     },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: NumericInputComponent,
-      multi: true
-    }
+    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}.
   ],
   templateUrl: './numeric-input.component.html',
   styleUrl: './numeric-input.component.scss'
 })
-export class NumericInputComponent implements OnInit, AfterViewInit, OnDestroy {
-  parentContainer = inject(ControlContainer);
+export class NumericInputComponent implements OnInit, ControlValueAccessor, AfterViewInit, OnDestroy {
+
+  private _value!: FormFieldValue;
+  stateChanges = new Subject<void>();
 
   @Input() min!: number | null;
   @Input() max!: number | null;
   @Input() step!: number | null;
-  @Input() value!: number | null;
+  @Input() disabled = false;
   @Input() required = true;
   @Input() type: 'decimal' | 'integer' = 'integer';
   @Input({ required: true }) controlKey!: string;
   @Input({ required: true }) label = '';
-
+  @Input()
+  set value(value: FormFieldValue) {
+    this._value = value;
+    this.stateChanges.next();
+  }
+  get value() {
+    return this._value;
+  }
   ready = signal(false);
   errors = false;
+  disabled = false;
   placeholder!: string;
   customControl!: FormControl;
   errorMessages!: Record<string, string>;
 
-  constructor() {}
+  onChange!: (value: FormFieldValue) => void;
+  onTouch!: () => void;
+
+  constructor(private focusMonitor: FocusMonitor, @Optional() @Self() public ngControl: NgControl)
+  {
+    if (this.ngControl != null) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
+  }
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+  writeValue(obj: FormFieldValue): void {
+    this.value = obj;
+  }
 
   get parentFormGroup() {
     return this.parentContainer.control as FormGroup;

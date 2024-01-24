@@ -31,7 +31,6 @@ import { Subscription } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
-import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-input.component';
 import { ProgressSpinnerComponent } from 'src/app/shared/progress-spinner/progress-spinner.component';
 
 @Component({
@@ -51,8 +50,7 @@ import { ProgressSpinnerComponent } from 'src/app/shared/progress-spinner/progre
     MatSlideToggleModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    ProgressSpinnerComponent,
-    NumericInputComponent
+    ProgressSpinnerComponent
   ],
   templateUrl: './cascades4-face.component.html',
   styleUrls: ['./cascades4-face.component.scss']

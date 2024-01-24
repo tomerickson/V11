@@ -41,7 +41,6 @@ import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { FeedbackOptionsComponent } from 'src/app/shared/feedback-options/feedback-options.component';
-import { NumericInputComponent } from 'src/app/shared/numeric-input/numeric-input.component';
 import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.component';
 
 @Component({
@@ -67,7 +66,6 @@ import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.c
     MatTooltipModule,
     ReactiveFormsModule,
     FeedbackOptionsComponent,
-    NumericInputComponent,
     SliderInputComponent,
     NgTemplateOutlet
   ]
