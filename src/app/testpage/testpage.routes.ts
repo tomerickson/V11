@@ -1,15 +1,7 @@
 import { Routes } from '@angular/router';
-import { provideEffects } from '@ngrx/effects';
-import { provideState } from '@ngrx/store';
-import { HeaderProviderService } from '../shared/header/header.provider.service';
 // import * as state from '../state/all-results';
-import { TestpageHeadComponent } from './testpage.head.component';
-import {
-  ErrorStateMatcher,
-  ShowOnDirtyErrorStateMatcher
-} from '@angular/material/core';
 
-export const TESTPAGE_ROUTES: Routes = [
+export const TESTPAGE_ROUTES: Routes = [];/*
   {
     path: '',
     component: TestpageHeadComponent,
@@ -20,4 +12,4 @@ export const TESTPAGE_ROUTES: Routes = [
       { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
     ]
   }
-];
+]; */
