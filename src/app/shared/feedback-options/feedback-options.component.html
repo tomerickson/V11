@@ -1,12 +1,11 @@
-@if(ready() && feedbackOptions) {
+@if(ready() && fuelFeedbackOptions) {
 
-  <mat-form-field [formGroup]="parentForm">
+  <mat-form-field #feedback floatLabel="auto" required="true">
+    <mat-label>{{label}}</mat-label>
   <mat-select
-    formControlName="{{controlName}}"
-    placeholder="Choose an option."
-    [value]="selected">
-    @for (option of feedbackOptions; track option) {
-      <mat-option [value]="option.code">{{option.description}}</mat-option>
+    placeholder="placeholder" [formControl]="control">
+    @for (option of (this.fuelFeedbackOptions | async); track option) {
+      <mat-option [value]="option.code" (click)="onSelect(option.code)">{{option.description}}</mat-option>
     }
   </mat-select>
 </mat-form-field>

@@ -19,7 +19,8 @@ import {
   FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
-  ValidatorFn
+  ValidatorFn,
+  Validators
 
 } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -166,7 +167,7 @@ export class CascadesAllFaceComponent implements OnInit, AfterViewInit, OnDestro
         maxReactorTemp: new FormControl(2400),
         fusionMinEnergy: new FormControl(5),
         twoUpMinEnergy: new FormControl(5),
-        meltingSwitch: new FormControl('Core'),
+        meltingSwitch: ['Core', Validators.required],
         boilingSwitch: new FormControl('Include'),
         isotopeSwitch: new FormControl('Include'),
         halfLifeThreshold: new FormControl(18),

@@ -179,6 +179,7 @@
             }
           </mat-form-field>
         </div>
+        <!--
         <div class="flexrow end">
           <div>
             <label>
@@ -238,13 +239,10 @@
             For H, D, T*, Li, N, O, F, Na, Cl, K, Cr, Br, Rb and I which can
             form Dimers:
           </div>
-          <mfmp-feedback-options
-            [parentForm]="cascadesForm"
-            [feedbackOptions]="feedbackOptions | async"
-            [controlName]="'dimersSwitch'"
-            [selected]="dimersSwitch"
-            (feedback)="handleFeedback($event)"></mfmp-feedback-options>
+          <mfmp-feedback-options formControlName="dimersSwitch" label="Dimers">
+          </mfmp-feedback-options>
         </div>
+      -->
 
         <div class="flexrow end">
           <div>Order by which the Nuclei table will be presented :</div>

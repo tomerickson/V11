@@ -1,7 +1,10 @@
 import { Routes } from '@angular/router';
+import { TestpageHeadComponent } from './testpage.head.component';
+import { HeaderProviderService } from '../shared/header/header.provider.service';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 // import * as state from '../state/all-results';
 
-export const TESTPAGE_ROUTES: Routes = [];/*
+export const TESTPAGE_ROUTES: Routes = [
   {
     path: '',
     component: TestpageHeadComponent,
@@ -12,4 +15,4 @@ export const TESTPAGE_ROUTES: Routes = [];/*
       { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
     ]
   }
-]; */
+];
