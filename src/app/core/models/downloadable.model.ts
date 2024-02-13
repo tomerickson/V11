@@ -41,5 +41,12 @@ export const downloadOptions: Downloadable[] = [
     name: 'Compressed JSON',
     extension: '.json',
     type: 'application/json'
+  },
+  {
+    id: 5,
+    key: 'html',
+    name: 'HTML',
+    extension: '.html',
+    type: 'text/html'
   }
 ];
