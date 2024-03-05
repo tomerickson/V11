@@ -1,27 +1,26 @@
 import { CommonModule, NgFor } from '@angular/common';
 import {
-  AfterViewInit,
-  Component, ElementRef, Input,
-  OnInit, Provider, ViewChild, forwardRef, inject,
+  AfterContentInit,
+  Component,
+  Input,
+  OnInit,
+  inject,
   signal
 } from '@angular/core';
 import {
   ControlValueAccessor,
+  FormBuilder,
   FormControl,
+  FormGroup,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { MatFormField, MatSelectModule } from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import * as appState from '../../state/index';
-
-const FEEDBACK_CONTROL_VALUE_ACESSOR: Provider = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => FeedbackOptionsComponent),
-  multi: true};
 
 @Component({
   selector: 'mfmp-feedback-options',
@@ -29,59 +28,106 @@ const FEEDBACK_CONTROL_VALUE_ACESSOR: Provider = {
   imports: [CommonModule, ReactiveFormsModule, MatSelectModule, NgFor],
   templateUrl: './feedback-options.component.html',
   styles: [],
-  providers: [FEEDBACK_CONTROL_VALUE_ACESSOR]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: FeedbackOptionsComponent,
+      multi: true
+    }
+  ]
 })
-export class FeedbackOptionsComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+export class FeedbackOptionsComponent
+  implements ControlValueAccessor, OnInit, AfterContentInit
+{
 
+  form!: FormGroup;
   ready = signal(false);
   store: Store = inject(Store);
   fuelFeedbackOptions!: Observable<ILookupDataModel[]>;
-  control = new FormControl('');
-  disabled = false;
 
-  private onChange: Function = (value: string) => {};
-  private onTouched: Function = () => {};
-
-  @Input() placeHolder = 'Click to select.';
-  @Input({required: true}) label!: string;
-  @ViewChild('feedback') formField!: ElementRef<MatFormField>;
-
-  ngOnInit(): void {
-    this.fuelFeedbackOptions = this.store.select(appState.feature.selectFuelFeedbackModes);
+  get value(): string {
+    return this.form.get('control')?.value;
+  }
+  set value(val: string) {
+    this.form.get('control')?.patchValue(val);
+    this.onChange();
+    this.onTouch();
   }
 
-  ngAfterViewInit(): void {
-    const required = this.control.hasValidator(Validators.required);
+  get control(): FormControl {
+    return this.form.get('control') as FormControl;
+  }
+
+  set control(obj: FormControl) {
+    this.form.controls['control'] = obj;
+  }
+
+  @Input() placeHolder = 'Click to select.';
+  @Input({ required: true }) label!: string;
+
+  /**
+   * ControlValueAccessor
+   */
+  onChange: any = () => {};
+  onTouch: any = () => {};
+  disabled!: boolean;
+
+  registerOnTouched(fn: any): void {
+    this.registerOnTouched(fn);
+  }
+
+  registerOnChange(fn: any): void {
+    this.registerOnChange(fn);
+  }
+
+  writeValue(value: any): void {
+    this.value = value;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.setDisabledState(isDisabled);
+  }
+/**
+ *  end ControlValueAccessor
+ *  */
+
+
+  // val = ''; // this is the updated value that the class accesses
+  // set value(val: string) {
+  //   // this value is updated by programmatic changes
+  //   if (val !== undefined && this.val !== val) {
+  //     this.val = val;
+  //     this.onChange(val);
+  //     this.onTouch(val);
+  //   }
+  // }
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({control: ''});
+
+    this.fuelFeedbackOptions = this.store.select(
+      appState.feature.selectFuelFeedbackModes
+    );
+  }
+
+  ngAfterContentInit(): void {
+    const required = this.control?.hasValidator(Validators.required);
     console.log('required', required);
     this.ready.set(true);
     console.log('feedback-options form is ready');
   }
 
-  writeValue(value: string) :void {
-    this.control.setValue(value);
+  valueChange(v: string) {
+    this.onChange(v);
   }
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    if (isDisabled) {
-      this.control.disable();
-    } else {
-      this.control.enable();
-    }
+  touchedChange(v: boolean) {
+    this.onTouch(v);
   }
 
   onSelect(option: string) {
-    this.onChange(option);
-  }
-
-  onFocus() {
-    this.onTouched;
+    this.writeValue(option);
   }
 }
