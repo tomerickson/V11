@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,7 +32,7 @@ import { FusionFaceComponent } from './fusion-face/fusion-face.component';
       (sqlChanges)="sql_changes($event)"></mfmp-fusion-face>
   `,
   styles: [''],
-  imports: [CommonModule, HttpClientModule, FusionFaceComponent],
+  imports: [CommonModule, FusionFaceComponent],
   providers: [{ provide: HeaderProviderService }]
 })
 export class FusionHeadComponent implements OnInit, OnDestroy {
@@ -63,15 +63,14 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
     }
   }
 
-
   form_changes(form: FusionForm) {
-        this.buildCoreQuery(form);
+    this.buildCoreQuery(form);
   }
 
   /**
    * Convert spin choices to a string
-   * @param form 
-   * @returns 
+   * @param form
+   * @returns
    */
   buildSpinClause = (form: FusionForm): string | null => {
     const spinChoices: string[] = [];
@@ -145,14 +144,14 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
       if (elementJoin === 'or') {
         clause.startGroup = '(';
         clause.endGroup = ')';
-      };
-      clause.join = ` ${clause.join} `
+      }
+      clause.join = ` ${clause.join} `;
     }
 
     if (resultElements.length > 0) {
       if (leftElements.length > 0 || rightElements.length > 0) {
         clause.result = ' and';
-      }      
+      }
       clause.result += ` E in ${this.combineElements(resultElements, [], true)}`;
     }
     const result = `${clause.startGroup}${clause.left}${clause.join}${clause.right}${clause.endGroup}${clause.result}`;
@@ -178,7 +177,7 @@ export class FusionHeadComponent implements OnInit, OnDestroy {
       noNeutrinos,
       outputNeutrinos
     );
-      const spinClause = this.buildSpinClause(form);
+    const spinClause = this.buildSpinClause(form);
     const elementsClause = this.buildElementsClause(form);
 
     /**

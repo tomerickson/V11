@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -52,7 +52,6 @@ import { fusionElementsValidator } from '../fusion-form.validator';
   styleUrls: ['./fusion-face.component.scss'],
   imports: [
     CommonModule,
-    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,

@@ -11,7 +11,7 @@ import { ILookupDataModel } from '../core/models/lookup-data.model';
 import { FormGroup } from '@angular/forms';
 import * as appState from '../state';
 import * as fissionState from '../state/fission';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { ReportParameters } from '../core/models/report-parameters.model';
 import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
 import { KeyValuePair } from '../core/models/key-value-pair.model';
@@ -31,7 +31,7 @@ import { FissionForm } from '../core/models/fission-form.model';
       (sqlChanges)="sql_changes($event)"></mfmp-fission-face>
   `,
   styles: [''],
-  imports: [CommonModule, HttpClientModule, FissionFaceComponent],
+  imports: [CommonModule, FissionFaceComponent],
   providers: [AsyncPipe, { provide: HeaderProviderService }]
 })
 export class FissionHeadComponent implements OnInit {
@@ -42,7 +42,7 @@ export class FissionHeadComponent implements OnInit {
   coreQuery = '';
   fullQuery = '';
   route: ActivatedRoute = this.router.routerState.root;
-  elements!:Observable<IElementDataModel[] | null>;
+  elements!: Observable<IElementDataModel[] | null>;
   sortFields!: Observable<ILookupDataModel[] | null>;
   ready = signal(false);
   subscriptions: Subscription = new Subscription();
@@ -123,11 +123,9 @@ export class FissionHeadComponent implements OnInit {
     const leftElements = form.nuclides.selectedElements ?? [];
 
     if (leftElements.length > 0) {
-      elementChoices.push(
-        `E = '${leftElements}'`
-      );
+      elementChoices.push(`E = '${leftElements}'`);
     }
- 
+
     if (elementChoices.length > 0) {
       elementsClause = elementChoices.join(' and ');
       /*       if (elementChoices.length > 1) {
@@ -136,7 +134,7 @@ export class FissionHeadComponent implements OnInit {
     }
 
     if (mevLimit > 0) {
-      mevClause = `and MeV > ${mevLimit}`
+      mevClause = `and MeV > ${mevLimit}`;
     }
     /**
      * FilterChoices combines neutrinos, elements, MeV and spin
@@ -162,7 +160,7 @@ export class FissionHeadComponent implements OnInit {
       if (sortDescending === true) {
         orderByClause += ` desc`;
       }
-      console.log('descending', sortDescending)
+      console.log('descending', sortDescending);
     }
     /**
      * Limit
@@ -171,9 +169,10 @@ export class FissionHeadComponent implements OnInit {
       limitClause = `limit ${resultLimit}`;
     }
 
-    this.coreQuery = `${elementsClause} ${mevClause} ${orderByClause} ${limitClause}`
-      .trim()
-      .replace(/\s\s/g, ' ');
+    this.coreQuery =
+      `${elementsClause} ${mevClause} ${orderByClause} ${limitClause}`
+        .trim()
+        .replace(/\s\s/g, ' ');
     this.fullQuery = `${columnsClause} ${tablesClause} where ${filterClause} ${mevClause} ${orderByClause} ${limitClause}`;
   };
 
@@ -185,7 +184,9 @@ export class FissionHeadComponent implements OnInit {
       query: this.coreQuery,
       tables: 3
     };
-    this.store.dispatch(appState.actions.setReportParameters({ payload: extras }));
+    this.store.dispatch(
+      appState.actions.setReportParameters({ payload: extras })
+    );
     this.store.dispatch(fissionState.actions.fetchAllResults({ payload: kvp }));
     this.router.navigate(['/fission/reports']);
   };
@@ -207,7 +208,9 @@ export class FissionHeadComponent implements OnInit {
   ngOnInit(): void {
     this.forceReset();
     this.elements = this.store.select(appState.feature.selectElements);
-    this.sortFields = this.store.select(appState.feature.selectReactionSortFields);
+    this.sortFields = this.store.select(
+      appState.feature.selectReactionSortFields
+    );
     this.headerService.buildPageHeader('fission');
     this.ready.set(true);
   }
@@ -274,7 +277,7 @@ export class FissionHeadComponent implements OnInit {
       })
     );
     return kvp;
-  };
+  }
 
   buildNeutrinoClause = (
     left: boolean,
@@ -288,7 +291,7 @@ export class FissionHeadComponent implements OnInit {
     if (right) parts.push(`neutrino = 'right'`);
 
     if (parts.length > 0 && parts.length < 3) {
-      clause = `(${parts.join(" or ")})`;
+      clause = `(${parts.join(' or ')})`;
     }
     return clause;
   };
@@ -315,4 +318,4 @@ export class FissionHeadComponent implements OnInit {
       return c;
     }
   };
-};
+}

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -50,7 +50,6 @@ import { SqlForm } from 'src/app/core/models/sql-form.model';
   styleUrls: ['./two-up-face.component.scss'],
   imports: [
     CommonModule,
-    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,

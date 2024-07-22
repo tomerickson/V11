@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';import { concatLatestFrom } from '@ngrx/operators';
+
 import { Store } from '@ngrx/store';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { AllResultsService } from 'src/app/all-results/all-results.service';

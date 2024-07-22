@@ -42,12 +42,15 @@
       "prefix": "mfmp",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser-esbuild",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/v11",
+            "outputPath": {
+              "base": "dist/v11"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
@@ -55,16 +58,14 @@
               "@angular/material/prebuilt-themes/deeppurple-amber.css"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "src/main.ts"
           },
           "configurations": {
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
               "sourceMap": true,
               "namedChunks": true
@@ -93,8 +94,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -132,8 +131,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -191,9 +188,6 @@
               "devServerTarget": "v11:serve:production"
             }
           }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:app-shell"
         },
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
