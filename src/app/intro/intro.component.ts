@@ -9,14 +9,13 @@ import { AppConfigService } from '../core/config/app-config.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatExpansionModule, RouterModule],
-  selector: 'mfmp-intro',
-  templateUrl: './intro.component.html',
-  styleUrls: ['./intro.component.scss'],
-  providers: [
-    { provide: HeaderProviderService }
-  ]
+    imports: [CommonModule, MatCardModule, MatExpansionModule, RouterModule],
+    selector: 'mfmp-intro',
+    templateUrl: './intro.component.html',
+    styleUrls: ['./intro.component.scss'],
+    providers: [
+        { provide: HeaderProviderService }
+    ]
 })
 export class IntroComponent implements OnInit {
 

@@ -45,34 +45,33 @@ import { ReportPagesFaceComponent } from '../../shared/report-pages/report-pages
 import { fusionElementsValidator } from '../fusion-form.validator';
 
 @Component({
-  standalone: true,
-  selector: 'mfmp-fusion-face',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './fusion-face.component.html',
-  styleUrls: ['./fusion-face.component.scss'],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatTooltipModule,
-    MatFormFieldModule,
-    NuclidePickerComponent,
-    ReactiveFormsModule,
-    ReportPagesFaceComponent,
-    ResultsizePickerComponent,
-    RouterModule,
-    ExpandableBoxComponent
-  ],
-  providers: [{ provide: HeaderProviderService }],
-  viewProviders: [MatExpansionPanel]
+    selector: 'mfmp-fusion-face',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './fusion-face.component.html',
+    styleUrls: ['./fusion-face.component.scss'],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatTooltipModule,
+        MatFormFieldModule,
+        NuclidePickerComponent,
+        ReactiveFormsModule,
+        ReportPagesFaceComponent,
+        ResultsizePickerComponent,
+        RouterModule,
+        ExpandableBoxComponent
+    ],
+    providers: [{ provide: HeaderProviderService }],
+    viewProviders: [MatExpansionPanel]
 })
 export class FusionFaceComponent implements OnInit, OnDestroy {
   private _coreQuery = '';

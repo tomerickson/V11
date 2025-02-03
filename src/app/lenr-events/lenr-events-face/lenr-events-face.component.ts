@@ -41,27 +41,26 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'mfmp-lenr-events-face',
-  standalone: true,
-  imports: [
-    CdkDrag,
-    CommonModule,
-    RouterModule,
-    MatButtonModule,
-    MatCardModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTabsModule,
-    ReactiveFormsModule,
-    LenrEventsDetailComponent,
-    LenrEventsResultsComponent,
-    ProgressSpinnerComponent
-  ],
-  templateUrl: './lenr-events-face.component.html',
-  styleUrls: ['./lenr-events-face.component.scss']
+    selector: 'mfmp-lenr-events-face',
+    imports: [
+        CdkDrag,
+        CommonModule,
+        RouterModule,
+        MatButtonModule,
+        MatCardModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTabsModule,
+        ReactiveFormsModule,
+        LenrEventsDetailComponent,
+        LenrEventsResultsComponent,
+        ProgressSpinnerComponent
+    ],
+    templateUrl: './lenr-events-face.component.html',
+    styleUrls: ['./lenr-events-face.component.scss']
 })
 export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   private _maxId!: number | null;

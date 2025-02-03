@@ -15,18 +15,17 @@ import { AppConfigService } from '../../app/core/config/app-config.service';
 import { IAppConfig } from '../core/config/iapp-config.model';
 import { MenuItemComponent } from './menu-item.component';
 @Component({
-  standalone: true,
-  selector: 'mfmp-menu',
-  templateUrl: 'menu.component.html',
-  styleUrls: ['menu.component.scss'],
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule,
-    MenuItemComponent
-  ]
+    selector: 'mfmp-menu',
+    templateUrl: 'menu.component.html',
+    styleUrls: ['menu.component.scss'],
+    imports: [
+        CommonModule,
+        RouterModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatListModule,
+        MenuItemComponent
+    ]
 })
 export class MenuComponent implements AfterViewInit {
   readonly appService = inject(AppConfigService);

@@ -10,19 +10,18 @@ import { ILenrEventDetail } from 'src/app/core/models/lenr-event-detail.model';
 import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model';
 
 @Component({
-  selector: 'mfmp-lenr-events-detail',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatFormFieldModule
-  ],
-  templateUrl: './lenr-events-detail.component.html',
-  styleUrls: ['./lenr-events-detail.component.scss']
+    selector: 'mfmp-lenr-events-detail',
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        MatInputModule,
+        MatFormFieldModule
+    ],
+    templateUrl: './lenr-events-detail.component.html',
+    styleUrls: ['./lenr-events-detail.component.scss']
 })
 export class LenrEventsDetailComponent {
   private _event!: ILenrEventDetail;

@@ -7,18 +7,17 @@ import { MatSliderModule, MatSliderThumb } from '@angular/material/slider';
 import { SliderInputFields } from '.';
 
 @Component({
-  selector: 'mfmp-slider-input',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSliderModule
-  ],
-  templateUrl: './slider-input.component.html',
-  styleUrl: './slider-input.component.scss',
-  providers: [MatSliderThumb]
+    selector: 'mfmp-slider-input',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSliderModule
+    ],
+    templateUrl: './slider-input.component.html',
+    styleUrl: './slider-input.component.scss',
+    providers: [MatSliderThumb]
 })
 
 /**

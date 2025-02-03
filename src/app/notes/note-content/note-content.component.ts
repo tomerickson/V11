@@ -4,11 +4,10 @@ import { HtmlDirective } from 'src/app/shared/html.directive';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'mfmp-note-content',
-  standalone: true,
-  imports: [CommonModule, HtmlDirective, MatCardModule],
-  templateUrl: './note-content.component.html',
-  styleUrls: ['./note-content.component.scss']
+    selector: 'mfmp-note-content',
+    imports: [CommonModule, HtmlDirective, MatCardModule],
+    templateUrl: './note-content.component.html',
+    styleUrls: ['./note-content.component.scss']
 })
 export class NotesFaceComponent implements OnInit {
 

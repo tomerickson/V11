@@ -20,20 +20,19 @@ import { QueryResultsHeadComponent } from '../query-results/query-results.head.c
 import { CodeCopyCompoonent } from '../code-copy/code-copy.component';
 
 @Component({
-  standalone: true,
-  selector: 'mfmp-report-pages-face',
-  templateUrl: './report-pages.face.component.html',
-  styleUrls: ['./report-pages.face.component.scss'],
-  imports: [
-    MatButtonModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    QueryResultsHeadComponent,
-    AsyncPipe,
-    NgIf,
-    CodeCopyCompoonent
-  ]
+    selector: 'mfmp-report-pages-face',
+    templateUrl: './report-pages.face.component.html',
+    styleUrls: ['./report-pages.face.component.scss'],
+    imports: [
+        MatButtonModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatTabsModule,
+        QueryResultsHeadComponent,
+        AsyncPipe,
+        NgIf,
+        CodeCopyCompoonent
+    ]
 })
 export class ReportPagesFaceComponent implements OnInit, AfterContentInit {
   @Input({ required: true }) parameters!: ReportParameters;

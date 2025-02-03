@@ -4,11 +4,10 @@ import { MatCardModule } from '@angular/material/card';
 import { HtmlDirective } from '../shared/html.directive';
 
 @Component({
-  selector: 'mfmp-tables-in-detail-face',
-  standalone: true,
-  imports: [CommonModule, HtmlDirective, MatCardModule],
-  templateUrl: './tables-in-detail-face.component.html',
-  styleUrls: ['./tables-in-detail-face.component.scss']
+    selector: 'mfmp-tables-in-detail-face',
+    imports: [CommonModule, HtmlDirective, MatCardModule],
+    templateUrl: './tables-in-detail-face.component.html',
+    styleUrls: ['./tables-in-detail-face.component.scss']
 })
 export class TablesInDetailFaceComponent {
 

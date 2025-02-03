@@ -10,11 +10,10 @@ import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { ProgressSpinnerComponent } from 'src/app/shared/progress-spinner/progress-spinner.component';
 
 @Component({
-  selector: 'mfmp-cascades-summary-face',
-  standalone: true,
-  imports: [CommonModule, MatBadgeModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, ProgressSpinnerComponent],
-  templateUrl: './cascades-summary-face.component.html',
-  styleUrls: ['./cascades-summary-face.component.scss']
+    selector: 'mfmp-cascades-summary-face',
+    imports: [CommonModule, MatBadgeModule, MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, ProgressSpinnerComponent],
+    templateUrl: './cascades-summary-face.component.html',
+    styleUrls: ['./cascades-summary-face.component.scss']
 })
 export class CascadesSummaryFaceComponent {
 

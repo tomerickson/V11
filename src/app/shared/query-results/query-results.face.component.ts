@@ -30,22 +30,21 @@ import { ColumnType } from 'src/app/core/models/column-type.type';
 import { RestartFeatureComponent } from '../restart-feature/restart-feature.component';
 
 @Component({
-  selector: 'mfmp-query-face',
-  standalone: true,
-  templateUrl: './query-results.face.component.html',
-  styleUrls: ['./query-results.face.component.scss'],
-  imports: [
-    NgIf,
-    NgTemplateOutlet,
-    AsyncPipe,
-    CommonModule,
-    MatCardModule,
-    MatSortModule,
-    MatTableModule,
-    MatPaginatorModule,
-    DownloadComponent,
-    RestartFeatureComponent
-  ]
+    selector: 'mfmp-query-face',
+    templateUrl: './query-results.face.component.html',
+    styleUrls: ['./query-results.face.component.scss'],
+    imports: [
+        NgIf,
+        NgTemplateOutlet,
+        AsyncPipe,
+        CommonModule,
+        MatCardModule,
+        MatSortModule,
+        MatTableModule,
+        MatPaginatorModule,
+        DownloadComponent,
+        RestartFeatureComponent
+    ]
 })
 export class QueryResultsFaceComponent
   implements OnInit, AfterViewInit, OnDestroy

@@ -7,17 +7,16 @@ import { RouterModule } from '@angular/router';
 import { IMenuItem } from '../core/models/menu-item';
 
 @Component({
-  selector: 'mfmp-menu-item',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    RouterModule
-  ],
-  templateUrl: './menu-item.component.html',
-  styleUrls: ['./menu-item.component.scss']
+    selector: 'mfmp-menu-item',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MatListModule,
+        RouterModule
+    ],
+    templateUrl: './menu-item.component.html',
+    styleUrls: ['./menu-item.component.scss']
 })
 export class MenuItemComponent {
   @Input({ required: true }) icon!: string;

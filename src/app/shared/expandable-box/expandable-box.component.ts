@@ -2,11 +2,10 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'mfmp-expandable-box',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './expandable-box.component.html',
-  styleUrls: ['./expandable-box.component.scss']
+    selector: 'mfmp-expandable-box',
+    imports: [CommonModule],
+    templateUrl: './expandable-box.component.html',
+    styleUrls: ['./expandable-box.component.scss']
 })
 export class ExpandableBoxComponent {
   @Input({ required: true }) caption!: string;

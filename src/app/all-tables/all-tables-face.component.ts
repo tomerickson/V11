@@ -16,11 +16,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'mfmp-all-tables-face',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatCardModule],
-  templateUrl: './all-tables-face.component.html',
-  styleUrls: ['./all-tables-face.component.scss']
+    selector: 'mfmp-all-tables-face',
+    imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatCardModule],
+    templateUrl: './all-tables-face.component.html',
+    styleUrls: ['./all-tables-face.component.scss']
 })
 export class AllTablesFaceComponent implements OnInit {
 

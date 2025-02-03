@@ -9,13 +9,12 @@ import { ReportParameters } from 'src/app/core/models/report-parameters.model';
 
 
 @Component({
-  selector: 'mfmp-restart-feature',
-  standalone: true,
-  imports: [CommonModule, MatButtonModule],
-  template: `<button type="button" mat-raised-button color="primary" (click)="reset()">
+    selector: 'mfmp-restart-feature',
+    imports: [CommonModule, MatButtonModule],
+    template: `<button type="button" mat-raised-button color="primary" (click)="reset()">
   Again?
 </button>`,
-  styles: ['']
+    styles: ['']
 })
 
 /**

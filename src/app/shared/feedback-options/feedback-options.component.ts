@@ -23,18 +23,17 @@ import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import * as appState from '../../state/index';
 
 @Component({
-  selector: 'mfmp-feedback-options',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatSelectModule, NgFor],
-  templateUrl: './feedback-options.component.html',
-  styles: [],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: FeedbackOptionsComponent,
-      multi: true
-    }
-  ]
+    selector: 'mfmp-feedback-options',
+    imports: [CommonModule, ReactiveFormsModule, MatSelectModule, NgFor],
+    templateUrl: './feedback-options.component.html',
+    styles: [],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: FeedbackOptionsComponent,
+            multi: true
+        }
+    ]
 })
 export class FeedbackOptionsComponent
   implements ControlValueAccessor, OnInit, AfterContentInit

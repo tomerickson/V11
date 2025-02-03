@@ -18,9 +18,8 @@ import { KeyValuePair } from '../core/models/key-value-pair.model';
 import { SqlForm } from '../core/models/sql-form.model';
 import { FissionForm } from '../core/models/fission-form.model';
 @Component({
-  selector: 'mfmp-fission-head',
-  standalone: true,
-  template: `
+    selector: 'mfmp-fission-head',
+    template: `
     <mfmp-fission-face
       [elements]="elements | async"
       [sortFields]="sortFields | async"
@@ -30,9 +29,9 @@ import { FissionForm } from '../core/models/fission-form.model';
       (formChanges)="form_changes($event)"
       (sqlChanges)="sql_changes($event)"></mfmp-fission-face>
   `,
-  styles: [''],
-  imports: [CommonModule, FissionFaceComponent],
-  providers: [AsyncPipe, { provide: HeaderProviderService }]
+    styles: [''],
+    imports: [CommonModule, FissionFaceComponent],
+    providers: [AsyncPipe, { provide: HeaderProviderService }]
 })
 export class FissionHeadComponent implements OnInit {
   asyncPipe = inject(AsyncPipe);

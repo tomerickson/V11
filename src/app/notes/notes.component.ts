@@ -15,11 +15,10 @@ import { NotesFaceComponent } from './note-content/note-content.component';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 
 @Component({
-  selector: 'mfmp-notes',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, HtmlDirective, NotesFaceComponent],
-  template: `<mfmp-note-content [html]="html | async"></mfmp-note-content>`,
-  styles: []
+    selector: 'mfmp-notes',
+    imports: [CommonModule, MatCardModule, HtmlDirective, NotesFaceComponent],
+    template: `<mfmp-note-content [html]="html | async"></mfmp-note-content>`,
+    styles: []
 })
 
 export class NotesHeadComponent implements OnInit {

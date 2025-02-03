@@ -18,10 +18,9 @@ import { TwoUpFaceComponent } from './two-up-face/two-up-face.component';
 import { KeyValuePair } from '../core/models/key-value-pair.model';
 
 @Component({
-  selector: 'mfmp-two-up',
-  standalone: true,
-  imports: [CommonModule, TwoUpFaceComponent],
-  template: `
+    selector: 'mfmp-two-up',
+    imports: [CommonModule, TwoUpFaceComponent],
+    template: `
     <mfmp-two-up-face
       [elements]="elements | async"
       [sortFields]="sortFields | async"
@@ -31,8 +30,8 @@ import { KeyValuePair } from '../core/models/key-value-pair.model';
       (formChanges)="form_changes($event)"
       (sqlChanges)="sql_changes($event)"></mfmp-two-up-face>
   `,
-  styleUrls: [],
-  providers: [{ provide: HeaderProviderService }]
+    styleUrls: [],
+    providers: [{ provide: HeaderProviderService }]
 })
 export class TwoUpHeadComponent {
   store: Store = inject(Store);

@@ -7,14 +7,13 @@ import * as localState from '../state/tables-in-detail';
 import { TablesInDetailFaceComponent } from './tables-in-detail-face.component';
 
 @Component({
-  selector: 'mfmp-tables-in-detail-head',
-  standalone: true,
-  imports: [CommonModule, TablesInDetailFaceComponent],
-  template: `
+    selector: 'mfmp-tables-in-detail-head',
+    imports: [CommonModule, TablesInDetailFaceComponent],
+    template: `
     <mfmp-tables-in-detail-face
       [html]="html | async"></mfmp-tables-in-detail-face>
   `,
-  styles: []
+    styles: []
 })
 export class TablesInDetailHeadComponent {
   store = inject(Store);

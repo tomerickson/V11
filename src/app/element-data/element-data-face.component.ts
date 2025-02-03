@@ -24,19 +24,18 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Observable, Subscription, of } from 'rxjs';
 
 @Component({
-  selector: 'mfmp-element-data-face',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTableModule,
-    ReactiveFormsModule,
-    QueryResultsHeadComponent
-  ],
-  templateUrl: './element-data-face.component.html',
-  styleUrls: ['./element-data-face.component.scss']
+    selector: 'mfmp-element-data-face',
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTableModule,
+        ReactiveFormsModule,
+        QueryResultsHeadComponent
+    ],
+    templateUrl: './element-data-face.component.html',
+    styleUrls: ['./element-data-face.component.scss']
 })
 export class ElementDataFaceComponent implements OnInit {
   fb = inject(FormBuilder);

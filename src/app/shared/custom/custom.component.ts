@@ -35,8 +35,8 @@ import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 
 /** Custom `MatFormFieldControl` for telephone number input. */
 @Component({
-  selector: 'mfmp-custom',
-  template: `
+    selector: 'mfmp-custom',
+    template: `
   @if(ready()) {
   <div role="group" class="feedback-options-container"
      [formGroup]="feedbackForm"
@@ -51,14 +51,13 @@ import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 </div>
   }
 `,
-  styleUrl: 'custom.component.scss',
-  providers: [{ provide: MatFormFieldControl, useExisting: CustomComponent }],
-  host: {
-    '[class.feedbackoptions-floating]': 'shouldLabelFloat',
-    '[id]': 'id'
-  },
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSelectModule]
+    styleUrl: 'custom.component.scss',
+    providers: [{ provide: MatFormFieldControl, useExisting: CustomComponent }],
+    host: {
+        '[class.feedbackoptions-floating]': 'shouldLabelFloat',
+        '[id]': 'id'
+    },
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSelectModule]
 })
 export class CustomComponent
   implements ControlValueAccessor, MatFormFieldControl<string>, AfterViewInit, OnDestroy

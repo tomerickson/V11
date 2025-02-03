@@ -23,20 +23,19 @@ import { ILenrEventsLookup } from 'src/app/core/models/lenr-events-lookup.model'
 import { EventServices } from '../lenr-events.service';
 
 @Component({
-  selector: 'mfmp-lenr-events-results',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatTableModule,
-    MatProgressSpinnerModule
-  ],
-  templateUrl: './lenr-events-results.component.html',
-  styleUrls: ['./lenr-events-results.component.scss']
+    selector: 'mfmp-lenr-events-results',
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatTableModule,
+        MatProgressSpinnerModule
+    ],
+    templateUrl: './lenr-events-results.component.html',
+    styleUrls: ['./lenr-events-results.component.scss']
 })
 export class LenrEventsResultsComponent implements OnInit {
   service = inject(EventServices);

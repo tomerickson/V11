@@ -15,9 +15,8 @@ import { feature } from 'src/app/state/two-up';
 import { ReportPagesFaceComponent } from './report-pages.face.component';
 
 @Component({
-  standalone: true,
-  selector: 'mfmp-report-pages',
-  template: `
+    selector: 'mfmp-report-pages',
+    template: `
     <ng-container>
       <mfmp-report-pages-face
         [parameters]="parameters"
@@ -31,7 +30,7 @@ import { ReportPagesFaceComponent } from './report-pages.face.component';
         [ready]="ready"></mfmp-report-pages-face>
     </ng-container>
   `,
-  imports: [ReportPagesFaceComponent, AsyncPipe]
+    imports: [ReportPagesFaceComponent, AsyncPipe]
 })
 export class ReportPagesHeadComponent implements OnInit, OnDestroy {
   router: Router = inject(Router);

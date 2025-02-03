@@ -19,19 +19,18 @@ import { ProgressSpinnerComponent } from '../shared/progress-spinner/progress-sp
 import { AllResultsService } from './all-results.service';
 
 @Component({
-  selector: 'mfmp-all-results-face',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatSortModule,
-    MatTableModule,
-    DatePipe,
-    CustomPaginatorComponent,
-    ProgressSpinnerComponent
-  ],
-  templateUrl: './all-results-face.component.html',
-  styleUrls: ['./all-results-face.component.scss']
+    selector: 'mfmp-all-results-face',
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatSortModule,
+        MatTableModule,
+        DatePipe,
+        CustomPaginatorComponent,
+        ProgressSpinnerComponent
+    ],
+    templateUrl: './all-results-face.component.html',
+    styleUrls: ['./all-results-face.component.scss']
 })
 export class AllResultsFaceComponent implements OnInit, AfterViewInit {
   featureService = inject(AllResultsService);

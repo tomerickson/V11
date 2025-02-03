@@ -34,26 +34,25 @@ import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { ProgressSpinnerComponent } from 'src/app/shared/progress-spinner/progress-spinner.component';
 
 @Component({
-  selector: 'mfmp-cascades4-face',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    ProgressSpinnerComponent
-  ],
-  templateUrl: './cascades4-face.component.html',
-  styleUrls: ['./cascades4-face.component.scss']
+    selector: 'mfmp-cascades4-face',
+    imports: [
+        CommonModule,
+        MatBadgeModule,
+        MatButtonModule,
+        MatCardModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        ProgressSpinnerComponent
+    ],
+    templateUrl: './cascades4-face.component.html',
+    styleUrls: ['./cascades4-face.component.scss']
 })
 export class Cascades4FaceComponent implements OnInit {
   @Input({ required: true }) form!: ICascadesAllForm | null;

@@ -33,16 +33,15 @@ import {MatIconModule} from '@angular/material/icon';
 
 /** @title Form field with custom telephone number input control. */
 @Component({
-  selector: 'form-field-custom-control-example',
-  templateUrl: 'form-field-custom-control-example.html',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    forwardRef(() => MyTelInput),
-    MatIconModule,
-  ],
+    selector: 'form-field-custom-control-example',
+    templateUrl: 'form-field-custom-control-example.html',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        forwardRef(() => MyTelInput),
+        MatIconModule,
+    ]
 })
 export class FormFieldCustomControlExample {
   form: FormGroup = new FormGroup({
@@ -57,16 +56,15 @@ export class MyTel {
 
 /** Custom `MatFormFieldControl` for telephone number input. */
 @Component({
-  selector: 'example-tel-input',
-  templateUrl: 'example-tel-input-example.html',
-  styleUrls: ['example-tel-input-example.scss'],
-  providers: [{provide: MatFormFieldControl, useExisting: MyTelInput}],
-  host: {
-    '[class.example-floating]': 'shouldLabelFloat',
-    '[id]': 'id',
-  },
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+    selector: 'example-tel-input',
+    templateUrl: 'example-tel-input-example.html',
+    styleUrls: ['example-tel-input-example.scss'],
+    providers: [{ provide: MatFormFieldControl, useExisting: MyTelInput }],
+    host: {
+        '[class.example-floating]': 'shouldLabelFloat',
+        '[id]': 'id',
+    },
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class MyTelInput implements ControlValueAccessor, MatFormFieldControl<MyTel>, OnDestroy {
   static nextId = 0;

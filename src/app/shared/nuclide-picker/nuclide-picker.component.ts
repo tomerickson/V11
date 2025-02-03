@@ -19,29 +19,28 @@ import { IElementDataModel } from '../../core/models/element-data.model';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'mfmp-nuclide-picker',
-  standalone: true,
-  templateUrl: './nuclide-picker.component.html',
-  styleUrls: ['./nuclide-picker.component.scss'],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatTooltipModule,
-    NgSwitch,
-    NgSwitchCase
-  ],
-  viewProviders: [
-    { provide: ControlContainer, useExisting: FormGroupDirective }
-  ]
+    selector: 'mfmp-nuclide-picker',
+    templateUrl: './nuclide-picker.component.html',
+    styleUrls: ['./nuclide-picker.component.scss'],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatTooltipModule,
+        NgSwitch,
+        NgSwitchCase
+    ],
+    viewProviders: [
+        { provide: ControlContainer, useExisting: FormGroupDirective }
+    ]
 })
 export class NuclidePickerComponent implements OnInit {
   @Input({ required: true }) title!: string | null;

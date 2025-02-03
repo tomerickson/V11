@@ -10,10 +10,9 @@ import { ElementDataResultsModel } from '../core/models/element-data-results.mod
 import { IElementDataFormModel } from '../core/models/element-data-form.model';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
 @Component({
-  selector: 'mfmp-element-data-head',
-  standalone: true,
-  imports: [CommonModule, ElementDataFaceComponent],
-  template: `
+    selector: 'mfmp-element-data-head',
+    imports: [CommonModule, ElementDataFaceComponent],
+    template: `
     <mfmp-element-data-face
       [elementList]="elementsList | async"
       [results]="results"
@@ -23,7 +22,7 @@ import { HeaderProviderService } from '../shared/header/header.provider.service'
       [ready]="ready | async"
       (change)="handleChange($event)"></mfmp-element-data-face>
   `,
-  styles: []
+    styles: []
 })
 export class ElementDataHeadComponent implements OnInit {
   store = inject(Store);

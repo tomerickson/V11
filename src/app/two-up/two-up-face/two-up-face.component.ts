@@ -43,32 +43,31 @@ import { TwoUpForm } from 'src/app/core/models/two-up-form.model';
 import { SqlForm } from 'src/app/core/models/sql-form.model';
 
 @Component({
-  standalone: true,
-  selector: 'mfmp-two-up-face',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './two-up-face.component.html',
-  styleUrls: ['./two-up-face.component.scss'],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatFormFieldModule,
-    NuclidePickerComponent,
-    ReactiveFormsModule,
-    ReportPagesFaceComponent,
-    ResultsizePickerComponent,
-    RouterModule,
-    ExpandableBoxComponent
-  ],
-  viewProviders: [MatExpansionPanel]
+    selector: 'mfmp-two-up-face',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './two-up-face.component.html',
+    styleUrls: ['./two-up-face.component.scss'],
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatFormFieldModule,
+        NuclidePickerComponent,
+        ReactiveFormsModule,
+        ReportPagesFaceComponent,
+        ResultsizePickerComponent,
+        RouterModule,
+        ExpandableBoxComponent
+    ],
+    viewProviders: [MatExpansionPanel]
 })
 export class TwoUpFaceComponent implements OnInit, OnDestroy {
   private _coreQuery = '';

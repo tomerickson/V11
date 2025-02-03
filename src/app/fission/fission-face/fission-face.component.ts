@@ -34,32 +34,31 @@ import { FissionForm } from 'src/app/core/models/fission-form.model';
 import { SqlForm } from 'src/app/core/models/sql-form.model';
 
 @Component({
-  selector: 'mfmp-fission-face',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    NuclidePickerComponent,
-    ReactiveFormsModule,
-    ReportPagesFaceComponent,
-    ResultsizePickerComponent,
-    RouterModule,
-    MevPickerComponent,
-    ExpandableBoxComponent
-  ],
-  templateUrl: './fission-face.component.html',
-  styleUrls: ['./fission-face.component.scss'],
-  viewProviders: [MatExpansionPanel]
+    selector: 'mfmp-fission-face',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSliderModule,
+        NuclidePickerComponent,
+        ReactiveFormsModule,
+        ReportPagesFaceComponent,
+        ResultsizePickerComponent,
+        RouterModule,
+        MevPickerComponent,
+        ExpandableBoxComponent
+    ],
+    templateUrl: './fission-face.component.html',
+    styleUrls: ['./fission-face.component.scss'],
+    viewProviders: [MatExpansionPanel]
 })
 export class FissionFaceComponent implements OnInit, OnDestroy  {
 

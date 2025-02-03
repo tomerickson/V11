@@ -9,11 +9,10 @@ import { FormsModule } from '@angular/forms';
 import { MatSliderModule } from '@angular/material/slider';
 
 @Component({
-  selector: 'mfmp-resultsize-picker',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatSliderModule],
-  templateUrl: './resultsize-picker.component.html',
-  styleUrls: []
+    selector: 'mfmp-resultsize-picker',
+    imports: [CommonModule, FormsModule, MatSliderModule],
+    templateUrl: './resultsize-picker.component.html',
+    styleUrls: []
 })
 /**
  * Limit the number of rows returned by a query:

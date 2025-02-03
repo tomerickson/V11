@@ -45,31 +45,30 @@ import { FeedbackOptionsComponent } from 'src/app/shared/feedback-options/feedba
 import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.component';
 
 @Component({
-  selector: 'mfmp-cascades-all-face',
-  standalone: true,
-  templateUrl: './cascades-all-face.component.html',
-  styleUrls: ['./cascades-all-face.component.scss'],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    FeedbackOptionsComponent,
-    SliderInputComponent,
-    NgTemplateOutlet
-  ]
+    selector: 'mfmp-cascades-all-face',
+    templateUrl: './cascades-all-face.component.html',
+    styleUrls: ['./cascades-all-face.component.scss'],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatBadgeModule,
+        MatButtonModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        FeedbackOptionsComponent,
+        SliderInputComponent,
+        NgTemplateOutlet
+    ]
 })
 export class CascadesAllFaceComponent implements OnInit, AfterViewInit, OnDestroy {
   store = inject(Store);

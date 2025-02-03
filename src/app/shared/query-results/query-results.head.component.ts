@@ -29,21 +29,20 @@ import { QueryResultsFaceComponent } from './query-results.face.component';
 import { ColumnType } from 'src/app/core/models/column-type.type';
 
 @Component({
-  selector: 'mfmp-query-head',
-  standalone: true,
-  imports: [
-    QueryResultsFaceComponent,
-    NgIf,
-    NgTemplateOutlet,
-    AsyncPipe,
-    CommonModule,
-    MatCardModule,
-    MatSortModule,
-    MatTableModule,
-    MatPaginatorModule,
-    DownloadComponent
-  ],
-  template: `<mfmp-query-face
+    selector: 'mfmp-query-head',
+    imports: [
+        QueryResultsFaceComponent,
+        NgIf,
+        NgTemplateOutlet,
+        AsyncPipe,
+        CommonModule,
+        MatCardModule,
+        MatSortModule,
+        MatTableModule,
+        MatPaginatorModule,
+        DownloadComponent
+    ],
+    template: `<mfmp-query-face
       [resultType]="resultType"
       [download]="(download | async)!"
       [sortableColumns]="sortableColumns"
@@ -54,7 +53,7 @@ import { ColumnType } from 'src/app/core/models/column-type.type';
       [length]="length()"
       [paginate]="paginate"></mfmp-query-face>
   `,
-  styles: []
+    styles: []
 })
 export class QueryResultsHeadComponent
   implements OnInit, AfterContentInit, OnDestroy

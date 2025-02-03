@@ -13,10 +13,9 @@ import { ILenrEventDetail } from '../core/models/lenr-event-detail.model';
 import { EventServices } from './lenr-events.service';
 
 @Component({
-  selector: 'mfmp-lenr-events-head',
-  standalone: true,
-  imports: [CommonModule, LenrEventsFaceComponent],
-  template: `
+    selector: 'mfmp-lenr-events-head',
+    imports: [CommonModule, LenrEventsFaceComponent],
+    template: `
     <mfmp-lenr-events-face
       [categories]="categories | async"
       [eventCount]="eventCount | async"
@@ -30,7 +29,7 @@ import { EventServices } from './lenr-events.service';
       (fetcher)="fetch($event)"
       (sorter)="sort($event)"></mfmp-lenr-events-face>
   `,
-  styles: []
+    styles: []
 })
 export class LenrEventsHeadComponent implements OnInit {
   store = inject(Store);

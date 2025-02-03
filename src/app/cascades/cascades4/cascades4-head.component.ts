@@ -13,15 +13,14 @@ import * as featureStore from 'src/app/state/cascades-all';
 import * as appState from 'src/app/state/index';
 import { HeaderProviderService } from 'src/app/shared/header/header.provider.service';
 @Component({
-  selector: 'mfmp-cascades4-head',
-  standalone: true,
-  imports: [CommonModule, Cascades4FaceComponent],
-  template:`<mfmp-cascades4-face
+    selector: 'mfmp-cascades4-head',
+    imports: [CommonModule, Cascades4FaceComponent],
+    template: `<mfmp-cascades4-face
   [form]="form | async"
       [loading]="loading | async"
       [feedbackOptions]="feedbackOptions | async"
       (submitter)="submitForm($event)"></mfmp-cascades4-face>`,
-  styles: []
+    styles: []
 })
 export class Cascades4HeadComponent implements OnInit {
   store = inject(Store);

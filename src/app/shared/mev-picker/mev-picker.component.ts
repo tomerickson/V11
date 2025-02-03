@@ -4,11 +4,10 @@ import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'mfmp-mev-picker',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatSliderModule],
-  templateUrl: './mev-picker.component.html',
-  styleUrls: []
+    selector: 'mfmp-mev-picker',
+    imports: [CommonModule, FormsModule, MatSliderModule],
+    templateUrl: './mev-picker.component.html',
+    styleUrls: []
 })
 /**
  * Limit the number of rows returned by a query:

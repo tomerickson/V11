@@ -12,16 +12,15 @@ import * as appState from 'src/app/state/index';
 import { CascadesSummaryFaceComponent } from './cascades-summary-face.component';
 
 @Component({
-  selector: 'mfmp-cascades-summary',
-  standalone: true,
-  template: `
+    selector: 'mfmp-cascades-summary',
+    template: `
     <mfmp-cascades-summary-face
       [summary]="summary | async"
       [loading]="loading | async"
       [feedbackOptions]="feedbackOptions | async"
       (submitter)="loadReports($event)"></mfmp-cascades-summary-face>
   `,
-  imports: [CommonModule, CascadesSummaryFaceComponent]
+    imports: [CommonModule, CascadesSummaryFaceComponent]
 })
 export class CascadesSummaryHeadComponent implements OnInit {
   store = inject(Store);

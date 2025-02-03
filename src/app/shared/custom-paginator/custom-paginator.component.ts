@@ -13,17 +13,16 @@ import { PageNavigator } from '../models/page-navigator';
  * at a time from the ngrx store.
  */
 @Component({
-  selector: 'mfmp-custom-paginator',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatSelectModule
-  ],
-  templateUrl: './custom-paginator.component.html',
-  styleUrls: ['./custom-paginator.component.scss']
+    selector: 'mfmp-custom-paginator',
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatSelectModule
+    ],
+    templateUrl: './custom-paginator.component.html',
+    styleUrls: ['./custom-paginator.component.scss']
 })
 export class CustomPaginatorComponent {
   pageSize: number = 10;

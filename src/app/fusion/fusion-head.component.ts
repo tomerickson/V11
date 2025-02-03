@@ -19,9 +19,8 @@ import * as fusionState from '../state/fusion';
 import { FusionFaceComponent } from './fusion-face/fusion-face.component';
 
 @Component({
-  standalone: true,
-  selector: 'mfmp-fusion-head',
-  template: `
+    selector: 'mfmp-fusion-head',
+    template: `
     <mfmp-fusion-face
       [elements]="elements | async"
       [sortFields]="sortFields | async"
@@ -31,9 +30,9 @@ import { FusionFaceComponent } from './fusion-face/fusion-face.component';
       (formChanges)="form_changes($event)"
       (sqlChanges)="sql_changes($event)"></mfmp-fusion-face>
   `,
-  styles: [''],
-  imports: [CommonModule, FusionFaceComponent],
-  providers: [{ provide: HeaderProviderService }]
+    styles: [''],
+    imports: [CommonModule, FusionFaceComponent],
+    providers: [{ provide: HeaderProviderService }]
 })
 export class FusionHeadComponent implements OnInit, OnDestroy {
   store: Store = inject(Store);

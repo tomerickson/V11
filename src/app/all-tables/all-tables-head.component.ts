@@ -10,10 +10,9 @@ import { ReportParameters } from '../core/models/report-parameters.model';
 import { ReactionTypeEnum } from '../core/models/reaction-type-enum.model';
 
 @Component({
-  selector: 'mfmp-all-tables',
-  standalone: true,
-  imports: [CommonModule, AllTablesFaceComponent],
-  template: `
+    selector: 'mfmp-all-tables',
+    imports: [CommonModule, AllTablesFaceComponent],
+    template: `
     <mfmp-all-tables-face
       [query]="query()"
       (sql)="submitForm($event)"></mfmp-all-tables-face>

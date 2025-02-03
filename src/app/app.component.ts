@@ -10,15 +10,15 @@ import { Observable } from 'rxjs';
 import { feature } from './state/global.state';
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    RouterLinkWithHref,
-    RouterOutlet, MatSidenavModule, MatToolbarModule,HeaderComponent, MenuComponent],
-  selector: 'mfmp-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    imports: [
+        CommonModule,
+        RouterOutlet,
+        RouterLinkWithHref,
+        RouterOutlet, MatSidenavModule, MatToolbarModule, HeaderComponent, MenuComponent
+    ],
+    selector: 'mfmp-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   title = 'v11';

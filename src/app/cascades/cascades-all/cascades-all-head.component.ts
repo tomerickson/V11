@@ -12,17 +12,16 @@ import { Observable } from 'rxjs';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 @Component({
-  selector: 'mfmp-cascades-all-head',
-  standalone: true,
-  template: `
+    selector: 'mfmp-cascades-all-head',
+    template: `
     <mfmp-cascades-all-face
       [feedbackOptions]="feedbackOptions"
       (submitter)="submitForm($event)"></mfmp-cascades-all-face>
   `,
-  styles: [],
-  imports: [CommonModule, CascadesAllFaceComponent],
-  providers: [{ provide: HeaderProviderService },
-    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }]
+    styles: [],
+    imports: [CommonModule, CascadesAllFaceComponent],
+    providers: [{ provide: HeaderProviderService },
+        { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }]
 })
 export class CascadesAllHeadComponent implements OnInit {
   store = inject(Store);

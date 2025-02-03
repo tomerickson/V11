@@ -11,19 +11,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { actions } from 'src/app/state/global.actions';
 import { feature } from 'src/app/state/global.state';
 @Component({
-  selector: 'mfmp-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    MatButtonModule,
-    MatCommonModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule
-  ]
+    selector: 'mfmp-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    imports: [
+        AsyncPipe,
+        MatButtonModule,
+        MatCommonModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule
+    ]
 })
 export class HeaderComponent implements OnInit {
 

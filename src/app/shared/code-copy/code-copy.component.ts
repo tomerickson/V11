@@ -17,8 +17,8 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
  *@description Provides a text field that can be copied by clicking on the attached icon
  */
 @Component({
-  selector: 'code-copy',
-  template: `
+    selector: 'code-copy',
+    template: `
     <div (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
       <code #code [className]="'cold'">
         {{ text }}
@@ -33,8 +33,8 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
       </mat-icon>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .icon-display {
         transform: scale(0.5);
       }
@@ -59,9 +59,8 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
         }
       }
     `
-  ],
-  standalone: true,
-  imports: [FormsModule, ClipboardModule, MatButtonModule, MatIconModule]
+    ],
+    imports: [FormsModule, ClipboardModule, MatButtonModule, MatIconModule]
 })
 export class CodeCopyCompoonent implements AfterViewInit {
   @Input({ required: true }) text!: string | undefined;

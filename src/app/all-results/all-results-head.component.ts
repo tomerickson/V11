@@ -12,10 +12,9 @@ import { AllResultsService } from './all-results.service';
 import { Sort } from '@angular/material/sort';
 
 @Component({
-  selector: 'mfmp-all-results-head',
-  standalone: true,
-  imports: [CommonModule, AllResultsFaceComponent],
-  template: `
+    selector: 'mfmp-all-results-head',
+    imports: [CommonModule, AllResultsFaceComponent],
+    template: `
     <mfmp-all-results-face
       [resultList]="page | async"
       [pageSize]="pageSize | async"
@@ -26,7 +25,7 @@ import { Sort } from '@angular/material/sort';
       (opener)="openLink($event)"
       (sorter)="sortData($event)"></mfmp-all-results-face>
   `,
-  styleUrls: []
+    styleUrls: []
 })
 export class AllResultsHeadComponent implements OnInit {
   store = inject(Store);

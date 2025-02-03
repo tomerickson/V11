@@ -34,21 +34,20 @@ import { downloadFormValidator } from './download.validator';
 import { DownloadService } from './download.service';
 
 @Component({
-  selector: 'mfmp-download',
-  standalone: true,
-  imports: [
-    NgForOf,
-    CommonModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatSelectModule,
-    ReactiveFormsModule
-  ],
-  templateUrl: './download.component.html',
-  styleUrls: ['./download.component.scss'],
-  providers: [DownloadService]
+    selector: 'mfmp-download',
+    imports: [
+        NgForOf,
+        CommonModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatSelectModule,
+        ReactiveFormsModule
+    ],
+    templateUrl: './download.component.html',
+    styleUrls: ['./download.component.scss'],
+    providers: [DownloadService]
 })
 export class DownloadComponent implements OnInit, OnDestroy {
   @Input({ required: true }) data!: any;
