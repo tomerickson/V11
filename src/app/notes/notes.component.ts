@@ -9,14 +9,13 @@ import {
 import { MatCardModule } from '@angular/material/card';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import * as localState from '../state/notes';
-import { HtmlDirective } from '../shared/html.directive';
-import { NotesFaceComponent } from './note-content/note-content.component';
 import { HeaderProviderService } from '../shared/header/header.provider.service';
+import * as localState from '../state/notes';
+import { NotesFaceComponent } from './note-content/note-content.component';
 
 @Component({
     selector: 'mfmp-notes',
-    imports: [CommonModule, MatCardModule, HtmlDirective, NotesFaceComponent],
+    imports: [CommonModule, MatCardModule, NotesFaceComponent],
     template: `<mfmp-note-content [html]="html | async"></mfmp-note-content>`,
     styles: []
 })

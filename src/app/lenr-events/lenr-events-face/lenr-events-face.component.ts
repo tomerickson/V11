@@ -1,4 +1,3 @@
-import { CdkDrag } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
@@ -43,22 +42,21 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
     selector: 'mfmp-lenr-events-face',
     imports: [
-        CdkDrag,
-        CommonModule,
-        RouterModule,
-        MatButtonModule,
-        MatCardModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatSelectModule,
-        MatTabsModule,
-        ReactiveFormsModule,
-        LenrEventsDetailComponent,
-        LenrEventsResultsComponent,
-        ProgressSpinnerComponent
-    ],
+    CommonModule,
+    RouterModule,
+    MatButtonModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTabsModule,
+    ReactiveFormsModule,
+    LenrEventsDetailComponent,
+    LenrEventsResultsComponent,
+    ProgressSpinnerComponent
+],
     templateUrl: './lenr-events-face.component.html',
     styleUrls: ['./lenr-events-face.component.scss']
 })
@@ -218,7 +216,7 @@ export class LenrEventsFaceComponent implements OnInit, AfterViewInit {
   back() {
     this.tabGroup.selectedIndex = 1;
   }
-  
+
   clear() {
     this.tabGroup.selectedIndex = 0;
   }

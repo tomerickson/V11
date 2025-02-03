@@ -1,4 +1,3 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -30,7 +29,7 @@ import { ReportPagesFaceComponent } from './report-pages.face.component';
         [ready]="ready"></mfmp-report-pages-face>
     </ng-container>
   `,
-    imports: [ReportPagesFaceComponent, AsyncPipe]
+    imports: [ReportPagesFaceComponent]
 })
 export class ReportPagesHeadComponent implements OnInit, OnDestroy {
   router: Router = inject(Router);

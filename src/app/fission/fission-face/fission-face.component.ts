@@ -13,7 +13,7 @@ import {
   MatExpansionPanel
 } from '@angular/material/expansion';
 import { Router, RouterModule } from '@angular/router';
-import { Subscription, pairwise } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { IElementDataModel } from 'src/app/core/models/element-data.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
 import { NuclidePickerComponent } from 'src/app/shared/nuclide-picker/nuclide-picker.component';
@@ -21,7 +21,6 @@ import { fissionElementsValidator } from '../fission-form.validator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
-import { ReportPagesFaceComponent } from 'src/app/shared/report-pages/report-pages.face.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
@@ -29,33 +28,30 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
 import { MevPickerComponent } from 'src/app/shared/mev-picker/mev-picker.component';
-import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable-box.component';
 import { FissionForm } from 'src/app/core/models/fission-form.model';
 import { SqlForm } from 'src/app/core/models/sql-form.model';
 
 @Component({
     selector: 'mfmp-fission-face',
     imports: [
-        CommonModule,
-        MatButtonModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatGridListModule,
-        MatIconModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatSliderModule,
-        NuclidePickerComponent,
-        ReactiveFormsModule,
-        ReportPagesFaceComponent,
-        ResultsizePickerComponent,
-        RouterModule,
-        MevPickerComponent,
-        ExpandableBoxComponent
-    ],
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    NuclidePickerComponent,
+    ReactiveFormsModule,
+    ResultsizePickerComponent,
+    RouterModule,
+    MevPickerComponent
+],
     templateUrl: './fission-face.component.html',
     styleUrls: ['./fission-face.component.scss'],
     viewProviders: [MatExpansionPanel]

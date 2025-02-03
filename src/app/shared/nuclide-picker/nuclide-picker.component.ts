@@ -1,4 +1,4 @@
-import { CommonModule, NgSwitch, NgSwitchCase } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   ControlContainer,
@@ -23,21 +23,19 @@ import { MatIconModule } from '@angular/material/icon';
     templateUrl: './nuclide-picker.component.html',
     styleUrls: ['./nuclide-picker.component.scss'],
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatGridListModule,
-        MatIconModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatTooltipModule,
-        NgSwitch,
-        NgSwitchCase
-    ],
+    CommonModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatTooltipModule
+],
     viewProviders: [
         { provide: ControlContainer, useExisting: FormGroupDirective }
     ]

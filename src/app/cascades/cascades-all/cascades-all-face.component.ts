@@ -41,34 +41,30 @@ import { Observable, Subscription } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
-import { FeedbackOptionsComponent } from 'src/app/shared/feedback-options/feedback-options.component';
-import { SliderInputComponent } from 'src/app/shared/slider-input/slider-input.component';
 
 @Component({
     selector: 'mfmp-cascades-all-face',
     templateUrl: './cascades-all-face.component.html',
     styleUrls: ['./cascades-all-face.component.scss'],
     imports: [
-        CommonModule,
-        FormsModule,
-        MatBadgeModule,
-        MatButtonModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatTooltipModule,
-        ReactiveFormsModule,
-        FeedbackOptionsComponent,
-        SliderInputComponent,
-        NgTemplateOutlet
-    ]
+    CommonModule,
+    FormsModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    NgTemplateOutlet
+]
 })
 export class CascadesAllFaceComponent implements OnInit, AfterViewInit, OnDestroy {
   store = inject(Store);

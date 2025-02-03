@@ -35,13 +35,11 @@ import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FusionForm } from 'src/app/core/models/fusion-form.model';
 import { SqlForm } from 'src/app/core/models/sql-form.model';
-import { ExpandableBoxComponent } from 'src/app/shared/expandable-box/expandable-box.component';
 import { ResultsizePickerComponent } from 'src/app/shared/resultsize-picker/resultsize-picker.component';
 import { IElementDataModel } from '../../core/models/element-data.model';
 import { ILookupDataModel } from '../../core/models/lookup-data.model';
 import { HeaderProviderService } from '../../shared/header/header.provider.service';
 import { NuclidePickerComponent } from '../../shared/nuclide-picker/nuclide-picker.component';
-import { ReportPagesFaceComponent } from '../../shared/report-pages/report-pages.face.component';
 import { fusionElementsValidator } from '../fusion-form.validator';
 
 @Component({
@@ -50,26 +48,24 @@ import { fusionElementsValidator } from '../fusion-form.validator';
     templateUrl: './fusion-face.component.html',
     styleUrls: ['./fusion-face.component.scss'],
     imports: [
-        CommonModule,
-        MatButtonModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatExpansionModule,
-        MatGridListModule,
-        MatIconModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatSliderModule,
-        MatTooltipModule,
-        MatFormFieldModule,
-        NuclidePickerComponent,
-        ReactiveFormsModule,
-        ReportPagesFaceComponent,
-        ResultsizePickerComponent,
-        RouterModule,
-        ExpandableBoxComponent
-    ],
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    NuclidePickerComponent,
+    ReactiveFormsModule,
+    ResultsizePickerComponent,
+    RouterModule
+],
     providers: [{ provide: HeaderProviderService }],
     viewProviders: [MatExpansionPanel]
 })

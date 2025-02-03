@@ -13,19 +13,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { AppConfigService } from '../../app/core/config/app-config.service';
 import { IAppConfig } from '../core/config/iapp-config.model';
-import { MenuItemComponent } from './menu-item.component';
 @Component({
     selector: 'mfmp-menu',
     templateUrl: 'menu.component.html',
     styleUrls: ['menu.component.scss'],
     imports: [
-        CommonModule,
-        RouterModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatListModule,
-        MenuItemComponent
-    ]
+    CommonModule,
+    RouterModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule
+]
 })
 export class MenuComponent implements AfterViewInit {
   readonly appService = inject(AppConfigService);

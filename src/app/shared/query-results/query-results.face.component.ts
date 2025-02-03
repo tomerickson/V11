@@ -1,5 +1,4 @@
 import {
-  AsyncPipe,
   CommonModule,
   NgIf,
   NgTemplateOutlet
@@ -34,17 +33,16 @@ import { RestartFeatureComponent } from '../restart-feature/restart-feature.comp
     templateUrl: './query-results.face.component.html',
     styleUrls: ['./query-results.face.component.scss'],
     imports: [
-        NgIf,
-        NgTemplateOutlet,
-        AsyncPipe,
-        CommonModule,
-        MatCardModule,
-        MatSortModule,
-        MatTableModule,
-        MatPaginatorModule,
-        DownloadComponent,
-        RestartFeatureComponent
-    ]
+    NgIf,
+    NgTemplateOutlet,
+    CommonModule,
+    MatCardModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
+    DownloadComponent,
+    RestartFeatureComponent
+]
 })
 export class QueryResultsFaceComponent
   implements OnInit, AfterViewInit, OnDestroy

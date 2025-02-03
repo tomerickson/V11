@@ -31,17 +31,14 @@ import { ColumnType } from 'src/app/core/models/column-type.type';
 @Component({
     selector: 'mfmp-query-head',
     imports: [
-        QueryResultsFaceComponent,
-        NgIf,
-        NgTemplateOutlet,
-        AsyncPipe,
-        CommonModule,
-        MatCardModule,
-        MatSortModule,
-        MatTableModule,
-        MatPaginatorModule,
-        DownloadComponent
-    ],
+    QueryResultsFaceComponent,
+    AsyncPipe,
+    CommonModule,
+    MatCardModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule
+],
     template: `<mfmp-query-face
       [resultType]="resultType"
       [download]="(download | async)!"
@@ -142,9 +139,9 @@ export class QueryResultsHeadComponent
   };
 
   /**
-   * Select classes to align text based on columnTypes 
-   * @param columnTypes 
-   * @returns 
+   * Select classes to align text based on columnTypes
+   * @param columnTypes
+   * @returns
    */
   setColumnStyles = (): void => {
     const columnStyles: string[] = new Array<string>(this.columnTypes.length);
@@ -168,8 +165,8 @@ export class QueryResultsHeadComponent
   /**
    * For styling purposes we need to know if a column's content
    * contains numbers, strings, or if there are null values
-   * @param data 
-   * @param columns 
+   * @param data
+   * @param columns
    * @returns arrary of ['string', 'number', 'null']
    */
   setColumnTypes = (data: any[], columns: any[]): void => {

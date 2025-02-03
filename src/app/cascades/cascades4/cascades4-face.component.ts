@@ -31,26 +31,24 @@ import { Subscription } from 'rxjs';
 import { ICascadesAllForm } from 'src/app/core/models/cascades-all-form.model';
 import { KeyValuePair } from 'src/app/core/models/key-value-pair.model';
 import { ILookupDataModel } from 'src/app/core/models/lookup-data.model';
-import { ProgressSpinnerComponent } from 'src/app/shared/progress-spinner/progress-spinner.component';
 
 @Component({
     selector: 'mfmp-cascades4-face',
     imports: [
-        CommonModule,
-        MatBadgeModule,
-        MatButtonModule,
-        MatCardModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatSlideToggleModule,
-        MatTooltipModule,
-        ReactiveFormsModule,
-        ProgressSpinnerComponent
-    ],
+    CommonModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    ReactiveFormsModule
+],
     templateUrl: './cascades4-face.component.html',
     styleUrls: ['./cascades4-face.component.scss']
 })
