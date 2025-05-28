@@ -46,13 +46,15 @@ export class CrudService {
     const url = `${this.endPoint}${page}`;
     console.log('postPage url', url);
     if (useFacade) return this.getDummyResults(page, headers);
-    return this.http.post(url, payload, {
-      headers: headers,
-      responseType: 'text',
-      observe: 'body'
-    });
-  };
+    let result: Observable<string>;
 
+      result = this.http.post(url, payload, {
+        headers: headers,
+        responseType: 'text',
+        observe: 'body'
+      })
+    return result;
+  };
 
   getDummyResults(
     page: string,

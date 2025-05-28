@@ -1,15 +1,25 @@
 import { APP_BASE_HREF, PlatformLocation } from '@angular/common';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import {
-  APP_INITIALIZER,
+  HTTP_INTERCEPTORS,
+  HttpInterceptorFn,
+  provideHttpClient,
+  withInterceptors,
+  withJsonpSupport
+} from '@angular/common/http';
+import {
   ErrorHandler,
   enableProdMode,
-  importProvidersFrom
+  importProvidersFrom,
+  inject,
+  provideAppInitializer
 } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  provideAnimations
+} from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore } from '@ngrx/router-store';
@@ -26,6 +36,7 @@ import { feature } from './app/state/global.state';
 import { AppConfigService } from './app/core/config/app-config.service';
 import { GlobalEffects } from './app/state/global.effects';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { corsInterceptor, loggingInterceptor } from './app/core/interceptors/cors-interceptor';
 
 export function getBaseHref(platformLocation: PlatformLocation): string {
   return platformLocation.getBaseHrefFromDOM();
@@ -47,20 +58,35 @@ fetch('/assets/config/config.json')
 
 */
 // platformBrowserDynamic([{ provide: APP_CONFIG, useValue: AppConfig }]);
+
+const initializeAppFn = () => {
+  const config = inject(AppConfigService);
+  if (config.production) {
+    enableProdMode();
+  }
+  return config.loadConfigFile();
+};
+
+const initializeHttpClientFn = (config: typeof initializeAppFn) => {};
+
 bootstrapApplication(AppComponent, {
   providers: [
+    provideAppInitializer(initializeAppFn),
     provideAnimations(),
     {
       provide: APP_BASE_HREF,
       useFactory: getBaseHref,
       deps: [PlatformLocation]
     },
-    {
+
+    //provideHttpClient(),
+    provideHttpClient(withJsonpSupport()),
+    /*     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
       deps: [AppConfigService],
       multi: true
-    },
+    }, */
     // {provide: APP_CONFIG, useClass: AppConfigService,
     // deps: [APP_BASE_HREF]},
     {
@@ -84,7 +110,7 @@ bootstrapApplication(AppComponent, {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' }
     },
-    provideHttpClient(),
+    provideHttpClient(withJsonpSupport()),
     provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideStore(),
     provideState(feature),

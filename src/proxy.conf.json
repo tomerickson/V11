@@ -1,7 +1,7 @@
 {
     "/api/": {
       "target": "https://nanosoft.co.nz",
-      "secure": false,
+      "secure": true,
       "pathRewrite": {
         "^/api": ""
       },
