@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { IntroComponent } from './intro/intro.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 export const APP_ROUTES: Routes = [
   {
@@ -75,7 +76,8 @@ export const APP_ROUTES: Routes = [
   {
     path: 'testpage',
     loadChildren: () =>
-      import('./testpage/testpage.routes').then((m) => m.TESTPAGE_ROUTES)
+      import('./testpage/testpage.routes').then((m) => m.TESTPAGE_ROUTES),
+    providers: [MatDialogRef]
   },
   { path: '**', component: NotFoundComponent }
 ];
