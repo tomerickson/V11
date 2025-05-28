@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { AppConfigService } from '../config/app-config.service';
 import { IElementDataModel } from '../models/element-data.model';
 import { ILookupDataModel } from '../models/lookup-data.model';
-import { IAppConfig } from '../config/iapp-config.model';
 
 export interface User {
   id: string;
@@ -48,29 +47,14 @@ export class CrudService {
     console.log('postPage url', url);
     if (useFacade) return this.getDummyResults(page, headers);
     let result: Observable<string>;
-    if (this.config.useJsonp) {
-      result = this.getJsonp(url, payload, headers);
-    } else {
+
       result = this.http.post(url, payload, {
         headers: headers,
         responseType: 'text',
         observe: 'body'
       })
-    }
     return result;
   };
-
-  private getJsonp = (page: string, payload: any, headers: HttpHeaders): Observable<string> => {
-    const url = `${this.endPoint}${page}`;
-    console.log('getJsonp url', url);
-    return this.http.jsonp(url, 'parseJson') as Observable<string>;
-    }
-
-    private parseJson = (json: string): string => {
-      debugger;
-      return json
-    }
-
 
   getDummyResults(
     page: string,

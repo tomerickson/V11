@@ -29,7 +29,6 @@ export class AppConfigService {
     version: packageJson.version,
     proxy: null,
     apiUrl: '?',
-    useJsonp: false,
     virtualDirectory: null,
     httpMaxRetries: -1,
     httpRetryDelay: -1,
@@ -91,8 +90,5 @@ export class AppConfigService {
   }
   get allTablesPageSize(): number {
     return this._appConfig.allTablesPageSize;
-  }
-  get useJsonp(): boolean {
-    return this._appConfig.useJsonp;
   }
 }
