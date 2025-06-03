@@ -33,8 +33,9 @@ export class AppConfigService {
     httpMaxRetries: -1,
     httpRetryDelay: -1,
     pageCredits: '',
-    allTablesPageSize: 1
-  };
+    allTablesPageSize: 1,
+    useJsonp: false
+   };
 
   constructor(
     @Inject(APP_BASE_HREF) private baseUrl: string,
@@ -90,5 +91,8 @@ export class AppConfigService {
   }
   get allTablesPageSize(): number {
     return this._appConfig.allTablesPageSize;
+  }
+  get useJsonp(): boolean {
+    return this._appConfig.useJsonp;
   }
 }
