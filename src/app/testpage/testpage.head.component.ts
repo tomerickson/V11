@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, OnInit, importProvidersFrom, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,9 +9,12 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { NuclideDialogComponent } from '../shared/nuclide-dialog/nuclide-dialog.component';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Observable, from } from 'rxjs';
 import { IElementDataModel } from '../core/models/element-data.model';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { NuclideDialogComponent } from '../shared/nuclide-dialog/nuclide-dialog.component';
+import * as appState from '../state';
 @Component({
   selector: 'mfmp-testpage',
   imports: [
@@ -19,80 +22,40 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
-    NuclideDialogComponent
-  ],
-  providers: [MatDialogModule],
-  template: `
-    <form [formGroup]="fusionForm">
-      <div class="nuclides">
-        <div class="elements">
-          <mfmp-nuclide-dialog
-            [role]="'query'"
-            [title]="'Left side (E1)'"
-            [multiselect]="true"
-            [formGroupName]="'leftNuclides'"
-            [caption]="'Left'"
-            [elementsList]="elements"></mfmp-nuclide-dialog>
-          <div class="join">
-            <button
-              type="button"
-              class="mat-elevation-z2"
-              mat-flat-button
-              (click)="toggleJoin()"
-              formControlName="elementJoin"
-              ngDefaultControl>
-              {{ fusionForm.get('elementJoin')?.value }}
-            </button>
-          </div>
-          <mfmp-nuclide-dialog
-            [role]="'query'"
-            [title]="'Right side (E2)'"
-            [multiselect]="true"
-            [formGroupName]="'rightNuclides'"
-            [caption]="'Right'"
-            [elementsList]="elements"></mfmp-nuclide-dialog>
-        </div>
-        <div class="results">
-          <mfmp-nuclide-dialog
-            [role]="'result'"
-            [title]="'Results (E)'"
-            [multiselect]="true"
-            [formGroupName]="'resultNuclides'"
-            [caption]="'Result'"
-            [elementsList]="elements"></mfmp-nuclide-dialog>
-        </div>
-      </div>
-    </form>
-  `,
-  styles: `
-    .fullheight {
-      bottom: 0;
-      right: 0;
-    }
-    .bottom-dock {
-      bottom: 5;
-      right: 5;
-    }
-  `
+    MatDialogModule,
+    NuclideDialogComponent  ],
+  providers: [],
+  templateUrl: './testpage-head.component.html',
+  styleUrls: ['./testpage-head.component.scss']
 })
 export class TestpageHeadComponent implements OnInit {
-  @Input({ required: true }) elements!: IElementDataModel[] | null;
-
+  store: Store = inject(Store);
+  title = signal<string>('Test Page');
+  elements = signal<IElementDataModel[]>([]);
   fb = inject(FormBuilder);
   dialogRef = inject(MatDialogRef<NuclideDialogComponent>);
-  fusionForm!: FormGroup;
+  dialogForm!: FormGroup;
 
   get options(): FormControl {
-    return this.fusionForm.get('options') as FormControl;
+    return this.dialogForm.get('options') as FormControl;
   }
   toggleJoin = () => {
-    let join: string = this.fusionForm.get('elementJoin')?.value ?? '';
+    let join: string = this.dialogForm.get('elementJoin')?.value ?? '';
     join = join === 'and' ? 'or' : 'and';
-    this.fusionForm.get('elementJoin')?.patchValue(join);
+    this.dialogForm.get('elementJoin')?.patchValue(join);
   };
 
   ngOnInit() {
-    this.fusionForm = this.fb.group({
+    const obj = this.store.select(appState.feature.selectElements);
+    if (obj instanceof Observable) {
+      from(obj).subscribe((elements: IElementDataModel[]) => {
+        this.elements.set(elements);
+      });
+    } else {
+      this.elements.set(obj);
+    }
+
+    this.dialogForm = this.fb.group({
       counter: 0,
       options: ['Core', [Validators.required]],
       elementJoin: new FormControl('and'),

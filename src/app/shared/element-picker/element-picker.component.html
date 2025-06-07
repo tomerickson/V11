@@ -1,0 +1,18 @@
+          <mat-form-field
+            formControlName="formControlName()"
+            subscriptSizing="dynamic"
+            ngDefaultControl>
+            <mat-label>{{ caption() }}</mat-label>
+            <mat-select
+              #matElements
+              formControlName="formControlName()"
+              multiple
+              title="select elements"
+              [placeholder]="'click here to begin.'">
+              <div>
+                <mat-option *ngFor="let element of elementsList()" [value]="element.E">
+                  {{ elementOptionValue(element) }}
+                </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>

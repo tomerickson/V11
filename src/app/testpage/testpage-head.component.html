@@ -1,0 +1,44 @@
+<form [formGroup]="dialogForm">
+  <div class="nuclides">
+    <div class="elements">
+      <mfmp-nuclide-dialog
+        [role]="'query'"
+        [title]="'Left side (E1)'"
+        [multiselect]="true"
+        [formGroupName]="'leftNuclide'"
+        [caption]="'Left'"
+        [elementsList]="elements() ? elements() : []"
+        [selectedElements]="[]"></mfmp-nuclide-dialog>
+
+      <div class="join">
+        <button
+          type="button"
+          class="mat-elevation-z2"
+          mat-flat-button
+          (click)="toggleJoin()"
+          formControlName="elementJoin"
+          ngDefaultControl>
+          {{ dialogForm.get('elementJoin')?.value }}
+        </button>
+      </div>
+      <mfmp-nuclide-dialog
+        [role]="'query'"
+        [title]="'Right side (E2)'"
+        [multiselect]="true"
+        [formGroupName]="'rightNuclides'"
+        [caption]="'Right'"
+        [elementsList]="elements() ? elements() : []"
+        [selectedElements]="[]"></mfmp-nuclide-dialog>
+    </div>
+    <div class="results">
+      <mfmp-nuclide-dialog
+        [role]="'result'"
+        [title]="'Results (E)'"
+        [multiselect]="true"
+        [formGroupName]="'resultNuclides'"
+        [caption]="'Result'"
+        [elementsList]="elements() ? elements() : []"
+        [selectedElements]="[]"></mfmp-nuclide-dialog>
+    </div>
+  </div>
+</form>

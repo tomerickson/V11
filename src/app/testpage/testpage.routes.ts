@@ -4,19 +4,24 @@ import { HeaderProviderService } from '../shared/header/header.provider.service'
 import { ErrorStateMatcher, MatNativeDateModule, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { importProvidersFrom } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-// import * as state from '../state/all-results';
+import * as state from '../state/all-results';
+import { provideState } from '@ngrx/store';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { NuclideDialogComponent } from '../shared/nuclide-dialog/nuclide-dialog.component';
 
 export const TESTPAGE_ROUTES: Routes = [
   {
     path: '',
     component: TestpageHeadComponent,
     providers: [
-      // provideState(state.feature),
+      provideState(state.feature),
       // provideEffects([state.effects]),
 
           // See angular issue #48350
       importProvidersFrom(ReactiveFormsModule.withConfig({ callSetDisabledState: 'whenDisabledForLegacyCode' })),
       importProvidersFrom(MatNativeDateModule),
+      importProvidersFrom(MatDialogModule),
+      // importProvidersFrom(MatDialogRef<NuclideDialogComponent>),
       { provide: HeaderProviderService, useClass: HeaderProviderService },
       { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
     ]

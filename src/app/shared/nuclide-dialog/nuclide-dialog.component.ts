@@ -1,5 +1,5 @@
 import { IElementDataModel } from './../../core/models/element-data.model';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import {
   ControlContainer,
   FormGroup,
@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { NuclidePickerRoleEnum} from './nuclide-dialog.types'
 @Component({
   selector: 'mfmp-nuclide-dialog',
   imports: [
@@ -31,14 +31,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrl: './nuclide-dialog.component.scss'
 })
 export class NuclideDialogComponent implements OnInit {
-  @Input({ required: true }) title!: string | null;
-  @Input({ required: true }) role!: 'query' | 'result';
-  @Input({ required: true }) elementsList: IElementDataModel[] | null = null;
-  @Input({ required: true }) multiselect!: boolean;
-  @Input({ required: true }) caption!: string;
-  @Input({ required: true }) formGroupName!: string;
-
   dialogRef = inject(MatDialogRef<NuclideDialogComponent>);
+  title = input.required<string>();
+  role = input.required<'query' | 'result'>();
+  elementsList = input.required<IElementDataModel[]>();
+  selectedElements = input.required<IElementDataModel[]>();
+  multiselect = input.required<boolean>();
+  caption = input.required<string>();
+formGroupName = input.required<string>();
   fgd = inject(FormGroupDirective);
   nuclideForm!: FormGroup;
   hoverMessage =
@@ -54,8 +54,8 @@ export class NuclideDialogComponent implements OnInit {
    * 3 = single result;
    */
   flavor = (): number => {
-    const result: number = (this.role === 'result') as any as number;
-    const multi: number = !this.multiselect as any as number;
+    const result: number = (this.role() === NuclidePickerRoleEnum.result) ? 1 : 0;
+    const multi: number = this.multiselect() ? 1 : 0;
     return multi * 2 + result;
   };
 
@@ -64,8 +64,12 @@ export class NuclideDialogComponent implements OnInit {
   }
 
   elementOptionValue = (element: IElementDataModel): string => {
-    return this.role === 'query'
+    return this.role() === NuclidePickerRoleEnum.query
       ? (element.E + ' - ' + element.EName).padEnd(50)
       : element.E;
   };
+
+  close(): void {
+    this.dialogRef.close();
+  }
 }

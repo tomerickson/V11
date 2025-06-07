@@ -1,118 +1,131 @@
-<h2 mat-dialog-title></h2>
-<mat-dialog-content>
-<mat-card [formGroup]="nuclideForm" class="flexcolumn">
-  <section class="margins" formGroupName="{{ formGroupName }}">
-    <section [className]="'elements'">
-      @switch (flavor()) { @case(0) {
-      <mat-form-field
-        formControlName="selectedElements"
-        subscriptSizing="dynamic"
-        ngDefaultControl>
-        <label>{{ title }}</label>
-        <mat-select
-          #matElements
-          formControlName="selectedElements"
-          multiple
-          title="select elements"
-          [placeholder]="'click here to begin.'">
-          <div>
-            <mat-option
-              *ngFor="let element of elementsList"
-              [value]="element.E">
-              {{ this.elementOptionValue(element) }}
-            </mat-option>
-          </div>
-        </mat-select>
-      </mat-form-field>
-      } @case(1) {
-      <mat-form-field
-        formControlName="selectedElements"
-        subscriptSizing="dynamic"
-        ngDefaultControl>
-        <label>{{ title }}</label>
-        <mat-select
-          #matElements
-          formControlName="selectedElements"
-          multiple
-          title="select elements"
-          [placeholder]="'click here to filter.'">
-          <div>
-            <mat-option
-              [disabled]
-              *ngFor="let element of elementsList"
-              [value]="element.E">
-              {{ this.elementOptionValue(element) }}
-            </mat-option>
-          </div>
-        </mat-select>
-      </mat-form-field>
-      } @case(2) {
-      <mat-form-field
-        formControlName="selectedElements"
-        subscriptSizing="dynamic"
-        ngDefaultControl>
-        <label>{{ title }}</label>
+<div>
+  <h2 mat-dialog-title></h2>
+  <mat-dialog-content>
+    <mat-card [formGroup]="nuclideForm" class="flexcolumn">
+      <section class="margins" formGroupName="{{ formGroupName() }}">
+        <section [className]="'elements'">
+          @switch (flavor()) {
+            @case (0) {
+              <mat-form-field
+                formControlName="selectedElements"
+                subscriptSizing="dynamic"
+                ngDefaultControl>
+                <label>{{ title() }}</label>
+                <mat-select
+                  #matElements
+                  formControlName="selectedElements"
+                  multiple
+                  title="select elements"
+                  [placeholder]="'click here to begin.'">
+                  <div>
+                    <mat-option
+                      *ngFor="let element of elementsList"
+                      [value]="element.E">
+                      {{ this.elementOptionValue(element) }}
+                    </mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+            }
+            @case (1) {
+              <mat-form-field
+                formControlName="selectedElements"
+                subscriptSizing="dynamic"
+                ngDefaultControl>
+                <label>{{ title() }}</label>
+                <mat-select
+                  #matElements
+                  formControlName="selectedElements"
+                  multiple
+                  title="select elements"
+                  [placeholder]="'click here to filter.'">
+                  <div>
+                    <mat-option
+                      [disabled]
+                      *ngFor="let element of elementsList"
+                      [value]="element.E">
+                      {{ this.elementOptionValue(element) }}
+                    </mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+            }
+            @case (2) {
+              <mat-form-field
+                formControlName="selectedElements"
+                subscriptSizing="dynamic"
+                ngDefaultControl>
+                <label>{{ title() }}</label>
 
-        <mat-select
-          #matElements
-          formControlName="selectedElements"
-          title="select elements"
-          [placeholder]="'click here to begin.'">
-          <div>
-            <mat-option
-              *ngFor="let element of elementsList"
-              [value]="element.E">
-              {{ this.elementOptionValue(element) }}
-            </mat-option>
+                <mat-select
+                  #matElements
+                  formControlName="selectedElements"
+                  title="select elements"
+                  [placeholder]="'click here to begin.'">
+                  <div>
+                    <mat-option
+                      *ngFor="let element of elementsList"
+                      [value]="element.E">
+                      {{ this.elementOptionValue(element) }}
+                    </mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+            }
+            @case (3) {
+              <mat-form-field
+                formControlName="selectedElements"
+                subscriptSizing="dynamic"
+                ngDefaultControl>
+                <label>{{ title() }}</label>
+                <input
+                  type="text"
+                  title="results"
+                  class="hidden"
+                  matInput
+                  readonly />
+              </mat-form-field>
+            }
+            @default {
+              <div>No match found</div>
+            }
+          }
+        </section>
+        <section class="spin">
+          <h3
+            matTooltip="{{ hoverMessage }}"
+            [matTooltipPosition]="'above'"
+            [matTooltipShowDelay]="tooltipDelay">
+            Spin:
+            <mat-icon [inline]="true">info</mat-icon>
+          </h3>
+          <div class="flexrow">
+            <div class="flexcolumn">
+              <mat-label>Atomic</mat-label>
+              <mat-radio-group
+                class="spinbutton"
+                formControlName="atomicSpin"
+                defaultTabIndex="2"
+                value="bf">
+                <mat-radio-button value="b">Boson</mat-radio-button>
+                <mat-radio-button value="f">Fermion</mat-radio-button>
+                <mat-radio-button value="bf">Either</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="flexcolumn">
+              <mat-label>Nuclear</mat-label>
+              <mat-radio-group
+                class="spinbutton"
+                formControlName="nuclearSpin"
+                value="bf">
+                <mat-radio-button value="b">Boson</mat-radio-button>
+                <mat-radio-button value="f">Fermion</mat-radio-button>
+                <mat-radio-button value="bf">Either</mat-radio-button>
+              </mat-radio-group>
+            </div>
           </div>
-        </mat-select>
-      </mat-form-field>
-      } @case(3) {
-      <mat-form-field
-        formControlName="selectedElements"
-        subscriptSizing="dynamic"
-        ngDefaultControl>
-        <label>{{ title }}</label>
-        <input type="text" title="results" class="hidden" matInput readonly />
-      </mat-form-field>
-      } @default() {
-      <div>No match found</div>
-      } }
-    </section>
-    <section class="spin">
-      <h3
-        matTooltip="{{ hoverMessage }}"
-        [matTooltipPosition]="'above'"
-        [matTooltipShowDelay]="tooltipDelay">
-        Spin:
-        <mat-icon [inline]="true">info</mat-icon>
-      </h3>
-      <div class="flexrow">
-        <div class="flexcolumn">
-          <mat-label>Atomic</mat-label>
-          <mat-radio-group
-            class="spinbutton"
-            formControlName="atomicSpin"
-            defaultTabIndex="2"
-            value="bf">
-            <mat-radio-button value="b">Boson</mat-radio-button>
-            <mat-radio-button value="f">Fermion</mat-radio-button>
-            <mat-radio-button value="bf">Either</mat-radio-button>
-          </mat-radio-group>
-        </div>
-        <div class="flexcolumn">
-          <mat-label>Nuclear</mat-label>
-          <mat-radio-group
-            class="spinbutton"
-            formControlName="nuclearSpin"
-            value="bf">
-            <mat-radio-button value="b">Boson</mat-radio-button>
-            <mat-radio-button value="f">Fermion</mat-radio-button>
-            <mat-radio-button value="bf">Either</mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </div>
-    </section>
-  </section>
-</mat-card>
-</mat-dialog-content>
+        </section>
+      </section>
+    </mat-card>
+  </mat-dialog-content>
+</div>
